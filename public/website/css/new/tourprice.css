@@ -1,0 +1,373 @@
+/* Main Tour Pricing Container */
+.tour-luxury-container {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.tour-luxury-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+}
+
+/* Tour Luxury Pricing Cards */
+.tour-luxury-card {
+    background: white;
+    border-radius: 25px;
+    padding: 0;
+    box-shadow: var(--shadow-subtle);
+    border: 1px solid #e0e6ed;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.tour-luxury-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--gradient-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.tour-luxury-card:hover::before {
+    transform: scaleX(1);
+}
+
+.tour-luxury-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-dramatic);
+    border-color: var(--rich-gold);
+}
+
+/* Featured and Popular Cards */
+.tour-luxury-card.tour-popular,
+.tour-luxury-card.tour-best-value,
+.tour-luxury-card.tour-featured-price {
+    border: 3px solid var(--rich-gold);
+    transform: scale(1.02);
+    z-index: 2;
+}
+
+.tour-luxury-card.tour-featured-price {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.tour-luxury-card.tour-popular::before,
+.tour-luxury-card.tour-best-value::before,
+.tour-luxury-card.tour-featured-price::before {
+    transform: scaleX(1);
+}
+
+/* Tour Pricing Badges */
+.tour-pricing-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--gradient-gold);
+    color: var(--primary-navy);
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-gold);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tour-pricing-badge i {
+    font-size: 0.75rem;
+}
+
+/* Tour Card Header */
+.tour-card-header {
+    padding: 40px 30px 25px;
+    text-align: center;
+    background: var(--gradient-elegant);
+    border-radius: 22px 22px 0 0;
+}
+
+.tour-card-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-navy);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+}
+
+.tour-pricing-amount {
+    margin: 20px 0 15px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 5px;
+}
+
+.tour-currency {
+    font-size: 1.5rem;
+    color: var(--rich-gold);
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.tour-price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    line-height: 1;
+}
+
+.tour-per-person {
+    font-size: 0.9rem;
+    color: var(--warm-gray);
+    margin-top: 25px;
+    font-style: italic;
+}
+
+/* Tour Card Body */
+.tour-card-body {
+    padding: 25px 30px;
+}
+
+/* Tour Terms Section */
+.tour-policy-card {
+    margin: 50px 0 40px;
+    background: var(--gradient-elegant);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid #e0e6ed;
+}
+
+.tour-terms-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--light-sand);
+}
+
+.tour-terms-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-navy);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tour-terms-title i {
+    color: var(--rich-gold);
+}
+
+.tour-terms-content {
+    color: var(--charcoal-deep);
+    line-height: 1.7;
+}
+
+.tour-terms-content p {
+    margin-bottom: 15px;
+}
+
+.tour-terms-content ul,
+.tour-terms-content ol {
+    margin: 15px 0;
+    padding-left: 25px;
+}
+
+.tour-terms-content li {
+    margin-bottom: 8px;
+}
+
+/* Enhanced Policies Section */
+.tour-policies-section {
+    margin: 50px 0;
+}
+
+.tour-policies-main-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-navy);
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.tour-policies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.tour-policy-info-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow-subtle);
+    border: 1px solid #e0e6ed;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.tour-policy-info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--rich-gold);
+}
+
+.tour-policy-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--gradient-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: var(--shadow-gold);
+}
+
+.tour-policy-icon i {
+    font-size: 2rem;
+    color: var(--primary-navy);
+}
+
+.tour-policy-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-navy);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+}
+
+.tour-policy-content {
+    text-align: left;
+}
+
+.tour-policy-content p {
+    color: var(--charcoal-deep);
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.tour-policy-list {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.tour-policy-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: var(--charcoal-deep);
+    line-height: 1.5;
+}
+
+.tour-policy-list li::before {
+    content: '•';
+    color: var(--rich-gold);
+    font-weight: bold;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.tour-age-range,
+.tour-days-range {
+    color: var(--rich-gold);
+    font-weight: 600;
+}
+
+/* Tour Section Headers */
+.tour-section-header {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-navy);
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.tour-section-subtitle {
+    color: var(--warm-gray);
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .tour-luxury-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .tour-luxury-card.tour-popular,
+    .tour-luxury-card.tour-best-value,
+    .tour-luxury-card.tour-featured-price {
+        transform: none;
+    }
+    
+    .tour-card-header {
+        padding: 30px 20px 20px;
+    }
+    
+    .tour-card-body {
+        padding: 20px;
+    }
+    
+    .tour-price {
+        font-size: 2rem;
+    }
+    
+    .tour-pricing-badge {
+        top: 10px;
+        right: 10px;
+        padding: 4px 8px;
+        font-size: 0.65rem;
+        border-radius: 12px;
+        gap: 3px;
+    }
+    
+    .tour-pricing-badge i {
+        font-size: 0.65rem;
+    }
+    
+    .tour-policy-card {
+        padding: 25px 20px;
+        margin: 30px 0;
+    }
+    
+    .tour-policies-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .tour-policy-info-card {
+        padding: 25px 20px;
+    }
+    
+    .tour-section-header {
+        font-size: 1.6rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .tour-luxury-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}

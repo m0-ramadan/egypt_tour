@@ -1,0 +1,59 @@
+.prefix_title{
+    opacity: .3;
+}
+
+html[dir="rtl"] body {
+    font-family: "Cairo", "Noto Kufi Arabic", sans-serif !important;
+}
+
+html[dir="ltr"] body {
+    font-family: "Public Sans", sans-serif !important;
+}
+
+html[dir="ltr"] .menu-inner,
+html[dir="ltr"] .menu-vertical,
+html[dir="ltr"] .card,
+html[dir="ltr"] .table,
+html[dir="ltr"] .dropdown-menu,
+html[dir="ltr"] .form-control,
+html[dir="ltr"] .form-select {
+    text-align: left;
+}
+
+html[dir="rtl"] .menu-inner,
+html[dir="rtl"] .menu-vertical,
+html[dir="rtl"] .card,
+html[dir="rtl"] .table,
+html[dir="rtl"] .dropdown-menu,
+html[dir="rtl"] .form-control,
+html[dir="rtl"] .form-select {
+    text-align: right;
+}
+
+.menu-link.btn.btn-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.dropdown-language .dropdown-item.active {
+    color: var(--bs-primary);
+    font-weight: 600;
+}
+
+html[dir="ltr"] .layout-menu-toggle {
+    margin-left: auto;
+    margin-right: 0 !important;
+}
+
+html[dir="rtl"] .layout-menu-toggle {
+    margin-right: auto;
+    margin-left: 0 !important;
+}
+
+html[dir="ltr"] .breadcrumb-item + .breadcrumb-item::before {
+    float: left;
+}
+
+html[dir="rtl"] .breadcrumb-item + .breadcrumb-item::before {
+    float: right;
+}

@@ -1,0 +1,36 @@
+@import "./generated/bootstrap.min.css";
+@import "./generated/line-awesome.css";
+@import "./generated/style.css";
+
+@font-face {
+    font-family: "Line Awesome Brands";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/website/fonts/website/la-brands-subset.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Line Awesome Free";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/website/fonts/website/la-regular-subset.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Line Awesome Free";
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url("/website/fonts/website/la-solid-subset.woff2") format("woff2");
+}
+/* Cards that inherit navigation from their primary link. */
+.is-navigation-card {
+    cursor: pointer;
+}
+
+.is-navigation-card:focus-visible {
+    outline: 3px solid var(--rich-gold, #c9974c);
+    outline-offset: 4px;
+}
