@@ -1,0 +1,62 @@
+      @media (min-width: 992px) {
+          /*
+           * Keep the desktop dropdown open while the pointer crosses the visual
+           * gap between its toggle and menu.
+           */
+          body.website-theme-shell .navbar .dropdown-menu::before {
+              content: "";
+              position: absolute;
+              top: -12px;
+              right: 0;
+              left: 0;
+              height: 12px;
+          }
+      }
+
+      @media (max-width: 991px) {
+          body.website-theme-shell .navbar-brand img {
+                 width: 130px !important;
+                 height: auto !important;
+                 max-height: 42px !important;
+          }
+      }
+      @media (max-width: 500px) {
+          body.website-theme-shell .navbar-brand img {
+                 width: 95px !important;
+                 height: auto !important;
+                 max-height: 32px !important;
+          }
+          body.website-theme-shell .mobile-actions .viber,
+          body.website-theme-shell .mobile-actions .whatsapp {
+              display: none !important;
+          }
+          body.website-theme-shell .mobile-actions .mobile-action-btn,
+          body.website-theme-shell .mobile-toggle {
+              width: 34px !important;
+              height: 34px !important;
+              min-height: 34px !important;
+              border-radius: 10px !important;
+          }
+          body.website-theme-shell .mobile-actions .mobile-action-btn i {
+              font-size: 1rem !important;
+          }
+          body.website-theme-shell .hamburger {
+              width: 18px !important;
+              height: 12px !important;
+          }
+          body.website-theme-shell .hamburger span {
+              height: 2px !important;
+          }
+          body.website-theme-shell .hamburger span:nth-child(2) {
+              top: 5px !important;
+          }
+          body.website-theme-shell .hamburger span:nth-child(3) {
+              top: 10px !important;
+          }
+          body.website-theme-shell .hamburger.active span:nth-child(1) {
+              top: 5px !important;
+          }
+          body.website-theme-shell .hamburger.active span:nth-child(3) {
+              top: 5px !important;
+          }
+      }

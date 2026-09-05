@@ -1,0 +1,55 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-l0sNRNKZ.js",
+    "name": "app",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/website-after.css": {
+    "file": "assets/website-after-C-A5w9HT.css",
+    "src": "resources/css/website-after.css",
+    "isEntry": true
+  },
+  "resources/css/website-base.css": {
+    "file": "assets/website-base-CgQf-vEf.css",
+    "src": "resources/css/website-base.css",
+    "isEntry": true
+  },
+  "resources/css/website-header.css": {
+    "file": "assets/website-header-Gk21_MpL.css",
+    "src": "resources/css/website-header.css",
+    "isEntry": true
+  },
+  "resources/css/website-home.css": {
+    "file": "assets/website-home-BXv3T60w.css",
+    "src": "resources/css/website-home.css",
+    "isEntry": true
+  },
+  "resources/css/website-rtl.css": {
+    "file": "assets/website-rtl-CIK9UJYo.css",
+    "src": "resources/css/website-rtl.css",
+    "isEntry": true
+  },
+  "resources/css/website-theme.css": {
+    "file": "assets/website-theme-BGKYplr1.css",
+    "src": "resources/css/website-theme.css",
+    "isEntry": true
+  },
+  "resources/css/website.css": {
+    "file": "assets/website-DTf9f2sw.css",
+    "src": "resources/css/website.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DUr89oQr.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/website.js": {
+    "file": "assets/website-G6kQFut7.js",
+    "name": "website",
+    "src": "resources/js/website.js",
+    "isEntry": true
+  }
+}

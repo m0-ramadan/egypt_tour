@@ -1,0 +1,45 @@
+{
+    "app": {
+        "name": "Banners Management",
+        "title": "Banners Management System",
+        "description": "Manage and display advertising banners"
+    },
+    "banner": {
+        "add": "Add New Banner",
+        "edit": "Edit Banner",
+        "title": "Banner Title",
+        "type": "Banner Type",
+        "status": "Banner Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "confirm_delete": "Are you sure you want to delete?",
+        "success": "Operation completed successfully",
+        "error": "An error occurred"
+    },
+    "validation": {
+        "required": "This field is required",
+        "invalid": "Invalid value",
+        "min": "Value must be at least :min",
+        "max": "Value must be at most :max"
+    },
+    "buttons": {
+        "save": "Save",
+        "update": "Update",
+        "cancel": "Cancel",
+        "back": "Back",
+        "next": "Next",
+        "previous": "Previous",
+        "add_item": "Add Item",
+        "edit_item": "Edit Item",
+        "delete_item": "Delete Item"
+    },
+    "messages": {
+        "saved": "Saved successfully",
+        "updated": "Updated successfully",
+        "deleted": "Deleted successfully",
+        "error": "An error occurred, please try again"
+    }
+}
