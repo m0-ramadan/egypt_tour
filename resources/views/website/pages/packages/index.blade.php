@@ -4,12 +4,18 @@
     $isToursPage = request()->routeIs('website.tours.*');
     $indexRoute = $isToursPage ? route('website.tours.all') : route('website.trips');
     $firstPackage = $packages->first();
-    $heroImage = is_array($firstPackage) ? ($firstPackage['image'] ?? asset('website/photos/home2.webp')) : asset('website/photos/home2.webp');
+    $heroImage = is_array($firstPackage)
+        ? $firstPackage['image'] ?? asset('website/photos/home2.webp')
+        : asset('website/photos/home2.webp');
 @endphp
 
-@section('title', $pageContent['title'] . ' - Etro Tours')
+@section('title', $pageContent['title'] . ' - Egypt Tour Pro')
 @section('description', $pageContent['description'] ?? $pageContent['overview_text'])
-@section('keywords', trim(collect([$pageContent['title'] ?? null, 'Etro Tours', 'Egypt tours', 'travel packages'])->filter()->implode(', '), ', '))
+@section('keywords',
+    trim(
+    collect([$pageContent['title'] ?? null, 'Egypt Tour Pro', 'Egypt tours', 'travel packages'])->filter()->implode(', '),
+    ', ',
+    ))
 @section('image', $heroImage)
 
 @section('css')
@@ -23,7 +29,7 @@
             padding: 140px 0 90px;
             color: #fff;
             background:
-                linear-gradient(rgba(16, 33, 63, 0.72), rgba(22, 60, 103, 0.62)),
+                linear-gradient(rgba(28, 28, 28, 0.72), rgba(43, 43, 43, 0.62)),
                 url('{{ $heroImage }}') center/cover no-repeat;
             overflow: hidden;
         }
@@ -64,7 +70,7 @@
         }
 
         .listing-badge i {
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
         }
 
         .listing-title {
@@ -103,7 +109,7 @@
             display: block;
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
             line-height: 1;
             margin-bottom: 8px;
         }
@@ -121,15 +127,15 @@
         .overview-card {
             background: #fff;
             border-radius: 28px;
-            border: 1px solid rgba(26, 54, 93, 0.08);
-            box-shadow: 0 20px 50px rgba(16, 33, 63, 0.08);
+            border: 1px solid rgba(43, 43, 43, 0.08);
+            box-shadow: 0 20px 50px rgba(28, 28, 28, 0.08);
             padding: 34px;
             text-align: center;
         }
 
         .overview-card h2 {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #2b2b2b;
             font-size: clamp(1.8rem, 4vw, 2.5rem);
             margin-bottom: 16px;
         }
@@ -137,13 +143,13 @@
         .overview-card p {
             margin: 0 auto;
             max-width: 900px;
-            color: #5b6776;
+            color: #5b5854;
             line-height: 1.9;
             font-size: 1.03rem;
         }
 
         .listing-results {
-            background: linear-gradient(180deg, #f7fafc 0%, #eef4fb 100%);
+            background: linear-gradient(180deg, #f7fafc 0%, #ffd0a8 100%);
             padding: 26px 0 90px;
         }
 
@@ -151,8 +157,8 @@
             background: #fff;
             border-radius: 28px;
             padding: 28px;
-            border: 1px solid rgba(26, 54, 93, 0.08);
-            box-shadow: 0 16px 38px rgba(16, 33, 63, 0.08);
+            border: 1px solid rgba(43, 43, 43, 0.08);
+            box-shadow: 0 16px 38px rgba(28, 28, 28, 0.08);
             margin-bottom: 34px;
         }
 
@@ -160,7 +166,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #1c325c;
+            color: #2b2b2b;
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
             margin-bottom: 22px;
@@ -177,21 +183,21 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #425466;
+            color: #3d3d3d;
         }
 
         .filters-card .form-control,
         .filters-card .form-select {
             min-height: 54px;
             border-radius: 16px;
-            border: 1px solid rgba(26, 54, 93, 0.14);
+            border: 1px solid rgba(43, 43, 43, 0.14);
             box-shadow: none;
         }
 
         .filters-card .form-control:focus,
         .filters-card .form-select:focus {
-            border-color: #c5955b;
-            box-shadow: 0 0 0 0.2rem rgba(197, 149, 91, 0.14);
+            border-color: var(--etp-orange-500, #F36B0A);
+            box-shadow: 0 0 0 0.2rem rgba(243, 107, 10, 0.14);
         }
 
         .filter-btn,
@@ -209,16 +215,16 @@
         }
 
         .filter-btn {
-            background: linear-gradient(135deg, #c5955b 0%, #b8860b 100%);
-            color: #1c325c;
+            background: var(--etp-gradient-orange, linear-gradient(135deg, #F36B0A 0%, #FF8A3D 100%));
+            color: #ffffff;
             border: none;
-            box-shadow: 0 10px 24px rgba(197, 149, 91, 0.22);
+            box-shadow: 0 10px 24px rgba(243, 107, 10, 0.22);
         }
 
         .reset-btn {
-            border: 1px solid rgba(26, 54, 93, 0.14);
+            border: 1px solid rgba(43, 43, 43, 0.14);
             background: #fff;
-            color: #1c325c;
+            color: #2b2b2b;
         }
 
         .results-head {
@@ -233,13 +239,13 @@
         .results-head h3 {
             margin: 0;
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #2b2b2b;
             font-size: clamp(1.7rem, 4vw, 2.4rem);
         }
 
         .results-head p {
             margin: 0;
-            color: #5b6776;
+            color: #5b5854;
         }
 
         .results-grid {
@@ -253,22 +259,22 @@
             overflow: hidden;
             border-radius: 26px;
             background: #fff;
-            border: 1px solid rgba(26, 54, 93, 0.08);
-            box-shadow: 0 16px 40px rgba(16, 33, 63, 0.08);
+            border: 1px solid rgba(43, 43, 43, 0.08);
+            box-shadow: 0 16px 40px rgba(28, 28, 28, 0.08);
             transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease;
         }
 
         .journey-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(197, 149, 91, 0.34);
-            box-shadow: 0 24px 52px rgba(16, 33, 63, 0.14);
+            border-color: rgba(243, 107, 10, 0.34);
+            box-shadow: 0 24px 52px rgba(28, 28, 28, 0.14);
         }
 
         .journey-image {
             position: relative;
             height: 255px;
             overflow: hidden;
-            background: #dbe6f2;
+            background: #efe9e2;
         }
 
         .journey-image img {
@@ -298,13 +304,13 @@
             top: 18px;
             left: 18px;
             color: #fff;
-            background: rgba(16, 33, 63, 0.82);
+            background: rgba(28, 28, 28, 0.82);
         }
 
         .journey-badge {
             top: 18px;
             right: 18px;
-            color: #1c325c;
+            color: #2b2b2b;
             background: rgba(255, 210, 125, 0.95);
         }
 
@@ -313,9 +319,9 @@
             right: 18px;
             bottom: 18px;
             text-align: center;
-            color: #1c325c;
+            color: #2b2b2b;
             background: rgba(255, 255, 255, 0.96);
-            box-shadow: 0 12px 28px rgba(16, 33, 63, 0.14);
+            box-shadow: 0 12px 28px rgba(28, 28, 28, 0.14);
         }
 
         .journey-body {
@@ -326,7 +332,7 @@
         }
 
         .journey-country {
-            color: #9b6a2c;
+            color: var(--etp-orange-500, #F36B0A);
             font-size: 0.88rem;
             font-weight: 700;
             letter-spacing: 0.02em;
@@ -341,12 +347,12 @@
         }
 
         .journey-title a {
-            color: #1c325c;
+            color: #2b2b2b;
             text-decoration: none;
         }
 
         .journey-title a:hover {
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
         }
 
         .journey-meta {
@@ -363,14 +369,14 @@
             padding: 8px 12px;
             border-radius: 999px;
             background: #f4f7fb;
-            color: #425466;
+            color: #3d3d3d;
             font-size: 0.88rem;
             font-weight: 600;
         }
 
         .journey-meta i,
         .journey-schedule i {
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
         }
 
         .journey-schedule {
@@ -380,14 +386,14 @@
             padding: 12px 14px;
             border-radius: 18px;
             background: #f8fbff;
-            color: #5b6776;
+            color: #5b5854;
             margin-bottom: 16px;
             font-size: 0.92rem;
             line-height: 1.7;
         }
 
         .journey-description {
-            color: #5b6776;
+            color: #5b5854;
             line-height: 1.8;
             margin-bottom: 18px;
         }
@@ -404,8 +410,8 @@
             align-items: center;
             padding: 7px 12px;
             border-radius: 999px;
-            background: #edf4fb;
-            color: #1c325c;
+            background: #ffd0a8;
+            color: #2b2b2b;
             font-size: 0.82rem;
             font-weight: 700;
         }
@@ -419,11 +425,11 @@
             gap: 8px;
             border-radius: 18px;
             padding: 14px 18px;
-            background: linear-gradient(135deg, #c5955b 0%, #b8860b 100%);
-            color: #1c325c;
+            background: var(--etp-gradient-orange, linear-gradient(135deg, #F36B0A 0%, #FF8A3D 100%));
+            color: #ffffff;
             text-decoration: none;
             font-weight: 700;
-            box-shadow: 0 10px 24px rgba(197, 149, 91, 0.22);
+            box-shadow: 0 10px 24px rgba(243, 107, 10, 0.22);
         }
 
         .journey-empty {
@@ -431,19 +437,19 @@
             background: #fff;
             border-radius: 28px;
             padding: 48px 28px;
-            border: 1px solid rgba(26, 54, 93, 0.08);
-            box-shadow: 0 16px 38px rgba(16, 33, 63, 0.08);
+            border: 1px solid rgba(43, 43, 43, 0.08);
+            box-shadow: 0 16px 38px rgba(28, 28, 28, 0.08);
         }
 
         .journey-empty h4 {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #2b2b2b;
             font-size: 2rem;
             margin-bottom: 12px;
         }
 
         .journey-empty p {
-            color: #5b6776;
+            color: #5b5854;
             margin: 0 auto;
             max-width: 620px;
             line-height: 1.85;
@@ -465,15 +471,15 @@
 
         html[data-theme='dark'] .listing-overview,
         html[data-theme='dark'] .listing-results {
-            background: linear-gradient(180deg, #0b1220 0%, #111827 100%) !important;
+            background: linear-gradient(180deg, #111111 0%, #111111 100%) !important;
         }
 
         html[data-theme='dark'] .overview-card,
         html[data-theme='dark'] .filters-card,
         html[data-theme='dark'] .journey-card,
         html[data-theme='dark'] .journey-empty {
-            background: #111827 !important;
-            border-color: rgba(148, 163, 184, 0.16) !important;
+            background: #111111 !important;
+            border-color: rgba(170, 163, 155, 0.16) !important;
             box-shadow: var(--shadow-medium) !important;
         }
 
@@ -496,13 +502,13 @@
         html[data-theme='dark'] .filters-card .form-control,
         html[data-theme='dark'] .filters-card .form-select,
         html[data-theme='dark'] .reset-btn {
-            background: #0f172a !important;
+            background: #111111 !important;
             color: var(--charcoal-deep) !important;
-            border-color: rgba(148, 163, 184, 0.2) !important;
+            border-color: rgba(170, 163, 155, 0.2) !important;
         }
 
         html[data-theme='dark'] .filters-card .form-control::placeholder {
-            color: #94a3b8 !important;
+            color: #aaa39b !important;
         }
 
         html[data-theme='dark'] .reset-btn {
@@ -510,12 +516,12 @@
         }
 
         html[data-theme='dark'] .reset-btn:hover {
-            background: #172033 !important;
+            background: #1c1c1c !important;
             color: var(--charcoal-deep) !important;
         }
 
         html[data-theme='dark'] .journey-image {
-            background: #0f172a !important;
+            background: #111111 !important;
         }
 
         html[data-theme='dark'] .journey-title a:hover {
@@ -525,37 +531,37 @@
         html[data-theme='dark'] .journey-meta span,
         html[data-theme='dark'] .journey-schedule,
         html[data-theme='dark'] .journey-highlights span {
-            background: #172033 !important;
+            background: #1c1c1c !important;
             color: var(--warm-gray) !important;
-            border-color: rgba(148, 163, 184, 0.14) !important;
+            border-color: rgba(170, 163, 155, 0.14) !important;
         }
 
         html[data-theme='dark'] .journey-country {
-            color: #f4c36a !important;
+            color: var(--etp-orange-400, #FB923C) !important;
         }
 
         html[data-theme='dark'] .journey-price {
-            background: rgba(15, 23, 42, 0.94) !important;
+            background: rgba(17, 17, 17, 0.94) !important;
             color: var(--charcoal-deep) !important;
             box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28) !important;
         }
 
         html[data-theme='dark'] .journey-type {
-            background: rgba(15, 23, 42, 0.88) !important;
+            background: rgba(17, 17, 17, 0.88) !important;
         }
 
         html[data-theme='dark'] .listing-pagination .page-link {
-            background: #111827 !important;
+            background: #111111 !important;
             color: var(--charcoal-deep) !important;
-            border-color: rgba(148, 163, 184, 0.18) !important;
+            border-color: rgba(170, 163, 155, 0.18) !important;
         }
 
         html[data-theme='dark'] .listing-pagination .page-item.active .page-link {
-            color: #0f172a !important;
+            color: #111111 !important;
         }
 
         html[data-theme='dark'] .listing-pagination .page-link:hover {
-            background: #172033 !important;
+            background: #1c1c1c !important;
             color: var(--charcoal-deep) !important;
         }
 

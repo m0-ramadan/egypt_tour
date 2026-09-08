@@ -65,8 +65,8 @@ class PageController extends BaseWebsiteController
                     default => null,
                 };
             })
-            ->when($request->sort === 'price', fn ($query) => $query->orderBy('start_from_price'))
-            ->when($request->sort === 'duration', fn ($query) => $query->orderBy('duration_days'))
+            ->when($request->sort === 'price', fn($query) => $query->orderBy('start_from_price'))
+            ->when($request->sort === 'duration', fn($query) => $query->orderBy('duration_days'))
             ->when(!in_array($request->sort, ['price', 'duration'], true), function ($query) {
                 $query->orderByDesc('is_featured')
                     ->orderByRaw('sort_order IS NULL, sort_order ASC')
@@ -76,7 +76,7 @@ class PageController extends BaseWebsiteController
             ->paginate(12)
             ->withQueryString();
 
-        $packages->getCollection()->transform(fn (Package $package) => $this->mapMultiCountryCard($package));
+        $packages->getCollection()->transform(fn(Package $package) => $this->mapMultiCountryCard($package));
 
         $heroImage = $this->resolveMultiCountryHeroImage(
             $featuredCategory?->image,
@@ -173,7 +173,7 @@ class PageController extends BaseWebsiteController
     private function renderStaticPage(Page $page): View
     {
         $pageTitle = $page->display_title ?: Str::headline(str_replace('-', ' ', $page->slug));
-        $seoTitle = $page->display_seo_title ?: $pageTitle . ' - Etro Tours';
+        $seoTitle = $page->display_seo_title ?: $pageTitle . ' - Egypt Tour Pro';
         $pageBody = $page->display_body;
         $pageExcerpt = $page->display_seo_description ?: $this->plainText($pageBody, 200);
         $heroImage = $this->imageUrl($page->featured_image, 'website/photos/home2.webp');

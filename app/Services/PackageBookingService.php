@@ -33,7 +33,7 @@ class PackageBookingService
 
     public function hasBookablePrice(Package $package): bool
     {
-        return $this->pricingOptions($package)->isNotEmpty();
+        return $package->package_type !== 'nile_cruise' && $this->pricingOptions($package)->isNotEmpty();
     }
 
     public function pricingOptions(Package $package, CarbonInterface|string|null $travelDate = null): Collection
@@ -259,7 +259,26 @@ class PackageBookingService
         int $children,
         int $infants,
         int $rooms,
+        array $roomsData = [],
+        ?string $accommodation = null,
     ): array {
+        $this->validateOperatingDay($package, $travelDate);
+
+        if (
+            \Illuminate\Support\Str::startsWith($optionId, 'travel_package')
+            || ($package->package_type === 'travel_package' && ! empty($roomsData) && ($accommodation || $package->tourPackageAccommodations->isNotEmpty()))
+        ) {
+            $accId = $accommodation;
+            if (! $accId && \Illuminate\Support\Str::startsWith($optionId, 'travel_package:')) {
+                $parts = explode(':', $optionId);
+                $accId = $parts[1] ?? null;
+            }
+            if (! $accId && $package->tourPackageAccommodations->isNotEmpty()) {
+                $accId = $package->tourPackageAccommodations->first()->id;
+            }
+            return $this->quoteTravelPackage($package, $accId, $travelDate, $roomsData);
+        }
+
         $option = $this->pricingOptions($package, $travelDate)->firstWhere('id', $optionId);
 
         if (! $option) {
@@ -335,6 +354,40 @@ class PackageBookingService
             'quantity' => $option['price_unit'] === 'per_room' ? $rooms : max(1, $payingTravellers),
             'total' => round($total, 2),
         ];
+    }
+
+    /**
+     * Day tours may only be booked on the weekdays selected in the package
+     * editor. Empty schedules and legacy "daily" values mean every day.
+     */
+    public function validateOperatingDay(Package $package, CarbonInterface|string $travelDate): void
+    {
+        if ($package->package_type !== 'day_tour') {
+            return;
+        }
+
+        $operatingDays = collect((array) $package->operating_days)
+            ->map(fn ($day) => strtolower(trim((string) $day)))
+            ->filter()
+            ->values();
+
+        if (
+            $operatingDays->isEmpty()
+            || $operatingDays->contains(fn ($day) => in_array($day, ['daily', 'everyday', 'every day', 'all'], true))
+        ) {
+            return;
+        }
+
+        $selectedDay = strtolower(Carbon::parse($travelDate)->englishDayOfWeek);
+        $isAvailable = $operatingDays->contains(function ($day) use ($selectedDay) {
+            return $day === $selectedDay || substr($day, 0, 3) === substr($selectedDay, 0, 3);
+        });
+
+        if (! $isAvailable) {
+            throw ValidationException::withMessages([
+                'travel_date' => __('This tour is not available on the selected date. Please choose an operating day.'),
+            ]);
+        }
     }
 
     public function paymentMethods(Package $package): Collection
@@ -479,5 +532,265 @@ class PackageBookingService
         }
 
         return trim((string) ($value ?? ''));
+    }
+
+    public function getTravelPackageMatrix(Package $package): array
+    {
+        $matrix = [];
+        $accommodations = [];
+
+        foreach ($package->tourPackageAccommodations->where('is_active', true) as $acc) {
+            $accData = [
+                'id' => $acc->id,
+                'name' => $acc->name,
+                'description' => $acc->description,
+                'seasons' => [],
+            ];
+
+            $matrix[$acc->name] = [];
+            $matrix[$acc->id] = [];
+
+            foreach ($acc->seasons->where('is_active', true) as $season) {
+                $seasonName = $season->display_season_name;
+                $rates = [
+                    'single' => 0.0,
+                    'double' => 0.0,
+                    'triple' => 0.0,
+                ];
+
+                foreach ($season->items->where('is_active', true) as $item) {
+                    $occ = strtolower((string) $item->occupancy_type);
+                    if (array_key_exists($occ, $rates)) {
+                        $rates[$occ] = (float) $item->price;
+                    }
+                }
+
+                $seasonKey = \Illuminate\Support\Str::contains(\Illuminate\Support\Str::lower($seasonName), ['may', 'summer']) ? 'summer' : 'winter';
+
+                $accData['seasons'][] = [
+                    'id' => $season->id,
+                    'name' => $seasonName,
+                    'key' => $seasonKey,
+                    'date_from' => $season->date_from?->toDateString(),
+                    'date_to' => $season->date_to?->toDateString(),
+                    'rates' => $rates,
+                ];
+
+                $matrix[$acc->name][$seasonKey] = $rates;
+                $matrix[$acc->id][$seasonKey] = $rates;
+                $matrix[$acc->name][\Illuminate\Support\Str::slug($seasonName)] = $rates;
+                $matrix[$acc->id][\Illuminate\Support\Str::slug($seasonName)] = $rates;
+            }
+
+            $accommodations[] = $accData;
+        }
+
+        // Fallback for packages that do not have explicit tourPackageAccommodations configured yet
+        if (empty($accommodations)) {
+            $base = (float) ($package->adult_price > 0 ? $package->adult_price : 150);
+            $tiers = [
+                'Standard' => ['mult' => 1.0, 'desc' => 'Standard 4-star hotels'],
+                'Deluxe' => ['mult' => 1.3, 'desc' => '5-star luxury hotels'],
+                'Luxury' => ['mult' => 1.7, 'desc' => '5-star ultra luxury & boutique hotels'],
+            ];
+
+            foreach ($tiers as $tierName => $tierInfo) {
+                $tBase = round($base * $tierInfo['mult'], 2);
+                $summerRates = [
+                    'single' => round($tBase * 1.4, 2),
+                    'double' => round($tBase, 2),
+                    'triple' => round($tBase * 0.85, 2),
+                ];
+                $winterRates = [
+                    'single' => round($tBase * 1.5, 2),
+                    'double' => round($tBase * 1.15, 2),
+                    'triple' => round($tBase * 0.95, 2),
+                ];
+
+                $matrix[$tierName] = [
+                    'summer' => $summerRates,
+                    'winter' => $winterRates,
+                ];
+
+                $accommodations[] = [
+                    'id' => \Illuminate\Support\Str::slug($tierName),
+                    'name' => $tierName,
+                    'description' => $tierInfo['desc'],
+                    'seasons' => [
+                        [
+                            'id' => 'summer_' . $tierName,
+                            'name' => 'May to August',
+                            'key' => 'summer',
+                            'rates' => $summerRates,
+                        ],
+                        [
+                            'id' => 'winter_' . $tierName,
+                            'name' => 'September to April',
+                            'key' => 'winter',
+                            'rates' => $winterRates,
+                        ],
+                    ],
+                ];
+            }
+        }
+
+        return [
+            'accommodations' => $accommodations,
+            'matrix' => $matrix,
+        ];
+    }
+
+    public function calculateRoomPrice(array $rates, int $adults, int $children): float
+    {
+        $single = (float) ($rates['single'] ?? 0);
+        $double = (float) ($rates['double'] ?? 0);
+        $triple = (float) ($rates['triple'] ?? 0);
+
+        if ($adults === 1 && $children === 0) {
+            return $single;
+        }
+
+        if ($adults === 1 && ($children === 1 || $children === 2)) {
+            return $double * 2;
+        }
+
+        if ($adults === 2) {
+            $base = $double * 2;
+            $childRate = $double * 0.50;
+            return $base + ($children * $childRate);
+        }
+
+        if ($adults === 3) {
+            return $triple * 3;
+        }
+
+        if ($triple > 0) {
+            return ($triple * $adults) + ($children * $triple * 0.50);
+        }
+
+        return ($double * $adults) + ($children * $double * 0.50);
+    }
+
+    public function quoteTravelPackage(
+        Package $package,
+        string|int|null $accommodationIdentifier,
+        CarbonInterface|string $travelDate,
+        array $roomsData
+    ): array {
+        $matrixData = $this->getTravelPackageMatrix($package);
+        $accommodations = $matrixData['accommodations'] ?? [];
+        $matrix = $matrixData['matrix'] ?? [];
+
+        if (empty($accommodations) || empty($matrix)) {
+            throw ValidationException::withMessages([
+                'accommodation' => __('Please select an accommodation type.'),
+            ]);
+        }
+
+        $defaultAcc = $accommodations[0];
+        $selectedAcc = collect($accommodations)->first(function ($item) use ($accommodationIdentifier) {
+            if (! $accommodationIdentifier) {
+                return false;
+            }
+            return (string) ($item['id'] ?? '') === (string) $accommodationIdentifier
+                || strcasecmp(trim($item['name'] ?? ''), trim((string) $accommodationIdentifier)) === 0;
+        }) ?: $defaultAcc;
+
+        $date = \Illuminate\Support\Carbon::parse($travelDate);
+        $month = (int) $date->format('n');
+        $targetSeasonKey = ($month >= 5 && $month <= 8) ? 'summer' : 'winter';
+        $seasonName = $targetSeasonKey === 'summer' ? 'May to August' : 'September to April';
+
+        $defaultAccName = $selectedAcc['name'] ?? 'Standard';
+        $roomBreakdown = [];
+        $total = 0.0;
+        $totalAdults = 0;
+        $totalChildren = 0;
+        $accNamesInBooking = [];
+        $lastRates = ['single' => 0.0, 'double' => 0.0, 'triple' => 0.0];
+
+        if (empty($roomsData)) {
+            $roomsData = [['accommodation' => $defaultAccName, 'adults' => 2, 'children' => 0]];
+        }
+
+        foreach ($roomsData as $index => $room) {
+            $roomAccName = $room['accommodation'] ?? $defaultAccName;
+            $rates = $matrix[$roomAccName][$targetSeasonKey]
+                ?? $matrix[$defaultAccName][$targetSeasonKey]
+                ?? reset($matrix)[$targetSeasonKey]
+                ?? ['single' => 0.0, 'double' => 0.0, 'triple' => 0.0];
+
+            $lastRates = $rates;
+            $maxGuestsPerRoom = ((float) ($rates['triple'] ?? 0) > 0) ? 3 : 2;
+
+            $adults = max(1, (int) ($room['adults'] ?? 1));
+            $children = max(0, (int) ($room['children'] ?? 0));
+
+            if (($adults + $children) > $maxGuestsPerRoom) {
+                throw ValidationException::withMessages([
+                    'rooms' => __('Room :room exceeds maximum capacity of :max guests.', [
+                        'room' => $index + 1,
+                        'max' => $maxGuestsPerRoom,
+                    ]),
+                ]);
+            }
+
+            $roomPrice = $this->calculateRoomPrice($rates, $adults, $children);
+            $roomBreakdown[] = [
+                'room_number' => $index + 1,
+                'accommodation' => $roomAccName,
+                'adults' => $adults,
+                'children' => $children,
+                'price' => round($roomPrice, 2),
+            ];
+
+            $accNamesInBooking[] = $roomAccName;
+            $total += $roomPrice;
+            $totalAdults += $adults;
+            $totalChildren += $children;
+        }
+
+        $depositPercentage = (float) ($package->deposit_percentage ?: 50);
+        if ($depositPercentage <= 0 || $depositPercentage > 100) {
+            $depositPercentage = 50;
+        }
+        $depositAmount = round($total * ($depositPercentage / 100), 2);
+        $remainingBalance = round($total - $depositAmount, 2);
+
+        $currency = $package->currency;
+        $uniqueAccommodations = array_values(array_unique($accNamesInBooking));
+        $accLabel = implode(', ', $uniqueAccommodations);
+
+        return [
+            'id' => 'travel_package:' . ($selectedAcc['id'] ?? 'standard') . ':' . $targetSeasonKey,
+            'source' => 'tour_package',
+            'source_id' => $selectedAcc['id'] ?? null,
+            'season_id' => null,
+            'accommodation_id' => $selectedAcc['id'] ?? null,
+            'accommodation_name' => $accLabel,
+            'season_name' => $seasonName,
+            'label' => $accLabel . ' (' . $seasonName . ')',
+            'description' => collect([$accLabel, $seasonName])->filter()->implode(' · '),
+            'currency_code' => strtoupper((string) ($currency?->code ?: 'USD')),
+            'currency_symbol' => (string) ($currency?->symbol ?: '$'),
+            'rates' => $lastRates,
+            'rooms' => count($roomsData),
+            'room_breakdown' => $roomBreakdown,
+            'adults' => $totalAdults,
+            'children' => $totalChildren,
+            'infants' => 0,
+            'travellers' => $totalAdults + $totalChildren,
+            'occupancy_type' => 'room_based',
+            'cabin_id' => null,
+            'quantity' => count($roomsData),
+            'price_unit' => 'travel_package',
+            'amount' => round($total, 2),
+            'total' => round($total, 2),
+            'deposit_percentage' => $depositPercentage,
+            'deposit_amount' => $depositAmount,
+            'remaining_balance' => $remainingBalance,
+            'valid_from' => null,
+            'valid_to' => null,
+        ];
     }
 }

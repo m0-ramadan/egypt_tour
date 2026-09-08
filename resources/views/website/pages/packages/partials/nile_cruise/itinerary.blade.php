@@ -25,13 +25,13 @@
                     </div>
                     @if($duration->departure_day)
                         <div>
-                            <span class="nc-pill"><i class="la la-calendar-check me-1" style="color:var(--rich-gold,#c5955b)"></i> {{ __('Departure:') }} {{ $duration->departure_day }}</span>
+                            <span class="nc-pill"><i class="la la-calendar-check me-1" style="color:var(--rich-gold,#F36B0A)"></i> {{ __('Departure:') }} {{ $duration->departure_day }}</span>
                         </div>
                     @endif
                     @if($duration->start_from_price)
                         <div>
                             <small class="text-muted d-block text-end">{{ __('Starting From') }}</small>
-                            <strong style="color: var(--rich-gold, #c5955b); font-size: 1.25rem;">{{ $duration->currency?->symbol ?: ($package->currency?->symbol ?: '$') }}{{ number_format((float)$duration->start_from_price, 0) }}</strong>
+                            <strong style="color: var(--rich-gold, #F36B0A); font-size: 1.25rem;">{{ $duration->currency?->symbol ?: ($package->currency?->symbol ?: '$') }}{{ number_format((float)$duration->start_from_price, 0) }}</strong>
                         </div>
                     @endif
                 </div>
@@ -63,7 +63,7 @@
                                         @if($day->activities->isNotEmpty())
                                             <div class="activities-list mt-3">
                                                 <strong class="d-block mb-2 activity-header" style="font-size: 0.95rem;">
-                                                    <i class="la la-map-pin" style="color: var(--rich-gold, #c5955b);"></i> {{ __('Key Activities & Visits:') }}
+                                                    <i class="la la-map-pin" style="color: var(--rich-gold, #F36B0A);"></i> {{ __('Key Activities & Visits:') }}
                                                 </strong>
                                                 @foreach($day->activities as $activity)
                                                     @php $activityHeading = $activity->display_title ?: $activity->attraction?->display_name; @endphp
@@ -85,7 +85,7 @@
 
                                         @if($day->display_overnight)
                                             <p class="mt-3 mb-0 overnight-info">
-                                                <strong><i class="la la-moon" style="color: var(--rich-gold, #c5955b);"></i> {{ __('Overnight:') }}</strong> {{ $day->display_overnight }}
+                                                <strong><i class="la la-moon" style="color: var(--rich-gold, #F36B0A);"></i> {{ __('Overnight:') }}</strong> {{ $day->display_overnight }}
                                             </p>
                                         @endif
 

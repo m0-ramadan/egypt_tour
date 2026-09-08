@@ -49,7 +49,7 @@ class WebsiteSitemapTest extends TestCase
 
         Page::query()->create([
             'slug' => 'about-etrotours',
-            'title' => ['en' => 'About Etro Tours'],
+            'title' => ['en' => 'About Egypt Tour Pro'],
             'body' => ['en' => '<p>About us</p>'],
             'is_active' => true,
             'published_at' => now()->subDay(),

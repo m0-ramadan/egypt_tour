@@ -25,7 +25,7 @@
                 <div class="col-md-6">
                     <div class="included-box h-100">
                         <h4 class="box-title">
-                            <i class="la la-map-pin me-2" style="color: var(--rich-gold, #c5955b);"></i>{{ __('Pickup & Drop-off') }}
+                            <i class="la la-map-pin me-2" style="color: var(--rich-gold, #F36B0A);"></i>{{ __('Pickup & Drop-off') }}
                         </h4>
                         <div class="about-content">
                             @if($ncDetail?->pickup_notes)<div>{{ $ncDetail->pickup_notes }}</div>@endif
@@ -40,7 +40,7 @@
                 <div class="col-md-6">
                     <div class="included-box h-100">
                         <h4 class="box-title">
-                            <i class="la la-file-alt me-2" style="color: var(--rich-gold, #c5955b);"></i>{{ __('Booking & Deposit') }}
+                            <i class="la la-file-alt me-2" style="color: var(--rich-gold, #F36B0A);"></i>{{ __('Booking & Deposit') }}
                         </h4>
                         <div class="about-content">
                             @if($ncDepositPolicy === 'not_required')
@@ -60,7 +60,7 @@
                 <div class="col-md-6">
                     <div class="included-box h-100">
                         <h4 class="box-title">
-                            <i class="la la-child me-2" style="color: var(--rich-gold, #c5955b);"></i>{{ __('Children Policy') }}
+                            <i class="la la-child me-2" style="color: var(--rich-gold, #F36B0A);"></i>{{ __('Children Policy') }}
                         </h4>
                         <div class="about-content">{!! $childrenPolicy !!}</div>
                     </div>
@@ -71,7 +71,7 @@
                 <div class="col-md-6">
                     <div class="included-box h-100">
                         <h4 class="box-title">
-                            <i class="la la-info-circle me-2" style="color: var(--rich-gold, #c5955b);"></i>{{ __('Cancellation Policy') }}
+                            <i class="la la-info-circle me-2" style="color: var(--rich-gold, #F36B0A);"></i>{{ __('Cancellation Policy') }}
                         </h4>
                         <div class="about-content">{!! $cancellationPolicy !!}</div>
                     </div>
@@ -82,7 +82,7 @@
                 <div class="col-12">
                     <div class="included-box">
                         <h4 class="box-title">
-                            <i class="la la-file-alt me-2" style="color: var(--rich-gold, #c5955b);"></i>{{ __('Terms & Conditions') }}
+                            <i class="la la-file-alt me-2" style="color: var(--rich-gold, #F36B0A);"></i>{{ __('Terms & Conditions') }}
                         </h4>
                         <div class="about-content">{!! $termsConditions !!}</div>
                     </div>

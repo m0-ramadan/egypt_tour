@@ -1,12 +1,14 @@
 @extends('website.layouts.master')
 
 @php
-    $heroImage = isset($category) && $category->banner_url 
-        ? $category->banner_url 
-        : ($type->banner_url ?: asset('website/images/nile-cruises/luxor-aswan.jpg'));
+    $heroImage =
+        isset($category) && $category->banner_url
+            ? $category->banner_url
+            : ($type->banner_url ?:
+            asset('website/images/nile-cruises/luxor-aswan.jpg'));
 @endphp
 
-@section('title', $pageContent['title'] . ' - Etro Tours')
+@section('title', $pageContent['title'] . ' - Egypt Tour Pro')
 @section('description', $pageContent['subtitle'])
 @section('keywords', $pageContent['title'] . ', Egypt Nile Cruise, Nile River Tours')
 @section('image', $heroImage)
@@ -22,7 +24,7 @@
             margin-top: -85px;
             padding: 140px 0 75px;
             color: #fff;
-            background: linear-gradient(rgba(16, 33, 63, 0.78), rgba(22, 60, 103, 0.68)),
+            background: linear-gradient(rgba(28, 28, 28, 0.78), rgba(43, 43, 43, 0.68)),
                 url('{{ $heroImage }}') center/cover no-repeat;
             overflow: hidden;
         }
@@ -50,7 +52,7 @@
             backdrop-filter: blur(12px);
             font-weight: 600;
             margin-bottom: 18px;
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
         }
 
         .nile-title {
@@ -89,29 +91,30 @@
             flex-grow: 1;
             border-radius: 999px;
             font-size: 0.95rem;
-            color: #10213f;
+            color: #1c1c1c;
         }
 
         .search-box button {
             border: none;
-            background: #163c67;
+            background: var(--etp-gradient-orange, linear-gradient(135deg, #F36B0A 0%, #FF8A3D 100%));
             color: #fff;
             padding: 10px 24px;
             border-radius: 999px;
             font-weight: 600;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .search-box button:hover {
-            background: #10213f;
+            background: linear-gradient(135deg, #FF8A3D 0%, #F36B0A 100%);
         }
 
         .breadcrumb-item a {
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
         }
+
         .breadcrumb-item.active {
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
         }
     </style>
 @endsection
@@ -123,9 +126,11 @@
             <nav aria-label="breadcrumb" class="d-flex justify-content-center mb-3">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('website.home') }}">{{ __('Home') }}</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('website.nile_cruises.index') }}">{{ __('Egypt Nile Cruise') }}</a></li>
+                    <li class="breadcrumb-item"><a
+                            href="{{ route('website.nile_cruises.index') }}">{{ __('Egypt Nile Cruise') }}</a></li>
                     @if (isset($category))
-                        <li class="breadcrumb-item"><a href="{{ route('website.nile_cruises.luxor_aswan') }}">{{ $type->display_name }}</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{{ route('website.nile_cruises.luxor_aswan') }}">{{ $type->display_name }}</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ $category->display_name }}</li>
                     @else
                         <li class="breadcrumb-item active" aria-current="page">{{ $type->display_name }}</li>
@@ -141,7 +146,8 @@
 
             <div class="search-box-wrapper">
                 <form action="{{ url()->current() }}" method="GET" class="search-box">
-                    <input type="text" name="q" value="{{ $search }}" placeholder="{{ __('Search Nile cruise packages...') }}">
+                    <input type="text" name="q" value="{{ $search }}"
+                        placeholder="{{ __('Search Nile cruise packages...') }}">
                     <button type="submit">
                         <i class="la la-search"></i> {{ __('Search') }}
                     </button>
@@ -159,7 +165,8 @@
                         {{ $pageContent['overview_title'] }}
                     </h2>
                     <p class="text-muted mb-0">
-                        {{ __('Showing') }} <strong>{{ $packages->count() }}</strong> {{ __('of') }} <strong>{{ $stats['count'] }}</strong> {{ __('available Nile cruise packages') }}
+                        {{ __('Showing') }} <strong>{{ $packages->count() }}</strong> {{ __('of') }}
+                        <strong>{{ $stats['count'] }}</strong> {{ __('available Nile cruise packages') }}
                     </p>
                 </div>
 
@@ -191,7 +198,8 @@
                                     @endif
 
                                     <a href="{{ $pkg['url'] }}">
-                                        <img src="{{ $pkg['image'] }}" alt="{{ $pkg['title'] }}" width="800" height="500" loading="lazy" decoding="async">
+                                        <img src="{{ $pkg['image'] }}" alt="{{ $pkg['title'] }}" width="800"
+                                            height="500" loading="lazy" decoding="async">
                                     </a>
                                 </div>
 

@@ -52,6 +52,10 @@ class ImportTourFromUrl extends Command
             $this->line('Source downloaded.');
             $this->line('Page parsed.');
             $this->line("Tour type: " . ($stats['tour_type'] ?? 'travel_package'));
+            if ($package->package_type === 'nile_cruise') {
+                $this->line('Nile Cruise Type: ' . ($package->nileCruiseType?->display_name ?? 'Unassigned'));
+                $this->line('Nile Cruise Category: ' . ($package->nileCruiseCategory?->display_name ?? 'Unassigned / not applicable'));
+            }
             $this->line("Cities: " . ($stats['cities'] ?? ''));
             $this->line("Pricing levels: " . ($stats['pricing_levels_count'] ?? 0));
             $this->line("Images discovered: " . ($stats['images_discovered_count'] ?? 0));

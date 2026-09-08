@@ -187,7 +187,7 @@ class TripController extends BaseWebsiteController
                             'description' => trim((string) ($activity['description'] ?? '')),
                         ];
                     })
-                    ->filter(fn ($activity) => $activity && collect($activity)->filter()->isNotEmpty())
+                    ->filter(fn($activity) => $activity && collect($activity)->filter()->isNotEmpty())
                     ->values();
                 return $item;
             })
@@ -310,55 +310,31 @@ class TripController extends BaseWebsiteController
                 };
             })->filter()->unique()->values();
         $whatToBring = collect($package->what_to_bring ?: ($legacyNileDetail?->what_to_bring ?? []))
-            ->map(fn ($value) => trim((string) $value))->filter()->unique()->values();
+            ->map(fn($value) => trim((string) $value))->filter()->unique()->values();
         $operatingDays = collect($package->operating_days ?: ($legacyNileDetail?->operating_days ?? []))
-            ->map(fn ($value) => trim((string) $value))->filter()->unique()->values();
+            ->map(fn($value) => trim((string) $value))->filter()->unique()->values();
         $departureTimes = $package->package_type === 'day_tour'
-            ? collect($package->departure_times ?? [])->map(fn ($value) => trim((string) $value))->filter()->values()
+            ? collect($package->departure_times ?? [])->map(fn($value) => trim((string) $value))->filter()->values()
             : collect();
         $promotionalVideos = collect($package->promotional_videos ?: ($legacyNileDetail?->promotional_videos ?? []))
-            ->map(fn ($value) => trim((string) $value))->filter()->unique()->values();
+            ->map(fn($value) => trim((string) $value))->filter()->unique()->values();
         $addons = $package->addons->where('is_active', true)->values();
         if ($addons->isEmpty() && $package->package_type === 'nile_cruise' && method_exists($package, 'nileCruiseAddons')) {
             $addons = $package->nileCruiseAddons->where('is_active', true)->values();
         }
         $tourPackageDetail = $package->package_type === 'travel_package' ? $package->tourPackageDetail : null;
-        $packageCities = $package->cities->sortBy(fn ($city) => $city->pivot?->stop_order ?? 999)->values();
+        $packageCities = $package->cities->sortBy(fn($city) => $city->pivot?->stop_order ?? 999)->values();
         $brochureUrl = $package->brochure_path ? asset('storage/' . ltrim((string) $package->brochure_path, '/')) : null;
         $sharedTimezone = trim((string) ($package->tour_timezone ?: ($legacyNileDetail?->timezone ?? '')));
         $sharedDepositPolicy = trim((string) ($package->deposit_policy ?: ($legacyNileDetail?->deposit_policy ?? '')));
         $bookingService = app(\App\Services\PackageBookingService::class);
         $bookingPricingOptions = $bookingService->pricingOptions($package);
-        $hasBookablePrice = $bookingPricingOptions->isNotEmpty();
+        $hasBookablePrice = $package->package_type !== 'nile_cruise' && $bookingPricingOptions->isNotEmpty();
+        $travelPackageMatrix = $package->package_type === 'travel_package'
+            ? $bookingService->getTravelPackageMatrix($package)
+            : null;
 
-        $countries = Country::query()
-            ->orderBy('id')
-            ->get()
-            ->map(fn($country) => $country->display_name)
-            ->filter()
-            ->values();
-
-        if ($countries->isEmpty()) {
-            $countries = collect([
-                'Egypt',
-                'United States',
-                'United Kingdom',
-                'Canada',
-                'Australia',
-                'Germany',
-                'France',
-                'Italy',
-                'Spain',
-                'Japan',
-                'China',
-                'India',
-                'Saudi Arabia',
-                'United Arab Emirates',
-                'Morocco',
-                'Jordan',
-                'Turkey',
-            ]);
-        }
+        $countries = \App\Support\CountryList::all();
 
         $relatedPackages = Package::query()
             ->with(['currency'])
@@ -427,7 +403,8 @@ class TripController extends BaseWebsiteController
             'itineraryUnit',
             'isDayTour',
             'hasBookablePrice',
-            'bookingPricingOptions'
+            'bookingPricingOptions',
+            'travelPackageMatrix'
         ));
     }
 

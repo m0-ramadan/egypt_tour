@@ -3,10 +3,12 @@
     font-style: normal;
     font-weight: 300 700;
     font-display: swap;
-    src: url("/website/fonts/website/inter-latin-variable.woff2") format("woff2");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
-        U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
-        U+2215, U+FEFF, U+FFFD;
+    src: url("/website/fonts/website/inter-latin-variable.woff2")
+        format("woff2");
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+        U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+        U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* Above-the-fold Bootstrap primitives used while the full cached stylesheet is loading. */
@@ -100,10 +102,12 @@ body {
     font-style: normal;
     font-weight: 400 700;
     font-display: swap;
-    src: url("/website/fonts/website/playfair-display-latin-variable.woff2") format("woff2");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
-        U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
-        U+2215, U+FEFF, U+FFFD;
+    src: url("/website/fonts/website/playfair-display-latin-variable.woff2")
+        format("woff2");
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+        U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+        U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -111,8 +115,10 @@ body {
     font-style: normal;
     font-weight: 300 800;
     font-display: swap;
-    src: url("/website/fonts/website/cairo-arabic-variable.woff2") format("woff2");
-    unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1,
+    src: url("/website/fonts/website/cairo-arabic-variable.woff2")
+        format("woff2");
+    unicode-range:
+        U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1,
         U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF,
         U+FE70-FE74, U+FE76-FEFC;
 }
@@ -123,7 +129,7 @@ body {
     inset-inline-start: 1rem;
     z-index: 100000;
     padding: 0.75rem 1rem;
-    color: #082f49;
+    color: #1c1c1c;
     background: #fff;
     border: 2px solid #d6a354;
     border-radius: 0 0 0.5rem 0.5rem;
@@ -132,7 +138,7 @@ body {
 }
 
 .skip-to-content:focus {
-    color: #082f49;
+    color: #1c1c1c;
     transform: translateY(0);
 }
 
@@ -161,7 +167,7 @@ body {
 }
 
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
-    outline: 3px solid #f4c36a;
+    outline: 3px solid var(--etp-orange-500, #f36b0a);
     outline-offset: 3px;
 }
 

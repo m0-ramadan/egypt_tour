@@ -168,6 +168,43 @@ class PackageTypesCreationCycleTest extends TestCase
         $this->assertEquals('Cairo', $day1->overnight_location);
         $this->assertEquals('5-star hotel in Cairo', $day1->accommodation);
         $this->assertTrue((bool)$day1->meals_dinner);
+        $this->assertNull($package->destination_id);
+    }
+
+    public function test_travel_package_does_not_require_or_persist_destination_id(): void
+    {
+        $response = $this->actingAs($this->admin, 'admin')->post(route('admin.packages.store'), array_merge($this->defaultAgeRules(), [
+            'title' => 'Egypt Classic Tour Package',
+            'package_type' => 'travel_package',
+            'category_id' => $this->category->id,
+            'primary_country_id' => $this->country->id,
+            'currency_id' => $this->currency->id,
+            'tour_type' => 'group',
+            'duration_type' => 'days',
+            'duration_days' => 5,
+            'duration_nights' => 4,
+            'adult_price' => 900,
+            'tour_city_ids' => [$this->city->id],
+            'itinerary' => [
+                [
+                    'day_number' => 1,
+                    'title' => 'Arrival Day',
+                    'duration' => 'Day 1',
+                    'description' => 'Arrival and transfer.',
+                ]
+            ],
+        ]));
+
+        $response->assertSessionHasNoErrors();
+        $response->assertRedirect(route('admin.packages.index'));
+
+        $package = Package::where('slug', 'egypt-classic-tour-package')->firstOrFail();
+        $this->assertEquals('travel_package', $package->package_type);
+        $this->assertNull($package->destination_id);
+
+        $editResponse = $this->actingAs($this->admin, 'admin')->get(route('admin.packages.edit', $package->id));
+        $editResponse->assertOk();
+        $editResponse->assertSee('data-tour-type-section="day_tour,shore_excursion,custom"', false);
     }
 
     public function test_can_create_and_update_nile_cruise(): void
@@ -258,5 +295,80 @@ class PackageTypesCreationCycleTest extends TestCase
         $this->assertTrue($day2->meals_breakfast);
         $this->assertTrue($day2->meals_lunch);
         $this->assertTrue($day2->meals_dinner);
+    }
+    public function test_show_and_edit_render_saved_media_for_each_trip_type(): void
+    {
+        foreach (['day_tour', 'travel_package', 'nile_cruise'] as $type) {
+            $package = Package::create([
+                'title' => ['en' => 'Saved trip ' . $type],
+                'slug' => 'saved-trip-' . $type,
+                'package_type' => $type,
+                'category_id' => $this->category->id,
+                'primary_country_id' => $this->country->id,
+                'currency_id' => $this->currency->id,
+                'duration_type' => $type === 'day_tour' ? 'hours' : 'days',
+                'duration_hours' => $type === 'day_tour' ? 6 : null,
+                'featured_image' => 'website/images/day-tours/cairo-day-tours.jpg',
+                'gallery_images' => [
+                    ['path' => 'website/images/day-tours/luxor-day-tours.jpg'],
+                    ['url' => 'https://example.com/gallery.jpg'],
+                ],
+            ]);
+
+            foreach (['show', 'edit'] as $action) {
+                $response = $this->actingAs($this->admin, 'admin')
+                    ->get(route('admin.packages.' . $action, $package));
+                $response->assertOk()
+                    ->assertSee('Saved trip ' . $type)
+                    ->assertSee('website/images/day-tours/cairo-day-tours.jpg')
+                    ->assertSee('website/images/day-tours/luxor-day-tours.jpg')
+                    ->assertSee('https://example.com/gallery.jpg');
+                $response->assertViewHas('savedGalleryUrls', fn($urls) => count($urls) === 2);
+            }
+        }
+    }
+
+    public function test_admin_trip_pages_load_populated_season_prices_with_and_without_currency(): void
+    {
+        foreach ([$this->currency->id, null] as $currencyId) {
+            $package = Package::create([
+                'title' => ['en' => 'Season priced trip'],
+                'slug' => 'season-priced-trip-' . ($currencyId ?? 'no-currency'),
+                'package_type' => 'travel_package',
+                'category_id' => $this->category->id,
+                'primary_country_id' => $this->country->id,
+                'currency_id' => $this->currency->id,
+            ]);
+            $accommodation = $package->tourPackageAccommodations()->create([
+                'name' => 'Deluxe accommodation',
+                'is_active' => true,
+            ]);
+            $season = $accommodation->seasons()->create([
+                'package_id' => $package->id,
+                'name' => ['en' => 'Summer'],
+                'currency_id' => $currencyId,
+                'is_active' => true,
+            ]);
+            $price = $season->items()->create([
+                'occupancy_type' => 'double',
+                'label' => ['en' => 'Double room'],
+                'price' => 175,
+                'price_unit' => 'per_person',
+                'is_active' => true,
+            ]);
+
+            foreach (['show', 'edit'] as $action) {
+                $response = $this->actingAs($this->admin, 'admin')
+                    ->get(route('admin.packages.' . $action, $package));
+                $response->assertOk()->assertSee('Season priced trip');
+                $response->assertViewHas('package', function ($loadedPackage) use ($price, $currencyId) {
+                    $loadedSeason = $loadedPackage->tourPackageAccommodations->first()->seasons->first();
+                    return $loadedSeason->relationLoaded('currency')
+                        && $loadedSeason->currency?->id === $currencyId
+                        && $loadedSeason->relationLoaded('items')
+                        && $loadedSeason->items->first()->id === $price->id;
+                });
+            }
+        }
     }
 }

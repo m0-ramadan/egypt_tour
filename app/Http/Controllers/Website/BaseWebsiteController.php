@@ -252,6 +252,7 @@ abstract class BaseWebsiteController extends Controller
             'route_text' => $package->route_text ?: $this->translated($package->getRawOriginal('destinations_text') ?? null),
             'is_ultra_luxury' => (bool) $package->is_ultra_luxury,
             'is_best_seller' => (bool) $package->is_best_seller,
+            'is_featured' => (bool) $package->is_featured,
             'url' => $this->packageRoute($package),
             'tags' => $highlights,
         ];

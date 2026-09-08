@@ -27,8 +27,8 @@ class DestinationController extends BaseWebsiteController
         $destinations = City::query()
             ->with('country')
             ->withCount([
-                'attractions' => fn ($query) => $query->where('is_active', true),
-                'packages' => fn ($query) => $query->where('packages.is_active', true),
+                'attractions' => fn($query) => $query->where('is_active', true),
+                'packages' => fn($query) => $query->where('packages.is_active', true),
             ])
             ->where('is_active', true)
             ->when($selectedCountry, function ($query) use ($selectedCountry) {
@@ -42,7 +42,7 @@ class DestinationController extends BaseWebsiteController
         $highlightCity = City::query()
             ->with('country')
             ->where('is_active', true)
-            ->when($selectedCountry, fn ($query) => $query->where('country_id', $selectedCountry->id))
+            ->when($selectedCountry, fn($query) => $query->where('country_id', $selectedCountry->id))
             ->orderByDesc('is_featured')
             ->orderBy('sort_order')
             ->first();
@@ -112,7 +112,7 @@ class DestinationController extends BaseWebsiteController
     public function show(Request $request, string $slug): View
     {
         $destination = City::query()
-            ->with(['country', 'attractions' => fn ($query) => $query->where('is_active', true)->orderBy('sort_order')])
+            ->with(['country', 'attractions' => fn($query) => $query->where('is_active', true)->orderBy('sort_order')])
             ->where('slug', $slug)
             ->where('is_active', true)
             ->firstOrFail();
@@ -155,7 +155,7 @@ class DestinationController extends BaseWebsiteController
             ->with(['currency', 'primaryCountry', 'highlights', 'tags', 'cruise', 'category'])
             ->where('is_active', true)
             ->where($matchesDestination)
-            ->when($selectedType, fn ($query) => $query->where('package_type', $selectedType))
+            ->when($selectedType, fn($query) => $query->where('package_type', $selectedType))
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('title', 'like', "%{$search}%")
@@ -174,7 +174,7 @@ class DestinationController extends BaseWebsiteController
             ->withQueryString();
 
         $packages->getCollection()->transform(
-            fn (Package $package) => $this->packageListingCard($package)
+            fn(Package $package) => $this->packageListingCard($package)
         );
 
         $heroImage = $this->imageUrl(
@@ -223,11 +223,13 @@ class DestinationController extends BaseWebsiteController
             })
             ->values();
 
-        $primaryDestinationTypes = [
-            'day_tour',
-            'nile_cruise',
-            'travel_package',
-        ];
+        $nileCruiseCities = ['luxor', 'aswan', 'nile-cruises'];
+        $nileCruiseCities = ['aswan', 'nile-cruises'];
+        $hasNileCruises = in_array($destination->slug, $nileCruiseCities, true);
+
+        $primaryDestinationTypes = $hasNileCruises
+            ? ['day_tour', 'nile_cruise', 'travel_package']
+            : ['day_tour', 'travel_package'];
 
         $availableTypes = (clone $statsQuery)
             ->select('package_type')
@@ -245,32 +247,57 @@ class DestinationController extends BaseWebsiteController
         $typeOptions = $availableTypes
             ->merge($primaryDestinationTypes)
             ->unique()
-            ->map(fn (string $type) => [
+            ->map(fn(string $type) => [
                 'value' => $type,
                 'label' => $this->typeLabel($type),
             ])
             ->values()
             ->all();
 
-        $typeImageMap = [
-            'day_tour' => 'website/photos/home2.webp',
-            'nile_cruise' => 'website/images/nile-cruises/luxor-aswan.jpg',
-            'travel_package' => 'website/photos/Dest/Egypt.jpg',
-        ];
+        $dayTourImage = file_exists(public_path("website/images/day-tours/{$destination->slug}-day-tours.jpg"))
+            ? "website/images/day-tours/{$destination->slug}-day-tours.jpg"
+            : 'website/images/day-tours/cairo-day-tours.jpg';
 
-        $typeCards = collect($primaryDestinationTypes)
-            ->map(fn (string $type) => [
-                'value' => $type,
-                'label' => $this->typeLabel($type),
-                'count' => (int) ($typeCounts[$type] ?? 0),
-                'image' => $typeImageMap[$type] ?? 'website/photos/home2.webp',
-                'url' => route('website.destinations.show', [
-                    'slug' => $destination->slug,
-                    'type' => $type,
-                ], false) . '#destination-journeys',
-                'active' => $selectedType === $type,
-            ])
-            ->values();
+        $typeCards = collect([
+            [
+                'value' => 'day_tour',
+                'label' => __('Day Tours'),
+                'badge' => __('Excursions & Day Trips'),
+                'count' => (int) ($typeCounts['day_tour'] ?? 0),
+                'image' => $dayTourImage,
+                'description' => __('Explore private day excursions, iconic sightseeing landmarks, and authentic experiences in :city and across Egypt.', ['city' => $destination->display_name]),
+                'btn_text' => __('Explore Day Tours'),
+                'url' => route('website.day_tours.index'),
+                'url' => route('website.tours.all', ['destination' => $destination->slug, 'type' => 'day_tour']),
+                'active' => false,
+            ],
+            [
+                'value' => 'nile_cruise',
+                'label' => __('Nile Cruises'),
+                'badge' => __('Luxury River Voyages'),
+                'count' => (int) ($typeCounts['nile_cruise'] ?? 0),
+                'image' => 'website/images/nile-cruises/luxor-aswan.jpg',
+                'description' => __('Sail along the timeless Nile between Luxor and Aswan aboard premier 5-star cruise ships and authentic Dahabiyas.'),
+                'btn_text' => __('Discover Nile Cruises'),
+                'url' => route('website.nile_cruises.index'),
+                'active' => false,
+            ],
+            [
+                'value' => 'travel_package',
+                'label' => __('Travel Packages'),
+                'badge' => __('Curated Vacations'),
+                'count' => (int) ($typeCounts['travel_package'] ?? 0),
+                'image' => 'website/images/travel-packages/7-days-egypt-vacation.jpg',
+                'description' => __('All-inclusive multi-day vacation packages combining :city, ancient pharaonic wonders, Nile cruises, and Red Sea tranquility.', ['city' => $destination->display_name]),
+                'btn_text' => __('Browse Travel Packages'),
+                'url' => route('website.travel_packages.index'),
+                'active' => false,
+            ],
+        ]);
+
+        if (!$hasNileCruises) {
+            $typeCards = $typeCards->reject(fn($card) => $card['value'] === 'nile_cruise')->values();
+        }
 
         $stats = [
             'count' => (clone $statsQuery)->count(),

@@ -176,31 +176,7 @@ class ContactController extends BaseWebsiteController
 
     private function countryOptions(): array
     {
-        $countries = Country::query()
-            ->where('is_active', true)
-            ->orderByRaw('sort_order IS NULL, sort_order ASC')
-            ->get()
-            ->map(fn(Country $country) => $country->display_name)
-            ->filter()
-            ->values();
-
-        if ($countries->isNotEmpty()) {
-            return $countries->all();
-        }
-
-        return [
-            __('Egypt'),
-            __('United States'),
-            __('United Kingdom'),
-            __('Canada'),
-            __('Australia'),
-            __('Germany'),
-            __('France'),
-            __('Italy'),
-            __('Spain'),
-            __('Saudi Arabia'),
-            __('United Arab Emirates'),
-        ];
+        return \App\Support\CountryList::all();
     }
 
     private function buildMessage(array $validated, Request $request): string

@@ -10,7 +10,7 @@
 
     $categorySlug = $article->category?->slug ?? 'general';
 
-    $authorName = $article->author?->name ?? 'Etro Tours';
+    $authorName = $article->author?->name ?? 'Egypt Tour Pro';
 
     $date = $article->published_at ?? $article->created_at;
 
@@ -20,9 +20,9 @@
     $twitterShare = 'https://twitter.com/intent/tweet?url=' . urlencode($articleUrl) . '&text=' . urlencode($title);
 @endphp
 
-@section('title', $article->display_seo_title ?: $title . ' - Etro Tours')
+@section('title', $article->display_seo_title ?: $title . ' - Egypt Tour Pro')
 @section('description', $description)
-@section('keywords', trim(collect([$title, $categoryTitle, 'Etro Tours blog', 'Egypt travel guide'])->filter()->implode(', '), ', '))
+@section('keywords', trim(collect([$title, $categoryTitle, 'Egypt Tour Pro blog', 'Egypt travel guide'])->filter()->implode(', '), ', '))
 @section('image', $image)
 @section('og_type', 'article')
 @section('published_time', optional($date)->toIso8601String())
@@ -33,7 +33,7 @@
         .article-hero {
             min-height: 520px;
             background:
-                linear-gradient(rgba(28, 50, 92, .45), rgba(26, 75, 102, .55)),
+                linear-gradient(rgba(43, 43, 43, .45), rgba(43, 43, 43, .55)),
                 url('{{ $image }}');
             background-size: cover;
             background-position: center;
@@ -63,8 +63,8 @@
         }
 
         .article-badge {
-            background: rgba(197, 149, 91, .95);
-            color: var(--primary-navy, #1c325c);
+            background: rgba(243, 107, 10, .95);
+            color: var(--primary-navy, #2b2b2b);
             padding: 10px 24px;
             border-radius: 50px;
             font-weight: 700;
@@ -103,11 +103,11 @@
         }
 
         .info-item i {
-            color: var(--rich-gold, #c5955b);
+            color: var(--rich-gold, var(--etp-orange-500, #F36B0A));
         }
 
         .article-content-area {
-            background: linear-gradient(135deg, var(--cream-elegant, #f8f2e8), var(--light-sand, #efe4d3));
+            background: linear-gradient(135deg, var(--cream-elegant, #f8fafc), var(--light-sand, #efe9e2));
             padding: 70px 0;
         }
 
@@ -117,8 +117,8 @@
         .related-article-card {
             background: #fff;
             border-radius: 24px;
-            box-shadow: 0 10px 35px rgba(28, 50, 92, .08);
-            border: 1px solid rgba(197, 149, 91, .14);
+            box-shadow: 0 10px 35px rgba(43, 43, 43, .08);
+            border: 1px solid rgba(243, 107, 10, .14);
             overflow: hidden;
         }
 
@@ -144,7 +144,7 @@
         .article-content h3,
         .article-content h4 {
             font-family: 'Playfair Display', serif;
-            color: var(--primary-navy, #1c325c);
+            color: var(--primary-navy, #2b2b2b);
             font-weight: 800;
             margin-top: 30px;
             margin-bottom: 16px;
@@ -163,7 +163,7 @@
             bottom: 0;
             width: 75px;
             height: 4px;
-            background: var(--gradient-gold, #c5955b);
+            background: var(--gradient-gold, var(--etp-orange-500, #F36B0A));
             border-radius: 4px;
         }
 
@@ -176,7 +176,7 @@
         }
 
         .article-content a {
-            color: var(--rich-gold, #c5955b);
+            color: var(--rich-gold, var(--etp-orange-500, #F36B0A));
             font-weight: 700;
             text-decoration: none;
         }
@@ -217,9 +217,9 @@
 
         .tag-item,
         .category-tag {
-            background: rgba(197, 149, 91, .13);
-            color: var(--primary-navy, #1c325c);
-            border: 1px solid rgba(197, 149, 91, .22);
+            background: rgba(243, 107, 10, .13);
+            color: var(--primary-navy, #2b2b2b);
+            border: 1px solid rgba(243, 107, 10, .22);
             padding: 8px 14px;
             border-radius: 25px;
             text-decoration: none;
@@ -229,7 +229,7 @@
 
         .tag-item:hover,
         .category-tag:hover {
-            background: var(--rich-gold, #c5955b);
+            background: var(--rich-gold, var(--etp-orange-500, #F36B0A));
             color: #fff;
         }
 
@@ -244,8 +244,8 @@
             width: 38px;
             height: 38px;
             border-radius: 50%;
-            background: var(--gradient-gold, #c5955b);
-            color: var(--primary-navy, #1c325c);
+            background: var(--gradient-gold, var(--etp-orange-500, #F36B0A));
+            color: var(--primary-navy, #2b2b2b);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -256,7 +256,7 @@
         .share-button:hover,
         .social-link:hover {
             transform: translateY(-3px);
-            color: var(--primary-navy, #1c325c);
+            color: var(--primary-navy, #2b2b2b);
         }
 
         .luxury-sidebar {
@@ -266,7 +266,7 @@
 
         .sidebar-title {
             font-family: 'Playfair Display', serif;
-            color: var(--primary-navy, #1c325c);
+            color: var(--primary-navy, #2b2b2b);
             font-size: 1.45rem;
             font-weight: 800;
             margin-bottom: 18px;
@@ -278,7 +278,7 @@
             content: '';
             width: 65px;
             height: 4px;
-            background: var(--gradient-gold, #c5955b);
+            background: var(--gradient-gold, var(--etp-orange-500, #F36B0A));
             border-radius: 4px;
             position: absolute;
             bottom: 0;
@@ -299,14 +299,14 @@
         }
 
         .search-input:focus {
-            border-color: var(--rich-gold, #c5955b);
-            box-shadow: 0 0 0 .2rem rgba(197, 149, 91, .18);
+            border-color: var(--rich-gold, var(--etp-orange-500, #F36B0A));
+            box-shadow: 0 0 0 .2rem rgba(243, 107, 10, .18);
         }
 
         .search-btn {
             border: none;
-            background: var(--gradient-gold, #c5955b);
-            color: var(--primary-navy, #1c325c);
+            background: var(--gradient-gold, var(--etp-orange-500, #F36B0A));
+            color: var(--primary-navy, #2b2b2b);
             border-radius: 14px;
             width: 48px;
             font-size: 1.2rem;
@@ -323,7 +323,7 @@
             display: flex;
             gap: 14px;
             padding: 14px 0;
-            border-bottom: 1px solid rgba(197, 149, 91, .14);
+            border-bottom: 1px solid rgba(243, 107, 10, .14);
         }
 
         .popular-article:last-child {
@@ -347,12 +347,12 @@
         }
 
         .popular-content h4 a {
-            color: var(--primary-navy, #1c325c);
+            color: var(--primary-navy, #2b2b2b);
             text-decoration: none;
         }
 
         .popular-content h4 a:hover {
-            color: var(--rich-gold, #c5955b);
+            color: var(--rich-gold, var(--etp-orange-500, #F36B0A));
         }
 
         .popular-date {
@@ -368,7 +368,7 @@
         }
 
         .related-articles-section {
-            background: var(--pearl-luxury, #faf8f3);
+            background: var(--pearl-luxury, #f8fafc);
             padding: 70px 0;
         }
 
@@ -379,7 +379,7 @@
 
         .section-title {
             font-family: 'Playfair Display', serif;
-            color: var(--primary-navy, #1c325c);
+            color: var(--primary-navy, #2b2b2b);
             font-size: clamp(1.8rem, 4vw, 3rem);
             font-weight: 800;
             margin-bottom: 14px;
@@ -399,7 +399,7 @@
 
         .related-article-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 18px 45px rgba(28, 50, 92, .16);
+            box-shadow: 0 18px 45px rgba(43, 43, 43, .16);
         }
 
         .related-image {
@@ -432,12 +432,12 @@
         }
 
         .related-title a {
-            color: var(--primary-navy, #1c325c);
+            color: var(--primary-navy, #2b2b2b);
             text-decoration: none;
         }
 
         .related-title a:hover {
-            color: var(--rich-gold, #c5955b);
+            color: var(--rich-gold, var(--etp-orange-500, #F36B0A));
         }
 
         .related-desc {
@@ -447,8 +447,8 @@
         }
 
         .btn-read-more {
-            background: var(--gradient-gold, #c5955b);
-            color: var(--primary-navy, #1c325c);
+            background: var(--gradient-gold, var(--etp-orange-500, #F36B0A));
+            color: var(--primary-navy, #2b2b2b);
             padding: 10px 20px;
             border-radius: 50px;
             font-weight: 800;
@@ -461,7 +461,7 @@
 
         .btn-read-more:hover {
             transform: translateY(-2px);
-            color: var(--primary-navy, #1c325c);
+            color: var(--primary-navy, #2b2b2b);
         }
 
         .empty-state {
@@ -470,7 +470,7 @@
             padding: 28px;
             text-align: center;
             color: #777;
-            border: 1px solid rgba(197, 149, 91, .15);
+            border: 1px solid rgba(243, 107, 10, .15);
         }
 
         @media(max-width: 991px) {
@@ -538,10 +538,10 @@
             ],
             'publisher' => [
                 '@type' => 'Organization',
-                'name' => 'Etro Tours',
+                'name' => 'Egypt Tour Pro',
                 'logo' => [
                     '@type' => 'ImageObject',
-                    'url' => asset('website/logo/logo-lat.png'),
+                    'url' => asset('website/logo/egypt-tour-pro-charcoal.png'),
                 ],
             ],
             'mainEntityOfPage' => request()->fullUrl(),

@@ -10,24 +10,30 @@
         ? route('website.destinations.index', ['country' => $attraction->city->country->slug])
         : route('website.destinations.index');
 
-    $heroSubtitle = $shortDescription !== ''
-        ? $shortDescription
-        : __('Explore :name, one of the iconic places to visit in :city.', [
-            'name' => $attraction->display_name,
-            'city' => $cityName,
-        ]);
+    $heroSubtitle =
+        $shortDescription !== ''
+            ? $shortDescription
+            : __('Explore :name, one of the iconic places to visit in :city.', [
+                'name' => $attraction->display_name,
+                'city' => $cityName,
+            ]);
 @endphp
 
-@section('title', $pageTitle . ' - Etro Tours')
+@section('title', $pageTitle . ' - Egypt Tour Pro')
 @section('description', $pageDescription)
-@section('keywords', trim(collect([$attraction->display_name, $cityName, $countryName, 'Attraction details', 'Etro Tours'])->filter()->implode(', '), ', '))
+@section('keywords',
+    trim(
+    collect([$attraction->display_name, $cityName, $countryName, 'Attraction details', 'Egypt Tour Pro'])->filter()->implode(',
+    '),
+    ', ',
+    ))
 @section('image', $heroImage)
 
 @section('css')
     <style>
         .attraction-breadcrumb {
-            background: var(--pearl-luxury, #faf8f3);
-            border-bottom: 1px solid rgba(197, 149, 91, 0.16);
+            background: var(--pearl-luxury, #f8fafc);
+            border-bottom: 1px solid rgba(243, 107, 10, 0.16);
             padding: 16px 0;
         }
 
@@ -39,13 +45,13 @@
 
         .attraction-breadcrumb .breadcrumb-item,
         .attraction-breadcrumb .breadcrumb-item a {
-            color: #1c325c;
+            color: #2b2b2b;
             font-size: 0.95rem;
             text-decoration: none;
         }
 
         .attraction-breadcrumb .breadcrumb-item.active {
-            color: #9b6a2c;
+            color: var(--etp-orange-500, #F36B0A);
             font-weight: 700;
         }
 
@@ -56,7 +62,7 @@
             padding: 145px 0 80px;
             color: #fff;
             background:
-                linear-gradient(rgba(16, 33, 63, 0.72), rgba(18, 61, 102, 0.65)),
+                linear-gradient(rgba(28, 28, 28, 0.72), rgba(43, 43, 43, 0.65)),
                 url('{{ $heroImage }}') center/cover no-repeat;
             overflow: hidden;
         }
@@ -94,7 +100,7 @@
         }
 
         .hero-badge i {
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
         }
 
         .hero-title {
@@ -135,9 +141,9 @@
         .hero-btn,
         .cta-btn,
         .journey-btn {
-            background: linear-gradient(135deg, #c5955b 0%, #b8860b 100%);
-            color: #1c325c;
-            box-shadow: 0 12px 26px rgba(197, 149, 91, 0.22);
+            background: var(--etp-gradient-orange, linear-gradient(135deg, #F36B0A 0%, #FF8A3D 100%));
+            color: #ffffff;
+            box-shadow: 0 12px 26px rgba(243, 107, 10, 0.22);
             min-height: 52px;
             padding: 0 24px;
             border-radius: 18px;
@@ -157,7 +163,7 @@
         .cta-btn:hover,
         .journey-btn:hover {
             transform: translateY(-2px);
-            color: #1c325c;
+            color: #2b2b2b;
         }
 
         .hero-btn-outline:hover {
@@ -185,8 +191,8 @@
         .cta-card {
             background: #fff;
             border-radius: 28px;
-            border: 1px solid rgba(26, 54, 93, 0.08);
-            box-shadow: 0 18px 46px rgba(16, 33, 63, 0.08);
+            border: 1px solid rgba(43, 43, 43, 0.08);
+            box-shadow: 0 18px 46px rgba(28, 28, 28, 0.08);
         }
 
         .overview-panel {
@@ -198,7 +204,7 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 18px;
-            color: #9b6a2c;
+            color: var(--etp-orange-500, #F36B0A);
             font-size: 0.92rem;
             font-weight: 700;
             letter-spacing: 0.04em;
@@ -209,7 +215,7 @@
         .section-heading h2,
         .cta-card h2 {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #2b2b2b;
             line-height: 1.2;
             margin-bottom: 20px;
         }
@@ -219,7 +225,7 @@
         }
 
         .overview-body {
-            color: #4a5568;
+            color: #3d3d3d;
             line-height: 1.95;
             font-size: 1.05rem;
         }
@@ -240,7 +246,7 @@
 
         .sidebar-card h3 {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #2b2b2b;
             font-size: 1.45rem;
             margin-bottom: 20px;
         }
@@ -262,7 +268,7 @@
         }
 
         .fact-item span {
-            color: #5b6776;
+            color: #5b5854;
             font-size: 0.94rem;
             display: inline-flex;
             align-items: center;
@@ -270,12 +276,12 @@
         }
 
         .fact-item span i {
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
             font-size: 1.1rem;
         }
 
         .fact-item strong {
-            color: #1c325c;
+            color: #2b2b2b;
             font-weight: 700;
             text-align: right;
             font-size: 0.96rem;
@@ -290,17 +296,17 @@
             min-height: 50px;
             border-radius: 16px;
             background: #f4f7fb;
-            color: #1c325c;
-            border: 1px solid rgba(26, 54, 93, 0.12);
+            color: #2b2b2b;
+            border: 1px solid rgba(43, 43, 43, 0.12);
             font-weight: 700;
             text-decoration: none;
             transition: all 0.3s ease;
         }
 
         .map-btn:hover {
-            background: #1c325c;
+            background: #2b2b2b;
             color: #fff;
-            border-color: #1c325c;
+            border-color: #2b2b2b;
         }
 
         .attraction-journeys {
@@ -318,7 +324,7 @@
         }
 
         .section-heading p {
-            color: #5b6776;
+            color: #5b5854;
             line-height: 1.85;
         }
 
@@ -336,15 +342,15 @@
 
         .journey-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(197, 149, 91, 0.34);
-            box-shadow: 0 24px 52px rgba(16, 33, 63, 0.14);
+            border-color: rgba(243, 107, 10, 0.34);
+            box-shadow: 0 24px 52px rgba(28, 28, 28, 0.14);
         }
 
         .journey-image {
             position: relative;
             height: 245px;
             overflow: hidden;
-            background: #dbe6f2;
+            background: #efe9e2;
         }
 
         .journey-image img {
@@ -374,13 +380,13 @@
             top: 16px;
             left: 16px;
             color: #fff;
-            background: rgba(16, 33, 63, 0.82);
+            background: rgba(28, 28, 28, 0.82);
         }
 
         .journey-badge {
             top: 16px;
             right: 16px;
-            color: #1c325c;
+            color: #2b2b2b;
             background: rgba(255, 210, 125, 0.95);
         }
 
@@ -389,9 +395,9 @@
             right: 16px;
             bottom: 16px;
             text-align: center;
-            color: #1c325c;
+            color: #2b2b2b;
             background: rgba(255, 255, 255, 0.96);
-            box-shadow: 0 12px 28px rgba(16, 33, 63, 0.14);
+            box-shadow: 0 12px 28px rgba(28, 28, 28, 0.14);
         }
 
         .journey-body {
@@ -402,7 +408,7 @@
         }
 
         .journey-country {
-            color: #9b6a2c;
+            color: var(--etp-orange-500, #F36B0A);
             font-size: 0.88rem;
             font-weight: 700;
             letter-spacing: 0.02em;
@@ -417,12 +423,12 @@
         }
 
         .journey-title a {
-            color: #1c325c;
+            color: #2b2b2b;
             text-decoration: none;
         }
 
         .journey-title a:hover {
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
         }
 
         .journey-meta {
@@ -439,17 +445,17 @@
             padding: 7px 12px;
             border-radius: 999px;
             background: #f4f7fb;
-            color: #425466;
+            color: #3d3d3d;
             font-size: 0.86rem;
             font-weight: 600;
         }
 
         .journey-meta i {
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
         }
 
         .journey-description {
-            color: #5b6776;
+            color: #5b5854;
             line-height: 1.8;
             font-size: 0.94rem;
             margin-bottom: 20px;
@@ -477,13 +483,13 @@
 
         .attraction-card-item:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 48px rgba(16, 33, 63, 0.12);
+            box-shadow: 0 20px 48px rgba(28, 28, 28, 0.12);
         }
 
         .attraction-card-img {
             height: 220px;
             overflow: hidden;
-            background: #dbe6f2;
+            background: #efe9e2;
         }
 
         .attraction-card-img img {
@@ -506,22 +512,22 @@
 
         .attraction-card-title {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #2b2b2b;
             font-size: 1.3rem;
             margin-bottom: 10px;
         }
 
         .attraction-card-title a {
-            color: #1c325c;
+            color: #2b2b2b;
             text-decoration: none;
         }
 
         .attraction-card-title a:hover {
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
         }
 
         .attraction-card-desc {
-            color: #5b6776;
+            color: #5b5854;
             font-size: 0.92rem;
             line-height: 1.8;
             margin-bottom: 16px;
@@ -532,18 +538,18 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
             font-weight: 700;
             text-decoration: none;
             font-size: 0.92rem;
         }
 
         .attraction-card-link:hover {
-            color: #1c325c;
+            color: #2b2b2b;
         }
 
         .attraction-cta {
-            background: linear-gradient(135deg, #0f2749 0%, #123d66 100%);
+            background: linear-gradient(135deg, #1c1c1c 0%, #2b2b2b 100%);
             padding: 88px 0 88px;
         }
 
@@ -560,7 +566,7 @@
         }
 
         .cta-card p {
-            color: #5b6776;
+            color: #5b5854;
             line-height: 1.85;
         }
 
@@ -572,15 +578,15 @@
 
         .cta-btn.secondary {
             background: #f8fbff;
-            color: #1c325c;
-            border: 1px solid rgba(26, 54, 93, 0.12);
+            color: #2b2b2b;
+            border: 1px solid rgba(43, 43, 43, 0.12);
             box-shadow: none;
         }
 
         /* Dark Theme Support */
         html[data-theme='dark'] .attraction-breadcrumb {
-            background: #0b1220 !important;
-            border-color: rgba(148, 163, 184, 0.14) !important;
+            background: #111111 !important;
+            border-color: rgba(170, 163, 155, 0.14) !important;
         }
 
         html[data-theme='dark'] .attraction-breadcrumb .breadcrumb-item,
@@ -597,7 +603,7 @@
         html[data-theme='dark'] .attraction-overview,
         html[data-theme='dark'] .attraction-journeys,
         html[data-theme='dark'] .related-attractions {
-            background: linear-gradient(180deg, #0b1220 0%, #111827 100%) !important;
+            background: linear-gradient(180deg, #111111 0%, #111111 100%) !important;
         }
 
         html[data-theme='dark'] .overview-panel,
@@ -605,8 +611,8 @@
         html[data-theme='dark'] .journey-card,
         html[data-theme='dark'] .attraction-card-item,
         html[data-theme='dark'] .cta-card {
-            background: #111827 !important;
-            border-color: rgba(148, 163, 184, 0.16) !important;
+            background: #111111 !important;
+            border-color: rgba(170, 163, 155, 0.16) !important;
             box-shadow: var(--shadow-medium) !important;
         }
 
@@ -623,9 +629,9 @@
         html[data-theme='dark'] .map-btn,
         html[data-theme='dark'] .journey-meta span,
         html[data-theme='dark'] .cta-btn.secondary {
-            background: #172033 !important;
+            background: #1c1c1c !important;
             color: var(--warm-gray) !important;
-            border-color: rgba(148, 163, 184, 0.14) !important;
+            border-color: rgba(170, 163, 155, 0.14) !important;
         }
 
         html[data-theme='dark'] .fact-item strong,
@@ -635,7 +641,7 @@
 
         html[data-theme='dark'] .journey-image,
         html[data-theme='dark'] .attraction-card-img {
-            background: #0f172a !important;
+            background: #111111 !important;
         }
 
         @media (max-width: 991px) {
@@ -877,8 +883,13 @@
                 <div class="row g-4">
                     @foreach ($relatedAttractions as $rel)
                         @php
-                            $relImg = $rel->image ? asset('storage/' . ltrim($rel->image, '/')) : asset('website/photos/home2.webp');
-                            $relDesc = Str::limit(trim(strip_tags($rel->display_short_description ?: $rel->display_description)), 120);
+                            $relImg = $rel->image
+                                ? asset('storage/' . ltrim($rel->image, '/'))
+                                : asset('website/photos/home2.webp');
+                            $relDesc = Str::limit(
+                                trim(strip_tags($rel->display_short_description ?: $rel->display_description)),
+                                120,
+                            );
                         @endphp
                         <div class="col-lg-3 col-md-6">
                             <article class="attraction-card-item">
@@ -888,12 +899,15 @@
                                 </div>
                                 <div class="attraction-card-body">
                                     <h3 class="attraction-card-title">
-                                        <a href="{{ route('website.attractions.show', $rel->slug) }}">{{ $rel->display_name }}</a>
+                                        <a
+                                            href="{{ route('website.attractions.show', $rel->slug) }}">{{ $rel->display_name }}</a>
                                     </h3>
                                     <p class="attraction-card-desc">{{ $relDesc }}</p>
-                                    <a href="{{ route('website.attractions.show', $rel->slug) }}" class="attraction-card-link">
+                                    <a href="{{ route('website.attractions.show', $rel->slug) }}"
+                                        class="attraction-card-link">
                                         {{ __('Explore Place') }}
-                                        <i class="la {{ app()->getLocale() === 'ar' ? 'la-angle-left' : 'la-angle-right' }}"></i>
+                                        <i
+                                            class="la {{ app()->getLocale() === 'ar' ? 'la-angle-left' : 'la-angle-right' }}"></i>
                                     </a>
                                 </div>
                             </article>

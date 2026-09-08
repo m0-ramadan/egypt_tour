@@ -4,6 +4,7 @@ use App\Http\Controllers\Website\AttractionController;
 use App\Http\Controllers\Website\BlogController;
 use App\Http\Controllers\Website\CheckoutController;
 use App\Http\Controllers\Website\ContactController;
+use App\Http\Controllers\Website\DayTourController;
 use App\Http\Controllers\Website\DestinationController;
 use App\Http\Controllers\Website\HomeController;
 use App\Http\Controllers\Website\InquiryController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Website\SearchController;
 use App\Http\Controllers\Website\SitemapController;
 use App\Http\Controllers\Website\TailorMadeController;
 use App\Http\Controllers\Website\TourController;
+use App\Http\Controllers\Website\TravelPackageController;
 use App\Http\Controllers\Website\TripController;
 use Illuminate\Support\Facades\Route;
 
@@ -77,6 +79,23 @@ Route::name('website.')->group(function () {
         Route::get('/luxor-aswan-nile-cruises/{categorySlug}', 'showLuxorAswanCategory')->name('luxor_aswan.category');
         Route::get('/{typeSlug}', 'showType')->where('typeSlug', 'dahabiya-nile-cruise|lake-nasser-cruise')->name('type');
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Day Tours
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/day-tours', [DayTourController::class, 'index'])->name('day_tours.index');
+    Route::get('/Egypt/day-tours', [DayTourController::class, 'index']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Travel Packages
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/travel-packages', [TravelPackageController::class, 'index'])->name('travel_packages.index');
+    Route::get('/Egypt/travel-packages', [TravelPackageController::class, 'index']);
+    Route::get('/Egypt/travel-pakages', [TravelPackageController::class, 'index']);
 
     /*
     |--------------------------------------------------------------------------

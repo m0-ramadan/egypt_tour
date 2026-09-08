@@ -4,9 +4,10 @@
     $heroImage = $type->banner_url ?: $type->image_url;
 @endphp
 
-@section('title', $pageContent['title'] . ' - Etro Tours')
+@section('title', $pageContent['title'] . ' - Egypt Tour Pro')
 @section('description', $pageContent['subtitle'])
-@section('keywords', 'Luxor and Aswan Nile Cruises, Standard Nile Cruises, Deluxe Nile Cruises, Ultra Deluxe Nile Cruises, Luxury Nile Cruises')
+@section('keywords', 'Luxor and Aswan Nile Cruises, Standard Nile Cruises, Deluxe Nile Cruises, Ultra Deluxe Nile
+    Cruises, Luxury Nile Cruises')
 @section('image', $heroImage)
 
 @section('css')
@@ -20,7 +21,7 @@
             margin-top: -85px;
             padding: 145px 0 85px;
             color: #fff;
-            background: linear-gradient(rgba(16, 33, 63, 0.75), rgba(22, 60, 103, 0.65)),
+            background: linear-gradient(rgba(28, 28, 28, 0.75), rgba(43, 43, 43, 0.65)),
                 url('{{ $heroImage }}') center/cover no-repeat;
             overflow: hidden;
         }
@@ -29,7 +30,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at top right, rgba(255, 210, 125, 0.2), transparent 35%);
+            background: radial-gradient(circle at top right, rgba(243, 107, 10, 0.12), transparent 35%);
         }
 
         .nile-hero .container {
@@ -48,7 +49,7 @@
             backdrop-filter: blur(12px);
             font-weight: 600;
             margin-bottom: 20px;
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
         }
 
         .nile-title {
@@ -105,8 +106,8 @@
             position: absolute;
             top: 16px;
             left: 16px;
-            background: rgba(16, 33, 63, 0.85);
-            color: #ffd27d;
+            background: rgba(28, 28, 28, 0.85);
+            color: var(--etp-orange-400, #FB923C);
             padding: 5px 14px;
             border-radius: 999px;
             font-size: 0.8rem;
@@ -125,12 +126,12 @@
             font-family: 'Playfair Display', serif;
             font-size: 1.45rem;
             font-weight: 700;
-            color: #10213f;
+            color: #1c1c1c;
             margin-bottom: 10px;
         }
 
         .cat-desc {
-            color: #5b6b7c;
+            color: #5b5854;
             font-size: 0.94rem;
             line-height: 1.65;
             margin-bottom: 20px;
@@ -145,7 +146,7 @@
             width: 100%;
             padding: 12px 20px;
             border-radius: 14px;
-            background: linear-gradient(135deg, #10213f, #163c67);
+            background: linear-gradient(135deg, #1c1c1c, #2b2b2b);
             color: #fff;
             font-weight: 600;
             text-decoration: none;
@@ -153,13 +154,13 @@
         }
 
         .cat-btn:hover {
-            background: linear-gradient(135deg, #163c67, #20548a);
+            background: linear-gradient(135deg, #2b2b2b, #3d3d3d);
             color: #fff;
         }
 
         /* Dark Mode Support */
         html[data-theme='dark'] .cat-card {
-            background: #111827;
+            background: #111111;
             border-color: rgba(255, 255, 255, 0.1);
             box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
         }
@@ -169,17 +170,17 @@
         }
 
         html[data-theme='dark'] .cat-desc {
-            color: #cbd5e1;
+            color: #d6d0c8;
         }
 
         html[data-theme='dark'] .cat-btn {
-            background: linear-gradient(135deg, #c5955b, #e7b762);
-            color: #0f172a;
+            background: var(--etp-gradient-orange, linear-gradient(135deg, #F36B0A 0%, #FF8A3D 100%));
+            color: #ffffff;
         }
 
         html[data-theme='dark'] .cat-btn:hover {
-            background: linear-gradient(135deg, #e7b762, #f4c36a);
-            color: #0f172a;
+            background: linear-gradient(135deg, #FF8A3D 0%, #F36B0A 100%);
+            color: #ffffff;
         }
     </style>
 @endsection
@@ -223,7 +224,8 @@
                                 <h3 class="cat-title">{{ $cat->display_name }}</h3>
                                 <p class="cat-desc">{{ $cat->display_short_description }}</p>
 
-                                <a href="{{ route('website.nile_cruises.luxor_aswan.category', $cat->slug) }}" class="cat-btn mt-auto">
+                                <a href="{{ route('website.nile_cruises.luxor_aswan.category', $cat->slug) }}"
+                                    class="cat-btn mt-auto">
                                     <span>{{ __('View Category') }}</span>
                                     <i class="la la-arrow-right"></i>
                                 </a>
@@ -238,10 +240,12 @@
                 <div class="pt-4 border-top">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <div>
-                            <h3 class="h2 font-serif fw-bold text-dark mb-1" style="font-family: 'Playfair Display', serif;">
+                            <h3 class="h2 font-serif fw-bold text-dark mb-1"
+                                style="font-family: 'Playfair Display', serif;">
                                 {{ __('Featured Luxor & Aswan Packages') }}
                             </h3>
-                            <p class="text-muted mb-0">{{ __('Top-rated Nile River itineraries selected by our experts') }}</p>
+                            <p class="text-muted mb-0">{{ __('Top-rated Nile River itineraries selected by our experts') }}
+                            </p>
                         </div>
                     </div>
 
@@ -263,7 +267,8 @@
                                         @endif
 
                                         <a href="{{ $pkg['url'] }}">
-                                            <img src="{{ $pkg['image'] }}" alt="{{ $pkg['title'] }}" width="800" height="500" loading="lazy" decoding="async">
+                                            <img src="{{ $pkg['image'] }}" alt="{{ $pkg['title'] }}" width="800"
+                                                height="500" loading="lazy" decoding="async">
                                         </a>
                                     </div>
 

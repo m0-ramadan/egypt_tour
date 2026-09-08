@@ -1,16 +1,17 @@
 @extends('website.layouts.master')
 
-@section('title', __('Search Egypt Tours') . ' - Etro Tours')
-@section('description', __('Search Etro Tours packages, Nile cruises, day trips, and tailor-made travel ideas across Egypt and nearby destinations.'))
-@section('keywords', 'search Egypt tours, Etro Tours search, find Nile cruises, Egypt package search')
+@section('title', __('Search Egypt Tours') . ' - Egypt Tour Pro')
+@section('description', __('Search Egypt Tour Pro packages, Nile cruises, day trips, and tailor-made travel ideas across
+    Egypt and nearby destinations.'))
+@section('keywords', 'search Egypt tours, Egypt Tour Pro search, find Nile cruises, Egypt package search')
 @section('canonical', route('website.search.index'))
 @section('robots', 'noindex, follow')
-@section('image', asset('website/logo/logo-lat.png'))
+@section('image', asset('website/logo/egypt-tour-pro-charcoal.png'))
 
 @section('css')
     <style>
         .search-hero {
-            background: linear-gradient(135deg, #1c325c 0%, #1a4b66 55%, #2c3e50 100%);
+            background: linear-gradient(135deg, #2b2b2b 0%, #2b2b2b 55%, #2b2b2b 100%);
             color: #fff;
             padding: 130px 0 90px;
             position: relative;
@@ -22,7 +23,7 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(circle at top right, rgba(197, 149, 91, 0.18), transparent 35%),
+                radial-gradient(circle at top right, rgba(243, 107, 10, 0.1), transparent 35%),
                 radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.08), transparent 28%);
         }
 
@@ -90,15 +91,15 @@
             border-radius: 18px;
             background: rgba(255, 255, 255, 0.95);
             padding: 16px 20px 16px 56px;
-            color: #2c3e50;
+            color: #2b2b2b;
             font-size: 1rem;
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
             outline: none;
-            border-color: #c5955b;
-            box-shadow: 0 0 0 0.25rem rgba(197, 149, 91, 0.2);
+            border-color: var(--etp-orange-500, #F36B0A);
+            box-shadow: 0 0 0 0.25rem rgba(243, 107, 10, 0.18);
         }
 
         .search-btn {
@@ -107,16 +108,16 @@
             border: none;
             border-radius: 18px;
             padding: 16px 28px;
-            background: linear-gradient(135deg, #c5955b 0%, #b8860b 100%);
-            color: #1c325c;
+            background: var(--etp-gradient-orange, linear-gradient(135deg, #F36B0A 0%, #FF8A3D 100%));
+            color: #ffffff;
             font-weight: 700;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(197, 149, 91, 0.28);
+            box-shadow: 0 8px 24px rgba(243, 107, 10, 0.28);
         }
 
         .search-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(197, 149, 91, 0.34);
+            box-shadow: 0 12px 30px rgba(243, 107, 10, 0.34);
         }
 
         .search-suggestions-dropdown {
@@ -126,8 +127,8 @@
             right: 0;
             background: #fff;
             border-radius: 18px;
-            border: 1px solid rgba(197, 149, 91, 0.18);
-            box-shadow: 0 18px 40px rgba(28, 50, 92, 0.14);
+            border: 1px solid rgba(243, 107, 10, 0.18);
+            box-shadow: 0 18px 40px rgba(43, 43, 43, 0.14);
             overflow: hidden;
             display: none;
             z-index: 20;
@@ -141,7 +142,7 @@
             display: block;
             padding: 14px 18px;
             text-decoration: none;
-            color: #2c3e50;
+            color: #2b2b2b;
             transition: background 0.25s ease, color 0.25s ease;
             border-bottom: 1px solid #f2f2f2;
         }
@@ -152,8 +153,8 @@
 
         .suggestion-item:hover,
         .suggestion-item.active {
-            background: #f8f6f1;
-            color: #1c325c;
+            background: #f8fafc;
+            color: #2b2b2b;
         }
 
         .suggestion-type {
@@ -165,7 +166,7 @@
 
         .results-section {
             padding: 70px 0 90px;
-            background: linear-gradient(180deg, #f8f6f1 0%, #fff 120px);
+            background: linear-gradient(180deg, #f8fafc 0%, #fff 120px);
         }
 
         .section-header {
@@ -175,7 +176,7 @@
 
         .section-title {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #2b2b2b;
             font-size: clamp(2rem, 4vw, 2.8rem);
             margin-bottom: 14px;
         }
@@ -196,15 +197,15 @@
             overflow: hidden;
             border-radius: 24px;
             background: #fff;
-            border: 1px solid rgba(197, 149, 91, 0.14);
-            box-shadow: 0 12px 36px rgba(28, 50, 92, 0.08);
+            border: 1px solid rgba(243, 107, 10, 0.14);
+            box-shadow: 0 12px 36px rgba(43, 43, 43, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .result-card:hover {
             transform: translateY(-6px);
-            border-color: rgba(197, 149, 91, 0.45);
-            box-shadow: 0 18px 44px rgba(28, 50, 92, 0.12);
+            border-color: rgba(243, 107, 10, 0.35);
+            box-shadow: 0 18px 44px rgba(43, 43, 43, 0.12);
         }
 
         .card-image {
@@ -231,11 +232,11 @@
             right: 18px;
             padding: 9px 14px;
             border-radius: 999px;
-            background: linear-gradient(135deg, #c5955b 0%, #b8860b 100%);
-            color: #1c325c;
+            background: var(--etp-gradient-orange, linear-gradient(135deg, #F36B0A 0%, #FF8A3D 100%));
+            color: #ffffff;
             font-size: 0.88rem;
             font-weight: 700;
-            box-shadow: 0 10px 22px rgba(197, 149, 91, 0.25);
+            box-shadow: 0 10px 22px rgba(243, 107, 10, 0.25);
         }
 
         .card-content {
@@ -251,8 +252,8 @@
             width: fit-content;
             padding: 6px 12px;
             border-radius: 999px;
-            background: rgba(197, 149, 91, 0.12);
-            color: #9b6a2c;
+            background: rgba(243, 107, 10, 0.12);
+            color: var(--etp-orange-600, #D95600);
             font-size: 0.8rem;
             font-weight: 700;
             margin-bottom: 14px;
@@ -264,7 +265,7 @@
 
         .card-title {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #2b2b2b;
             font-size: 1.35rem;
             line-height: 1.45;
             margin-bottom: 14px;
@@ -272,7 +273,7 @@
         }
 
         .card-title-link:hover .card-title {
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
         }
 
         .card-meta {
@@ -287,15 +288,15 @@
             align-items: center;
             gap: 8px;
             padding: 10px 14px;
-            background: #f8f6f1;
+            background: #f8fafc;
             border-radius: 14px;
-            color: #44505c;
+            color: #3d3d3d;
             font-size: 0.9rem;
             font-weight: 600;
         }
 
         .card-meta i {
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
         }
 
         .card-description {
@@ -315,17 +316,17 @@
             text-decoration: none;
             border-radius: 999px;
             padding: 14px 24px;
-            background: linear-gradient(135deg, #c5955b 0%, #b8860b 100%);
-            color: #1c325c;
+            background: var(--etp-gradient-orange, linear-gradient(135deg, #F36B0A 0%, #FF8A3D 100%));
+            color: #ffffff;
             font-weight: 700;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(197, 149, 91, 0.24);
+            box-shadow: 0 8px 24px rgba(243, 107, 10, 0.24);
         }
 
         .view-btn:hover {
-            color: #1c325c;
+            color: #ffffff;
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(197, 149, 91, 0.32);
+            box-shadow: 0 12px 30px rgba(243, 107, 10, 0.32);
         }
 
         .empty-state {
@@ -334,14 +335,14 @@
             padding: 50px 30px;
             border-radius: 28px;
             background: #fff;
-            border: 1px solid rgba(197, 149, 91, 0.14);
-            box-shadow: 0 16px 40px rgba(28, 50, 92, 0.08);
+            border: 1px solid rgba(243, 107, 10, 0.14);
+            box-shadow: 0 16px 40px rgba(43, 43, 43, 0.08);
             text-align: center;
         }
 
         .empty-state h3 {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #2b2b2b;
             font-size: 2rem;
             margin-bottom: 14px;
         }
@@ -366,7 +367,7 @@
             justify-content: center;
             padding: 12px 20px;
             border-radius: 999px;
-            background: #1c325c;
+            background: #2b2b2b;
             color: #fff;
             text-decoration: none;
             font-weight: 600;
@@ -374,8 +375,8 @@
         }
 
         .suggestion-link:hover {
-            background: #c5955b;
-            color: #1c325c;
+            background: var(--etp-orange-500, #F36B0A);
+            color: #ffffff;
             transform: translateY(-2px);
         }
 
@@ -396,15 +397,15 @@
 
         .results-pagination .page-link {
             border-radius: 12px;
-            border-color: rgba(197, 149, 91, 0.2);
-            color: #1c325c;
+            border-color: rgba(243, 107, 10, 0.2);
+            color: #2b2b2b;
         }
 
-        .results-pagination .active > .page-link,
+        .results-pagination .active>.page-link,
         .results-pagination .page-link.active {
-            background: #c5955b;
-            border-color: #c5955b;
-            color: #1c325c;
+            background: var(--etp-orange-500, #F36B0A);
+            border-color: var(--etp-orange-500, #F36B0A);
+            color: #ffffff;
         }
 
         @media (max-width: 991px) {
@@ -455,13 +456,8 @@
                     <form action="{{ route('website.search.index') }}" method="GET" class="search-form" autocomplete="off">
                         <div class="search-input-wrap">
                             <i class="las la-search search-icon"></i>
-                            <input
-                                type="text"
-                                name="keyword"
-                                class="search-input"
-                                id="searchKeyword"
-                                placeholder="{{ __('Search tours, packages, cruises...') }}"
-                                value="{{ $keyword }}"
+                            <input type="text" name="keyword" class="search-input" id="searchKeyword"
+                                placeholder="{{ __('Search tours, packages, cruises...') }}" value="{{ $keyword }}"
                                 data-suggestions-url="{{ route('website.search.suggestions') }}">
                             <div id="searchSuggestions" class="search-suggestions-dropdown"></div>
                         </div>
@@ -481,7 +477,8 @@
             @if (!$hasSearch)
                 <div class="empty-state">
                     <h3>{{ __('Start Your Egyptian Adventure') }}</h3>
-                    <p>{{ __('Enter keywords above to search our collection of tours, travel packages, and Nile cruises.') }}</p>
+                    <p>{{ __('Enter keywords above to search our collection of tours, travel packages, and Nile cruises.') }}
+                    </p>
 
                     <div class="suggestion-links">
                         @foreach ($suggestedLinks as $link)
@@ -553,7 +550,8 @@
                 @else
                     <div class="empty-state">
                         <h3>{{ __('No results found') }}</h3>
-                        <p>{{ __('Try a different keyword, browse our popular sections, or let us help you plan a custom journey.') }}</p>
+                        <p>{{ __('Try a different keyword, browse our popular sections, or let us help you plan a custom journey.') }}
+                        </p>
 
                         <div class="suggestion-links">
                             @foreach ($suggestedLinks as $link)
@@ -619,11 +617,11 @@
                 url.searchParams.set('keyword', keyword);
 
                 fetch(url.toString(), {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    }
-                })
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    })
                     .then((response) => response.ok ? response.json() : [])
                     .then((items) => renderSuggestions(Array.isArray(items) ? items : []))
                     .catch(() => hideSuggestions());

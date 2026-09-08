@@ -31,8 +31,8 @@ class BookingController extends Controller
                         });
                 });
             })
-            ->when($request->filled('package_id'), fn ($q) => $q->where('package_id', $request->integer('package_id')))
-            ->when($request->filled('status'), fn ($q) => $q->where('status', $request->input('status')))
+            ->when($request->filled('package_id'), fn($q) => $q->where('package_id', $request->integer('package_id')))
+            ->when($request->filled('status'), fn($q) => $q->where('status', $request->input('status')))
             ->latest()
             ->paginate($this->perPage($request));
 
@@ -78,8 +78,8 @@ class BookingController extends Controller
                 'booking_date' => now()->toDateString(),
                 'travel_date' => $data['travel_date'],
                 'adults' => $data['adults'],
-                'children' => 0,
-                'infants' => 0,
+                'children' => (int) ($data['children'] ?? 0),
+                'infants' => (int) ($data['infants'] ?? 0),
                 'special_requests' => $data['special_requests'],
             ]);
         }, 3);
@@ -110,9 +110,11 @@ class BookingController extends Controller
         if ($booking->payments()->exists()) {
             $factor = (int) config('services.paymob.minor_unit_factor', 100);
 
-            if (Money::toMinor((string) $data['total_amount'], $factor)
-                    !== Money::toMinor((string) $booking->total_amount, $factor)
-                || strtoupper($data['currency_code']) !== strtoupper((string) $booking->currency_code)) {
+            if (
+                Money::toMinor((string) $data['total_amount'], $factor)
+                !== Money::toMinor((string) $booking->total_amount, $factor)
+                || strtoupper($data['currency_code']) !== strtoupper((string) $booking->currency_code)
+            ) {
                 return back()
                     ->withInput()
                     ->with('error', 'Total amount and currency cannot change after a payment attempt exists.');
@@ -129,6 +131,8 @@ class BookingController extends Controller
                 'currency_code' => $data['currency_code'],
                 'travel_date' => $data['travel_date'],
                 'adults' => $data['adults'],
+                'children' => (int) ($data['children'] ?? $booking->children ?? 0),
+                'infants' => (int) ($data['infants'] ?? $booking->infants ?? 0),
                 'special_requests' => $data['special_requests'],
             ])->save();
 
@@ -274,6 +278,8 @@ class BookingController extends Controller
             'currency_code' => ['required', 'string', 'size:3'],
             'travel_date' => ['required', 'date'],
             'adults' => ['required', 'integer', 'min:1'],
+            'children' => ['nullable', 'integer', 'min:0'],
+            'infants' => ['nullable', 'integer', 'min:0'],
             'special_requests' => ['nullable', 'string'],
             'phone' => ['nullable', 'string', 'max:50'],
             'email' => [

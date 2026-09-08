@@ -2,7 +2,7 @@
 
 @section('title', $seoTitle)
 @section('description', $pageExcerpt)
-@section('keywords', trim(collect([$pageTitle, 'Etro Tours', 'Egypt travel'])->implode(', '), ', '))
+@section('keywords', trim(collect([$pageTitle, 'Egypt Tour Pro', 'Egypt travel'])->implode(', '), ', '))
 @section('image', $heroImage)
 
 @section('css')
@@ -13,7 +13,7 @@
             margin-top: -85px;
             padding: 150px 0 90px;
             background:
-                linear-gradient(rgba(10, 24, 48, 0.74), rgba(18, 44, 78, 0.72)),
+                linear-gradient(rgba(17, 17, 17, 0.74), rgba(28, 28, 28, 0.72)),
                 url('{{ $heroImage }}') center/cover no-repeat;
         }
 
@@ -51,7 +51,7 @@
         }
 
         .static-page-badge i {
-            color: #f4c36a;
+            color: var(--etp-orange-400, #FB923C);
         }
 
         .static-page-title {
@@ -72,15 +72,15 @@
 
         .static-page-section {
             padding: 72px 0 90px;
-            background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+            background: linear-gradient(180deg, #f8fbff 0%, #ffd0a8 100%);
         }
 
         .static-page-card {
             background: #fff;
             border-radius: 30px;
             padding: 34px;
-            border: 1px solid rgba(26, 54, 93, 0.08);
-            box-shadow: 0 18px 44px rgba(20, 41, 74, 0.08);
+            border: 1px solid rgba(43, 43, 43, 0.08);
+            box-shadow: 0 18px 44px rgba(28, 28, 28, 0.08);
         }
 
         .static-page-meta {
@@ -90,8 +90,8 @@
             flex-wrap: wrap;
             margin-bottom: 24px;
             padding-bottom: 18px;
-            border-bottom: 1px solid rgba(26, 54, 93, 0.08);
-            color: #617189;
+            border-bottom: 1px solid rgba(43, 43, 43, 0.08);
+            color: #5b5854;
             font-size: 0.95rem;
         }
 
@@ -102,7 +102,7 @@
         }
 
         .static-page-body {
-            color: #344256;
+            color: #2b2b2b;
             line-height: 1.95;
             font-size: 1.04rem;
         }
@@ -111,7 +111,7 @@
         .static-page-body h2,
         .static-page-body h3,
         .static-page-body h4 {
-            color: #1c325c;
+            color: #2b2b2b;
             font-family: 'Playfair Display', serif;
             margin-top: 0;
             margin-bottom: 16px;
@@ -130,13 +130,13 @@
         }
 
         .static-page-body a {
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
             font-weight: 600;
             text-decoration: none;
         }
 
         .static-page-body a:hover {
-            color: #b8860b;
+            color: var(--etp-orange-600, #D95600);
         }
 
         .static-page-body img {
@@ -147,18 +147,18 @@
         }
 
         html[data-theme='dark'] .static-page-section {
-            background: linear-gradient(180deg, #0b1220 0%, #111827 100%) !important;
+            background: linear-gradient(180deg, #111111 0%, #111111 100%) !important;
         }
 
         html[data-theme='dark'] .static-page-card {
-            background: #111827 !important;
-            border-color: rgba(148, 163, 184, 0.16) !important;
+            background: #111111 !important;
+            border-color: rgba(170, 163, 155, 0.16) !important;
             box-shadow: var(--shadow-medium) !important;
         }
 
         html[data-theme='dark'] .static-page-meta {
             color: var(--warm-gray) !important;
-            border-color: rgba(148, 163, 184, 0.12) !important;
+            border-color: rgba(170, 163, 155, 0.12) !important;
         }
 
         html[data-theme='dark'] .static-page-body {
@@ -200,7 +200,7 @@
             <div class="static-page-hero-content">
                 <div class="static-page-badge">
                     <i class="la la-file-alt"></i>
-                    <span>{{ __('Etro Tours') }}</span>
+                    <span>{{ __('Egypt Tour Pro') }}</span>
                 </div>
                 <h1 class="static-page-title">{{ $pageTitle }}</h1>
                 @if ($pageExcerpt)

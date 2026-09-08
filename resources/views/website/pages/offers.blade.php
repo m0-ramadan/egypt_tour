@@ -1,8 +1,10 @@
 @extends('website.layouts.master')
 
-@section('title', __('Travel Deals') . ' - Etro Tours')
-@section('description', __('Explore the latest Etro Tours travel deals, limited-time Egypt tour offers, luxury escapes, and curated savings on unforgettable journeys.'))
-@section('keywords', 'Egypt travel deals, Etro Tours offers, luxury tour discounts, Nile cruise deals, Egypt holiday promotions')
+@section('title', __('Travel Deals') . ' - Egypt Tour Pro')
+@section('description', __('Explore the latest Egypt Tour Pro travel deals, limited-time Egypt tour offers, luxury escapes,
+    and curated savings on unforgettable journeys.'))
+@section('keywords', 'Egypt travel deals, Egypt Tour Pro offers, luxury tour discounts, Nile cruise deals, Egypt holiday
+    promotions')
 @section('image', asset('website/photos/home2.webp'))
 
 @section('css')
@@ -13,7 +15,7 @@
             display: flex;
             align-items: center;
             background:
-                linear-gradient(rgba(16, 33, 63, 0.62), rgba(23, 58, 99, 0.55)),
+                linear-gradient(rgba(28, 28, 28, 0.62), rgba(43, 43, 43, 0.55)),
                 url('{{ asset('website/photos/home2.webp') }}') center/cover no-repeat;
             margin-top: -85px;
             padding-top: 85px;
@@ -55,7 +57,7 @@
         }
 
         .offers-badge i {
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
         }
 
         .offers-title {
@@ -76,7 +78,7 @@
 
         .offers-breadcrumb {
             background: #f8fafc;
-            border-bottom: 1px solid rgba(26, 54, 93, 0.08);
+            border-bottom: 1px solid rgba(43, 43, 43, 0.08);
             padding: 16px 0;
         }
 
@@ -87,22 +89,22 @@
 
         .offers-summary-card {
             background: white;
-            border: 1px solid rgba(26, 54, 93, 0.08);
+            border: 1px solid rgba(43, 43, 43, 0.08);
             border-radius: 24px;
-            box-shadow: 0 20px 45px rgba(20, 41, 74, 0.08);
+            box-shadow: 0 20px 45px rgba(28, 28, 28, 0.08);
             padding: 32px;
         }
 
         .offers-summary-card p {
             margin: 0;
-            color: #4a5568;
+            color: #3d3d3d;
             font-size: 1.05rem;
             line-height: 1.85;
             text-align: center;
         }
 
         .offers-section {
-            background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+            background: linear-gradient(180deg, #f8fbff 0%, #ffd0a8 100%);
             padding: 40px 0 90px;
         }
 
@@ -128,8 +130,8 @@
             background: white;
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 14px 35px rgba(20, 41, 74, 0.08);
-            border: 1px solid rgba(26, 54, 93, 0.08);
+            box-shadow: 0 14px 35px rgba(28, 28, 28, 0.08);
+            border: 1px solid rgba(43, 43, 43, 0.08);
             display: flex;
             flex-direction: column;
             transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
@@ -138,15 +140,15 @@
 
         .offer-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(66, 153, 225, 0.28);
-            box-shadow: 0 24px 50px rgba(20, 41, 74, 0.14);
+            border-color: rgba(243, 107, 10, 0.28);
+            box-shadow: 0 24px 50px rgba(28, 28, 28, 0.14);
         }
 
         .offer-image-wrap {
             position: relative;
             height: 245px;
             overflow: hidden;
-            background: #dce8f5;
+            background: #ffd0a8;
         }
 
         .offer-image-wrap img {
@@ -176,12 +178,12 @@
         .offer-country-badge {
             left: 18px;
             color: white;
-            background: rgba(16, 33, 63, 0.76);
+            background: rgba(28, 28, 28, 0.76);
         }
 
         .offer-save-badge {
             right: 18px;
-            color: #10213f;
+            color: #1c1c1c;
             background: rgba(255, 210, 125, 0.95);
         }
 
@@ -197,12 +199,12 @@
             align-items: end;
             justify-content: space-between;
             gap: 14px;
-            box-shadow: 0 14px 28px rgba(16, 33, 63, 0.12);
+            box-shadow: 0 14px 28px rgba(28, 28, 28, 0.12);
         }
 
         .offer-price-label {
             display: block;
-            color: #718096;
+            color: #817b73;
             font-size: 0.78rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -211,7 +213,7 @@
         }
 
         .offer-price-current {
-            color: #1a365d;
+            color: #2b2b2b;
             font-size: 1.55rem;
             font-weight: 800;
             line-height: 1;
@@ -219,7 +221,7 @@
 
         .offer-price-regular {
             text-align: right;
-            color: #718096;
+            color: #817b73;
             font-size: 0.92rem;
         }
 
@@ -250,12 +252,12 @@
         }
 
         .offer-title a {
-            color: #1a365d;
+            color: #2b2b2b;
             text-decoration: none;
         }
 
         .offer-title a:hover {
-            color: #4299e1;
+            color: #f36b0a;
         }
 
         .offer-meta {
@@ -263,7 +265,7 @@
             flex-wrap: wrap;
             gap: 14px;
             margin-bottom: 16px;
-            color: #4a5568;
+            color: #3d3d3d;
             font-size: 0.92rem;
         }
 
@@ -273,12 +275,12 @@
         }
 
         .offer-meta i {
-            color: #4299e1;
+            color: #f36b0a;
             margin-right: 6px;
         }
 
         .offer-description {
-            color: #718096;
+            color: #817b73;
             line-height: 1.75;
             margin-bottom: 18px;
             display: -webkit-box;
@@ -299,8 +301,8 @@
             align-items: center;
             padding: 6px 12px;
             border-radius: 999px;
-            background: #edf4fb;
-            color: #1a365d;
+            background: #ffd0a8;
+            color: #2b2b2b;
             font-size: 0.82rem;
             font-weight: 700;
         }
@@ -316,8 +318,8 @@
             border-radius: 22px;
             padding: 40px 24px;
             text-align: center;
-            color: #718096;
-            box-shadow: 0 14px 35px rgba(20, 41, 74, 0.08);
+            color: #817b73;
+            box-shadow: 0 14px 35px rgba(28, 28, 28, 0.08);
         }
 
         .offers-pagination {
@@ -395,7 +397,8 @@
     <section class="offers-summary">
         <div class="container">
             <div class="offers-summary-card">
-                <p>{{ __('For travelers looking to save on their next journey, explore our latest special offers and limited-time package prices in one place.') }}</p>
+                <p>{{ __('For travelers looking to save on their next journey, explore our latest special offers and limited-time package prices in one place.') }}
+                </p>
             </div>
         </div>
     </section>

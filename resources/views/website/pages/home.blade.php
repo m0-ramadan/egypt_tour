@@ -1,21 +1,23 @@
 @extends('website.layouts.master')
 
-@section('title', __('Home - Etro Tours'))
+@section('title', __('Home - Egypt Tour Pro'))
 @section('description',
     __('Luxury Egypt tours, Nile cruises, private day trips, and tailor-made travel experiences
-    curated by Etro Tours across Cairo, Luxor, Aswan, and beyond.'))
+    curated by Egypt Tour Pro across Cairo, Luxor, Aswan, and beyond.'))
 @section('keywords',
-    'Etro Tours, luxury Egypt tours, Nile cruises, Egypt holidays, Cairo tours, Luxor tours, Aswan
+    'Egypt Tour Pro, luxury Egypt tours, Nile cruises, Egypt holidays, Cairo tours, Luxor tours, Aswan
     tours, tailor made travel')
-@section('image', asset('website/logo/logo-lat.png'))
+@section('image', asset('website/logo/egypt-tour-pro-charcoal.png'))
 @section('preferred_theme', 'light')
 @section('body_class', 'home-reference-page')
 
 @section('lcp_preload')
-    <link rel="preload" as="image" type="image/avif" href="{{ asset('website/photos/optimized/hero-mobile-744.avif') }}"
-        media="(max-width: 767px)" fetchpriority="high">
-    <link rel="preload" as="image" type="image/avif" href="{{ asset('website/photos/optimized/hero-desktop-1280.avif') }}"
-        imagesrcset="{{ asset('website/photos/optimized/hero-desktop-1280.avif') }} 1280w, {{ asset('website/photos/optimized/hero-desktop-1672.avif') }} 1672w"
+    <link rel="preload" as="image" type="image/webp"
+        href="{{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }}" media="(max-width: 767px)"
+        fetchpriority="high">
+    <link rel="preload" as="image" type="image/webp"
+        href="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }}"
+        imagesrcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
         imagesizes="100vw" media="(min-width: 768px)" fetchpriority="high">
 @endsection
 
@@ -30,18 +32,13 @@
 
         <section class="hero-section" id="home">
             <picture class="hero-media" aria-hidden="true">
-                <source media="(max-width: 767px)" type="image/avif"
-                    srcset="{{ asset('website/photos/optimized/hero-mobile-744.avif') }}">
                 <source media="(max-width: 767px)" type="image/webp"
-                    srcset="{{ asset('website/photos/optimized/hero-mobile-744.webp') }}">
-                <source type="image/avif"
-                    srcset="{{ asset('website/photos/optimized/hero-desktop-1280.avif') }} 1280w, {{ asset('website/photos/optimized/hero-desktop-1672.avif') }} 1672w"
-                    sizes="100vw">
+                    srcset="{{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }}">
                 <source type="image/webp"
-                    srcset="{{ asset('website/photos/optimized/hero-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/hero-desktop-1672.webp') }} 1672w"
+                    srcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
                     sizes="100vw">
-                <img src="{{ asset('website/photos/optimized/hero-desktop-1280.webp') }}" alt="" width="1672"
-                    height="941" fetchpriority="high" loading="eager" decoding="async">
+                <img src="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }}" alt=""
+                    width="1677" height="938" fetchpriority="high" loading="eager" decoding="async">
             </picture>
             <div class="container">
                 <div class="hero-grid">
@@ -56,7 +53,7 @@
                             {{ __('Explore Egypt') }}
                             <span class="hero-title-line">
                                 <span class="hero-title-prefix">{{ __('With') }}</span>
-                                <span class="hero-title-gold">{{ __('Etro Tours') }}</span>
+                                <span class="hero-title-gold">{{ __('Egypt Tour Pro') }}</span>
                             </span>
                         </h1>
                         <div class="hero-title-rule" aria-hidden="true"></div>
@@ -98,33 +95,26 @@
                                 <i class="la la-star"></i>
                                 {{ __('Premium Tour') }}
                             </div>
-                            <picture>
-                                <source media="(max-width: 991px)" type="image/gif"
-                                    srcset="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-                                <source type="image/avif"
-                                    srcset="{{ asset('website/photos/optimized/hero-card-900.avif') }}">
-                                <source type="image/webp"
-                                    srcset="{{ asset('website/photos/optimized/hero-card-900.webp') }}">
-                                <img src="{{ asset('website/photos/optimized/hero-card-900.webp') }}"
-                                    alt="{{ __('Egypt Tour') }}" width="900" height="506" decoding="async">
-                            </picture>
+                            <img src="{{ asset('website/photos/optimized/home-nile-cruise-900.webp') }}"
+                                alt="{{ __('Luxury Nile cruise at sunset') }}" width="900" height="473"
+                                loading="eager" decoding="sync">
                             <div class="floating-info">
-                                <h2>{{ __('Private Egypt Journey') }}</h2>
-                                <p>{{ __('Premium tours, hand-picked guides, comfortable transfers, and carefully curated routes.') }}
+                                <h2>{{ __('Nile Cruise Experience') }}</h2>
+                                <p>{{ __('Sail the timeless Nile in comfort and style, with hand-picked itineraries and expert guides.') }}
                                 </p>
                                 <div class="mini-route">
                                     @if ($isRtl)
+                                        <span><i class="la la-map-marker"></i>{{ __('Abu Simbel') }}</span>
+                                        <span><i class="la la-long-arrow-left"></i></span>
                                         <span><i class="la la-map-marker"></i>{{ __('Aswan') }}</span>
                                         <span><i class="la la-long-arrow-left"></i></span>
-                                        <span><i class="la la-map-marker"></i>{{ __('Luxor') }}</span>
-                                        <span><i class="la la-long-arrow-left"></i></span>
-                                        <span><i class="la la-map-marker"></i> {{ __('Cairo') }}</span>
+                                        <span><i class="la la-map-marker"></i> {{ __('Luxor') }}</span>
                                     @else
-                                        <span><i class="la la-map-marker"></i> {{ __('Cairo') }}</span>
-                                        <span><i class="la la-long-arrow-right"></i></span>
-                                        <span><i class="la la-map-marker"></i>{{ __('Luxor') }}</span>
+                                        <span><i class="la la-map-marker"></i> {{ __('Luxor') }}</span>
                                         <span><i class="la la-long-arrow-right"></i></span>
                                         <span><i class="la la-map-marker"></i>{{ __('Aswan') }}</span>
+                                        <span><i class="la la-long-arrow-right"></i></span>
+                                        <span><i class="la la-map-marker"></i>{{ __('Abu Simbel') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -175,7 +165,7 @@
             </div>
         </section>
 
-        <section class="section-pad light-section">
+        {{-- <section class="section-pad light-section">
             <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">
@@ -203,14 +193,14 @@
                     @endforeach
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <section class="section-pad">
             <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">
                         <i class="la la-star"></i>
-                        {{ __('Why Etro Tours') }}
+                        {{ __('Why Egypt Tour Pro') }}
                     </div>
                     <h2 class="section-title">{{ __('Travel Egypt With Confidence') }}</h2>
                     <p class="section-subtitle">
@@ -258,70 +248,211 @@
             <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">
-                        <i class="la la-suitcase"></i>
-                        {{ __('Featured Tours') }}
+                        <i class="la la-compass"></i>
+                        {{ __('Tour Categories') }}
                     </div>
                     <h2 class="section-title">{{ __('Signature Egypt Experiences') }}</h2>
                     <p class="section-subtitle">
-                        {{ __('Discover our most requested journeys, from iconic landmarks to luxurious Nile adventures.') }}
+                        {{ __('Discover our premier journey categories, from iconic day excursions to comprehensive vacation packages and luxury Nile cruises.') }}
                     </p>
                 </div>
 
                 <div class="cards-grid">
-                    @forelse ($featuredPackages as $package)
-                        <div class="deal-card reveal-up">
-                            <div class="card-image">
-                                @if ($package['is_ultra_luxury'])
-                                    <div class="badge-top">{{ __('Ultra Luxury') }}</div>
-                                @elseif ($package['is_best_seller'])
-                                    <div class="badge-top">{{ __('Best Seller') }}</div>
-                                @endif
+                    {{-- Category 1: Day Tours --}}
+                    <div class="deal-card reveal-up">
+                        <div class="card-image">
+                            <div class="badge-top">{{ __('Day Tours') }}</div>
 
-                                <div class="deal-price">{{ $package['price'] }}</div>
+                            <a href="{{ route('website.day_tours.index') }}" aria-label="{{ __('Egypt Day Tours') }}">
+                                <img src="{{ asset('website/photos/experiences/day-tours.jpg') }}"
+                                    alt="{{ __('Egypt Day Tours') }}" width="800" height="500" loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null;this.src='{{ asset('website/images/day-tours/cairo-day-tours.jpg') }}';">
+                            </a>
+                        </div>
 
-                                <a href="{{ $package['url'] }}">
-                                    <img src="{{ $package['image'] }}" alt="{{ $package['title'] }}" width="800"
-                                        height="500" loading="lazy" decoding="async">
-                                </a>
+                        <div class="card-body">
+                            <h3 class="deal-title">
+                                <a href="{{ route('website.day_tours.index') }}">{{ __('Egypt Day Tours') }}</a>
+                            </h3>
+
+                            <div class="deal-meta">
+                                <span><i class="la la-clock"></i>{{ __('Full & Half Day') }}</span>
+                                <span><i class="la la-map-marker"></i>{{ __('Cairo, Luxor & Red Sea') }}</span>
+                                <span><i class="la la-user-tie"></i>{{ __('Private Guided') }}</span>
                             </div>
 
-                            <div class="card-body">
-                                <h3 class="deal-title">
-                                    <a href="{{ $package['url'] }}">{{ $package['title'] }}</a>
-                                </h3>
+                            <p class="deal-description">
+                                {{ __('Discover Egypt\'s iconic landmarks and ancient marvels on private guided day trips. From the Giza Pyramids to Luxor\'s temples and Red Sea shores, experience unforgettable day adventures.') }}
+                            </p>
 
-                                <div class="deal-meta">
-                                    <span><i class="la la-clock"></i>{{ $package['duration'] }}</span>
-                                    <span><i class="la la-users"></i>{{ $package['tour_type'] }}</span>
-                                    @if ($package['route_text'])
-                                        <span><i class="la la-map-marker"></i>{{ $package['route_text'] }}</span>
-                                    @endif
-                                </div>
+                            <a href="{{ route('website.day_tours.index') }}" class="gold-btn deal-btn mt-auto">
+                                {{ __('Explore Day Tours') }}
+                                <i class="la la-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
 
-                                <p class="deal-description">{{ $package['description'] }}</p>
+                    {{-- Category 2: Travel Packages --}}
+                    <div class="deal-card reveal-up">
+                        <div class="card-image">
+                            <div class="badge-top">{{ __('Tour Packages') }}</div>
 
-                                @if (!empty($package['tags']))
-                                    <div class="tag-list">
-                                        @foreach ($package['tags'] as $tag)
-                                            <span class="feature-tag">{{ $tag }}</span>
-                                        @endforeach
-                                    </div>
-                                @endif
+                            <a href="{{ route('website.travel_packages.index') }}"
+                                aria-label="{{ __('Egypt Tour Packages') }}">
+                                <img src="{{ asset('website/photos/experiences/travel-packages.jpg') }}"
+                                    alt="{{ __('Egypt Tour Packages') }}" width="800" height="500" loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null;this.src='{{ asset('website/images/travel-packages/7-days-egypt-vacation.jpg') }}';">
+                            </a>
+                        </div>
 
-                                <a href="{{ $package['url'] }}" class="gold-btn deal-btn">
-                                    {{ __('Explore Journey') }}
-                                    <i class="la la-arrow-right"></i>
-                                </a>
+                        <div class="card-body">
+                            <h3 class="deal-title">
+                                <a
+                                    href="{{ route('website.travel_packages.index') }}">{{ __('Egypt Tour Packages') }}</a>
+                            </h3>
+
+                            <div class="deal-meta">
+                                <span><i class="la la-calendar"></i>{{ __('Multi-Day Journeys') }}</span>
+                                <span><i class="la la-hotel"></i>{{ __('5-Star & Luxury Stays') }}</span>
+                                <span><i class="la la-sliders-h"></i>{{ __('Customizable Itineraries') }}</span>
                             </div>
+
+                            <p class="deal-description">
+                                {{ __('Multi-day curated journeys combining ancient wonders, luxury hotel stays, desert adventures, and bespoke cultural itineraries with seamless transfers and dedicated support.') }}
+                            </p>
+
+                            <a href="{{ route('website.travel_packages.index') }}" class="gold-btn deal-btn mt-auto">
+                                {{ __('Explore Tour Packages') }}
+                                <i class="la la-arrow-right"></i>
+                            </a>
                         </div>
-                    @empty
-                        <div class="empty-state">
-                            {{ __('No featured packages found. Add active packages from the admin panel.') }}
+                    </div>
+
+                    {{-- Category 3: Nile Cruises --}}
+                    <div class="deal-card reveal-up">
+                        <div class="card-image">
+                            <div class="badge-top">{{ __('Nile Cruises') }}</div>
+
+                            <a href="{{ route('website.nile_cruises.index') }}"
+                                aria-label="{{ __('Egypt Nile Cruise') }}">
+                                <img src="{{ asset('website/photos/experiences/nile-cruises.jpg') }}"
+                                    alt="{{ __('Egypt Nile Cruise') }}" width="800" height="500" loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null;this.src='{{ asset('website/images/nile-cruises/luxor-aswan.jpg') }}';">
+                            </a>
                         </div>
-                    @endforelse
+
+                        <div class="card-body">
+                            <h3 class="deal-title">
+                                <a href="{{ route('website.nile_cruises.index') }}">{{ __('Egypt Nile Cruise') }}</a>
+                            </h3>
+
+                            <div class="deal-meta">
+                                <span><i class="la la-ship"></i>{{ __('Luxor & Aswan Sights') }}</span>
+                                <span><i class="la la-moon"></i>{{ __('3 to 7 Night Cruises') }}</span>
+                                <span><i class="la la-utensils"></i>{{ __('Full Board Dining') }}</span>
+                            </div>
+
+                            <p class="deal-description">
+                                {{ __('Sail timeless waters between Luxor and Aswan aboard five-star ships, boutique Dahabiyas, and Lake Nasser floating palaces with world-class dining and guided temple visits.') }}
+                            </p>
+
+                            <a href="{{ route('website.nile_cruises.index') }}" class="gold-btn deal-btn mt-auto">
+                                {{ __('Explore Nile Cruises') }}
+                                <i class="la la-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+
+        @if ($featuredPackages->isNotEmpty())
+            <section class="section-pad" id="featured-packages">
+                <div class="container">
+                    <div class="section-heading reveal-up">
+                        <div class="section-kicker">
+                            <i class="la la-suitcase"></i>
+                            {{ __('Featured Tours') }}
+                        </div>
+                        <h2 class="section-title">{{ __('Most Popular Egypt Tours & Cruises') }}</h2>
+                        <p class="section-subtitle">
+                            {{ __('Discover our most requested journeys, from iconic landmarks to luxurious Nile adventures.') }}
+                        </p>
+                    </div>
+
+                    <div class="cards-grid">
+                        @foreach ($featuredPackages as $package)
+                            <div class="deal-card reveal-up">
+                                <div class="card-image">
+                                    @if (!empty($package['is_ultra_luxury']))
+                                        <div class="badge-top">{{ __('Ultra Luxury') }}</div>
+                                    @elseif (!empty($package['is_best_seller']))
+                                        <div class="badge-top">{{ __('Best Seller') }}</div>
+                                    @elseif (!empty($package['is_featured']))
+                                        <div class="badge-top">{{ __('Featured') }}</div>
+                                    @endif
+
+                                    @if (!empty($package['price']))
+                                        <div class="deal-price">{{ $package['price'] }}</div>
+                                    @endif
+
+                                    <a href="{{ $package['url'] }}" aria-label="{{ $package['title'] }}">
+                                        <img src="{{ $package['image'] }}" alt="{{ $package['title'] }}"
+                                            width="800" height="500" loading="lazy" decoding="async">
+                                    </a>
+                                </div>
+
+                                <div class="card-body">
+                                    <h3 class="deal-title">
+                                        <a href="{{ $package['url'] }}">{{ $package['title'] }}</a>
+                                    </h3>
+
+                                    <div class="deal-meta">
+                                        @if (!empty($package['duration']))
+                                            <span><i class="la la-clock"></i>{{ $package['duration'] }}</span>
+                                        @endif
+                                        @if (!empty($package['tour_type']))
+                                            <span><i class="la la-users"></i>{{ $package['tour_type'] }}</span>
+                                        @endif
+                                        @if (!empty($package['route_text']))
+                                            <span><i class="la la-map-marker"></i>{{ $package['route_text'] }}</span>
+                                        @endif
+                                    </div>
+
+                                    @if (!empty($package['description']))
+                                        <p class="deal-description">{{ $package['description'] }}</p>
+                                    @endif
+
+                                    @if (!empty($package['tags']))
+                                        <div class="tag-list">
+                                            @foreach ($package['tags'] as $tag)
+                                                <span class="feature-tag">{{ $tag }}</span>
+                                            @endforeach
+                                        </div>
+                                    @endif
+
+                                    <a href="{{ $package['url'] }}" class="gold-btn deal-btn mt-auto">
+                                        {{ __('Explore Journey') }}
+                                        <i class="la la-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="text-center mt-5 reveal-up">
+                        <a href="{{ route('website.travel_packages.index') }}" class="gold-btn"
+                            style="padding: 14px 32px; font-size: 1.05rem;">
+                            <i class="la la-th-large"></i>
+                            {{ __('View All Packages & Tours') }}
+                        </a>
+                    </div>
+                </div>
+            </section>
+        @endif
 
         <section class="quote-section" id="quote">
             <div class="container">
@@ -471,7 +602,7 @@
                         <i class="la la-comments"></i>
                         {{ __('Guest Reviews') }}
                     </div>
-                    <h2 class="section-title">{{ __('Travelers Love Etro Tours') }}</h2>
+                    <h2 class="section-title">{{ __('Travelers Love Egypt Tour Pro') }}</h2>
                     <p class="section-subtitle">
                         {{ __('Real experiences from guests who discovered the magic of Egypt with our team.') }}
                     </p>
@@ -519,8 +650,7 @@
                 </div>
 
                 <div class="text-center mt-5 reveal-up">
-                    <a href="https://www.tripadvisor.com/Attraction_Review-g294205-d19981172-Reviews-Etro_tours-Luxor_Nile_River_Valley.html"
-                        target="_blank" class="gold-btn">
+                    <a href="#" target="_blank" class="gold-btn">
                         <i class="la la-external-link"></i>
                         {{ __('Read All Reviews on TripAdvisor') }}
                     </a>
@@ -627,7 +757,7 @@
 
 @section('js')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        function initReveal() {
             const revealItems = document.querySelectorAll('.reveal-up');
 
             if ('IntersectionObserver' in window) {
@@ -639,11 +769,12 @@
                         }
                     });
                 }, {
-                    threshold: 0.12
+                    threshold: 0.05,
+                    rootMargin: '0px 0px 50px 0px'
                 });
 
                 revealItems.forEach(function(item, index) {
-                    item.style.transitionDelay = (index % 4) * 80 + 'ms';
+                    item.style.transitionDelay = (index % 4) * 60 + 'ms';
                     observer.observe(item);
                 });
             } else {
@@ -652,6 +783,17 @@
                 });
             }
 
-        });
+            setTimeout(function() {
+                document.querySelectorAll('.reveal-up:not(.is-visible)').forEach(function(item) {
+                    item.classList.add('is-visible');
+                });
+            }, 400);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initReveal);
+        } else {
+            initReveal();
+        }
     </script>
 @endsection

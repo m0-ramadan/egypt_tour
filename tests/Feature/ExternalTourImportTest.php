@@ -362,6 +362,222 @@ HTML;
         $this->assertSame('nile_cruise', $luxorResult['package']->category?->category_type);
     }
 
+    protected function getCruiseProgramsHtml(): string
+    {
+        $html = '<html><body><h1>Test Nile Cruise</h1><section id="itinerary"><div class="itinerary-section">';
+        foreach ([4 => 'Wednesday', 5 => 'Saturday'] as $count => $departure) {
+            $nights = $count - 1;
+            $html .= "<h3 class=\"itinerary-program-title\">0{$count} Days / 0{$nights} Nights Program (Every {$departure})</h3>";
+            for ($day = 1; $day <= $count; $day++) {
+                $html .= "<div class=\"day-card\"><span class=\"day-number\">{$day}</span>"
+                    . "<h3 class=\"day-title\">Day {$day}: {$departure} stop {$day}</h3>"
+                    . "<div class=\"day-content\"><p>Explore Luxor on {$departure}.</p>"
+                    . '<div class="meals-list">Breakfast Lunch</div></div></div>';
+            }
+        }
+
+        return $html . '</div></section></body></html>';
+    }
+
+    public function test_cruise_programs_are_separate_and_updates_preserve_duration_prices(): void
+    {
+        $this->fakeHttpResponses(str_replace("04 Days / 03 Nights", "04 Days - 03 Nights", $this->getCruiseProgramsHtml()));
+        $url = 'https://www.luxorandaswan.com/Egypt/cruise/test-programs';
+        $service = app(ExternalTourImportService::class);
+        $options = ['rewrite' => false, 'download_images' => false];
+        $package = $service->import($url, $options)['package'];
+        $durations = $package->nileCruiseDurations()->get();
+        $this->assertCount(2, $durations);
+        $this->assertSame(4, $package->duration_days);
+        $this->assertSame(0, $package->itineraries()->count());
+        foreach ($durations as $duration) {
+            $this->assertSame(range(1, $duration->days), $duration->itineraryDays->pluck('day_number')->all());
+            $this->assertSame(['breakfast', 'lunch'], $duration->itineraryDays->first()->meals);
+        }
+        $durations[0]->update(['start_from_price' => 1234]);
+        $service->import($url, $options + ['update' => true]);
+        $this->assertSame($durations->pluck('id')->all(), $package->nileCruiseDurations()->pluck('id')->all());
+        $this->assertEquals(1234, $durations[0]->fresh()->start_from_price);
+        $this->assertSame(4, $durations[0]->itineraryDays()->count());
+
+        $view = view('website.pages.packages.partials.nile_cruise.itinerary', [
+            'package' => $package->fresh(), 'title' => 'Test Nile Cruise',
+        ])->render();
+        $this->assertStringContainsString('Every Wednesday', $view);
+        $this->assertStringContainsString('Every Saturday', $view);
+        $this->assertStringNotContainsString('Day 6', $view);
+
+        // Repair an old flattened import without touching commercial fields.
+        $package->nileCruiseDurations()->delete();
+        $package->itineraries()->create(['day_number' => 9, 'title' => ['en' => 'Flattened day'], 'sort_order' => 9]);
+        $before = $package->fresh()->getAttributes();
+        $this->artisan('tour:repair-cruise-itineraries', ['--package' => $package->id])->assertSuccessful();
+        $this->assertSame($before, $package->fresh()->getAttributes());
+        $this->assertSame(0, $package->itineraries()->count());
+        $this->assertSame(2, $package->nileCruiseDurations()->count());
+
+        // A partial source response must not remove existing days.
+        $this->fakeHttpResponses(str_replace('<span class="day-number">5</span>', '<span class="day-number">6</span>', $this->getCruiseProgramsHtml()));
+        $this->artisan('tour:repair-cruise-itineraries', ['--package' => $package->id])->assertFailed();
+        $this->assertSame(5, $package->nileCruiseDurations()->where('days', 5)->first()->itineraryDays()->count());
+    }
+
+    public function test_same_length_cruise_programs_keep_both_directions(): void
+    {
+        $html = str_replace(
+            ['04 Days / 03 Nights Program (Every Wednesday)', '05 Days / 04 Nights Program (Every Saturday)'],
+            ['THREE-NIGHT CRUISE - ASWAN TO LUXOR', '4 Days - Luxor / Aswan'],
+            $this->getCruiseProgramsHtml()
+        );
+        $html = preg_replace('/<div class="day-card"><span class="day-number">5<\/span>.*?<\/div><\/div><\/div>/s', '', $html);
+        $this->fakeHttpResponses($html);
+        $package = app(ExternalTourImportService::class)->import(
+            'https://www.luxorandaswan.com/Egypt/cruise/two-directions',
+            ['rewrite' => false, 'download_images' => false]
+        )['package'];
+        $this->assertSame(2, $package->nileCruiseDurations()->count());
+        $this->assertSame([4, 4], $package->nileCruiseDurations->pluck('days')->all());
+        $this->assertSame([3, 3], $package->nileCruiseDurations->pluck('nights')->all());
+        $this->assertSame('Wednesday stop 1', $package->nileCruiseDurations[0]->itineraryDays[0]->display_title);
+        $this->assertSame('Saturday stop 1', $package->nileCruiseDurations[1]->itineraryDays[0]->display_title);
+    }
+
+    public function test_cruise_pricing_preserves_periods_and_renders_separate_cabin_cards(): void
+    {
+        $cards = '';
+        foreach (['May to August' => 640, 'September to April' => 780] as $period => $price) {
+            $cards .= '<div class="pricing-card"><div class="pricing-duration">3 Nights 4 Days</div>'
+                . "<div class=\"pricing-season\">{$period}</div>"
+                . '<div class="room-price-row"><div class="room-type">Triple Cabin</div>'
+                . "<span class=\"price\">{$price}</span></div></div>";
+        }
+        $html = str_replace('</body>', $cards . '</body>', $this->getCruiseProgramsHtml());
+        $this->fakeHttpResponses($html);
+        $url = 'https://www.luxorandaswan.com/Egypt/cruise/seasonal-pricing';
+        $service = app(ExternalTourImportService::class);
+        $package = $service->import($url, ['rewrite' => false, 'download_images' => false])['package'];
+        $seasons = $package->tourPackageAccommodations->first()->seasons;
+        $this->assertSame(['May to August', 'September to April'], $seasons->pluck('period')->all());
+        $rendered = view('website.pages.packages.partials.nile_cruise.imported_pricing', [
+            'package' => $package, 'currencySymbol' => '$',
+        ])->render();
+        $this->assertSame(2, substr_count($rendered, '<details class="nc-fare-card"'));
+        $this->assertStringContainsString('May to August', $rendered);
+        $this->assertStringContainsString('September to April', $rendered);
+        $this->assertStringContainsString('Triple Cabin', $rendered);
+        $this->assertStringContainsString('From: $640', $rendered);
+        $this->assertStringContainsString('From: $780', $rendered);
+        $this->assertStringNotContainsString('<table', $rendered);
+
+        foreach ($seasons as $season) $season->update(['period' => null]);
+        $seasons[1]->items->first()->update(['price' => 999]);
+        $this->assertSame(1, $service->repairCruisePricingPeriods($package->fresh(), $url));
+        $this->assertSame('May to August', $seasons[0]->fresh()->period);
+        $this->assertNull($seasons[1]->fresh()->period);
+        $this->assertEquals(999, $seasons[1]->items->first()->fresh()->price);
+    }
+
+    public function test_cruise_rewrite_matches_program_and_day_together(): void
+    {
+        $data = app(LuxorAndAswanTourPageParser::class)->parse($this->getCruiseProgramsHtml(), 'https://www.luxorandaswan.com/Egypt/cruise/test-programs');
+        config(['services.deepseek.api_key' => 'test']);
+        $ai = $this->createMock(DeepSeekService::class);
+        $ai->method('askJson')->willReturn(['itinerary' => [
+            ['program_id' => 1, 'day_number' => 1, 'title' => 'Aswan embarkation'],
+            ['program_id' => 2, 'day_number' => 1, 'title' => 'Luxor embarkation'],
+            ['day_number' => 2, 'title' => 'Ambiguous day must be ignored'],
+        ]]);
+        $result = (new ExternalTourContentRewriter($ai))->rewrite($data)['data'];
+        $this->assertSame('Aswan embarkation', $result['itinerary'][0]['title']);
+        $this->assertSame('Luxor embarkation', $result['itinerary'][4]['title']);
+        $this->assertSame($data['itinerary'][1], $result['itinerary'][1]);
+        $this->assertSame($data['itinerary'][5], $result['itinerary'][5]);
+        $this->assertSame($data['itinerary'][4]['program'], $result['itinerary'][4]['program']);
+    }
+
+    public function test_cruise_import_assigns_type_and_category_and_repairs_on_update(): void
+    {
+        $type = \App\Models\NileCruiseType::firstOrCreate(
+            ['slug' => 'luxor-aswan-nile-cruises'],
+            ['name' => ['en' => 'Luxor and Aswan Nile Cruises'], 'is_active' => true]
+        );
+        $category = \App\Models\NileCruiseCategory::firstOrCreate(
+            ['nile_cruise_type_id' => $type->id, 'slug' => 'standard-nile-cruises'],
+            ['name' => ['en' => 'Standard Nile Cruises'], 'is_active' => true]
+        );
+        $html = str_replace(
+            ['7 Days Egypt Tour Packages', '7 Day Cairo, Alexandria and Nile Cruise Tour Package by Flight'],
+            ['Luxor and Aswan Nile Cruises</a></li><li>Standard Nile Cruises', 'Test Nile Cruise'],
+            $this->getSampleTourHtml()
+        );
+        $this->fakeHttpResponses($html);
+        $url = 'https://www.luxorandaswan.com/Egypt/cruise/test-nile-cruise';
+        $service = app(ExternalTourImportService::class);
+        $options = ['rewrite' => false, 'download_images' => false];
+        $package = $service->import($url, $options)['package'];
+        $this->assertEquals($type->id, $package->nile_cruise_type_id);
+        $this->assertEquals($category->id, $package->nile_cruise_category_id);
+
+        $package->update(['nile_cruise_type_id' => null, 'nile_cruise_category_id' => null]);
+        $updated = $service->import($url, $options + ['update' => true])['package'];
+        $this->assertSame($package->id, $updated->id);
+        $this->assertEquals($type->id, $updated->nile_cruise_type_id);
+        $this->assertEquals($category->id, $updated->nile_cruise_category_id);
+
+        $view = app(\App\Http\Controllers\Website\NileCruiseController::class)
+            ->showLuxorAswanCategory(\Illuminate\Http\Request::create('/'), $category->slug);
+        $this->assertContains($package->id, $view->getData()['paginated']->pluck('id')->all());
+    }
+
+    public function test_cruise_taxonomy_uses_breadcrumb_tier_not_marketing_description(): void
+    {
+        $resolver = app(\App\Services\ExternalTours\ExternalNileCruiseTaxonomyResolver::class);
+        $type = \App\Models\NileCruiseType::firstOrCreate(
+            ['slug' => 'luxor-aswan-nile-cruises'],
+            ['name' => ['en' => 'Luxor and Aswan Nile Cruises'], 'is_active' => true]
+        );
+        foreach (['standard', 'deluxe', 'ultra-deluxe', 'luxury'] as $tier) {
+            $category = \App\Models\NileCruiseCategory::firstOrCreate(
+                ['nile_cruise_type_id' => $type->id, 'slug' => $tier . '-nile-cruises'],
+                ['name' => ['en' => $tier], 'is_active' => true]
+            );
+            $facts = [
+                'package_type' => 'nile_cruise',
+                'title' => 'Luxury Nile Cruise',
+                'breadcrumbs' => ['Luxor and Aswan Nile Cruises', str_replace('-', ' ', $tier) . ' Nile Cruises']
+            ];
+            $resolved = $resolver->resolve($facts);
+            $this->assertEquals($category->id, $resolved['nile_cruise_category_id']);
+        }
+        $unknown = $resolver->resolve([
+            'package_type' => 'nile_cruise',
+            'breadcrumbs' => ['Luxor and Aswan Nile Cruises'],
+            'description' => 'Luxury cruise with standard cabins'
+        ]);
+        $this->assertNull($unknown['nile_cruise_category_id']);
+        $this->assertNotEmpty($unknown['warnings']);
+        $land = $resolver->resolve(['package_type' => 'travel_package', 'title' => 'Luxury Dahabiya and Cairo']);
+        $this->assertNull($land['nile_cruise_type_id']);
+
+        foreach (['dahabiya-nile-cruise' => 'Dahabiya Nile Cruise', 'lake-nasser-cruise' => 'Lake Nasser Cruise'] as $slug => $label) {
+            $otherType = \App\Models\NileCruiseType::firstOrCreate(
+                ['slug' => $slug],
+                ['name' => ['en' => $label], 'is_active' => true]
+            );
+            $resolved = $resolver->resolve(['package_type' => 'nile_cruise', 'breadcrumbs' => [$label]]);
+            $this->assertEquals($otherType->id, $resolved['nile_cruise_type_id']);
+            $this->assertNull($resolved['nile_cruise_category_id']);
+        }
+    }
+
+    public function test_parser_handles_missing_open_graph_metadata(): void
+    {
+        $html = preg_replace('/<meta property="og:[^>]+>/', '', $this->getSampleTourHtml());
+        $parsed = app(LuxorAndAswanTourPageParser::class)->parse($html, $this->sampleUrl);
+        $this->assertStringContainsString('Cairo', $parsed['title']);
+        $this->assertNotEmpty($parsed['images']);
+    }
+
     public function test_extracts_and_persists_correct_duration(): void
     {
         $this->fakeHttpResponses($this->getSampleTourHtml(3));
@@ -686,5 +902,37 @@ HTML;
 
         $attractionIds = $package->packageAttractions->pluck('attraction_id')->toArray();
         $this->assertSame(count($attractionIds), count(array_unique($attractionIds)), 'Package has duplicate attractions attached.');
+    }
+
+    /** @test */
+    public function it_rejects_soft_404_pages_from_remote_source(): void
+    {
+        $notFoundHtml = <<<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>404 - Page Not Found | Luxor and Aswan Travel</title>
+</head>
+<body>
+    <h1>404</h1>
+    <p>The page you're looking for couldn't be found.</p>
+</body>
+</html>
+HTML;
+
+        Http::fake([
+            'https://www.luxorandaswan.com/*' => Http::response($notFoundHtml, 200),
+        ]);
+
+        /** @var ExternalTourImportService $service */
+        $service = app(ExternalTourImportService::class);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage("404 - Page Not Found");
+
+        $service->import('https://www.luxorandaswan.com/Egypt/cruise/invalid-tour-slug', [
+            'rewrite' => false,
+            'download_images' => false,
+        ]);
     }
 }

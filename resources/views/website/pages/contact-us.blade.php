@@ -1,8 +1,10 @@
 @extends('website.layouts.master')
 
-@section('title', __('Contact Us') . ' - Etro Tours')
-@section('description', __('Contact Etro Tours for luxury Egypt tours, tailor-made itineraries, Nile cruises, and fast support from our travel specialists.'))
-@section('keywords', 'contact Etro Tours, Egypt travel experts, luxury travel support, Nile cruise booking, tailor made Egypt tours')
+@section('title', __('Contact Us') . ' - Egypt Tour Pro')
+@section('description', __('Contact Egypt Tour Pro for luxury Egypt tours, tailor-made itineraries, Nile cruises, and fast
+    support from our travel specialists.'))
+@section('keywords', 'contact Egypt Tour Pro, Egypt travel experts, luxury travel support, Nile cruise booking, tailor made
+    Egypt tours')
 @section('image', asset('website/photos/home2.webp'))
 
 @section('css')
@@ -13,7 +15,7 @@
             margin-top: -85px;
             padding: 150px 0 95px;
             background:
-                linear-gradient(rgba(16, 33, 63, 0.7), rgba(21, 53, 91, 0.72)),
+                linear-gradient(rgba(28, 28, 28, 0.7), rgba(43, 43, 43, 0.72)),
                 url('{{ asset('website/photos/home2.webp') }}') center/cover no-repeat;
         }
 
@@ -54,7 +56,7 @@
         }
 
         .contact-badge i {
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
         }
 
         .contact-title {
@@ -86,14 +88,14 @@
             background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.14);
             backdrop-filter: blur(14px);
-            box-shadow: 0 20px 40px rgba(10, 20, 40, 0.18);
+            box-shadow: 0 20px 40px rgba(17, 17, 17, 0.18);
         }
 
         .hero-stat i {
             display: block;
             margin-bottom: 14px;
             font-size: 2rem;
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
         }
 
         .hero-stat h4 {
@@ -110,7 +112,7 @@
 
         .contact-main-section {
             padding: 80px 0 36px;
-            background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+            background: linear-gradient(180deg, #f8fbff 0%, #ffd0a8 100%);
         }
 
         .section-heading {
@@ -122,13 +124,13 @@
         .section-heading h2 {
             font-family: 'Playfair Display', serif;
             font-size: clamp(2rem, 4vw, 2.8rem);
-            color: #1c325c;
+            color: #2b2b2b;
             margin-bottom: 14px;
         }
 
         .section-heading p {
             margin: 0;
-            color: #617189;
+            color: #5b5854;
             line-height: 1.8;
             font-size: 1.02rem;
         }
@@ -147,15 +149,15 @@
             padding: 32px 28px;
             border-radius: 24px;
             background: #fff;
-            border: 1px solid rgba(26, 54, 93, 0.08);
-            box-shadow: 0 14px 38px rgba(20, 41, 74, 0.08);
+            border: 1px solid rgba(43, 43, 43, 0.08);
+            box-shadow: 0 14px 38px rgba(28, 28, 28, 0.08);
             transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
         }
 
         .contact-method:hover {
             transform: translateY(-8px);
-            border-color: rgba(197, 149, 91, 0.28);
-            box-shadow: 0 24px 52px rgba(20, 41, 74, 0.14);
+            border-color: rgba(243, 107, 10, 0.28);
+            box-shadow: 0 24px 52px rgba(28, 28, 28, 0.14);
         }
 
         .contact-method-icon {
@@ -166,22 +168,22 @@
             justify-content: center;
             margin-bottom: 22px;
             border-radius: 22px;
-            background: linear-gradient(135deg, rgba(197, 149, 91, 0.15), rgba(66, 153, 225, 0.16));
-            color: #c5955b;
+            background: linear-gradient(135deg, rgba(243, 107, 10, 0.15), rgba(28, 28, 28, 0.08));
+            color: var(--etp-orange-500, #F36B0A);
             font-size: 2rem;
-            box-shadow: 0 10px 24px rgba(197, 149, 91, 0.12);
+            box-shadow: 0 10px 24px rgba(243, 107, 10, 0.12);
         }
 
         .contact-method-title {
             font-family: 'Playfair Display', serif;
             margin-bottom: 12px;
             font-size: 1.45rem;
-            color: #1c325c;
+            color: #2b2b2b;
         }
 
         .contact-method-description {
             margin: 0 0 12px;
-            color: #5f6f86;
+            color: #5b5854;
             line-height: 1.75;
             flex: 1;
         }
@@ -192,8 +194,8 @@
             margin-bottom: 18px;
             padding: 8px 14px;
             border-radius: 999px;
-            background: rgba(197, 149, 91, 0.12);
-            color: #9b6a2c;
+            background: rgba(243, 107, 10, 0.12);
+            color: var(--etp-orange-600, #D95600);
             font-size: 0.84rem;
             font-weight: 700;
         }
@@ -202,14 +204,14 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: #1c325c;
+            color: #2b2b2b;
             text-decoration: none;
             font-weight: 700;
             transition: color 0.25s ease, transform 0.25s ease;
         }
 
         .contact-method-link:hover {
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
             transform: translateY(-1px);
         }
 
@@ -225,8 +227,8 @@
         .office-card {
             background: #fff;
             border-radius: 28px;
-            border: 1px solid rgba(26, 54, 93, 0.08);
-            box-shadow: 0 18px 44px rgba(20, 41, 74, 0.08);
+            border: 1px solid rgba(43, 43, 43, 0.08);
+            box-shadow: 0 18px 44px rgba(28, 28, 28, 0.08);
         }
 
         .contact-form-card {
@@ -236,13 +238,13 @@
         .contact-card-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.9rem;
-            color: #1c325c;
+            color: #2b2b2b;
             margin-bottom: 10px;
         }
 
         .contact-card-subtitle {
             margin: 0 0 24px;
-            color: #617189;
+            color: #5b5854;
             line-height: 1.75;
         }
 
@@ -288,7 +290,7 @@
         .form-label {
             display: block;
             margin-bottom: 10px;
-            color: #1c325c;
+            color: #2b2b2b;
             font-weight: 700;
             font-size: 0.96rem;
         }
@@ -298,12 +300,12 @@
         .form-textarea {
             width: 100%;
             min-height: 58px;
-            border: 1px solid rgba(26, 54, 93, 0.12);
+            border: 1px solid rgba(43, 43, 43, 0.12);
             border-radius: 18px;
             background: #fff;
-            color: #1f2f46;
+            color: #1c1c1c;
             padding: 15px 18px;
-            box-shadow: 0 8px 24px rgba(20, 41, 74, 0.04);
+            box-shadow: 0 8px 24px rgba(28, 28, 28, 0.04);
             transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
         }
 
@@ -316,8 +318,8 @@
         .form-select:focus,
         .form-textarea:focus {
             outline: none;
-            border-color: rgba(197, 149, 91, 0.58);
-            box-shadow: 0 0 0 4px rgba(197, 149, 91, 0.12);
+            border-color: var(--etp-orange-500, #F36B0A);
+            box-shadow: 0 0 0 4px rgba(243, 107, 10, 0.14);
             transform: translateY(-1px);
         }
 
@@ -343,16 +345,16 @@
             width: min(100%, 320px);
             border: 0;
             border-radius: 999px;
-            background: linear-gradient(135deg, #c5955b 0%, #b8860b 100%);
-            color: #10213f;
+            background: var(--etp-gradient-orange, linear-gradient(135deg, #F36B0A 0%, #FF8A3D 100%));
+            color: #ffffff;
             font-weight: 800;
-            box-shadow: 0 14px 30px rgba(197, 149, 91, 0.24);
+            box-shadow: 0 14px 30px rgba(243, 107, 10, 0.24);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 18px 36px rgba(197, 149, 91, 0.32);
+            box-shadow: 0 18px 36px rgba(243, 107, 10, 0.32);
         }
 
         .contact-side-card,
@@ -368,7 +370,7 @@
         .side-card-title,
         .office-title {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #2b2b2b;
             font-size: 1.65rem;
             margin-bottom: 12px;
         }
@@ -376,7 +378,7 @@
         .side-card-copy,
         .office-intro {
             margin: 0 0 22px;
-            color: #617189;
+            color: #5b5854;
             line-height: 1.75;
         }
 
@@ -397,8 +399,8 @@
             gap: 14px;
             padding: 18px;
             border-radius: 20px;
-            background: linear-gradient(135deg, #f8fbff 0%, #f2f6fb 100%);
-            border: 1px solid rgba(26, 54, 93, 0.08);
+            background: linear-gradient(135deg, #f8fbff 0%, #ffd0a8 100%);
+            border: 1px solid rgba(43, 43, 43, 0.08);
         }
 
         .support-item i,
@@ -410,8 +412,8 @@
             align-items: center;
             justify-content: center;
             border-radius: 16px;
-            background: rgba(197, 149, 91, 0.14);
-            color: #c5955b;
+            background: rgba(243, 107, 10, 0.14);
+            color: var(--etp-orange-500, #F36B0A);
             font-size: 1.35rem;
         }
 
@@ -419,29 +421,29 @@
         .office-detail strong {
             display: block;
             margin-bottom: 6px;
-            color: #1c325c;
+            color: #2b2b2b;
         }
 
         .support-item span,
         .office-detail-text,
         .office-detail-text a {
-            color: #5f6f86;
+            color: #5b5854;
             line-height: 1.7;
             text-decoration: none;
         }
 
         .office-detail-text a:hover {
-            color: #c5955b;
+            color: var(--etp-orange-500, #F36B0A);
         }
 
         .contact-office-section {
             padding: 0 0 90px;
-            background: linear-gradient(180deg, #eef4fb 0%, #f8fbff 100%);
+            background: linear-gradient(180deg, #ffd0a8 0%, #f8fbff 100%);
         }
 
         html[data-theme='dark'] .contact-main-section,
         html[data-theme='dark'] .contact-office-section {
-            background: linear-gradient(180deg, #0b1220 0%, #111827 100%) !important;
+            background: linear-gradient(180deg, #111111 0%, #111111 100%) !important;
         }
 
         html[data-theme='dark'] .contact-method,
@@ -450,14 +452,14 @@
         html[data-theme='dark'] .office-card,
         html[data-theme='dark'] .support-item,
         html[data-theme='dark'] .office-detail {
-            background: #111827 !important;
-            border-color: rgba(148, 163, 184, 0.16) !important;
+            background: #111111 !important;
+            border-color: rgba(170, 163, 155, 0.16) !important;
             box-shadow: var(--shadow-medium) !important;
         }
 
         html[data-theme='dark'] .support-item,
         html[data-theme='dark'] .office-detail {
-            background: #172033 !important;
+            background: #1c1c1c !important;
         }
 
         html[data-theme='dark'] .section-heading h2,
@@ -483,8 +485,8 @@
         }
 
         html[data-theme='dark'] .contact-method-highlight {
-            background: rgba(244, 195, 106, 0.12) !important;
-            color: #f7d488 !important;
+            background: rgba(243, 107, 10, 0.15) !important;
+            color: var(--etp-orange-400, #FB923C) !important;
         }
 
         html[data-theme='dark'] .contact-method-link {
@@ -499,14 +501,14 @@
         html[data-theme='dark'] .form-control,
         html[data-theme='dark'] .form-select,
         html[data-theme='dark'] .form-textarea {
-            background: #0f172a !important;
+            background: #111111 !important;
             color: var(--charcoal-deep) !important;
-            border-color: rgba(148, 163, 184, 0.24) !important;
+            border-color: rgba(170, 163, 155, 0.24) !important;
         }
 
         html[data-theme='dark'] .form-control::placeholder,
         html[data-theme='dark'] .form-textarea::placeholder {
-            color: #94a3b8 !important;
+            color: #aaa39b !important;
         }
 
         html[data-theme='dark'] .alert-success {
@@ -541,6 +543,7 @@
         }
 
         @media (max-width: 1199px) {
+
             .hero-stats,
             .contact-methods {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -620,7 +623,8 @@
         <div class="container">
             <div class="section-heading">
                 <h2>{{ __('How Can We Help You?') }}</h2>
-                <p>{{ __('Choose the contact method that suits you best, or send us a detailed message and our team will get back to you shortly.') }}</p>
+                <p>{{ __('Choose the contact method that suits you best, or send us a detailed message and our team will get back to you shortly.') }}
+                </p>
             </div>
 
             <div class="contact-methods">
@@ -665,7 +669,8 @@
 
                     <form method="POST" action="{{ route('website.contact.store') }}">
                         @csrf
-                        <input type="hidden" name="form_start_time" id="contactFormStartTime" value="{{ old('form_start_time') }}">
+                        <input type="hidden" name="form_start_time" id="contactFormStartTime"
+                            value="{{ old('form_start_time') }}">
 
                         <div style="display:none;">
                             <input type="text" name="website" tabindex="-1" autocomplete="off">
@@ -679,8 +684,8 @@
                                 <label class="form-label" for="first_name">{{ __('First Name') }} *</label>
                                 <input id="first_name" type="text" name="first_name"
                                     class="form-control @error('first_name') error @enderror"
-                                    value="{{ old('first_name') }}"
-                                    placeholder="{{ __('Enter your first name') }}" required>
+                                    value="{{ old('first_name') }}" placeholder="{{ __('Enter your first name') }}"
+                                    required>
                                 @error('first_name')
                                     <div class="field-error">{{ $message }}</div>
                                 @enderror
@@ -690,8 +695,8 @@
                                 <label class="form-label" for="last_name">{{ __('Last Name') }} *</label>
                                 <input id="last_name" type="text" name="last_name"
                                     class="form-control @error('last_name') error @enderror"
-                                    value="{{ old('last_name') }}"
-                                    placeholder="{{ __('Enter your last name') }}" required>
+                                    value="{{ old('last_name') }}" placeholder="{{ __('Enter your last name') }}"
+                                    required>
                                 @error('last_name')
                                     <div class="field-error">{{ $message }}</div>
                                 @enderror
@@ -700,8 +705,7 @@
                             <div>
                                 <label class="form-label" for="email">{{ __('Email Address') }} *</label>
                                 <input id="email" type="email" name="email"
-                                    class="form-control @error('email') error @enderror"
-                                    value="{{ old('email') }}"
+                                    class="form-control @error('email') error @enderror" value="{{ old('email') }}"
                                     placeholder="{{ __('your.email@example.com') }}" required>
                                 @error('email')
                                     <div class="field-error">{{ $message }}</div>
@@ -711,8 +715,7 @@
                             <div>
                                 <label class="form-label" for="phone">{{ __('Phone Number') }}</label>
                                 <input id="phone" type="tel" name="phone"
-                                    class="form-control @error('phone') error @enderror"
-                                    value="{{ old('phone') }}"
+                                    class="form-control @error('phone') error @enderror" value="{{ old('phone') }}"
                                     placeholder="{{ __('Phone Number') }}">
                                 @error('phone')
                                     <div class="field-error">{{ $message }}</div>
@@ -740,8 +743,7 @@
                             <div class="form-group-full">
                                 <label class="form-label" for="subject">{{ __('Subject') }} *</label>
                                 <input id="subject" type="text" name="subject"
-                                    class="form-control @error('subject') error @enderror"
-                                    value="{{ old('subject') }}"
+                                    class="form-control @error('subject') error @enderror" value="{{ old('subject') }}"
                                     placeholder="{{ __('Brief description of your inquiry') }}" required>
                                 @error('subject')
                                     <div class="field-error">{{ $message }}</div>
@@ -769,7 +771,7 @@
                 </div>
 
                 <aside class="contact-side-card">
-                    <h3 class="side-card-title">{{ __('Why Contact Etro Tours?') }}</h3>
+                    <h3 class="side-card-title">{{ __('Why Contact Egypt Tour Pro?') }}</h3>
                     <p class="side-card-copy">
                         {{ __('We do more than answer questions. We help shape the right trip, solve uncertainty quickly, and guide you with local expertise from the first message.') }}
                     </p>

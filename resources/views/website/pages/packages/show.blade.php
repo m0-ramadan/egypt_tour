@@ -27,7 +27,7 @@
     $pageTwitterDescription = $package->twitter_description ?: $ncSeoDetail?->twitter_description ?? null;
 @endphp
 
-@section('title', $package->getTranslation('seo_title') ?: $title . ' - Etro Tours')
+@section('title', $package->getTranslation('seo_title') ?: $title . ' - Egypt Tour Pro')
 @section('description', $package->getTranslation('seo_description') ?: $shortDescription)
 @section('body_class', trim('package-show-template ' . ($package->package_type === 'nile_cruise' ? 'nile-cruise-page' :
     '')))
@@ -39,8 +39,7 @@
     $title,
     $tourTypeText ?? null,
     $package->primaryCountry?->display_name ?? null,
-    'Etro
-    Tours',
+    'Egypt Tour Pro',
     ])->filter()->implode(', '),
     ', ',
     ))
@@ -68,7 +67,7 @@
     <style>
         .package-hero {
             min-height: clamp(560px, 72vh, 760px);
-            background: linear-gradient(rgba(28, 50, 92, .38), rgba(26, 75, 102, .48)), var(--hero-bg);
+            background: linear-gradient(rgba(6, 27, 62, .38), rgba(26, 75, 102, .48)), var(--hero-bg);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -149,8 +148,8 @@
         .gold-btn,
         .outline-btn,
         .submit-btn {
-            background: var(--gradient-gold, #c5955b);
-            color: var(--primary-navy, #1c325c);
+            background: var(--etp-orange-500, #F36B0A);
+            color: var(--etp-navy-950, #061B3E);
             padding: 11px 22px;
             border-radius: 50px;
             text-decoration: none;
@@ -175,19 +174,19 @@
         .gold-btn:hover,
         .submit-btn:hover {
             transform: translateY(-3px);
-            color: var(--primary-navy, #1c325c);
-            box-shadow: 0 12px 28px rgba(197, 149, 91, .35)
+            color: var(--etp-navy-950, #061B3E);
+            box-shadow: 0 12px 28px rgba(243, 107, 10, .35)
         }
 
         .outline-btn:hover {
             background: #fff;
-            color: var(--primary-navy, #1c325c)
+            color: var(--etp-navy-950, #061B3E)
         }
 
         .breadcrumb-top-bar {
-            background: var(--pearl-luxury, #faf8f3);
+            background: var(--etp-surface-muted, #f8fafc);
             padding: 15px 0;
-            border-bottom: 1px solid rgba(197, 149, 91, .18)
+            border-bottom: 1px solid rgba(243, 107, 10, .18)
         }
 
         .breadcrumb-list ul {
@@ -206,12 +205,12 @@
         .breadcrumb-list li:not(:last-child):after {
             content: '›';
             margin-left: 10px;
-            color: var(--rich-gold, #c5955b);
+            color: var(--etp-orange-500, #F36B0A);
             font-size: 1.2rem
         }
 
         .breadcrumb-list a {
-            color: var(--primary-navy, #1c325c);
+            color: var(--etp-navy-950, #061B3E);
             text-decoration: none
         }
 
@@ -236,13 +235,13 @@
             border-radius: 24px;
             padding: 34px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 35px rgba(28, 50, 92, .08);
-            border: 1px solid rgba(197, 149, 91, .14)
+            box-shadow: 0 10px 35px rgba(6, 27, 62, .08);
+            border: 1px solid rgba(243, 107, 10, .14)
         }
 
         .section-header {
             font-family: 'Playfair Display', serif;
-            color: var(--primary-navy, #1c325c);
+            color: var(--etp-navy-950, #061B3E);
             font-size: clamp(1.45rem, 3vw, 2.15rem);
             font-weight: 700;
             margin-bottom: 18px;
@@ -254,7 +253,7 @@
             display: block;
             width: 78px;
             height: 4px;
-            background: var(--gradient-gold, #c5955b);
+            background: var(--etp-orange-500, #F36B0A);
             border-radius: 4px;
             margin-top: 12px
         }
@@ -278,8 +277,8 @@
         }
 
         .detail-item {
-            background: var(--pearl-luxury, #faf8f3);
-            border: 1px solid rgba(197, 149, 91, .16);
+            background: var(--etp-surface-muted, #f8fafc);
+            border: 1px solid rgba(243, 107, 10, .16);
             border-radius: 16px;
             padding: 16px;
             display: flex;
@@ -292,8 +291,8 @@
             height: 38px;
             min-width: 38px;
             border-radius: 50%;
-            background: var(--gradient-gold, #c5955b);
-            color: var(--primary-navy, #1c325c);
+            background: var(--etp-orange-500, #F36B0A);
+            color: var(--etp-navy-950, #061B3E);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -309,7 +308,7 @@
         }
 
         .detail-label {
-            color: var(--primary-navy, #1c325c);
+            color: var(--etp-navy-950, #061B3E);
             white-space: nowrap
         }
 
@@ -318,7 +317,7 @@
         }
 
         .day-card {
-            border: 1px solid rgba(197, 149, 91, .18);
+            border: 1px solid rgba(243, 107, 10, .18);
             border-radius: 18px;
             margin-bottom: 16px;
             overflow: hidden;
@@ -331,7 +330,7 @@
             gap: 15px;
             padding: 18px;
             cursor: pointer;
-            background: var(--pearl-luxury, #faf8f3);
+            background: var(--etp-surface-muted, #f8fafc);
             border: 0;
             width: 100%;
             color: inherit;
@@ -340,7 +339,7 @@
         }
 
         .day-header:focus-visible {
-            outline: 3px solid rgba(197, 149, 91, .45);
+            outline: 3px solid rgba(243, 107, 10, .45);
             outline-offset: -3px
         }
 
@@ -348,8 +347,8 @@
             width: 46px;
             height: 46px;
             border-radius: 50%;
-            background: var(--gradient-gold, #c5955b);
-            color: var(--primary-navy, #1c325c);
+            background: var(--etp-orange-500, #F36B0A);
+            color: var(--etp-navy-950, #061B3E);
             font-weight: 800;
             display: flex;
             align-items: center;
@@ -359,7 +358,7 @@
 
         .day-title {
             font-family: 'Playfair Display', serif;
-            color: var(--primary-navy, #1c325c);
+            color: var(--etp-navy-950, #061B3E);
             font-size: 1.15rem;
             margin: 0
         }
@@ -398,8 +397,8 @@
         }
 
         .meal-badge {
-            background: rgba(197, 149, 91, .13);
-            color: var(--primary-navy, #1c325c);
+            background: rgba(243, 107, 10, .13);
+            color: var(--etp-navy-950, #061B3E);
             border-radius: 20px;
             padding: 6px 12px;
             font-weight: 600;
@@ -415,7 +414,7 @@
             padding: 9px 0;
             color: #555;
             line-height: 1.65;
-            border-bottom: 1px solid rgba(197, 149, 91, .12)
+            border-bottom: 1px solid rgba(243, 107, 10, .12)
         }
 
         .styled-list li:last-child {
@@ -437,7 +436,7 @@
         .cruise-facility-list li {
             position: relative;
             padding: 9px 0 11px 24px;
-            border-bottom: 1px solid rgba(28, 50, 92, .1);
+            border-bottom: 1px solid rgba(6, 27, 62, .1);
             color: #4f5d6f;
             font-size: 1.02rem;
             line-height: 1.45;
@@ -451,7 +450,7 @@
             width: 7px;
             height: 7px;
             border-radius: 50%;
-            background: var(--rich-gold, #c5955b);
+            background: var(--etp-orange-500, #F36B0A);
         }
 
         .cruise-facility-list li:last-child {
@@ -464,10 +463,10 @@
             gap: 12px;
             min-height: 56px;
             padding: 14px 16px;
-            background: var(--pearl-luxury, #faf8f3);
-            border: 1px solid rgba(197, 149, 91, .16);
+            background: var(--etp-surface-muted, #f8fafc);
+            border: 1px solid rgba(243, 107, 10, .16);
             border-radius: 14px;
-            color: var(--primary-navy, #1c325c);
+            color: var(--etp-navy-950, #061B3E);
             font-weight: 600;
         }
 
@@ -478,7 +477,7 @@
             width: 18px;
             height: 18px;
             min-width: 18px;
-            color: var(--rich-gold, #c5955b);
+            color: var(--etp-orange-500, #F36B0A);
         }
 
         .facility-icon svg {
@@ -495,17 +494,17 @@
         .included-box,
         .excluded-box,
         .price-box {
-            background: var(--pearl-luxury, #faf8f3);
+            background: var(--etp-surface-muted, #f8fafc);
             border-radius: 20px;
             padding: 26px;
-            border: 1px solid rgba(197, 149, 91, .16);
+            border: 1px solid rgba(243, 107, 10, .16);
             height: 100%
         }
 
         .box-title {
             font-size: 1.35rem;
             font-weight: 800;
-            color: var(--primary-navy, #1c325c);
+            color: var(--etp-navy-950, #061B3E);
             margin-bottom: 16px
         }
 
@@ -550,7 +549,7 @@
         }
 
         .price-table th {
-            color: var(--primary-navy, #1c325c)
+            color: var(--etp-navy-950, #061B3E)
         }
 
         .price-table td:first-child,
@@ -563,7 +562,7 @@
             border-radius: 0 12px 12px 0;
             text-align: right;
             font-weight: 800;
-            color: var(--rich-gold, #c5955b)
+            color: var(--etp-orange-500, #F36B0A)
         }
 
         .pricing-showcase {
@@ -572,9 +571,9 @@
             background:
                 radial-gradient(circle at 50% 0, rgba(255, 255, 255, .98), rgba(255, 253, 248, .94) 74%),
                 #fffdf9;
-            border: 1px solid rgba(28, 50, 92, .11);
+            border: 1px solid rgba(6, 27, 62, .11);
             border-radius: 28px;
-            box-shadow: 0 12px 38px rgba(28, 50, 92, .08)
+            box-shadow: 0 12px 38px rgba(6, 27, 62, .08)
         }
 
         .pricing-showcase .section-header {
@@ -613,9 +612,9 @@
             overflow: hidden;
             text-align: center;
             background: #ffffff;
-            border: 1px solid rgba(28, 50, 92, .12);
+            border: 1px solid rgba(6, 27, 62, .12);
             border-radius: 22px;
-            box-shadow: 0 9px 22px rgba(28, 50, 92, .08);
+            box-shadow: 0 9px 22px rgba(6, 27, 62, .08);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -713,7 +712,7 @@
         /* Dynamic Pricing Calculator & Tier Cards */
         .price-calculator-card {
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid rgba(197, 149, 91, 0.25);
+            border: 1px solid rgba(243, 107, 10, 0.25);
             border-radius: 20px;
             padding: 24px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
@@ -725,9 +724,9 @@
             width: 40px;
             height: 40px;
             border-radius: 12px;
-            border: 1px solid rgba(197, 149, 91, 0.4);
+            border: 1px solid rgba(243, 107, 10, 0.4);
             background: #ffffff;
-            color: #1c325c;
+            color: #061B3E;
             font-size: 1.25rem;
             font-weight: 700;
             display: inline-flex;
@@ -738,11 +737,11 @@
         }
 
         .counter-btn:hover:not(:disabled) {
-            background: #c5955b;
+            background: #F36B0A;
             color: #ffffff;
-            border-color: #c5955b;
+            border-color: #F36B0A;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(197, 149, 91, 0.3);
+            box-shadow: 0 4px 12px rgba(243, 107, 10, 0.3);
         }
 
         .counter-btn:disabled {
@@ -753,14 +752,14 @@
         .counter-value {
             font-size: 1.45rem;
             font-weight: 800;
-            color: #1c325c;
+            color: #061B3E;
             min-width: 44px;
             text-align: center;
         }
 
         .pax-tier-card {
             background: #ffffff;
-            border: 2px solid rgba(28, 50, 92, 0.1);
+            border: 2px solid rgba(6, 27, 62, 0.1);
             border-radius: 18px;
             padding: 18px 14px;
             text-align: center;
@@ -775,15 +774,15 @@
         }
 
         .pax-tier-card:hover {
-            border-color: #c5955b;
+            border-color: #F36B0A;
             transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(197, 149, 91, 0.15);
+            box-shadow: 0 10px 25px rgba(243, 107, 10, 0.15);
         }
 
         .pax-tier-card.active {
-            border-color: #c5955b;
-            background: linear-gradient(145deg, rgba(197, 149, 91, 0.1), rgba(197, 149, 91, 0.02));
-            box-shadow: 0 8px 24px rgba(197, 149, 91, 0.22);
+            border-color: #F36B0A;
+            background: linear-gradient(145deg, rgba(243, 107, 10, 0.1), rgba(243, 107, 10, 0.02));
+            box-shadow: 0 8px 24px rgba(243, 107, 10, 0.22);
         }
 
         .pax-tier-card.active::before {
@@ -793,13 +792,13 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: #c5955b;
+            background: #F36B0A;
         }
 
         .pax-tier-title {
             font-size: 1.05rem;
             font-weight: 700;
-            color: #1c325c;
+            color: #061B3E;
             margin-bottom: 6px;
         }
 
@@ -896,7 +895,7 @@
             justify-content: center;
             color: #fff;
             font-size: 2rem;
-            background: rgba(28, 50, 92, .26);
+            background: rgba(6, 27, 62, .26);
             opacity: 0;
             transition: .3s
         }
@@ -960,7 +959,7 @@
             height: 48px;
             border-radius: 50%;
             background: #fff;
-            color: var(--primary-navy, #1c325c);
+            color: var(--etp-navy-950, #061B3E);
             font-size: 2rem;
             line-height: 1;
             box-shadow: 0 10px 25px rgba(0, 0, 0, .2)
@@ -1005,11 +1004,11 @@
         }
 
         .review-card {
-            background: var(--pearl-luxury, #faf8f3);
+            background: var(--etp-surface-muted, #f8fafc);
             border-radius: 18px;
             padding: 22px;
             margin-bottom: 16px;
-            border: 1px solid rgba(197, 149, 91, .15)
+            border: 1px solid rgba(243, 107, 10, .15)
         }
 
         .rating-stars {
@@ -1033,12 +1032,12 @@
             background: #fff;
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(28, 50, 92, .14);
-            border: 1px solid rgba(197, 149, 91, .18)
+            box-shadow: 0 15px 40px rgba(6, 27, 62, .14);
+            border: 1px solid rgba(243, 107, 10, .18)
         }
 
         .sidebar-header {
-            background: linear-gradient(135deg, var(--primary-navy, #1c325c), #1a4b66);
+            background: linear-gradient(135deg, var(--etp-navy-950, #061B3E), #1a4b66);
             color: #fff;
             padding: 25px;
             text-align: center
@@ -1053,7 +1052,7 @@
         .sidebar-price span.item {
             font-size: 2.1rem;
             font-weight: 900;
-            color: var(--rich-gold, #c5955b)
+            color: var(--etp-orange-500, #F36B0A)
         }
 
         .sidebar-content {
@@ -1064,7 +1063,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             background: #fff;
-            border-bottom: 1px solid rgba(28, 50, 92, .1)
+            border-bottom: 1px solid rgba(6, 27, 62, .1)
         }
 
         .package-show-template .reserve-tab-btn {
@@ -1082,7 +1081,7 @@
         }
 
         .package-show-template .reserve-tab-btn.is-active {
-            color: #1c325c !important;
+            color: #061B3E !important;
             border-bottom-color: #d7a035 !important
         }
 
@@ -1095,7 +1094,7 @@
         }
 
         .booking-request-title {
-            color: var(--primary-navy, #1c325c);
+            color: var(--etp-navy-950, #061B3E);
             font-family: 'Playfair Display', serif;
             font-size: 1.2rem;
             margin-bottom: 6px
@@ -1154,13 +1153,58 @@
         }
 
         .package-show-template .sidebar-price-option input:checked+.sidebar-price-option-card {
-            border-color: #d29a4e;
+            border-color: #F36B0A;
             background: #fffaf3 !important;
             box-shadow: 0 0 0 3px rgba(210, 154, 78, .1)
         }
 
+        .day-tour-price-box {
+            background: linear-gradient(135deg, #fdfbf7 0%, #f9f4ea 100%);
+            border: 1.5px solid rgba(210, 154, 78, 0.35);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 14px 0 10px;
+        }
+
+        .day-tour-price-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .day-tour-price-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .day-tour-tier-badge {
+            background: rgba(210, 154, 78, 0.15);
+            color: #b0782b;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+        }
+
+        .day-tour-price-total {
+            font-size: 26px;
+            font-weight: 800;
+            color: #061B3E;
+            line-height: 1.1;
+        }
+
+        .day-tour-price-breakdown {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #777;
+        }
+
         .package-show-template .sidebar-option-name {
-            color: #1c325c !important;
+            color: #061B3E !important;
             font-weight: 800;
             font-size: .86rem
         }
@@ -1189,7 +1233,7 @@
             padding: 14px;
             border: 0;
             border-radius: 999px;
-            background: linear-gradient(90deg, #ca934e, #e7b576);
+            background: linear-gradient(90deg, #F36B0A, #FF8A33);
             color: #173763;
             font-weight: 900;
             cursor: pointer
@@ -1201,7 +1245,7 @@
 
         .label-text {
             display: block;
-            color: var(--primary-navy, #1c325c);
+            color: var(--etp-navy-950, #061B3E);
             font-weight: 700;
             margin-bottom: 8px
         }
@@ -1215,7 +1259,7 @@
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--rich-gold, #c5955b);
+            color: var(--etp-orange-500, #F36B0A);
             z-index: 2
         }
 
@@ -1240,13 +1284,13 @@
 
         .form-control:focus,
         .select-contain-select:focus {
-            border-color: var(--rich-gold, #c5955b);
-            box-shadow: 0 0 0 .25rem rgba(197, 149, 91, .22);
+            border-color: var(--etp-orange-500, #F36B0A);
+            box-shadow: 0 0 0 .25rem rgba(243, 107, 10, .22);
             outline: 0
         }
 
         .quantity-control {
-            background: var(--pearl-luxury, #faf8f3);
+            background: var(--etp-surface-muted, #f8fafc);
             border-radius: 15px;
             padding: 14px;
             margin-bottom: 12px
@@ -1264,8 +1308,8 @@
             height: 34px;
             border: 0;
             border-radius: 50%;
-            background: var(--gradient-gold, #c5955b);
-            color: var(--primary-navy, #1c325c);
+            background: var(--etp-orange-500, #F36B0A);
+            color: var(--etp-navy-950, #061B3E);
             font-weight: 900
         }
 
@@ -1275,6 +1319,110 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 7px
+        }
+
+        .day-tour-booking-form .day-tour-date-wrap {
+            position: relative
+        }
+
+        .day-tour-booking-form .day-tour-date-display {
+            cursor: pointer;
+            padding-left: 44px
+        }
+
+        .day-tour-calendar {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            z-index: 30;
+            width: min(310px, 100%);
+            padding: 14px;
+            border: 1px solid #e5bd72;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 14px 35px rgba(6, 27, 62, .18)
+        }
+
+        .day-tour-calendar[hidden] {
+            display: none
+        }
+
+        .day-tour-calendar-header {
+            display: grid;
+            grid-template-columns: 34px 1fr 34px;
+            align-items: center;
+            margin-bottom: 10px
+        }
+
+        .day-tour-calendar-title {
+            color: #34445a;
+            font-size: .86rem;
+            font-weight: 800;
+            text-align: center
+        }
+
+        .day-tour-calendar-nav {
+            border: 0;
+            background: transparent;
+            color: #061B3E;
+            font-size: 1.25rem;
+            cursor: pointer
+        }
+
+        .day-tour-calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+            text-align: center
+        }
+
+        .day-tour-calendar-weekday {
+            padding: 5px 0;
+            color: #34445a;
+            font-size: .72rem;
+            font-weight: 800
+        }
+
+        .day-tour-calendar-day {
+            width: 34px;
+            height: 34px;
+            margin: auto;
+            border: 0;
+            border-radius: 5px;
+            background: transparent;
+            color: #34445a;
+            font-size: .78rem;
+            cursor: pointer
+        }
+
+        .day-tour-calendar-day:hover,
+        .day-tour-calendar-day.is-selected {
+            background: #3b86bd;
+            color: #fff
+        }
+
+        .day-tour-calendar-day:disabled,
+        .day-tour-calendar-day.is-outside {
+            color: #aaa;
+            cursor: not-allowed;
+            text-decoration: line-through;
+            background: transparent
+        }
+
+        .day-tour-quantity-list {
+            margin-top: 14px
+        }
+
+        .day-tour-quantity-list .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px
+        }
+
+        .day-tour-quantity-list .quantity-control label,
+        .day-tour-quantity-list .qty-buttons {
+            margin: 0
         }
 
         .trust-indicators {
@@ -1288,12 +1436,22 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            color: var(--primary-navy, #1c325c);
+            color: var(--etp-navy-950, #061B3E);
             font-weight: 700
         }
 
         .trust-item-small i {
-            color: var(--rich-gold, #c5955b)
+            color: var(--etp-orange-500, #F36B0A)
+        }
+
+        #mobileBookingModal .sidebar-content {
+            padding: 0;
+        }
+
+        #mobileBookingModal .day-tour-calendar {
+            position: static;
+            width: 100%;
+            margin-top: 8px;
         }
 
         .fixed-mobile-btn {
@@ -1320,8 +1478,8 @@
             width: auto;
             min-width: 180px;
             max-width: 260px;
-            background: var(--gradient-gold, #c5955b);
-            color: var(--primary-navy, #1c325c);
+            background: var(--etp-orange-500, #F36B0A);
+            color: var(--etp-navy-950, #061B3E);
             border-radius: 50px;
             padding: 12px 24px;
             text-decoration: none;
@@ -1360,8 +1518,8 @@
             background: #fff;
             border-radius: 18px;
             overflow: hidden;
-            border: 1px solid rgba(197, 149, 91, .15);
-            box-shadow: 0 8px 24px rgba(28, 50, 92, .08)
+            border: 1px solid rgba(243, 107, 10, .15);
+            box-shadow: 0 8px 24px rgba(6, 27, 62, .08)
         }
 
         .related-card img {
@@ -1376,12 +1534,12 @@
 
         .related-card-title {
             font-family: 'Playfair Display', serif;
-            color: var(--primary-navy, #1c325c);
+            color: var(--etp-navy-950, #061B3E);
             font-weight: 800
         }
 
         .empty-state {
-            background: var(--pearl-luxury, #faf8f3);
+            background: var(--etp-surface-muted, #f8fafc);
             padding: 22px;
             border-radius: 16px;
             color: #777;
@@ -1394,7 +1552,7 @@
         }
 
         .modal-header {
-            background: linear-gradient(135deg, var(--primary-navy, #1c325c), #1a4b66);
+            background: linear-gradient(135deg, var(--etp-navy-950, #061B3E), #1a4b66);
             color: #fff
         }
 
@@ -1597,17 +1755,17 @@
         /* Attractions Highlight Section & Cards */
         .attractions-highlight-section {
             background: #faf7f2;
-            border: 1px solid rgba(197, 149, 91, 0.22);
+            border: 1px solid rgba(243, 107, 10, 0.22);
             border-radius: 28px;
             padding: 36px 32px;
-            box-shadow: 0 10px 30px rgba(28, 50, 92, 0.04);
+            box-shadow: 0 10px 30px rgba(6, 27, 62, 0.04);
         }
 
         .attractions-highlight-title {
             font-family: 'Playfair Display', serif;
             font-size: clamp(1.6rem, 3.5vw, 2.2rem);
             font-weight: 700;
-            color: #1c325c;
+            color: #061B3E;
             text-align: center;
             margin-bottom: 0;
         }
@@ -1615,7 +1773,7 @@
         .attractions-highlight-divider {
             width: 60px;
             height: 4px;
-            background: linear-gradient(90deg, #c5955b 0%, #b8860b 100%);
+            background: linear-gradient(90deg, #F36B0A 0%, #D95600 100%);
             border-radius: 4px;
             margin: 10px auto 28px auto;
         }
@@ -1637,7 +1795,7 @@
             align-items: center;
             gap: 16px;
             background: #ffffff;
-            border: 1.5px solid rgba(28, 50, 92, 0.08);
+            border: 1.5px solid rgba(6, 27, 62, 0.08);
             border-radius: 18px;
             padding: 14px 18px;
             text-decoration: none !important;
@@ -1648,8 +1806,8 @@
 
         .attraction-highlight-card:hover,
         .attraction-highlight-card:focus {
-            border-color: #c5955b;
-            box-shadow: 0 8px 25px rgba(197, 149, 91, 0.22);
+            border-color: #F36B0A;
+            box-shadow: 0 8px 25px rgba(243, 107, 10, 0.22);
             transform: translateY(-2px);
         }
 
@@ -1671,7 +1829,7 @@
             font-family: 'Playfair Display', serif;
             font-size: 1.12rem;
             font-weight: 700;
-            color: #1c325c;
+            color: #061B3E;
             margin-bottom: 4px;
             line-height: 1.3;
             white-space: nowrap;
@@ -1680,7 +1838,7 @@
         }
 
         .attraction-highlight-card:hover .attraction-highlight-name {
-            color: #c5955b;
+            color: #F36B0A;
         }
 
         .attraction-highlight-sub {
@@ -1695,7 +1853,7 @@
         }
 
         .attraction-highlight-arrow {
-            color: #c5955b;
+            color: #F36B0A;
             font-size: 1.3rem;
             display: flex;
             align-items: center;
@@ -1715,7 +1873,7 @@
 
         html[data-theme='dark'] .attractions-highlight-section {
             background: #111827;
-            border-color: rgba(197, 149, 91, 0.3);
+            border-color: rgba(243, 107, 10, 0.3);
         }
 
         html[data-theme='dark'] .attractions-highlight-title {
@@ -1737,7 +1895,7 @@
 
         html[data-theme='dark'] .pricing-showcase {
             background: #111827;
-            border-color: rgba(197, 149, 91, 0.3);
+            border-color: rgba(243, 107, 10, 0.3);
         }
 
         html[data-theme='dark'] .pricing-showcase .section-header {
@@ -1755,8 +1913,8 @@
         }
 
         html[data-theme='dark'] .pricing-card-icon {
-            background: rgba(197, 149, 91, 0.18);
-            color: #c5955b;
+            background: rgba(243, 107, 10, 0.18);
+            color: #F36B0A;
         }
 
         html[data-theme='dark'] .pricing-card-title {
@@ -1769,11 +1927,11 @@
         }
 
         html[data-theme='dark'] .pricing-card-price {
-            color: #c5955b;
+            color: #F36B0A;
         }
 
         html[data-theme='dark'] .pricing-info-title {
-            color: #c5955b;
+            color: #F36B0A;
         }
 
         html[data-theme='dark'] .pricing-info-text {
@@ -1786,7 +1944,7 @@
 
         html[data-theme='dark'] .price-table th {
             background: #151d30;
-            color: #c5955b;
+            color: #F36B0A;
             border-color: rgba(255, 255, 255, 0.1);
         }
 
@@ -1817,7 +1975,7 @@
 
         html[data-theme='dark'] .price-calculator-card {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border-color: rgba(197, 149, 91, 0.35);
+            border-color: rgba(243, 107, 10, 0.35);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
@@ -1828,9 +1986,9 @@
         }
 
         html[data-theme='dark'] .counter-btn:hover:not(:disabled) {
-            background: #c5955b;
+            background: #F36B0A;
             color: #ffffff;
-            border-color: #c5955b;
+            border-color: #F36B0A;
         }
 
         html[data-theme='dark'] .counter-value {
@@ -1843,9 +2001,9 @@
         }
 
         html[data-theme='dark'] .pax-tier-card.active {
-            background: linear-gradient(145deg, rgba(197, 149, 91, 0.22), rgba(15, 23, 42, 0.85));
-            border-color: #c5955b;
-            box-shadow: 0 8px 24px rgba(197, 149, 91, 0.3);
+            background: linear-gradient(145deg, rgba(243, 107, 10, 0.22), rgba(15, 23, 42, 0.85));
+            border-color: #F36B0A;
+            box-shadow: 0 8px 24px rgba(243, 107, 10, 0.3);
         }
 
         html[data-theme='dark'] .pax-tier-title {
@@ -1853,7 +2011,7 @@
         }
 
         html[data-theme='dark'] .pax-tier-price {
-            color: #c5955b;
+            color: #F36B0A;
         }
 
         html[data-theme='dark'] .pax-tier-sub {
@@ -1874,8 +2032,8 @@
 
         html[data-theme='dark'] .facility-card:hover,
         html[data-theme='dark'] .nile-cruise-page #cruise-facilities .facility-card:hover {
-            background: rgba(197, 149, 91, 0.18) !important;
-            border-color: rgba(197, 149, 91, 0.45) !important;
+            background: rgba(243, 107, 10, 0.18) !important;
+            border-color: rgba(243, 107, 10, 0.45) !important;
         }
 
         html[data-theme='dark'] .facility-card span,
@@ -1884,11 +2042,11 @@
         }
 
         html[data-theme='dark'] .facility-icon {
-            color: #c5955b !important;
+            color: #F36B0A !important;
         }
 
         html[data-theme='dark'] .facility-icon svg {
-            stroke: #c5955b !important;
+            stroke: #F36B0A !important;
         }
 
         html[data-theme='dark'] .cruise-facility-list li {
@@ -1930,21 +2088,21 @@
         }
 
         .group-tier-card:hover {
-            border-color: rgba(197, 149, 91, 0.4);
-            box-shadow: 0 8px 20px rgba(197, 149, 91, 0.1);
+            border-color: rgba(243, 107, 10, 0.4);
+            box-shadow: 0 8px 20px rgba(243, 107, 10, 0.1);
         }
 
         .group-tier-badge {
             position: absolute;
             top: -14px;
             right: 20px;
-            background: linear-gradient(135deg, #c5955b 0%, #a87943 100%);
+            background: linear-gradient(135deg, #F36B0A 0%, #a87943 100%);
             color: #ffffff;
             font-size: 0.82rem;
             font-weight: 700;
             padding: 4px 14px;
             border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(197, 149, 91, 0.35);
+            box-shadow: 0 4px 12px rgba(243, 107, 10, 0.35);
             letter-spacing: 0.3px;
             z-index: 2;
         }
@@ -1965,7 +2123,7 @@
             font-family: 'Playfair Display', serif;
             font-size: 1.3rem;
             font-weight: 700;
-            color: #1c325c;
+            color: #061B3E;
             margin: 0 0 6px 0;
             line-height: 1.2;
         }
@@ -1975,8 +2133,8 @@
             font-size: 0.78rem;
             font-weight: 800;
             letter-spacing: 0.8px;
-            color: #c5955b;
-            background: rgba(197, 149, 91, 0.12);
+            color: #F36B0A;
+            background: rgba(243, 107, 10, 0.12);
             padding: 4px 10px;
             border-radius: 6px;
             text-transform: uppercase;
@@ -1989,7 +2147,7 @@
         .group-tier-price {
             font-size: 2.2rem;
             font-weight: 800;
-            color: #1c325c;
+            color: #061B3E;
             line-height: 1;
             font-family: 'Playfair Display', serif;
         }
@@ -2017,8 +2175,8 @@
 
 
         /* =========================================================
-                   Nile Cruise body redesign — body only, shared header/footer untouched
-                   ========================================================= */
+                               Nile Cruise body redesign — body only, shared header/footer untouched
+                               ========================================================= */
         .nile-cruise-page .main-container {
             background:
                 radial-gradient(circle at 8% 8%, rgba(215, 239, 250, .58), transparent 34%),
@@ -2036,8 +2194,8 @@
             border-radius: 18px;
             padding: 26px 28px;
             margin-bottom: 18px;
-            border: 1px solid rgba(28, 50, 92, .09);
-            box-shadow: 0 12px 34px rgba(28, 50, 92, .075);
+            border: 1px solid rgba(6, 27, 62, .09);
+            box-shadow: 0 12px 34px rgba(6, 27, 62, .075);
             background: rgba(255, 255, 255, .96);
         }
 
@@ -2075,7 +2233,7 @@
             gap: 12px;
             margin-top: 20px;
             padding-top: 18px;
-            border-top: 1px solid rgba(28, 50, 92, .08);
+            border-top: 1px solid rgba(6, 27, 62, .08);
         }
 
         .nc-about-feature {
@@ -2083,13 +2241,13 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            color: #1c325c;
+            color: #061B3E;
             font-size: .82rem;
             font-weight: 700;
         }
 
         .nc-about-feature i {
-            color: #c5955b;
+            color: #F36B0A;
             font-size: 1.2rem;
         }
 
@@ -2103,13 +2261,13 @@
             min-height: 78px;
             padding: 14px 15px;
             background: #fff;
-            border-color: rgba(28, 50, 92, .10);
-            box-shadow: 0 4px 14px rgba(28, 50, 92, .035);
+            border-color: rgba(6, 27, 62, .10);
+            box-shadow: 0 4px 14px rgba(6, 27, 62, .035);
         }
 
         .nile-cruise-page #nile-cruise-details .detail-item i {
-            background: rgba(197, 149, 91, .12);
-            /* color: #c5955b !important; */
+            background: rgba(243, 107, 10, .12);
+            /* color: #F36B0A !important; */
             width: 34px;
             height: 34px;
             min-width: 34px;
@@ -2129,7 +2287,7 @@
         }
 
         .nile-cruise-page #nile-cruise-details .detail-value {
-            color: #1c325c;
+            color: #061B3E;
             font-size: .9rem;
             font-weight: 750;
         }
@@ -2149,8 +2307,8 @@
             gap: 12px;
             margin: 0 0 13px;
             padding-bottom: 9px;
-            border-bottom: 1px solid rgba(28, 50, 92, .08);
-            color: #1c325c;
+            border-bottom: 1px solid rgba(6, 27, 62, .08);
+            color: #061B3E;
             font-family: 'Playfair Display', serif;
             font-size: 1.2rem;
             font-weight: 700;
@@ -2163,7 +2321,7 @@
         }
 
         .nc-subsection-title i {
-            color: #c5955b
+            color: #F36B0A
         }
 
         .nile-cruise-page .nc-schedule-grid {
@@ -2175,7 +2333,7 @@
             padding: 14px 16px;
             border-radius: 13px;
             background: #fbfcfe;
-            border-color: rgba(28, 50, 92, .09);
+            border-color: rgba(6, 27, 62, .09);
             box-shadow: none;
         }
 
@@ -2188,7 +2346,7 @@
             padding: 0;
             overflow: hidden;
             border-radius: 15px;
-            box-shadow: 0 7px 20px rgba(28, 50, 92, .06);
+            box-shadow: 0 7px 20px rgba(6, 27, 62, .06);
         }
 
         .nile-cruise-page .nc-cabin-body {
@@ -2223,7 +2381,7 @@
             right: 8%;
             top: 25px;
             height: 2px;
-            background: linear-gradient(90deg, #1c325c, #3d76aa);
+            background: linear-gradient(90deg, #061B3E, #3d76aa);
         }
 
         .nc-route-stop {
@@ -2241,15 +2399,15 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: #1c325c;
+            background: #061B3E;
             color: #fff;
             border: 4px solid #fff;
-            box-shadow: 0 0 0 1px rgba(28, 50, 92, .12);
+            box-shadow: 0 0 0 1px rgba(6, 27, 62, .12);
             font-size: .62rem;
         }
 
         .nc-route-name {
-            color: #1c325c;
+            color: #061B3E;
             font-weight: 800;
             font-size: .82rem;
         }
@@ -2290,7 +2448,7 @@
         .nile-cruise-page .nc-duration-summary {
             padding: 12px 14px;
             margin-bottom: 12px;
-            border: 1px solid rgba(28, 50, 92, .08);
+            border: 1px solid rgba(6, 27, 62, .08);
             border-radius: 12px;
             background: #fbfcfe;
         }
@@ -2317,14 +2475,14 @@
             padding: 20px;
             border-radius: 14px;
             background: #fff;
-            border: 1px solid rgba(28, 50, 92, .09);
+            border: 1px solid rgba(6, 27, 62, .09);
         }
 
         .nc-list-title {
             display: flex;
             align-items: center;
             gap: 9px;
-            color: #1c325c;
+            color: #061B3E;
             font-family: 'Playfair Display', serif;
             font-size: 1.08rem;
             font-weight: 800;
@@ -2332,7 +2490,7 @@
         }
 
         .nc-list-title .ok {
-            color: #c5955b
+            color: #F36B0A
         }
 
         .nc-list-title .no {
@@ -2358,7 +2516,7 @@
         }
 
         .nc-clean-list li i {
-            color: #c5955b;
+            color: #F36B0A;
             margin-top: 2px;
         }
 
@@ -2367,7 +2525,7 @@
         }
 
         .nc-price-duration {
-            border: 1px solid rgba(28, 50, 92, .10);
+            border: 1px solid rgba(6, 27, 62, .10);
             border-radius: 15px;
             overflow: hidden;
             margin-bottom: 11px;
@@ -2440,7 +2598,7 @@
 
         .nc-price-matrix td:first-child {
             font-weight: 800;
-            color: #1c325c;
+            color: #061B3E;
             text-transform: uppercase
         }
 
@@ -2473,7 +2631,7 @@
 
         .nc-policy-card {
             padding: 14px;
-            border: 1px solid rgba(28, 50, 92, .09);
+            border: 1px solid rgba(6, 27, 62, .09);
             border-radius: 12px;
             background: #fbfcfe;
         }
@@ -2483,13 +2641,13 @@
             align-items: center;
             gap: 7px;
             margin: 0 0 6px;
-            color: #1c325c;
+            color: #061B3E;
             font-size: .84rem;
             font-weight: 800;
         }
 
         .nc-policy-card h4 i {
-            color: #c5955b
+            color: #F36B0A
         }
 
         .nc-policy-card .policy-copy {
@@ -2501,30 +2659,30 @@
 
         .nile-cruise-page .faq-accordion {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 8px;
+            grid-template-columns: 1fr;
+            gap: 12px;
         }
 
         .nile-cruise-page .faq-accordion .day-card {
             margin: 0 !important;
-            border-radius: 10px;
+            border-radius: 12px;
         }
 
         .nile-cruise-page .faq-accordion .day-header {
-            padding: 10px 12px;
+            padding: 14px 18px;
             background: #fff;
-            gap: 9px;
+            gap: 12px;
         }
 
         .nile-cruise-page .faq-accordion .day-number {
-            width: 28px !important;
-            height: 28px !important;
-            min-width: 28px !important;
-            font-size: .9rem !important;
+            width: 36px !important;
+            height: 36px !important;
+            min-width: 36px !important;
+            font-size: 1.15rem !important;
         }
 
         .nile-cruise-page .faq-accordion .day-title {
-            font-size: .78rem !important;
+            font-size: 1.05rem !important;
         }
 
         .nile-cruise-page .related-grid {
@@ -2535,7 +2693,7 @@
         .nile-cruise-page .related-card {
             border-radius: 13px;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(28, 50, 92, .06);
+            box-shadow: 0 8px 20px rgba(6, 27, 62, .06);
         }
 
         .nile-cruise-page .related-card img {
@@ -2562,7 +2720,7 @@
             top: 96px;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 18px 42px rgba(28, 50, 92, .13);
+            box-shadow: 0 18px 42px rgba(6, 27, 62, .13);
         }
 
         .nile-cruise-page .sidebar-header {
@@ -2628,11 +2786,11 @@
         }
 
         html[data-theme='dark'] .nile-cruise-page #cruise-facilities .facility-card .facility-icon {
-            color: #c5955b !important;
+            color: #F36B0A !important;
         }
 
         html[data-theme='dark'] .nile-cruise-page #cruise-facilities .facility-card .facility-icon svg {
-            stroke: #c5955b !important;
+            stroke: #F36B0A !important;
         }
 
         html[data-theme='dark'] .nile-cruise-page .nc-day summary,
@@ -2780,6 +2938,127 @@
                 font-size: 1rem;
             }
         }
+
+        .room-capacity-notice {
+            margin: 12px 0;
+            padding: 10px 14px;
+            border: 1px solid rgba(243, 107, 10, 0.35);
+            border-radius: 8px;
+            background: rgba(243, 107, 10, 0.08);
+            color: #061B3E;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.45;
+        }
+
+        .room-group-container {
+            background: #fdfbf7;
+            border: 1px solid rgba(6, 27, 62, 0.1);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+        }
+
+        .room-header {
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed rgba(6, 27, 62, 0.12);
+        }
+
+        .room-title {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: #061B3E;
+        }
+
+        .room-inline-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .room-inline-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 4px;
+        }
+
+        .age-info {
+            font-size: 11px;
+            color: #8c7355;
+            font-weight: 400;
+        }
+
+        .select-inline {
+            width: 100%;
+            padding: 7px 10px;
+            border: 1px solid #dce2e8;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fff;
+            color: #061B3E;
+        }
+
+        .room-price-badge {
+            background: rgba(243, 107, 10, 0.15);
+            color: #a87940;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 3px 9px;
+            border-radius: 6px;
+            letter-spacing: 0.2px;
+        }
+
+        .tp-price-summary-box {
+            background: #fff;
+            border: 1px solid rgba(243, 107, 10, 0.35);
+            border-radius: 14px;
+            padding: 16px;
+            margin-top: 14px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 15px rgba(6, 27, 62, 0.05);
+        }
+
+        .tp-price-summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed rgba(6, 27, 62, 0.14);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #061B3E;
+            font-size: 14.5px;
+        }
+
+        .tp-price-total {
+            font-size: 19px;
+            color: #F36B0A;
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+        }
+
+        .tp-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #4b5563;
+            margin-bottom: 5px;
+        }
+
+        .tp-price-row strong {
+            color: #061B3E;
+        }
+
+        .text-gold {
+            color: #F36B0A !important;
+            font-weight: 700;
+        }
     </style>
 @endsection
 
@@ -2794,7 +3073,7 @@
             'url' => $canonicalUrl,
             'provider' => [
                 '@type' => 'TravelAgency',
-                'name' => 'Etro Tours',
+                'name' => 'Egypt Tour Pro',
                 'url' => url('/'),
             ],
             'touristType' => $tourTypeText ?? __('Private'),
@@ -2894,7 +3173,8 @@
                         </a>
                     @endif
                     @if ($hasBookablePrice)
-                        <a href="{{ route('website.checkout.show', $package->slug) }}" class="gold-btn">
+                        <a href="{{ route('website.checkout.show', $package->slug) }}" class="gold-btn"
+                            data-mobile-booking>
                             <i class="la la-calendar-check"></i> {{ __('Book Now') }}
                         </a>
                     @endif
@@ -2926,7 +3206,21 @@
                 <div class="col-lg-8">
                     @php
                         $isExtendedNileCruise =
-                            $package->package_type === 'nile_cruise' && $package->nileCruiseDurations->isNotEmpty();
+                            $package->package_type === 'nile_cruise' &&
+                            $package->nileCruiseDurations->where('is_active', true)->isNotEmpty();
+                        $hasNileCruisePrices =
+                            $isExtendedNileCruise &&
+                            $package->nileCruiseDurations
+                                ->where('is_active', true)
+                                ->contains(
+                                    fn($duration) => $duration->seasonPrices
+                                        ->where('is_active', true)
+                                        ->contains(
+                                            fn($season) => $season->items->contains(
+                                                fn($item) => (float) $item->price > 0,
+                                            ),
+                                        ),
+                                );
                     @endphp
                     <section id="about" class="content-section">
                         <h2 class="section-header">{{ __('About') }} {{ $title }}</h2>
@@ -3138,7 +3432,7 @@
                                     @foreach ($highlights as $highlight)
                                         <li style="border: none; padding: 5px 0;">
                                             <i class="la la-check-circle"
-                                                style="color:var(--rich-gold, #c5955b); margin-right:8px; font-size: 1.2rem; vertical-align: middle;"></i>
+                                                style="color:var(--etp-orange-500, #F36B0A); margin-right:8px; font-size: 1.2rem; vertical-align: middle;"></i>
                                             @if ($highlight->display_title)
                                                 <strong>{{ $highlight->display_title }}</strong>
                                             @endif
@@ -3214,6 +3508,7 @@
                         $hasDynamicNileFacilities =
                             $isNileCruisePackage && ($facilities->isNotEmpty() || $nileFacilityStats->isNotEmpty());
                     @endphp
+
                     @if (!$isNileCruisePackage && $facilities->count())
                         <section class="content-section">
                             <h2 class="section-header">
@@ -3494,7 +3789,7 @@
                                                 @endphp
                                                 @if (!empty($dayMeals))
                                                     <div class="meals-included-card mt-3 p-3 rounded-3"
-                                                        style="background-color: #f8f6f0; border-left: 4px solid #c9974c;">
+                                                        style="background-color: #f8f6f0; border-left: 4px solid #F36B0A;">
                                                         <div class="fw-bold mb-2"
                                                             style="color: #1e293b; font-size: 0.9rem;">
                                                             {{ __('Meals Included') }}</div>
@@ -3519,7 +3814,7 @@
                                                                     }
                                                                 @endphp
                                                                 <span class="badge px-3 py-2 rounded-pill fw-medium"
-                                                                    style="background-color: #c9974c; color: #ffffff; font-size: 0.85rem; border: none;">
+                                                                    style="background-color: #F36B0A; color: #ffffff; font-size: 0.85rem; border: none;">
                                                                     {{ $mealText }}
                                                                 </span>
                                                             @endforeach
@@ -3533,6 +3828,8 @@
                             </div>
                         </section>
                     @endif
+
+
 
                     @if (!$isNileCruisePackage && ($included->count() || $excluded->count()))
                         <section class="content-section">
@@ -3571,11 +3868,12 @@
                     @endif
 
                     @include('website.pages.packages.partials.common_experience_details')
-
                     @php
-                        $groupTiersForDisplay = collect((array) ($package->group_pricing_tiers ?? []))->filter(
-                            fn($tier) => is_array($tier) && (float) ($tier['price_per_person'] ?? 0) > 0,
-                        );
+                        $groupTiersForDisplay = collect(
+                            $package->package_type === 'nile_cruise'
+                                ? []
+                                : (array) ($package->group_pricing_tiers ?? []),
+                        )->filter(fn($tier) => is_array($tier) && (float) ($tier['price_per_person'] ?? 0) > 0);
                         $hasAccommodations =
                             $package->tourPackageAccommodations && $package->tourPackageAccommodations->isNotEmpty();
                         $hasAnyStandardPricing =
@@ -3587,7 +3885,7 @@
                             $groupTiersForDisplay->isNotEmpty() ||
                             $hasAccommodations;
                     @endphp
-                    @if (!$isExtendedNileCruise && $hasAnyStandardPricing)
+                    @if (!$isNileCruisePackage && !$hasNileCruisePrices && $hasAnyStandardPricing)
                         <section class="content-section pricing-showcase" id="pricing-section">
                             <h2 class="section-header">{{ __('Pricing & Packages') }}</h2>
                             <p class="group-pricing-subtitle">
@@ -3634,20 +3932,20 @@
                             @if ($hasAccommodations)
                                 <div class="tour-accommodations-showcase mt-4">
                                     <h3 class="fw-bold mb-3"
-                                        style="color: var(--primary-navy, #1c325c); font-family: 'Playfair Display', serif;">
+                                        style="color: var(--etp-navy-950, #061B3E); font-family: 'Playfair Display', serif;">
                                         {{ __('Accommodation Tiers & Season Pricing') }}</h3>
                                     <div class="accordion" id="accPricingAccordion">
                                         @foreach ($package->tourPackageAccommodations as $accIndex => $acc)
                                             <div class="accordion-item mb-3 border rounded shadow-sm"
-                                                style="border-color: rgba(28, 50, 92, 0.12) !important;">
+                                                style="border-color: rgba(6, 27, 62, 0.12) !important;">
                                                 <h2 class="accordion-header" id="accHeading{{ $acc->id }}">
                                                     <button
                                                         class="accordion-button {{ $accIndex > 0 ? 'collapsed' : '' }} fw-bold"
                                                         type="button" data-bs-toggle="collapse"
                                                         data-bs-target="#accCollapse{{ $acc->id }}"
-                                                        style="color: var(--primary-navy, #1c325c);">
+                                                        style="color: var(--etp-navy-950, #061B3E);">
                                                         <i class="la la-building me-2"
-                                                            style="color: var(--rich-gold, #c5955b);"></i>
+                                                            style="color: var(--etp-orange-500, #F36B0A);"></i>
                                                         {{ $acc->name }}
                                                         @if ($acc->description)
                                                             <small
@@ -3661,18 +3959,18 @@
                                                     <div class="accordion-body">
                                                         @if ($acc->hotels->isNotEmpty())
                                                             <div class="mb-4 p-3 rounded"
-                                                                style="background: var(--pearl-luxury, #faf8f3); border: 1px solid rgba(28, 50, 92, 0.08);">
+                                                                style="background: var(--etp-surface-muted, #f8fafc); border: 1px solid rgba(6, 27, 62, 0.08);">
                                                                 <h5 class="fw-bold mb-2"
-                                                                    style="color: var(--primary-navy, #1c325c);"><i
+                                                                    style="color: var(--etp-navy-950, #061B3E);"><i
                                                                         class="la la-hotel"
-                                                                        style="color: var(--rich-gold, #c5955b);"></i>
+                                                                        style="color: var(--etp-orange-500, #F36B0A);"></i>
                                                                     {{ __('Assigned Hotels') }}</h5>
                                                                 <div class="row g-2">
                                                                     @foreach ($acc->hotels as $hotel)
                                                                         <div class="col-md-6 col-lg-4">
                                                                             <div class="p-2 border rounded bg-white">
                                                                                 <span class="badge mb-1"
-                                                                                    style="background: var(--primary-navy, #1c325c); color: #fff;">{{ $hotel->city_name ?: __('Hotel') }}</span>
+                                                                                    style="background: var(--etp-navy-950, #061B3E); color: #fff;">{{ $hotel->city_name ?: __('Hotel') }}</span>
                                                                                 <strong
                                                                                     class="d-block text-dark">{{ $hotel->hotel_name }}</strong>
                                                                                 @if ($hotel->star_rating)
@@ -3704,7 +4002,7 @@
                                                                                     @if ($loop->first)
                                                                                         <td rowspan="{{ $season->items->count() }}"
                                                                                             class="fw-bold"
-                                                                                            style="background: var(--pearl-luxury, #faf8f3);">
+                                                                                            style="background: var(--etp-surface-muted, #f8fafc);">
                                                                                             {{ $season->display_season_name }}
                                                                                             @if ($season->date_from || $season->date_to)
                                                                                                 <div
@@ -3718,7 +4016,7 @@
                                                                                     @endif
                                                                                     <td>{{ $item->display_label }}</td>
                                                                                     <td><strong
-                                                                                            style="color: var(--rich-gold, #c5955b); font-size: 1.1rem;">{{ $currencySymbol }}{{ number_format((float) $item->price, 0) }}</strong>
+                                                                                            style="color: var(--etp-orange-500, #F36B0A); font-size: 1.1rem;">{{ $currencySymbol }}{{ number_format((float) $item->price, 0) }}</strong>
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -3864,8 +4162,8 @@
                             @if ($childrenPolicy)
                                 <div class="mb-4">
                                     <h4 class="mb-3"
-                                        style="color: var(--primary-navy, #1c325c); font-family: 'Playfair Display', serif;">
-                                        <i class="la la-child" style="color: var(--rich-gold, #c5955b);"></i>
+                                        style="color: var(--etp-navy-950, #061B3E); font-family: 'Playfair Display', serif;">
+                                        <i class="la la-child" style="color: var(--etp-orange-500, #F36B0A);"></i>
                                         {{ __('Children Policy') }}
                                     </h4>
                                     <div class="about-content">{!! $childrenPolicy !!}</div>
@@ -3875,8 +4173,8 @@
                             @if ($pickupPolicy)
                                 <div class="mb-4">
                                     <h4 class="mb-3"
-                                        style="color: var(--primary-navy, #1c325c); font-family: 'Playfair Display', serif;">
-                                        <i class="la la-shuttle-van" style="color: var(--rich-gold, #c5955b);"></i>
+                                        style="color: var(--etp-navy-950, #061B3E); font-family: 'Playfair Display', serif;">
+                                        <i class="la la-shuttle-van" style="color: var(--etp-orange-500, #F36B0A);"></i>
                                         {{ __('Pickup & Drop-off Policy') }}
                                     </h4>
                                     <div class="about-content">{!! $pickupPolicy !!}</div>
@@ -3886,8 +4184,8 @@
                             @if ($cancellationPolicy)
                                 <div class="mb-4">
                                     <h4 class="mb-3"
-                                        style="color: var(--primary-navy, #1c325c); font-family: 'Playfair Display', serif;">
-                                        <i class="la la-info-circle" style="color: var(--rich-gold, #c5955b);"></i>
+                                        style="color: var(--etp-navy-950, #061B3E); font-family: 'Playfair Display', serif;">
+                                        <i class="la la-info-circle" style="color: var(--etp-orange-500, #F36B0A);"></i>
                                         {{ __('Cancellation Policy') }}
                                     </h4>
                                     <div class="about-content">
@@ -3899,8 +4197,8 @@
                             @if ($termsConditions)
                                 <div>
                                     <h4 class="mb-3"
-                                        style="color: var(--primary-navy, #1c325c); font-family: 'Playfair Display', serif;">
-                                        <i class="la la-file-alt" style="color: var(--rich-gold, #c5955b);"></i>
+                                        style="color: var(--etp-navy-950, #061B3E); font-family: 'Playfair Display', serif;">
+                                        <i class="la la-file-alt" style="color: var(--etp-orange-500, #F36B0A);"></i>
                                         {{ __('Terms & Conditions') }}
                                     </h4>
                                     <div class="about-content">
@@ -4037,55 +4335,273 @@
                                         class="la la-envelope"></i>{{ __('Enquiry Form') }}</button>
                             </div>
                             <div class="sidebar-content reserve-tab-panel" id="reserveBookingPanel" role="tabpanel">
-                                <h4 class="booking-request-title">{{ __('Select Your Booking') }}</h4>
-                                <p class="booking-request-copy">
-                                    {{ __('Choose your travel details and an available price, then continue to checkout.') }}
-                                </p>
-                                <form method="get" action="{{ route('website.checkout.show', $package->slug) }}"
-                                    id="sidebarBookingForm">
-                                    <div class="sidebar-booking-grid">
-                                        <div class="input-box"><label class="label-text"
-                                                for="sidebar_travel_date">{{ __('Travel Date') }}</label><input
-                                                class="form-control" id="sidebar_travel_date" type="date"
-                                                name="travel_date" min="{{ today()->toDateString() }}" required></div>
-                                        <div class="input-box"><label class="label-text"
-                                                for="sidebar_rooms">{{ $package->package_type === 'nile_cruise' ? __('Cabins') : __('Rooms') }}</label><input
-                                                class="form-control" id="sidebar_rooms" type="number" name="rooms"
-                                                min="1" max="20" value="1" required></div>
-                                        <div class="input-box"><label class="label-text"
-                                                for="sidebar_adults">{{ __('Adults') }}</label><input
-                                                class="form-control" id="sidebar_adults" type="number" name="adults"
-                                                min="1" max="40" value="1" required></div>
-                                        <div class="input-box"><label class="label-text"
-                                                for="sidebar_children">{{ __('Children') }}</label><input
-                                                class="form-control" id="sidebar_children" type="number"
-                                                name="children" min="0" max="40" value="0" required>
+                                @if ($package->package_type === 'travel_package')
+                                    <form method="get" action="{{ route('website.checkout.show', $package->slug) }}"
+                                        id="sidebarTravelPackageForm">
+                                        <input type="hidden" name="pricing_option" value="travel_package">
+                                        <input type="hidden" name="totalAdults" id="tp_totalAdults" value="2">
+                                        <input type="hidden" name="totalChildren" id="tp_totalChildren" value="0">
+                                        <input type="hidden" name="adults" id="tp_form_adults" value="2">
+                                        <input type="hidden" name="children" id="tp_form_children" value="0">
+                                        <input type="hidden" name="infants" value="0">
+
+                                        <!-- Date Field -->
+                                        <div class="input-box mb-3">
+                                            <label class="label-text" for="tp_travel_date"
+                                                style="font-weight: 600; color: #061B3E; font-size: 13px; margin-bottom: 6px; display: block;">{{ __('Date') }}
+                                                *</label>
+                                            <div class="form-group position-relative">
+                                                <span class="la la-calendar form-icon"
+                                                    style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #F36B0A; z-index: 2;"></span>
+                                                <input id="tp_travel_date" name="travel_date" class="form-control"
+                                                    type="date" value="{{ today()->toDateString() }}"
+                                                    min="{{ today()->toDateString() }}" required
+                                                    style="padding-left: 42px; border-radius: 10px; height: 46px; border: 1px solid #dce2e8; font-size: 14px;">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <input type="hidden" name="infants" value="0">
-                                    <div class="sidebar-price-options">
-                                        @foreach ($bookingPricingOptions as $option)
-                                            <label class="sidebar-price-option">
-                                                <input type="radio" name="pricing_option" value="{{ $option['id'] }}"
-                                                    data-valid-from="{{ $option['valid_from'] }}"
-                                                    data-valid-to="{{ $option['valid_to'] }}"
-                                                    data-pax-min="{{ $option['pax_min'] ?? '' }}"
-                                                    data-pax-max="{{ $option['pax_max'] ?? '' }}" required>
-                                                <span class="sidebar-price-option-card">
-                                                    <span><span
-                                                            class="sidebar-option-name">{{ $option['label'] }}</span><span
-                                                            class="sidebar-option-desc">{{ $option['description'] }}</span></span>
-                                                    <span
-                                                        class="sidebar-option-price">{{ $option['currency_symbol'] }}{{ number_format($option['amount'], 2) }}</span>
-                                                </span>
-                                            </label>
-                                        @endforeach
-                                    </div>
-                                    <div class="alert-danger mt-3" id="sidebarNoPrices" style="display:none">
-                                        {{ __('No booking price is available for these details.') }}</div>
-                                    <button type="submit" class="sidebar-checkout-btn"><i
-                                            class="la la-arrow-right"></i>{{ __('Continue to Checkout') }}</button>
-                                </form>
+
+                                        <!-- Rooms Field -->
+                                        <div class="input-box mb-3">
+                                            <label class="label-text" for="tp_rooms"
+                                                style="font-weight: 600; color: #061B3E; font-size: 13px; margin-bottom: 6px; display: block;">{{ __('Rooms') }}
+                                                *</label>
+                                            <div class="form-group">
+                                                <div class="select-contain w-auto">
+                                                    <select id="tp_rooms" name="rooms"
+                                                        class="form-select select-contain-select" required
+                                                        style="border-radius: 10px; height: 46px; border: 1px solid #dce2e8; font-size: 14px;">
+                                                        <option value="" disabled>{{ __('Select Rooms') }}</option>
+                                                        @for ($r = 1; $r <= 10; $r++)
+                                                            <option value="{{ $r }}"
+                                                                {{ $r === 1 ? 'selected' : '' }}>{{ $r }}
+                                                            </option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div id="tp_roomError"
+                                                    style="color:red; display:none; font-size: 13px; margin-top: 4px;">
+                                                    {{ __('Please select the number of rooms.') }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="tp_capacityNotice" class="room-capacity-notice mb-2"
+                                            style="display:none;"></div>
+
+                                        <!-- Dynamic Room Cards with Accommodations Type, Adults, Children -->
+                                        <div id="tp_roomFields" class="tp-room-fields mb-2"></div>
+
+                                        <!-- Live Estimated Price Summary Box -->
+                                        <div id="tp_priceSummaryBox" class="tp-price-summary-box mb-3"
+                                            style="display: none;">
+                                            <div class="tp-price-summary-header">
+                                                <span>{{ __('Estimated Price') }}</span>
+                                                <span class="tp-price-total" id="tp_displayTotal">$0.00</span>
+                                            </div>
+                                            <div class="tp-price-summary-details">
+                                                <div class="tp-price-row">
+                                                    <span>{{ __('Pay Today (50% Deposit)') }}:</span>
+                                                    <strong id="tp_displayDeposit" class="text-gold">$0.00</strong>
+                                                </div>
+                                                <div class="tp-price-row">
+                                                    <span>{{ __('Remaining Balance') }}:</span>
+                                                    <span id="tp_displayBalance">$0.00</span>
+                                                </div>
+                                                <small class="text-muted d-block mt-2"
+                                                    style="font-size: 11.5px; line-height: 1.35;">
+                                                    💡 {{ __('Remaining balance due 30 days prior to departure.') }}
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        <div class="btn-box mt-3">
+                                            <button type="submit" id="tp_bookButton" class="submit-btn w-100"
+                                                style="background: linear-gradient(135deg, #F36B0A 0%, #a87940 100%); color: #fff; font-weight: 700; border-radius: 10px; padding: 14px; font-size: 16px; border: none; box-shadow: 0 4px 15px rgba(243, 107, 10, 0.35); cursor: pointer; transition: all 0.2s;">
+                                                <i class="la la-calendar-check me-1"></i>
+                                                {{ __('Book Now') }}
+                                            </button>
+                                        </div>
+                                    </form>
+                                @elseif ($package->package_type === 'day_tour')
+                                    <h4 class="booking-request-title">{{ __('Select Your Booking') }}</h4>
+                                    <form method="get" action="{{ route('website.checkout.show', $package->slug) }}"
+                                        id="sidebarBookingForm" class="day-tour-booking-form"
+                                        data-operating-days='@json($operatingDays->values())'
+                                        data-min-date="{{ today()->toDateString() }}">
+                                        <div class="input-box">
+                                            <label class="label-text" for="day_tour_date_display">{{ __('Date') }}
+                                                *</label>
+                                            <div class="form-group day-tour-date-wrap">
+                                                <span class="la la-calendar form-icon"></span>
+                                                <input id="day_tour_date_display"
+                                                    class="form-control day-tour-date-display" type="text"
+                                                    autocomplete="off" placeholder="{{ __('Travel Date') }}" readonly
+                                                    required aria-haspopup="dialog" aria-expanded="false">
+                                                <input id="sidebar_travel_date" type="hidden" name="travel_date">
+                                                <div class="day-tour-calendar" id="dayTourCalendar" role="dialog"
+                                                    aria-label="{{ __('Choose an available travel date') }}" hidden>
+                                                    <div class="day-tour-calendar-header">
+                                                        <button type="button" class="day-tour-calendar-nav"
+                                                            data-calendar-prev
+                                                            aria-label="{{ __('Previous month') }}">‹</button>
+                                                        <div class="day-tour-calendar-title" aria-live="polite"></div>
+                                                        <button type="button" class="day-tour-calendar-nav"
+                                                            data-calendar-next
+                                                            aria-label="{{ __('Next month') }}">›</button>
+                                                    </div>
+                                                    <div class="day-tour-calendar-grid"></div>
+                                                </div>
+                                            </div>
+                                            <small class="text-danger d-none" id="dayTourDateError">
+                                                {{ __('Please choose an available travel date.') }}
+                                            </small>
+                                        </div>
+
+                                        <div class="day-tour-quantity-list">
+                                            <div class="quantity-control">
+                                                <label for="sidebar_adults">{{ __('Adults (12+ years)') }}</label>
+                                                <div class="qty-buttons">
+                                                    <button type="button" class="qty-btn"
+                                                        onclick="changeQty('sidebar_adults', -1)"
+                                                        aria-label="{{ __('Decrease adults') }}">−</button>
+                                                    <input type="number" id="sidebar_adults" name="adults"
+                                                        class="qty-input" value="2" min="1" max="40"
+                                                        readonly>
+                                                    <button type="button" class="qty-btn"
+                                                        onclick="changeQty('sidebar_adults', 1)"
+                                                        aria-label="{{ __('Increase adults') }}">+</button>
+                                                </div>
+                                            </div>
+                                            <div class="quantity-control">
+                                                <label for="sidebar_children">{{ __('Children (2–11 years)') }}</label>
+                                                <div class="qty-buttons">
+                                                    <button type="button" class="qty-btn"
+                                                        onclick="changeQty('sidebar_children', -1)"
+                                                        aria-label="{{ __('Decrease children') }}">−</button>
+                                                    <input type="number" id="sidebar_children" name="children"
+                                                        class="qty-input" value="0" min="0" max="40"
+                                                        readonly>
+                                                    <button type="button" class="qty-btn"
+                                                        onclick="changeQty('sidebar_children', 1)"
+                                                        aria-label="{{ __('Increase children') }}">+</button>
+                                                </div>
+                                            </div>
+                                            <div class="quantity-control">
+                                                <label for="sidebar_infants">{{ __('Infants (Under 2 years)') }}</label>
+                                                <div class="qty-buttons">
+                                                    <button type="button" class="qty-btn"
+                                                        onclick="changeQty('sidebar_infants', -1)"
+                                                        aria-label="{{ __('Decrease infants') }}">−</button>
+                                                    <input type="number" id="sidebar_infants" name="infants"
+                                                        class="qty-input" value="0" min="0" max="20"
+                                                        readonly>
+                                                    <button type="button" class="qty-btn"
+                                                        onclick="changeQty('sidebar_infants', 1)"
+                                                        aria-label="{{ __('Increase infants') }}">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" name="rooms" value="1">
+                                        <div class="sidebar-price-options d-none">
+                                            @foreach ($bookingPricingOptions as $option)
+                                                <label class="sidebar-price-option">
+                                                    <input type="radio" name="pricing_option"
+                                                        value="{{ $option['id'] }}"
+                                                        data-valid-from="{{ $option['valid_from'] }}"
+                                                        data-valid-to="{{ $option['valid_to'] }}"
+                                                        data-pax-min="{{ $option['pax_min'] ?? '' }}"
+                                                        data-pax-max="{{ $option['pax_max'] ?? '' }}"
+                                                        data-amount="{{ $option['amount'] ?? 0 }}"
+                                                        data-price-unit="{{ $option['price_unit'] ?? '' }}"
+                                                        data-adult-price="{{ $option['adult_price'] ?? 0 }}"
+                                                        data-child-price="{{ $option['child_price'] ?? 0 }}"
+                                                        data-infant-price="{{ $option['infant_price'] ?? 0 }}"
+                                                        data-currency-symbol="{{ $option['currency_symbol'] ?? '$' }}"
+                                                        data-label="{{ $option['label'] ?? '' }}"
+                                                        data-description="{{ $option['description'] ?? '' }}" required>
+                                                    <span class="sidebar-price-option-card">
+                                                        <span><span
+                                                                class="sidebar-option-name">{{ $option['label'] }}</span><span
+                                                                class="sidebar-option-desc">{{ $option['description'] }}</span></span>
+                                                        <span
+                                                            class="sidebar-option-price">{{ $option['currency_symbol'] }}{{ number_format($option['amount'], 2) }}</span>
+                                                    </span>
+                                                </label>
+                                            @endforeach
+                                        </div>
+
+                                        <div class="day-tour-price-box" id="dayTourPriceBox">
+                                            <div class="day-tour-price-header">
+                                                <span class="day-tour-price-label">{{ __('Total Price') }}</span>
+                                                <span class="day-tour-tier-badge" id="dayTourTierBadge"></span>
+                                            </div>
+                                            <div class="day-tour-price-total" id="dayTourPriceTotal"></div>
+                                            <div class="day-tour-price-breakdown text-muted" id="dayTourPriceBreakdown">
+                                            </div>
+                                        </div>
+                                        <div class="alert-danger mt-3" id="sidebarNoPrices" style="display:none">
+                                            {{ __('No booking price is available for these details.') }}
+                                        </div>
+                                        <button type="submit" class="sidebar-checkout-btn"><i
+                                                class="la la-calendar-check"></i>{{ __('Book Now') }}</button>
+                                    </form>
+                                @else
+                                    <h4 class="booking-request-title">{{ __('Select Your Booking') }}</h4>
+                                    <p class="booking-request-copy">
+                                        {{ __('Choose your travel details and an available price, then continue to checkout.') }}
+                                    </p>
+                                    <form method="get" action="{{ route('website.checkout.show', $package->slug) }}"
+                                        id="sidebarBookingForm">
+                                        <div class="sidebar-booking-grid">
+                                            <div class="input-box"><label class="label-text"
+                                                    for="sidebar_travel_date">{{ __('Travel Date') }}</label><input
+                                                    class="form-control" id="sidebar_travel_date" type="date"
+                                                    name="travel_date" min="{{ today()->toDateString() }}" required>
+                                            </div>
+                                            <div class="input-box"><label class="label-text"
+                                                    for="sidebar_rooms">{{ $package->package_type === 'nile_cruise' ? __('Cabins') : __('Rooms') }}</label><input
+                                                    class="form-control" id="sidebar_rooms" type="number"
+                                                    name="rooms" min="1" max="20" value="1"
+                                                    required></div>
+                                            <div class="input-box"><label class="label-text"
+                                                    for="sidebar_adults">{{ __('Adults') }}</label><input
+                                                    class="form-control" id="sidebar_adults" type="number"
+                                                    name="adults" min="1" max="40" value="1"
+                                                    required></div>
+                                            <div class="input-box"><label class="label-text"
+                                                    for="sidebar_children">{{ __('Children') }}</label><input
+                                                    class="form-control" id="sidebar_children" type="number"
+                                                    name="children" min="0" max="40" value="0"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="infants" value="0">
+                                        <div class="sidebar-price-options">
+                                            @foreach ($bookingPricingOptions as $option)
+                                                <label class="sidebar-price-option">
+                                                    <input type="radio" name="pricing_option"
+                                                        value="{{ $option['id'] }}"
+                                                        data-valid-from="{{ $option['valid_from'] }}"
+                                                        data-valid-to="{{ $option['valid_to'] }}"
+                                                        data-pax-min="{{ $option['pax_min'] ?? '' }}"
+                                                        data-pax-max="{{ $option['pax_max'] ?? '' }}" required>
+                                                    <span class="sidebar-price-option-card">
+                                                        <span><span
+                                                                class="sidebar-option-name">{{ $option['label'] }}</span><span
+                                                                class="sidebar-option-desc">{{ $option['description'] }}</span></span>
+                                                        <span
+                                                            class="sidebar-option-price">{{ $option['currency_symbol'] }}{{ number_format($option['amount'], 2) }}</span>
+                                                    </span>
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                        <div class="alert-danger mt-3" id="sidebarNoPrices" style="display:none">
+                                            {{ __('No booking price is available for these details.') }}</div>
+                                        <button type="submit" class="sidebar-checkout-btn"><i
+                                                class="la la-arrow-right"></i>{{ __('Continue to Checkout') }}</button>
+                                    </form>
+                                @endif
                             </div>
                             <div class="sidebar-content reserve-tab-panel" id="reserveEnquiryPanel" role="tabpanel"
                                 hidden>
@@ -4130,12 +4646,29 @@
     <div class="fixed-mobile-btn d-lg-none">
         @if ($hasBookablePrice)
             <a href="{{ route('website.checkout.show', $package->slug) }}" class="mobile-enquiry-btn"
-                style="margin-right:8px"><i class="la la-calendar-check"></i> {{ __('Book Now') }}</a>
+                data-mobile-booking style="margin-right:8px"><i class="la la-calendar-check"></i>
+                {{ __('Book Now') }}</a>
         @endif
         <a href="#" class="mobile-enquiry-btn" data-bs-toggle="modal" data-bs-target="#simpleEnquiryModal">
             <i class="la la-envelope"></i> {{ $hasBookablePrice ? __('Enquire') : __('Submit Enquiry') }}
         </a>
     </div>
+
+    @if ($hasBookablePrice)
+        <div class="modal fade" id="mobileBookingModal" tabindex="-1" aria-labelledby="mobileBookingModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="mobileBookingModalLabel">{{ __('Select Your Booking') }}</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="{{ __('Close') }}"></button>
+                    </div>
+                    <div class="modal-body" id="mobileBookingBody"></div>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="modal fade" id="simpleEnquiryModal" tabindex="-1" aria-labelledby="simpleEnquiryModalLabel"
         aria-hidden="true">
@@ -4166,7 +4699,11 @@
             if (!input) return;
             const min = parseInt(input.getAttribute('min') || '0');
             const current = parseInt(input.value || min);
-            input.value = Math.max(min, current + amount);
+            const max = parseInt(input.getAttribute('max') || '999');
+            input.value = Math.min(max, Math.max(min, current + amount));
+            input.dispatchEvent(new Event('change', {
+                bubbles: true
+            }));
         };
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -4200,17 +4737,155 @@
                 activateReserveTab(location.hash === '#enquiryFormDesktop' ? 'enquiry' : 'booking');
             }
 
+            const mobileBookingModal = document.getElementById('mobileBookingModal');
+            if (mobileBookingModal && reserveBookingPanel) {
+                const bookingHome = document.createComment('Booking panel desktop position');
+                reserveBookingPanel.before(bookingHome);
+                const mobileViewport = window.matchMedia('(max-width: 991.98px)');
+                let bookingWasHidden = false;
+
+                // Move the live form so its values, validation and price handlers stay shared.
+                mobileBookingModal.addEventListener('show.bs.modal', () => {
+                    bookingWasHidden = reserveBookingPanel.hidden;
+                    reserveBookingPanel.hidden = false;
+                    document.getElementById('mobileBookingBody').append(reserveBookingPanel);
+                });
+                mobileBookingModal.addEventListener('hidden.bs.modal', () => {
+                    bookingHome.after(reserveBookingPanel);
+                    reserveBookingPanel.hidden = bookingWasHidden;
+                });
+                document.querySelectorAll('[data-mobile-booking]').forEach((button) => {
+                    button.addEventListener('click', (event) => {
+                        if (!mobileViewport.matches) return;
+                        event.preventDefault();
+                        window.bootstrap.Modal.getOrCreateInstance(mobileBookingModal).show(button);
+                    });
+                });
+                const closeDesktopBookingModal = () => {
+                    if (!mobileViewport.matches) {
+                        window.bootstrap.Modal.getInstance(mobileBookingModal)?.hide();
+                    }
+                };
+                mobileViewport.addEventListener('change', closeDesktopBookingModal);
+                mobileBookingModal.addEventListener('shown.bs.modal', closeDesktopBookingModal);
+            }
+
             const sidebarBookingForm = document.getElementById('sidebarBookingForm');
             if (sidebarBookingForm) {
                 const travelDate = document.getElementById('sidebar_travel_date');
                 const adults = document.getElementById('sidebar_adults');
                 const children = document.getElementById('sidebar_children');
+                const infants = document.getElementById('sidebar_infants');
                 const noPrices = document.getElementById('sidebarNoPrices');
+                const dayTourPriceBox = document.getElementById('dayTourPriceBox');
+                const dayTourPriceTotal = document.getElementById('dayTourPriceTotal');
+                const dayTourTierBadge = document.getElementById('dayTourTierBadge');
+                const dayTourPriceBreakdown = document.getElementById('dayTourPriceBreakdown');
+
+                const calendar = document.getElementById('dayTourCalendar');
+                if (calendar) {
+                    const displayInput = document.getElementById('day_tour_date_display');
+                    const dateError = document.getElementById('dayTourDateError');
+                    const minDateParts = sidebarBookingForm.dataset.minDate.split('-').map(Number);
+                    const minDate = new Date(minDateParts[0], minDateParts[1] - 1, minDateParts[2]);
+                    const selectedDays = JSON.parse(sidebarBookingForm.dataset.operatingDays || '[]')
+                        .map(day => String(day).trim().toLowerCase()).filter(Boolean);
+                    const daily = !selectedDays.length || selectedDays.some(day => ['daily', 'everyday',
+                        'every day', 'all'
+                    ].includes(day));
+                    const weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+                    const allowedIndexes = selectedDays.map(day => weekdays.findIndex(name => name === day || name
+                        .slice(0, 3) === day.slice(0, 3))).filter(index => index >= 0);
+                    const title = calendar.querySelector('.day-tour-calendar-title');
+                    const grid = calendar.querySelector('.day-tour-calendar-grid');
+                    let viewedMonth = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+
+                    const toIso = date => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(
+                        date.getDate()).padStart(2, '0')].join('-');
+                    const isAvailable = date => date >= minDate && (daily || allowedIndexes.includes(date
+                .getDay()));
+                    const renderCalendar = () => {
+                        const locale = document.documentElement.lang || 'en';
+                        title.textContent = viewedMonth.toLocaleDateString(locale, {
+                            month: 'short',
+                            year: 'numeric'
+                        });
+                        grid.innerHTML = '';
+                        weekdays.forEach((day, index) => {
+                            const label = document.createElement('div');
+                            label.className = 'day-tour-calendar-weekday';
+                            const sample = new Date(2026, 7, 2 + index);
+                            label.textContent = sample.toLocaleDateString(locale, {
+                                weekday: 'short'
+                            }).slice(0, 2);
+                            grid.appendChild(label);
+                        });
+
+                        const first = new Date(viewedMonth.getFullYear(), viewedMonth.getMonth(), 1);
+                        const start = new Date(first);
+                        start.setDate(1 - first.getDay());
+                        for (let offset = 0; offset < 42; offset++) {
+                            const date = new Date(start);
+                            date.setDate(start.getDate() + offset);
+                            const button = document.createElement('button');
+                            button.type = 'button';
+                            button.className = 'day-tour-calendar-day';
+                            button.textContent = date.getDate();
+                            button.dataset.date = toIso(date);
+                            if (date.getMonth() !== viewedMonth.getMonth()) button.classList.add('is-outside');
+                            if (!isAvailable(date) || date.getMonth() !== viewedMonth.getMonth()) button
+                                .disabled = true;
+                            if (travelDate.value === button.dataset.date) button.classList.add('is-selected');
+                            button.addEventListener('click', () => {
+                                travelDate.value = button.dataset.date;
+                                displayInput.value = date.toLocaleDateString(locale, {
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: 'numeric'
+                                });
+                                displayInput.setAttribute('aria-expanded', 'false');
+                                calendar.hidden = true;
+                                dateError?.classList.add('d-none');
+                                travelDate.dispatchEvent(new Event('change', {
+                                    bubbles: true
+                                }));
+                            });
+                            grid.appendChild(button);
+                        }
+                    };
+
+                    displayInput.addEventListener('click', () => {
+                        calendar.hidden = !calendar.hidden;
+                        displayInput.setAttribute('aria-expanded', calendar.hidden ? 'false' : 'true');
+                        if (!calendar.hidden) renderCalendar();
+                    });
+                    calendar.querySelector('[data-calendar-prev]').addEventListener('click', () => {
+                        const previous = new Date(viewedMonth.getFullYear(), viewedMonth.getMonth() - 1, 1);
+                        if (previous >= new Date(minDate.getFullYear(), minDate.getMonth(), 1))
+                            viewedMonth = previous;
+                        renderCalendar();
+                    });
+                    calendar.querySelector('[data-calendar-next]').addEventListener('click', () => {
+                        viewedMonth = new Date(viewedMonth.getFullYear(), viewedMonth.getMonth() + 1, 1);
+                        renderCalendar();
+                    });
+                    document.addEventListener('click', event => {
+                        if (!calendar.hidden && !event.target.closest('.day-tour-date-wrap')) {
+                            calendar.hidden = true;
+                            displayInput.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                    renderCalendar();
+                }
 
                 const refreshSidebarPrices = () => {
                     const selectedDate = travelDate.value;
-                    const guests = Math.max(1, Number(adults.value || 1) + Number(children.value || 0));
+                    const numAdults = Number(adults?.value || 1);
+                    const numChildren = Number(children?.value || 0);
+                    const numInfants = Number(infants?.value || 0);
+                    const guests = Math.max(1, numAdults + numChildren + numInfants);
                     let firstAvailable = null;
+                    let bestOption = null;
 
                     sidebarBookingForm.querySelectorAll('.sidebar-price-option').forEach((label) => {
                         const input = label.querySelector('input[type="radio"]');
@@ -4222,20 +4897,83 @@
                         const guestsMatch = (!min || guests >= min) && (!max || guests <= max);
                         const available = dateMatches && guestsMatch;
 
-                        label.style.display = available ? '' : 'none';
+                        if (!dayTourPriceBox) {
+                            label.style.display = available ? '' : 'none';
+                        }
                         input.disabled = !available;
                         if (available && !firstAvailable) firstAvailable = input;
+                        if (available) {
+                            if (!bestOption || (min > 0 && Number(bestOption.dataset.paxMin || 0) ===
+                                0)) {
+                                bestOption = input;
+                            }
+                        }
                     });
 
-                    const selected = sidebarBookingForm.querySelector(
-                        'input[name="pricing_option"]:checked:not(:disabled)');
-                    if (!selected && firstAvailable) firstAvailable.checked = true;
-                    noPrices.style.display = firstAvailable ? 'none' : 'block';
+                    const activeInput = bestOption || firstAvailable;
+                    if (activeInput) {
+                        activeInput.checked = true;
+                    }
+
+                    if (dayTourPriceBox) {
+                        if (activeInput) {
+                            const symbol = activeInput.dataset.currencySymbol || '$';
+                            const unit = activeInput.dataset.priceUnit;
+                            const amount = parseFloat(activeInput.dataset.amount || 0);
+                            const adultPrice = parseFloat(activeInput.dataset.adultPrice || 0);
+                            const childPrice = parseFloat(activeInput.dataset.childPrice || 0);
+                            const infantPrice = parseFloat(activeInput.dataset.infantPrice || 0);
+
+                            let total = 0;
+                            let breakdown = '';
+                            if (unit === 'category') {
+                                total = (numAdults * adultPrice) + (numChildren * childPrice) + (numInfants *
+                                    infantPrice);
+                                const parts = [];
+                                parts.push(`${numAdults} × ${symbol}${adultPrice.toFixed(0)}`);
+                                if (numChildren > 0) parts.push(
+                                    `${numChildren} × ${symbol}${childPrice.toFixed(0)}`);
+                                if (numInfants > 0) parts.push(
+                                    `${numInfants} × ${symbol}${infantPrice.toFixed(0)}`);
+                                breakdown = parts.join(' + ');
+                            } else if (unit === 'per_booking') {
+                                total = amount;
+                                breakdown = `${symbol}${amount.toFixed(0)} per booking`;
+                            } else if (unit === 'per_adult') {
+                                total = amount * numAdults;
+                                breakdown = `${numAdults} × ${symbol}${amount.toFixed(0)}`;
+                            } else {
+                                total = amount * Math.max(1, numAdults + numChildren);
+                                breakdown = `${numAdults + numChildren} × ${symbol}${amount.toFixed(0)}`;
+                            }
+
+                            dayTourPriceTotal.textContent = `${symbol}${total.toFixed(0)}`;
+                            if (dayTourTierBadge) {
+                                dayTourTierBadge.textContent = activeInput.dataset.label || '';
+                            }
+                            if (dayTourPriceBreakdown) {
+                                dayTourPriceBreakdown.textContent = breakdown;
+                            }
+                            dayTourPriceBox.style.display = 'block';
+                            noPrices.style.display = 'none';
+                        } else {
+                            dayTourPriceBox.style.display = 'none';
+                            noPrices.style.display = 'block';
+                        }
+                    } else {
+                        noPrices.style.display = firstAvailable ? 'none' : 'block';
+                    }
                 };
 
-                [travelDate, adults, children].forEach((input) => input.addEventListener('change',
+                [travelDate, adults, children, infants].filter(Boolean).forEach((input) => input.addEventListener(
+                    'change',
                     refreshSidebarPrices));
                 sidebarBookingForm.addEventListener('submit', (event) => {
+                    if (calendar && !travelDate.value) {
+                        event.preventDefault();
+                        document.getElementById('dayTourDateError')?.classList.remove('d-none');
+                        return;
+                    }
                     if (!sidebarBookingForm.querySelector(
                             'input[name="pricing_option"]:checked:not(:disabled)')) {
                         event.preventDefault();
@@ -4245,18 +4983,265 @@
                 refreshSidebarPrices();
             }
 
-            const collapseTriggers = document.querySelectorAll('[data-collapse-target]');
+            const tpForm = document.getElementById('sidebarTravelPackageForm');
+            if (tpForm) {
+                const matrixData = @json($travelPackageMatrix['matrix'] ?? []);
+                const accommodationsList = @json($travelPackageMatrix['accommodations'] ?? []);
+                const currencySymbol = @json($currencySymbol ?? '$');
+                const travelDateInput = document.getElementById('tp_travel_date');
+                const roomsSelect = document.getElementById('tp_rooms');
+                const roomFields = document.getElementById('tp_roomFields');
+                const totalAdultsInput = document.getElementById('tp_totalAdults');
+                const totalChildrenInput = document.getElementById('tp_totalChildren');
+                const formAdultsInput = document.getElementById('tp_form_adults');
+                const formChildrenInput = document.getElementById('tp_form_children');
+                const priceSummaryBox = document.getElementById('tp_priceSummaryBox');
+                const displayTotal = document.getElementById('tp_displayTotal');
+                const displayDeposit = document.getElementById('tp_displayDeposit');
+                const displayBalance = document.getElementById('tp_displayBalance');
+
+                function getSelectedSeason() {
+                    const val = travelDateInput ? travelDateInput.value : '';
+                    if (!val) return 'winter';
+                    const date = new Date(val);
+                    if (isNaN(date.getTime())) return 'winter';
+                    const month = date.getMonth() + 1;
+                    return (month >= 5 && month <= 8) ? 'summer' : 'winter';
+                }
+
+                function getRoomRates(accName) {
+                    const season = getSelectedSeason();
+                    if (!accName && accommodationsList.length > 0) {
+                        accName = accommodationsList[0].name;
+                    }
+                    if (accName && matrixData[accName] && matrixData[accName][season]) {
+                        return matrixData[accName][season];
+                    }
+                    if (accName) {
+                        const lower = accName.toLowerCase();
+                        for (const key of Object.keys(matrixData)) {
+                            if (key.toLowerCase() === lower && matrixData[key][season]) {
+                                return matrixData[key][season];
+                            }
+                        }
+                    }
+                    const firstKey = Object.keys(matrixData)[0];
+                    if (firstKey && matrixData[firstKey][season]) {
+                        return matrixData[firstKey][season];
+                    }
+                    return {
+                        single: 0,
+                        double: 0,
+                        triple: 0
+                    };
+                }
+
+                function calculateRoomPrice(rates, adults, children) {
+                    const single = Number(rates.single || 0);
+                    const double = Number(rates.double || 0);
+                    const triple = Number(rates.triple || 0);
+
+                    if (adults === 1 && children === 0) {
+                        return single;
+                    }
+                    if (adults === 1 && (children === 1 || children === 2)) {
+                        return double * 2;
+                    }
+                    if (adults === 2) {
+                        const base = double * 2;
+                        const childRate = double * 0.50;
+                        return base + (children * childRate);
+                    }
+                    if (adults === 3) {
+                        return triple * 3;
+                    }
+                    if (triple > 0) {
+                        return (triple * adults) + (children * triple * 0.50);
+                    }
+                    return (double * adults) + (children * double * 0.50);
+                }
+
+                function generateRooms() {
+                    const numRooms = parseInt(roomsSelect ? roomsSelect.value : 1, 10) || 1;
+                    const existingData = [];
+                    roomFields.querySelectorAll('.room-group-container').forEach((roomEl) => {
+                        const accEl = roomEl.querySelector('.tp-room-acc-select');
+                        const adultEl = roomEl.querySelector('.tp-adult-select');
+                        const childEl = roomEl.querySelector('.tp-child-select');
+                        if (accEl) {
+                            existingData.push({
+                                acc: accEl.value,
+                                adults: parseInt(adultEl.value, 10) || 2,
+                                children: parseInt(childEl.value, 10) || 0,
+                            });
+                        }
+                    });
+
+                    roomFields.innerHTML = '';
+
+                    for (let i = 1; i <= numRooms; i++) {
+                        const prev = existingData[i - 1] || {};
+                        const selectedAcc = prev.acc || (accommodationsList[0]?.name || 'Standard');
+                        const selectedAdults = prev.adults !== undefined ? prev.adults : (i === 1 ? 2 : 1);
+                        const selectedChildren = prev.children !== undefined ? prev.children : 0;
+
+                        let accOptions = '';
+                        accommodationsList.forEach((a) => {
+                            const isSel = a.name === selectedAcc ? 'selected' : '';
+                            accOptions += `<option value="${a.name}" ${isSel}>${a.name}</option>`;
+                        });
+
+                        const roomHtml = `
+                                    <div class="room-group-container mb-2 p-3 rounded" style="background: #fff; border: 1px solid rgba(6, 27, 62, 0.12); box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                                        <div class="room-header d-flex justify-content-between align-items-center mb-2" style="border-bottom: 1px dashed rgba(6, 27, 62, 0.1); padding-bottom: 6px;">
+                                            <h6 class="room-title mb-0" style="font-weight: 700; color: #061B3E; font-size: 14.5px;">{{ __('Room') }} ${i}</h6>
+                                            <span class="room-price-badge" id="tp_room_${i}_priceTag">$0.00</span>
+                                        </div>
+                                        <div class="input-box mb-2">
+                                            <label class="room-inline-label" style="font-size: 12px; font-weight: 600; color: #4b5563; margin-bottom: 4px; display: block;">{{ __('Accommodations Type') }} *</label>
+                                            <select name="room_${i}_accommodation" class="form-select select-inline tp-room-acc-select" required style="border-radius: 8px; font-size: 13px; height: 38px;">
+                                                ${accOptions}
+                                            </select>
+                                        </div>
+                                        <div class="room-inline-row d-flex gap-2">
+                                            <div class="room-inline-option flex-fill">
+                                                <label class="room-inline-label" style="font-size: 12px; font-weight: 600; color: #4b5563; margin-bottom: 4px; display: block;">{{ __('Adults') }} <span class="age-info">(+12)</span></label>
+                                                <select name="room_${i}_adults" class="form-select select-inline tp-adult-select" autocomplete="off" style="border-radius: 8px; font-size: 13px; height: 38px;">
+                                                    <option value="1" ${selectedAdults === 1 ? 'selected' : ''}>1</option>
+                                                    <option value="2" ${selectedAdults === 2 ? 'selected' : ''}>2</option>
+                                                    <option value="3" ${selectedAdults === 3 ? 'selected' : ''}>3</option>
+                                                </select>
+                                            </div>
+                                            <div class="room-inline-option flex-fill">
+                                                <label class="room-inline-label" style="font-size: 12px; font-weight: 600; color: #4b5563; margin-bottom: 4px; display: block;">{{ __('Children') }} <span class="age-info">(2-11)</span></label>
+                                                <select name="room_${i}_children" class="form-select select-inline tp-child-select" autocomplete="off" style="border-radius: 8px; font-size: 13px; height: 38px;">
+                                                    <option value="0" ${selectedChildren === 0 ? 'selected' : ''}>0</option>
+                                                    <option value="1" ${selectedChildren === 1 ? 'selected' : ''}>1</option>
+                                                    <option value="2" ${selectedChildren === 2 ? 'selected' : ''}>2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                        roomFields.insertAdjacentHTML('beforeend', roomHtml);
+                    }
+
+                    recalculateAllPrices();
+                }
+
+                function recalculateAllPrices() {
+                    let totalPkgPrice = 0;
+                    let totalA = 0;
+                    let totalC = 0;
+
+                    roomFields.querySelectorAll('.room-group-container').forEach((roomEl, idx) => {
+                        const i = idx + 1;
+                        const accSel = roomEl.querySelector('.tp-room-acc-select');
+                        const adultSel = roomEl.querySelector('.tp-adult-select');
+                        const childSel = roomEl.querySelector('.tp-child-select');
+                        const priceTag = roomEl.querySelector(`#tp_room_${i}_priceTag`);
+                        if (!accSel || !adultSel || !childSel) return;
+
+                        const accName = accSel.value;
+                        const rates = getRoomRates(accName);
+                        const maxGuests = Number(rates.triple || 0) > 0 ? 3 : 2;
+
+                        let a = parseInt(adultSel.value, 10) || 1;
+                        let c = parseInt(childSel.value, 10) || 0;
+
+                        if (a + c > maxGuests) {
+                            c = Math.max(0, maxGuests - a);
+                            childSel.value = c;
+                        }
+
+                        const rPrice = calculateRoomPrice(rates, a, c);
+                        if (priceTag) {
+                            priceTag.textContent =
+                                `${currencySymbol}${rPrice.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
+                        }
+
+                        totalPkgPrice += rPrice;
+                        totalA += a;
+                        totalC += c;
+                    });
+
+                    if (totalAdultsInput) totalAdultsInput.value = totalA;
+                    if (totalChildrenInput) totalChildrenInput.value = totalC;
+                    if (formAdultsInput) formAdultsInput.value = totalA;
+                    if (formChildrenInput) formChildrenInput.value = totalC;
+
+                    if (totalPkgPrice > 0) {
+                        const deposit = totalPkgPrice * 0.5;
+                        const balance = totalPkgPrice - deposit;
+
+                        if (displayTotal) {
+                            displayTotal.textContent =
+                                `${currencySymbol}${totalPkgPrice.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
+                        }
+                        if (displayDeposit) {
+                            displayDeposit.textContent =
+                                `${currencySymbol}${deposit.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
+                        }
+                        if (displayBalance) {
+                            displayBalance.textContent =
+                                `${currencySymbol}${balance.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
+                        }
+                        if (priceSummaryBox) {
+                            priceSummaryBox.style.display = 'block';
+                        }
+                    } else if (priceSummaryBox) {
+                        priceSummaryBox.style.display = 'none';
+                    }
+                }
+
+                if (travelDateInput) {
+                    travelDateInput.addEventListener('change', recalculateAllPrices);
+                }
+                if (roomsSelect) {
+                    roomsSelect.addEventListener('change', generateRooms);
+                }
+
+                roomFields.addEventListener('change', (e) => {
+                    if (e.target.matches('.tp-room-acc-select, .tp-adult-select, .tp-child-select')) {
+                        recalculateAllPrices();
+                    }
+                });
+
+                tpForm.addEventListener('submit', (e) => {
+                    if (travelDateInput && !travelDateInput.value) {
+                        e.preventDefault();
+                        travelDateInput.focus();
+                        return;
+                    }
+                    if (roomsSelect && !roomsSelect.value) {
+                        e.preventDefault();
+                        const roomErr = document.getElementById('tp_roomError');
+                        if (roomErr) roomErr.style.display = 'block';
+                        roomsSelect.focus();
+                        return;
+                    }
+                    recalculateAllPrices();
+                });
+
+                generateRooms();
+            }
+
+            const collapseTriggers = document.querySelectorAll(
+                '[data-collapse-target]');
 
             const setCollapseState = (trigger, content, isOpen) => {
                 content.classList.toggle('open', isOpen);
                 content.classList.toggle('active', isOpen);
                 content.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-                trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-                content.style.maxHeight = isOpen ? `${content.scrollHeight}px` : '0px';
+                trigger.setAttribute('aria-expanded', isOpen ? 'true' :
+                    'false');
+                content.style.maxHeight = isOpen ? `${content.scrollHeight}px` :
+                    '0px';
             };
 
             collapseTriggers.forEach((trigger) => {
-                const content = document.getElementById(trigger.dataset.collapseTarget);
+                const content = document.getElementById(trigger.dataset
+                    .collapseTarget);
 
                 if (!content) {
                     return;
@@ -4265,17 +5250,21 @@
                 setCollapseState(
                     trigger,
                     content,
-                    content.classList.contains('open') || content.classList.contains('active')
+                    content.classList.contains('open') || content.classList
+                    .contains('active')
                 );
 
                 trigger.addEventListener('click', function() {
-                    setCollapseState(this, content, this.getAttribute('aria-expanded') !== 'true');
+                    setCollapseState(this, content, this.getAttribute(
+                        'aria-expanded') !== 'true');
                 });
             });
 
             window.addEventListener('resize', function() {
-                document.querySelectorAll('.collapsible-content.open').forEach((content) => {
-                    content.style.maxHeight = `${content.scrollHeight}px`;
+                document.querySelectorAll('.collapsible-content.open').forEach((
+                    content) => {
+                    content.style.maxHeight =
+                        `${content.scrollHeight}px`;
                 });
             });
 
@@ -4287,7 +5276,8 @@
                     const footerObserver = new IntersectionObserver((entries) => {
                         mobileFixedButton.classList.toggle(
                             'is-footer-visible',
-                            entries.some((entry) => entry.isIntersecting)
+                            entries.some((entry) => entry
+                                .isIntersecting)
                         );
                     }, {
                         rootMargin: '0px 0px -24px 0px',
@@ -4316,7 +5306,8 @@
                 anchor.addEventListener('click', function(e) {
                     const href = this.getAttribute('href');
 
-                    if (!href || href === '#' || this.hasAttribute('data-bs-toggle')) {
+                    if (!href || href === '#' || this.hasAttribute(
+                            'data-bs-toggle')) {
                         return;
                     }
 
@@ -4346,7 +5337,8 @@
             }
 
             const lightboxImage = document.getElementById('galleryLightboxImage');
-            const lightboxCounter = document.getElementById('galleryLightboxCounter');
+            const lightboxCounter = document.getElementById(
+                'galleryLightboxCounter');
             const closeButton = document.getElementById('galleryLightboxClose');
             const prevButton = document.getElementById('galleryLightboxPrev');
             const nextButton = document.getElementById('galleryLightboxNext');
@@ -4355,9 +5347,12 @@
 
             const updateLightbox = () => {
                 lightboxImage.src = galleryImages[currentIndex];
-                lightboxCounter.textContent = `${currentIndex + 1} / ${galleryImages.length}`;
-                prevButton.style.display = galleryImages.length > 1 ? 'inline-flex' : 'none';
-                nextButton.style.display = galleryImages.length > 1 ? 'inline-flex' : 'none';
+                lightboxCounter.textContent =
+                    `${currentIndex + 1} / ${galleryImages.length}`;
+                prevButton.style.display = galleryImages.length > 1 ?
+                    'inline-flex' : 'none';
+                nextButton.style.display = galleryImages.length > 1 ?
+                    'inline-flex' : 'none';
             };
 
             const openLightbox = (index) => {
@@ -4380,20 +5375,24 @@
             };
 
             const showPrev = () => {
-                currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+                currentIndex = (currentIndex - 1 + galleryImages.length) %
+                    galleryImages.length;
                 updateLightbox();
             };
 
             triggers.forEach((trigger) => {
                 trigger.addEventListener('click', function(e) {
                     e.preventDefault();
-                    openLightbox(Number(this.dataset.galleryIndex || 0));
+                    openLightbox(Number(this.dataset.galleryIndex ||
+                        0));
                 });
             });
 
             closeButton.addEventListener('click', closeLightbox);
-            nextButton.addEventListener('click', showNext);
-            prevButton.addEventListener('click', showPrev);
+            nextButton
+                .addEventListener('click', showNext);
+            prevButton.addEventListener(
+                'click', showPrev);
 
             lightbox.addEventListener('click', function(e) {
                 if (e.target === lightbox) {
