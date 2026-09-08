@@ -8,9 +8,7 @@
     $isRtl = $locale === 'ar';
     $viewErrors = $errors ?? new \Illuminate\Support\ViewErrorBag();
 
-    $selectedAttractionIds = collect(old('attraction_ids', []))
-        ->map(fn($id) => (int) $id)
-        ->all();
+    $selectedAttractionIds = collect(old('attraction_ids', []))->map(fn($id) => (int) $id)->all();
     $durationType = old('duration_type', 'days');
     $itinerary = old('itinerary');
     if (!is_array($itinerary) || $itinerary === []) {
@@ -759,7 +757,7 @@
             transition: all 0.2s ease;
         }
 
-        .meal-pill-checkbox input[type="checkbox"]:checked + .meal-pill {
+        .meal-pill-checkbox input[type="checkbox"]:checked+.meal-pill {
             background: linear-gradient(135deg, rgba(124, 92, 255, 0.35), rgba(124, 92, 255, 0.18));
             border-color: rgba(124, 92, 255, 0.6);
             color: #ffffff;
@@ -1490,9 +1488,85 @@
                 padding: 16px;
             }
         }
-    
-        .nile-choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}.nile-choice-card{position:relative;display:block;border:1px solid var(--wizard-border);background:var(--wizard-input);border-radius:14px;padding:14px;cursor:pointer;transition:.18s}.nile-choice-card:hover{border-color:rgba(124,58,237,.65);transform:translateY(-1px)}.nile-choice-card.is-selected{border-color:var(--wizard-primary);background:var(--wizard-primary-soft);box-shadow:0 0 0 1px var(--wizard-primary)}.nile-choice-card input{position:absolute;opacity:0;pointer-events:none}.nile-choice-card strong{display:block;font-size:14px;margin-bottom:4px}.nile-choice-card small{display:block;color:var(--wizard-muted);font-size:11px;line-height:1.5}.nile-choice-card img{width:100%;height:72px;object-fit:cover;border-radius:9px;margin-bottom:10px}.nile-choice-select{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}.nile-cruise-advanced-host{grid-column:1/-1}.nile-cruise-advanced-host .nile-cruise-extended-section{margin-top:0}@media(max-width:900px){.nile-choice-grid{grid-template-columns:1fr}}
-</style>
+
+        .nile-choice-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 10px
+        }
+
+        .nile-choice-card {
+            position: relative;
+            display: block;
+            border: 1px solid var(--wizard-border);
+            background: var(--wizard-input);
+            border-radius: 14px;
+            padding: 14px;
+            cursor: pointer;
+            transition: .18s
+        }
+
+        .nile-choice-card:hover {
+            border-color: rgba(124, 58, 237, .65);
+            transform: translateY(-1px)
+        }
+
+        .nile-choice-card.is-selected {
+            border-color: var(--wizard-primary);
+            background: var(--wizard-primary-soft);
+            box-shadow: 0 0 0 1px var(--wizard-primary)
+        }
+
+        .nile-choice-card input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .nile-choice-card strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px
+        }
+
+        .nile-choice-card small {
+            display: block;
+            color: var(--wizard-muted);
+            font-size: 11px;
+            line-height: 1.5
+        }
+
+        .nile-choice-card img {
+            width: 100%;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 9px;
+            margin-bottom: 10px
+        }
+
+        .nile-choice-select {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            opacity: 0 !important;
+            pointer-events: none !important
+        }
+
+        .nile-cruise-advanced-host {
+            grid-column: 1/-1
+        }
+
+        .nile-cruise-advanced-host .nile-cruise-extended-section {
+            margin-top: 0
+        }
+
+        @media(max-width:900px) {
+            .nile-choice-grid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -1545,14 +1619,22 @@
                 <div class="wizard-steps" id="wizardSteps">
                     @foreach ($steps as $number => $step)
                         @php $hasStepError = !empty($errorSteps[$number]); @endphp
-                        <button type="button" class="wizard-step {{ $hasStepError ? 'border-danger' : '' }}" data-step-trigger="{{ $number }}">
+                        <button type="button" class="wizard-step {{ $hasStepError ? 'border-danger' : '' }}"
+                            data-step-trigger="{{ $number }}">
                             <span class="wizard-step-badge {{ $hasStepError ? 'bg-danger text-white' : '' }}">
-                                @if($hasStepError) <i class="ti ti-alert-triangle"></i> @else {{ $number }} @endif
+                                @if ($hasStepError)
+                                    <i class="ti ti-alert-triangle"></i>
+                                @else
+                                    {{ $number }}
+                                @endif
                             </span>
                             <span>
                                 <span class="wizard-step-title {{ $hasStepError ? 'text-danger fw-bold' : '' }}">
                                     {{ $step['title'] }}
-                                    @if($hasStepError) <span class="badge bg-danger-subtle text-danger ms-1" style="font-size:10px;">{{ admin_t('خطأ') }}</span> @endif
+                                    @if ($hasStepError)
+                                        <span class="badge bg-danger-subtle text-danger ms-1"
+                                            style="font-size:10px;">{{ admin_t('خطأ') }}</span>
+                                    @endif
                                 </span>
                                 <span class="wizard-step-description">{{ $step['description'] }}</span>
                             </span>
@@ -1571,7 +1653,8 @@
 
             <div class="wizard-body">
                 @if ($viewErrors->any())
-                    <div class="alert alert-danger mx-4 mt-3 mb-3 shadow-sm" style="border-radius: 16px; background: rgba(239, 68, 68, 0.18); border: 1px solid rgba(239, 68, 68, 0.5); color: #ffffff;">
+                    <div class="alert alert-danger mx-4 mt-3 mb-3 shadow-sm"
+                        style="border-radius: 16px; background: rgba(239, 68, 68, 0.18); border: 1px solid rgba(239, 68, 68, 0.5); color: #ffffff;">
                         <div class="d-flex align-items-center gap-2 mb-2">
                             <i class="ti ti-alert-triangle-filled text-danger fs-3"></i>
                             <h5 class="mb-0 text-white fw-bold">
@@ -1619,25 +1702,33 @@
                                             @include('admin.packages.partials.tour-type-selector')
 
                                             <!-- Nile Cruise Fields -->
-                                            <div id="nile_cruise_type_wrapper" data-tour-type-section="nile_cruise" style="display: {{ old('package_type') == 'nile_cruise' ? 'block' : 'none' }};" class="mt-3">
+                                            <div id="nile_cruise_type_wrapper" data-tour-type-section="nile_cruise"
+                                                style="display: {{ old('package_type') == 'nile_cruise' ? 'block' : 'none' }};"
+                                                class="mt-3">
                                                 <label class="form-label" for="nile_cruise_type_id">
                                                     {{ admin_t('Nile Cruise Type') }}
                                                     <span class="required-mark">*</span>
                                                 </label>
                                                 <select id="nile_cruise_type_id" name="nile_cruise_type_id"
                                                     class="form-select nile-choice-select @error('nile_cruise_type_id') is-invalid @enderror">
-                                                    <option value="">{{ admin_t('Select Nile Cruise Type') }}</option>
-                                                    @foreach($nileCruiseTypes ?? [] as $nType)
-                                                        <option value="{{ $nType->id }}" data-slug="{{ $nType->slug }}" data-has-categories="{{ $nType->categories->count() > 0 ? 'true' : 'false' }}"
+                                                    <option value="">{{ admin_t('Select Nile Cruise Type') }}
+                                                    </option>
+                                                    @foreach ($nileCruiseTypes ?? [] as $nType)
+                                                        <option value="{{ $nType->id }}"
+                                                            data-slug="{{ $nType->slug }}"
+                                                            data-has-categories="{{ $nType->categories->count() > 0 ? 'true' : 'false' }}"
                                                             {{ old('nile_cruise_type_id') == $nType->id ? 'selected' : '' }}>
                                                             {{ $nType->display_name }}
                                                         </option>
                                                     @endforeach
                                                 </select>
                                                 <div class="nile-choice-grid" id="nileCruiseTypeCards">
-                                                    @foreach($nileCruiseTypes ?? [] as $nType)
-                                                        <button type="button" class="nile-choice-card text-start" data-nile-type-card="{{ $nType->id }}" data-type-has-categories="{{ $nType->categories->count() > 0 ? 'true' : 'false' }}">
-                                                            <img src="{{ $nType->image_url }}" alt="{{ $nType->display_name }}">
+                                                    @foreach ($nileCruiseTypes ?? [] as $nType)
+                                                        <button type="button" class="nile-choice-card text-start"
+                                                            data-nile-type-card="{{ $nType->id }}"
+                                                            data-type-has-categories="{{ $nType->categories->count() > 0 ? 'true' : 'false' }}">
+                                                            <img src="{{ $nType->image_url }}"
+                                                                alt="{{ $nType->display_name }}">
                                                             <strong>{{ $nType->display_name }}</strong>
                                                             <small>{{ $nType->display_short_description ?: admin_t('اختر هذا النوع للرحلة النيلية') }}</small>
                                                         </button>
@@ -1648,17 +1739,22 @@
                                                 @enderror
                                             </div>
 
-                                            <div id="nile_cruise_category_wrapper" data-tour-type-section="nile_cruise" style="display: {{ (old('package_type') == 'nile_cruise' && old('nile_cruise_type_id')) ? 'block' : 'none' }};" class="mt-3">
+                                            <div id="nile_cruise_category_wrapper" data-tour-type-section="nile_cruise"
+                                                style="display: {{ old('package_type') == 'nile_cruise' && old('nile_cruise_type_id') ? 'block' : 'none' }};"
+                                                class="mt-3">
                                                 <label class="form-label" for="nile_cruise_category_id">
                                                     {{ admin_t('Nile Cruise Category') }}
                                                     <span class="required-mark">*</span>
                                                 </label>
                                                 <select id="nile_cruise_category_id" name="nile_cruise_category_id"
                                                     class="form-select nile-choice-select @error('nile_cruise_category_id') is-invalid @enderror">
-                                                    <option value="">{{ admin_t('Select Nile Cruise Category') }}</option>
-                                                    @foreach($nileCruiseTypes ?? [] as $nType)
-                                                        @foreach($nType->categories as $nCat)
-                                                            <option value="{{ $nCat->id }}" data-type-id="{{ $nType->id }}" class="nile-cat-option nile-cat-type-{{ $nType->id }}"
+                                                    <option value="">{{ admin_t('Select Nile Cruise Category') }}
+                                                    </option>
+                                                    @foreach ($nileCruiseTypes ?? [] as $nType)
+                                                        @foreach ($nType->categories as $nCat)
+                                                            <option value="{{ $nCat->id }}"
+                                                                data-type-id="{{ $nType->id }}"
+                                                                class="nile-cat-option nile-cat-type-{{ $nType->id }}"
                                                                 {{ old('nile_cruise_category_id') == $nCat->id ? 'selected' : '' }}>
                                                                 {{ $nCat->display_name }}
                                                             </option>
@@ -1666,10 +1762,13 @@
                                                     @endforeach
                                                 </select>
                                                 <div class="nile-choice-grid" id="nileCruiseCategoryCards">
-                                                    @foreach($nileCruiseTypes ?? [] as $nType)
-                                                        @foreach($nType->categories as $nCat)
-                                                            <button type="button" class="nile-choice-card text-start" data-nile-category-card="{{ $nCat->id }}" data-type-id="{{ $nType->id }}">
-                                                                <img src="{{ $nCat->image_url }}" alt="{{ $nCat->display_name }}">
+                                                    @foreach ($nileCruiseTypes ?? [] as $nType)
+                                                        @foreach ($nType->categories as $nCat)
+                                                            <button type="button" class="nile-choice-card text-start"
+                                                                data-nile-category-card="{{ $nCat->id }}"
+                                                                data-type-id="{{ $nType->id }}">
+                                                                <img src="{{ $nCat->image_url }}"
+                                                                    alt="{{ $nCat->display_name }}">
                                                                 <strong>{{ $nCat->display_name }}</strong>
                                                                 <small>{{ $nCat->display_short_description ?: admin_t('تصنيف الرحلة النيلية') }}</small>
                                                             </button>
@@ -1722,11 +1821,13 @@
 
                                         <div>
                                             <label class="form-label" for="category_id">
-                                                {{ admin_t('Content Category / Theme') }} <small class="text-muted">({{ admin_t('optional') }})</small>
+                                                {{ admin_t('Content Category / Theme') }} <small
+                                                    class="text-muted">({{ admin_t('optional') }})</small>
                                             </label>
                                             <select id="category_id" name="category_id"
                                                 class="form-select @error('category_id') is-invalid @enderror">
-                                                <option value="">{{ admin_t('Select optional content category') }}</option>
+                                                <option value="">{{ admin_t('Select optional content category') }}
+                                                </option>
                                                 @foreach ($categories ?? collect() as $category)
                                                     <option value="{{ $category->id }}"
                                                         {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -1739,7 +1840,9 @@
                                             @enderror
                                         </div>
 
-                                        <div class="tour-type-conditional" data-tour-type-section="travel_package,day_tour,shore_excursion,custom" style="display: {{ old('package_type') == 'nile_cruise' ? 'none' : 'block' }};">
+                                        <div class="tour-type-conditional"
+                                            data-tour-type-section="day_tour,shore_excursion,custom"
+                                            style="display: {{ in_array(old('package_type'), ['nile_cruise', 'travel_package']) ? 'none' : 'block' }};">
                                             <label class="form-label" for="destination_selector">
                                                 {{ admin_t('المدينة') }}
                                                 <span class="required-mark">*</span>
@@ -1769,7 +1872,8 @@
                                         </div>
 
                                         <div>
-                                            <label class="form-label" for="tour_type">{{ admin_t('Tour Style / Group Style') }}</label>
+                                            <label class="form-label"
+                                                for="tour_type">{{ admin_t('Tour Style / Group Style') }}</label>
                                             <select id="tour_type" name="tour_type"
                                                 class="form-select @error('tour_type') is-invalid @enderror">
                                                 <option value="">{{ admin_t('اختر نوع الجولة') }}</option>
@@ -2118,7 +2222,8 @@
                                             <span class="dynamic-section-icon"><i class="ti ti-calendar-event"></i></span>
                                             <div>
                                                 <h4 id="itinerarySectionTitle">Daily Itinerary</h4>
-                                                <p id="itinerarySectionCopy">Split the trip into days with meal and activity details.</p>
+                                                <p id="itinerarySectionCopy">Split the trip into days with meal and
+                                                    activity details.</p>
                                             </div>
                                         </div>
 
@@ -2128,33 +2233,48 @@
                                                     <div class="itinerary-item-grid">
                                                         <div class="dynamic-order-column">
                                                             <span class="item-order-badge">
-                                                                <small class="item-order-label">{{ $durationType === 'hours' ? 'Step' : 'Day' }}</small>
-                                                                <span class="item-order-number">{{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                                                                <small
+                                                                    class="item-order-label">{{ $durationType === 'hours' ? 'Step' : 'Day' }}</small>
+                                                                <span
+                                                                    class="item-order-number">{{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</span>
                                                             </span>
                                                         </div>
 
                                                         <div class="field-block itinerary-date-field">
-                                                            <label class="field-block-label" data-itinerary-duration-label>Date / Day label</label>
+                                                            <label class="field-block-label"
+                                                                data-itinerary-duration-label>Date / Day label</label>
                                                             <div class="field-shell">
-                                                                <span class="field-shell-icon"><i class="ti ti-clock"></i></span>
+                                                                <span class="field-shell-icon"><i
+                                                                        class="ti ti-clock"></i></span>
                                                                 <input type="text" data-itinerary-duration-input
-                                                                    placeholder="Optional date or day label" name="itinerary[{{ $i }}][duration]"
+                                                                    placeholder="Optional date or day label"
+                                                                    name="itinerary[{{ $i }}][duration]"
                                                                     value="{{ $day['duration'] ?? '' }}">
                                                             </div>
-                                                            <input type="hidden" name="itinerary[{{ $i }}][day_number]"
+                                                            <input type="hidden"
+                                                                name="itinerary[{{ $i }}][day_number]"
                                                                 value="{{ $day['day_number'] ?? $i + 1 }}">
                                                         </div>
 
-                                                        <div class="field-block itinerary-hour-fields" data-itinerary-hour-fields>
+                                                        <div class="field-block itinerary-hour-fields"
+                                                            data-itinerary-hour-fields>
                                                             <label class="field-block-label">Activity time</label>
                                                             <div class="fields-grid fields-grid-2">
                                                                 <div class="field-shell">
-                                                                    <span class="field-shell-icon"><i class="ti ti-clock-play"></i></span>
-                                                                    <input type="time" name="itinerary[{{ $i }}][start_time]" value="{{ $day['start_time'] ?? '' }}" aria-label="Start time">
+                                                                    <span class="field-shell-icon"><i
+                                                                            class="ti ti-clock-play"></i></span>
+                                                                    <input type="time"
+                                                                        name="itinerary[{{ $i }}][start_time]"
+                                                                        value="{{ $day['start_time'] ?? '' }}"
+                                                                        aria-label="Start time">
                                                                 </div>
                                                                 <div class="field-shell">
-                                                                    <span class="field-shell-icon"><i class="ti ti-clock-stop"></i></span>
-                                                                    <input type="time" name="itinerary[{{ $i }}][end_time]" value="{{ $day['end_time'] ?? '' }}" aria-label="End time">
+                                                                    <span class="field-shell-icon"><i
+                                                                            class="ti ti-clock-stop"></i></span>
+                                                                    <input type="time"
+                                                                        name="itinerary[{{ $i }}][end_time]"
+                                                                        value="{{ $day['end_time'] ?? '' }}"
+                                                                        aria-label="End time">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -2162,92 +2282,160 @@
                                                         <div class="field-block itinerary-place-field">
                                                             <label class="field-block-label">Place / Stop</label>
                                                             <div class="field-shell">
-                                                                <span class="field-shell-icon"><i class="ti ti-map-pin"></i></span>
-                                                                <input type="text" name="itinerary[{{ $i }}][title]"
+                                                                <span class="field-shell-icon"><i
+                                                                        class="ti ti-map-pin"></i></span>
+                                                                <input type="text"
+                                                                    name="itinerary[{{ $i }}][title]"
                                                                     value="{{ $day['title'] ?? '' }}"
                                                                     placeholder="Enter place or stop">
                                                             </div>
                                                         </div>
 
-                                                        <div class="field-block itinerary-meals-field" data-itinerary-day-fields>
+                                                        <div class="field-block itinerary-meals-field"
+                                                            data-itinerary-day-fields>
                                                             <label class="field-block-label">Meals Included</label>
                                                             @php
                                                                 $mealsList = [];
                                                                 if (!empty($day['meals']) && is_array($day['meals'])) {
                                                                     $mealsList = $day['meals'];
                                                                 } else {
-                                                                    if (!empty($day['meals_breakfast'])) $mealsList[] = 'breakfast';
-                                                                    if (!empty($day['meals_lunch'])) $mealsList[] = 'lunch';
-                                                                    if (!empty($day['meals_dinner'])) $mealsList[] = 'dinner';
+                                                                    if (!empty($day['meals_breakfast'])) {
+                                                                        $mealsList[] = 'breakfast';
+                                                                    }
+                                                                    if (!empty($day['meals_lunch'])) {
+                                                                        $mealsList[] = 'lunch';
+                                                                    }
+                                                                    if (!empty($day['meals_dinner'])) {
+                                                                        $mealsList[] = 'dinner';
+                                                                    }
                                                                 }
                                                             @endphp
                                                             <div class="meal-options-pills">
                                                                 <label class="meal-pill-checkbox">
-                                                                    <input type="checkbox" name="itinerary[{{ $i }}][meals][]" value="breakfast"
-                                                                        {{ in_array('breakfast', $mealsList) ? 'checked' : '' }} class="js-meal-checkbox">
-                                                                    <span class="meal-pill"><i class="ti ti-coffee"></i> Breakfast</span>
+                                                                    <input type="checkbox"
+                                                                        name="itinerary[{{ $i }}][meals][]"
+                                                                        value="breakfast"
+                                                                        {{ in_array('breakfast', $mealsList) ? 'checked' : '' }}
+                                                                        class="js-meal-checkbox">
+                                                                    <span class="meal-pill"><i class="ti ti-coffee"></i>
+                                                                        Breakfast</span>
                                                                 </label>
                                                                 <label class="meal-pill-checkbox">
-                                                                    <input type="checkbox" name="itinerary[{{ $i }}][meals][]" value="lunch"
-                                                                        {{ in_array('lunch', $mealsList) ? 'checked' : '' }} class="js-meal-checkbox">
-                                                                    <span class="meal-pill"><i class="ti ti-soup"></i> Lunch</span>
+                                                                    <input type="checkbox"
+                                                                        name="itinerary[{{ $i }}][meals][]"
+                                                                        value="lunch"
+                                                                        {{ in_array('lunch', $mealsList) ? 'checked' : '' }}
+                                                                        class="js-meal-checkbox">
+                                                                    <span class="meal-pill"><i class="ti ti-soup"></i>
+                                                                        Lunch</span>
                                                                 </label>
                                                                 <label class="meal-pill-checkbox">
-                                                                    <input type="checkbox" name="itinerary[{{ $i }}][meals][]" value="dinner"
-                                                                        {{ in_array('dinner', $mealsList) ? 'checked' : '' }} class="js-meal-checkbox">
-                                                                    <span class="meal-pill"><i class="ti ti-glass-full"></i> Dinner</span>
+                                                                    <input type="checkbox"
+                                                                        name="itinerary[{{ $i }}][meals][]"
+                                                                        value="dinner"
+                                                                        {{ in_array('dinner', $mealsList) ? 'checked' : '' }}
+                                                                        class="js-meal-checkbox">
+                                                                    <span class="meal-pill"><i
+                                                                            class="ti ti-glass-full"></i> Dinner</span>
                                                                 </label>
                                                             </div>
-                                                            <input type="hidden" name="itinerary[{{ $i }}][meals_breakfast]"
-                                                                value="{{ in_array('breakfast', $mealsList) ? '1' : '0' }}" class="js-meal-hidden-breakfast">
-                                                            <input type="hidden" name="itinerary[{{ $i }}][meals_lunch]"
-                                                                value="{{ in_array('lunch', $mealsList) ? '1' : '0' }}" class="js-meal-hidden-lunch">
-                                                            <input type="hidden" name="itinerary[{{ $i }}][meals_dinner]"
-                                                                value="{{ in_array('dinner', $mealsList) ? '1' : '0' }}" class="js-meal-hidden-dinner">
+                                                            <input type="hidden"
+                                                                name="itinerary[{{ $i }}][meals_breakfast]"
+                                                                value="{{ in_array('breakfast', $mealsList) ? '1' : '0' }}"
+                                                                class="js-meal-hidden-breakfast">
+                                                            <input type="hidden"
+                                                                name="itinerary[{{ $i }}][meals_lunch]"
+                                                                value="{{ in_array('lunch', $mealsList) ? '1' : '0' }}"
+                                                                class="js-meal-hidden-lunch">
+                                                            <input type="hidden"
+                                                                name="itinerary[{{ $i }}][meals_dinner]"
+                                                                value="{{ in_array('dinner', $mealsList) ? '1' : '0' }}"
+                                                                class="js-meal-hidden-dinner">
                                                         </div>
 
                                                         <div class="field-block itinerary-activities-field">
-                                                            <label class="field-block-label">Activities / Day description</label>
+                                                            <label class="field-block-label">Activities / Day
+                                                                description</label>
                                                             <div class="field-shell field-shell-textarea">
-                                                                <span class="field-shell-icon"><i class="ti ti-route"></i></span>
-                                                                <textarea name="itinerary[{{ $i }}][description]" rows="4"
-                                                                    placeholder="Enter activities">{{ $day['description'] ?? '' }}</textarea>
+                                                                <span class="field-shell-icon"><i
+                                                                        class="ti ti-route"></i></span>
+                                                                <textarea name="itinerary[{{ $i }}][description]" rows="4" placeholder="Enter activities">{{ $day['description'] ?? '' }}</textarea>
                                                             </div>
                                                         </div>
 
-                                                        <div class="field-block itinerary-tour-package-fields" data-itinerary-tour-package-fields>
-                                                            <label class="field-block-label">Tour Package day details</label>
+                                                        <div class="field-block itinerary-tour-package-fields"
+                                                            data-itinerary-tour-package-fields>
+                                                            <label class="field-block-label">Tour Package day
+                                                                details</label>
                                                             <div class="fields-grid fields-grid-2">
                                                                 <div>
-                                                                    <label class="field-block-label">Overnight location</label>
-                                                                    <input class="form-control" type="text" name="itinerary[{{ $i }}][overnight_location]" value="{{ $day['overnight_location'] ?? '' }}" placeholder="e.g. Luxor">
+                                                                    <label class="field-block-label">Overnight
+                                                                        location</label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="itinerary[{{ $i }}][overnight_location]"
+                                                                        value="{{ $day['overnight_location'] ?? '' }}"
+                                                                        placeholder="e.g. Luxor">
                                                                 </div>
                                                                 <div>
                                                                     <label class="field-block-label">Accommodation</label>
-                                                                    <input class="form-control" type="text" name="itinerary[{{ $i }}][accommodation]" value="{{ $day['accommodation'] ?? '' }}" placeholder="e.g. 5-star hotel in Luxor">
+                                                                    <input class="form-control" type="text"
+                                                                        name="itinerary[{{ $i }}][accommodation]"
+                                                                        value="{{ $day['accommodation'] ?? '' }}"
+                                                                        placeholder="e.g. 5-star hotel in Luxor">
                                                                 </div>
                                                             </div>
                                                             <div class="mt-2">
                                                                 <label class="field-block-label">Transport notes</label>
-                                                                <textarea class="form-control" name="itinerary[{{ $i }}][transport_notes]" rows="2" placeholder="Transfers, domestic flights, train, private vehicle...">{{ $day['transport_notes'] ?? '' }}</textarea>
+                                                                <textarea class="form-control" name="itinerary[{{ $i }}][transport_notes]" rows="2"
+                                                                    placeholder="Transfers, domestic flights, train, private vehicle...">{{ $day['transport_notes'] ?? '' }}</textarea>
                                                             </div>
                                                         </div>
 
-                                                        <div class="field-block itinerary-tour-package-advanced" data-itinerary-tour-package-advanced>
-                                                            <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
-                                                                <label class="field-block-label mb-0">Advanced day activities</label>
-                                                                <button type="button" class="btn btn-sm btn-outline-primary js-add-tour-package-activity" data-itinerary-index="{{ $i }}">+ Add Activity</button>
+                                                        <div class="field-block itinerary-tour-package-advanced"
+                                                            data-itinerary-tour-package-advanced>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-between gap-2 mb-2">
+                                                                <label class="field-block-label mb-0">Advanced day
+                                                                    activities</label>
+                                                                <button type="button"
+                                                                    class="btn btn-sm btn-outline-primary js-add-tour-package-activity"
+                                                                    data-itinerary-index="{{ $i }}">+ Add
+                                                                    Activity</button>
                                                             </div>
-                                                            <div class="tour-package-activities-list" data-tour-package-activities-list>
+                                                            <div class="tour-package-activities-list"
+                                                                data-tour-package-activities-list>
                                                                 @foreach ((array) ($day['activities'] ?? []) as $activityIndex => $activity)
-                                                                    <div class="repeat-box tour-package-activity-row" data-tour-package-activity-row>
+                                                                    <div class="repeat-box tour-package-activity-row"
+                                                                        data-tour-package-activity-row>
                                                                         <div class="row g-2">
-                                                                            <div class="col-md-2"><input class="form-control" type="time" name="itinerary[{{ $i }}][activities][{{ $activityIndex }}][time]" value="{{ $activity['time'] ?? '' }}" aria-label="Activity time"></div>
-                                                                            <div class="col-md-3"><input class="form-control" type="text" name="itinerary[{{ $i }}][activities][{{ $activityIndex }}][title]" value="{{ $activity['title'] ?? '' }}" placeholder="Activity title"></div>
-                                                                            <div class="col-md-3"><input class="form-control" type="text" name="itinerary[{{ $i }}][activities][{{ $activityIndex }}][location]" value="{{ $activity['location'] ?? '' }}" placeholder="Location"></div>
-                                                                            <div class="col-md-2"><input class="form-control" type="text" name="itinerary[{{ $i }}][activities][{{ $activityIndex }}][duration]" value="{{ $activity['duration'] ?? '' }}" placeholder="Duration"></div>
-                                                                            <div class="col-md-2"><button type="button" class="btn btn-outline-danger w-100 js-remove-tour-package-activity">Remove</button></div>
-                                                                            <div class="col-12"><textarea class="form-control" rows="2" name="itinerary[{{ $i }}][activities][{{ $activityIndex }}][description]" placeholder="Activity details">{{ $activity['description'] ?? '' }}</textarea></div>
+                                                                            <div class="col-md-2"><input
+                                                                                    class="form-control" type="time"
+                                                                                    name="itinerary[{{ $i }}][activities][{{ $activityIndex }}][time]"
+                                                                                    value="{{ $activity['time'] ?? '' }}"
+                                                                                    aria-label="Activity time"></div>
+                                                                            <div class="col-md-3"><input
+                                                                                    class="form-control" type="text"
+                                                                                    name="itinerary[{{ $i }}][activities][{{ $activityIndex }}][title]"
+                                                                                    value="{{ $activity['title'] ?? '' }}"
+                                                                                    placeholder="Activity title"></div>
+                                                                            <div class="col-md-3"><input
+                                                                                    class="form-control" type="text"
+                                                                                    name="itinerary[{{ $i }}][activities][{{ $activityIndex }}][location]"
+                                                                                    value="{{ $activity['location'] ?? '' }}"
+                                                                                    placeholder="Location"></div>
+                                                                            <div class="col-md-2"><input
+                                                                                    class="form-control" type="text"
+                                                                                    name="itinerary[{{ $i }}][activities][{{ $activityIndex }}][duration]"
+                                                                                    value="{{ $activity['duration'] ?? '' }}"
+                                                                                    placeholder="Duration"></div>
+                                                                            <div class="col-md-2"><button type="button"
+                                                                                    class="btn btn-outline-danger w-100 js-remove-tour-package-activity">Remove</button>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <textarea class="form-control" rows="2"
+                                                                                    name="itinerary[{{ $i }}][activities][{{ $activityIndex }}][description]"
+                                                                                    placeholder="Activity details">{{ $activity['description'] ?? '' }}</textarea>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 @endforeach
@@ -2317,7 +2505,8 @@
 
                                     <div class="fields-grid">
                                         <div>
-                                            <label class="form-label" for="adult_price">{{ admin_t('Adult Price (Default)') }}</label>
+                                            <label class="form-label"
+                                                for="adult_price">{{ admin_t('Adult Price (Default)') }}</label>
                                             <input id="adult_price" type="number" step="0.01" min="0"
                                                 name="adult_price" class="form-control"
                                                 value="{{ old('adult_price', '') }}">
@@ -2327,7 +2516,8 @@
                                         </div>
 
                                         <div>
-                                            <label class="form-label" for="child_price">{{ admin_t('Child Price') }}</label>
+                                            <label class="form-label"
+                                                for="child_price">{{ admin_t('Child Price') }}</label>
                                             <input id="child_price" type="number" step="0.01" min="0"
                                                 name="child_price" class="form-control"
                                                 value="{{ old('child_price', '') }}">
@@ -2337,7 +2527,8 @@
                                         </div>
 
                                         <div>
-                                            <label class="form-label" for="infant_price">{{ admin_t('Infant Price') }}</label>
+                                            <label class="form-label"
+                                                for="infant_price">{{ admin_t('Infant Price') }}</label>
                                             <input id="infant_price" type="number" step="0.01" min="0"
                                                 name="infant_price" class="form-control"
                                                 value="{{ old('infant_price', '') }}">
@@ -2360,41 +2551,51 @@
                                         </div>
                                         <div class="fields-grid">
                                             <div>
-                                                <label class="form-label" for="adult_min_age">{{ admin_t('Adult Min Age') }}</label>
-                                                <input id="adult_min_age" type="number" min="0" name="adult_min_age"
-                                                    class="form-control" value="{{ $adultMinAge }}">
+                                                <label class="form-label"
+                                                    for="adult_min_age">{{ admin_t('Adult Min Age') }}</label>
+                                                <input id="adult_min_age" type="number" min="0"
+                                                    name="adult_min_age" class="form-control"
+                                                    value="{{ $adultMinAge }}">
                                                 @error('adult_min_age')
                                                     <div class="text-danger small mt-1">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div>
-                                                <label class="form-label" for="child_min_age">{{ admin_t('Child Min Age') }}</label>
-                                                <input id="child_min_age" type="number" min="0" name="child_min_age"
-                                                    class="form-control" value="{{ $childMinAge }}">
+                                                <label class="form-label"
+                                                    for="child_min_age">{{ admin_t('Child Min Age') }}</label>
+                                                <input id="child_min_age" type="number" min="0"
+                                                    name="child_min_age" class="form-control"
+                                                    value="{{ $childMinAge }}">
                                                 @error('child_min_age')
                                                     <div class="text-danger small mt-1">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div>
-                                                <label class="form-label" for="child_max_age">{{ admin_t('Child Max Age') }}</label>
-                                                <input id="child_max_age" type="number" min="0" name="child_max_age"
-                                                    class="form-control" value="{{ $childMaxAge }}">
+                                                <label class="form-label"
+                                                    for="child_max_age">{{ admin_t('Child Max Age') }}</label>
+                                                <input id="child_max_age" type="number" min="0"
+                                                    name="child_max_age" class="form-control"
+                                                    value="{{ $childMaxAge }}">
                                                 @error('child_max_age')
                                                     <div class="text-danger small mt-1">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div>
-                                                <label class="form-label" for="infant_min_age">{{ admin_t('Infant Min Age') }}</label>
-                                                <input id="infant_min_age" type="number" min="0" name="infant_min_age"
-                                                    class="form-control" value="{{ $infantMinAge }}">
+                                                <label class="form-label"
+                                                    for="infant_min_age">{{ admin_t('Infant Min Age') }}</label>
+                                                <input id="infant_min_age" type="number" min="0"
+                                                    name="infant_min_age" class="form-control"
+                                                    value="{{ $infantMinAge }}">
                                                 @error('infant_min_age')
                                                     <div class="text-danger small mt-1">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div>
-                                                <label class="form-label" for="infant_max_age">{{ admin_t('Infant Max Age') }}</label>
-                                                <input id="infant_max_age" type="number" min="0" name="infant_max_age"
-                                                    class="form-control" value="{{ $infantMaxAge }}">
+                                                <label class="form-label"
+                                                    for="infant_max_age">{{ admin_t('Infant Max Age') }}</label>
+                                                <input id="infant_max_age" type="number" min="0"
+                                                    name="infant_max_age" class="form-control"
+                                                    value="{{ $infantMaxAge }}">
                                                 @error('infant_max_age')
                                                     <div class="text-danger small mt-1">{{ $message }}</div>
                                                 @enderror
@@ -2424,7 +2625,8 @@
                                                     <div class="fields-grid">
                                                         <div>
                                                             <label class="form-label">{{ admin_t('Season') }}</label>
-                                                            <input type="text" name="prices[{{ $i }}][season_name]"
+                                                            <input type="text"
+                                                                name="prices[{{ $i }}][season_name]"
                                                                 class="form-control"
                                                                 value="{{ $price['season_name'] ?? '' }}"
                                                                 placeholder="{{ admin_t('e.g. Summer Season') }}">
@@ -2434,7 +2636,8 @@
                                                             <label class="form-label">{{ admin_t('Amount') }}</label>
                                                             <input type="number" step="0.01"
                                                                 name="prices[{{ $i }}][amount]"
-                                                                class="form-control" value="{{ $price['amount'] ?? '' }}"
+                                                                class="form-control"
+                                                                value="{{ $price['amount'] ?? '' }}"
                                                                 placeholder="{{ admin_t('Amount') }}">
                                                         </div>
 
@@ -2555,7 +2758,7 @@
                                 $oldFacilityTitles = collect(old('facilities', []))
                                     ->pluck('title')
                                     ->filter()
-                                    ->map(fn ($title) => trim((string) $title))
+                                    ->map(fn($title) => trim((string) $title))
                                     ->all();
                                 $normalizeFacility = function (string $str): string {
                                     $c = strtolower(trim($str));
@@ -2573,7 +2776,8 @@
                                     <div class="section-icon"><i class="ti ti-layout-grid-add"></i></div>
                                     <div>
                                         <h3>{{ admin_t('Trip & Cruise Facilities') }}</h3>
-                                        <p>{{ admin_t('Select the facilities and amenities that appear on the trip or cruise page.') }}</p>
+                                        <p>{{ admin_t('Select the facilities and amenities that appear on the trip or cruise page.') }}
+                                        </p>
                                     </div>
                                 </div>
 
@@ -2581,15 +2785,15 @@
                                     <div class="attractions-picker-grid">
                                         @foreach ($facilityPresets as $facilityIndex => $facilityTitle)
                                             @php
-                                                $isChecked = in_array($facilityTitle, $oldFacilityTitles, true)
-                                                    || in_array($normalizeFacility($facilityTitle), $normalizedOld, true);
+                                                $isChecked =
+                                                    in_array($facilityTitle, $oldFacilityTitles, true) ||
+                                                    in_array($normalizeFacility($facilityTitle), $normalizedOld, true);
                                             @endphp
                                             <label class="attraction-choice">
-                                                <input type="checkbox"
-                                                    name="facilities[{{ $facilityIndex }}][title]"
-                                                    value="{{ $facilityTitle }}"
-                                                    {{ $isChecked ? 'checked' : '' }}>
-                                                <input type="hidden" name="facilities[{{ $facilityIndex }}][sort_order]"
+                                                <input type="checkbox" name="facilities[{{ $facilityIndex }}][title]"
+                                                    value="{{ $facilityTitle }}" {{ $isChecked ? 'checked' : '' }}>
+                                                <input type="hidden"
+                                                    name="facilities[{{ $facilityIndex }}][sort_order]"
                                                     value="{{ $facilityIndex }}">
                                                 <span class="attraction-choice-icon"><i class="ti ti-check"></i></span>
                                                 <span class="attraction-choice-copy">
@@ -2612,15 +2816,19 @@
                                 </div>
 
                                 <div class="section-body">
-                                    <div class="attractions-picker-toolbar d-flex align-items-center justify-content-between gap-2 flex-wrap mb-3">
+                                    <div
+                                        class="attractions-picker-toolbar d-flex align-items-center justify-content-between gap-2 flex-wrap mb-3">
                                         <div class="attractions-search flex-grow-1" style="max-width: 400px;">
                                             <i class="ti ti-search"></i>
                                             <input type="search" class="form-control" id="attractionSearch"
                                                 placeholder="Search attractions by name or city..." autocomplete="off">
                                         </div>
                                         <div class="d-flex align-items-center gap-2">
-                                            <span class="attractions-selected-count" id="attractionsSelectedCount">0 selected</span>
-                                            <button type="button" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#quickAddAttractionModal">
+                                            <span class="attractions-selected-count" id="attractionsSelectedCount">0
+                                                selected</span>
+                                            <button type="button"
+                                                class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1"
+                                                data-bs-toggle="modal" data-bs-target="#quickAddAttractionModal">
                                                 <i class="ti ti-plus"></i> {{ __('Add New Facility / Place') }}
                                             </button>
                                         </div>
@@ -2629,7 +2837,8 @@
                                     <div class="attractions-picker-grid" id="attractionsPicker">
                                         @forelse ($attractions ?? collect() as $attraction)
                                             @php
-                                                $attractionName = adminTrans($attraction->name) ?: 'Attraction #' . $attraction->id;
+                                                $attractionName =
+                                                    adminTrans($attraction->name) ?: 'Attraction #' . $attraction->id;
                                                 $cityName = adminTrans($attraction->city?->name) ?: 'No city';
                                                 $searchText = mb_strtolower($attractionName . ' ' . $cityName);
                                             @endphp
@@ -2646,7 +2855,8 @@
                                             </label>
                                         @empty
                                             <div class="empty-state field-span-3">
-                                                No active attractions are available. Add attractions first, then return to this page.
+                                                No active attractions are available. Add attractions first, then return to
+                                                this page.
                                             </div>
                                         @endforelse
                                     </div>
@@ -2788,15 +2998,18 @@
                                                 <div class="repeat-box faq-item faq-item-card">
                                                     <div class="faq-item-grid">
                                                         <div class="dynamic-order-column">
-                                                            <span class="item-order-badge">{{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                                                            <span
+                                                                class="item-order-badge">{{ str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) }}</span>
                                                         </div>
 
                                                         <div class="field-block faq-question-field">
                                                             <label class="field-block-label">Question</label>
                                                             <div class="field-shell">
-                                                                <span class="field-shell-icon"><i class="ti ti-help-circle"></i></span>
-                                                                <input type="text" name="faq_json[{{ $i }}][question]"
-                                                                    value="{{ is_array($faq['question'] ?? null) ? ($faq['question'][app()->getLocale()] ?? $faq['question']['en'] ?? '') : ($faq['question'] ?? '') }}"
+                                                                <span class="field-shell-icon"><i
+                                                                        class="ti ti-help-circle"></i></span>
+                                                                <input type="text"
+                                                                    name="faq_json[{{ $i }}][question]"
+                                                                    value="{{ is_array($faq['question'] ?? null) ? $faq['question'][app()->getLocale()] ?? ($faq['question']['en'] ?? '') : $faq['question'] ?? '' }}"
                                                                     placeholder="Enter question...">
                                                             </div>
                                                         </div>
@@ -2804,9 +3017,9 @@
                                                         <div class="field-block faq-answer-field">
                                                             <label class="field-block-label">Answer</label>
                                                             <div class="field-shell field-shell-textarea">
-                                                                <span class="field-shell-icon"><i class="ti ti-edit"></i></span>
-                                                                <textarea name="faq_json[{{ $i }}][answer]" rows="4"
-                                                                    placeholder="Enter answer...">{{ is_array($faq['answer'] ?? null) ? ($faq['answer'][app()->getLocale()] ?? $faq['answer']['en'] ?? '') : ($faq['answer'] ?? '') }}</textarea>
+                                                                <span class="field-shell-icon"><i
+                                                                        class="ti ti-edit"></i></span>
+                                                                <textarea name="faq_json[{{ $i }}][answer]" rows="4" placeholder="Enter answer...">{{ is_array($faq['answer'] ?? null) ? $faq['answer'][app()->getLocale()] ?? ($faq['answer']['en'] ?? '') : $faq['answer'] ?? '' }}</textarea>
                                                             </div>
                                                         </div>
 
@@ -2971,9 +3184,11 @@
                                 <div class="section-body">
                                     <div class="fields-grid">
                                         <div class="field-span-2">
-                                            <label class="form-label" for="seo_title">{{ admin_t('عنوان SEO') }}</label>
-                                            <input id="seo_title" type="text" name="seo_title" class="form-control"
-                                                value="{{ old('seo_title') }}" data-counter-max="60">
+                                            <label class="form-label"
+                                                for="seo_title">{{ admin_t('عنوان SEO') }}</label>
+                                            <input id="seo_title" type="text" name="seo_title"
+                                                class="form-control" value="{{ old('seo_title') }}"
+                                                data-counter-max="60">
                                             <div class="counter-line"><span data-counter-for="seo_title">0 / 60</span>
                                             </div>
                                         </div>
@@ -2988,7 +3203,8 @@
                                         <div class="field-span-2">
                                             <label class="form-label"
                                                 for="seo_description">{{ admin_t('وصف SEO') }}</label>
-                                            <textarea id="seo_description" name="seo_description" rows="4" class="form-control" data-counter-max="160">{{ old('seo_description') }}</textarea>
+                                            <textarea id="seo_description" name="seo_description" rows="4" class="form-control"
+                                                data-counter-max="160">{{ old('seo_description') }}</textarea>
                                             <div class="counter-line"><span data-counter-for="seo_description">0 /
                                                     160</span></div>
                                         </div>
@@ -3051,28 +3267,64 @@
                                     </div>
 
                                     <div class="summary-grid mb-4" data-day-trip-review-summary style="display:none;">
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Tour Type') }}</span><span class="summary-value">🗺️ Day Trip</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Timeline Stops') }}</span><span class="summary-value" data-summary="dayTripStops">0</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Departure Times') }}</span><span class="summary-value" data-summary="dayTripDepartureTimes">-</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Operating Days') }}</span><span class="summary-value" data-summary="operatingDays">-</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Tour Type') }}</span><span
+                                                class="summary-value">🗺️ Day Trip</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Timeline Stops') }}</span><span
+                                                class="summary-value" data-summary="dayTripStops">0</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Departure Times') }}</span><span
+                                                class="summary-value" data-summary="dayTripDepartureTimes">-</span>
+                                        </div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Operating Days') }}</span><span
+                                                class="summary-value" data-summary="operatingDays">-</span></div>
                                     </div>
 
-                                    <div class="summary-grid mb-4" data-tour-package-review-summary style="display:none;">
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Tour Type') }}</span><span class="summary-value">📦 Tour Package</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Cities') }}</span><span class="summary-value" data-summary="tourPackageCities">-</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Accommodation') }}</span><span class="summary-value" data-summary="tourPackageAccommodation">-</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Meals') }}</span><span class="summary-value" data-summary="tourPackageMeals">-</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Flexible Itinerary') }}</span><span class="summary-value" data-summary="tourPackageFlexible">-</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Itinerary Mode') }}</span><span class="summary-value" data-summary="tourPackageItineraryMode">-</span></div>
+                                    <div class="summary-grid mb-4" data-tour-package-review-summary
+                                        style="display:none;">
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Tour Type') }}</span><span
+                                                class="summary-value">📦 Tour Package</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Cities') }}</span><span
+                                                class="summary-value" data-summary="tourPackageCities">-</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Accommodation') }}</span><span
+                                                class="summary-value" data-summary="tourPackageAccommodation">-</span>
+                                        </div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Meals') }}</span><span
+                                                class="summary-value" data-summary="tourPackageMeals">-</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Flexible Itinerary') }}</span><span
+                                                class="summary-value" data-summary="tourPackageFlexible">-</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Itinerary Mode') }}</span><span
+                                                class="summary-value" data-summary="tourPackageItineraryMode">-</span>
+                                        </div>
                                     </div>
 
                                     <div class="summary-grid mb-4" data-nile-review-summary style="display:none;">
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Nile Cruise Type') }}</span><span class="summary-value" data-summary="nileType">-</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Nile Cruise Category') }}</span><span class="summary-value" data-summary="nileCategory">-</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Cabins / Suites') }}</span><span class="summary-value" data-summary="nileCabins">0</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Duration Variants') }}</span><span class="summary-value" data-summary="nileDurations">0</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Sailing Schedules') }}</span><span class="summary-value" data-summary="nileSchedules">0</span></div>
-                                        <div class="summary-item"><span class="summary-label">{{ admin_t('Route Stops') }}</span><span class="summary-value" data-summary="nileRouteStops">0</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Nile Cruise Type') }}</span><span
+                                                class="summary-value" data-summary="nileType">-</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Nile Cruise Category') }}</span><span
+                                                class="summary-value" data-summary="nileCategory">-</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Cabins / Suites') }}</span><span
+                                                class="summary-value" data-summary="nileCabins">0</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Duration Variants') }}</span><span
+                                                class="summary-value" data-summary="nileDurations">0</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Sailing Schedules') }}</span><span
+                                                class="summary-value" data-summary="nileSchedules">0</span></div>
+                                        <div class="summary-item"><span
+                                                class="summary-label">{{ admin_t('Route Stops') }}</span><span
+                                                class="summary-value" data-summary="nileRouteStops">0</span></div>
                                     </div>
 
                                     <div class="review-list">
@@ -3174,25 +3426,30 @@
                 const genericItineraryCard = genericItineraryWrapper?.closest('.form-section-card');
                 const itineraryTitle = document.getElementById('itinerary-section-title');
                 const itineraryCopy = document.getElementById('itinerary-section-copy');
-                const addGenericItinerary = document.getElementById('addItineraryBtn') || document.getElementById('add-itinerary-btn');
+                const addGenericItinerary = document.getElementById('addItineraryBtn') || document.getElementById(
+                    'add-itinerary-btn');
                 const pricesWrapper = document.getElementById('prices-wrapper');
-                const addGenericPrice = document.getElementById('addPriceBtn') || document.getElementById('add-price-btn');
+                const addGenericPrice = document.getElementById('addPriceBtn') || document.getElementById(
+                    'add-price-btn');
                 const groupPricingCard = document.querySelector('[name="price_1_person"]')?.closest('.card');
 
                 if (genericItineraryCard) {
                     genericItineraryCard.style.display = isNile ? 'none' : '';
-                    genericItineraryCard.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled = isNile);
+                    genericItineraryCard.querySelectorAll('input,select,textarea,button').forEach(el => el
+                        .disabled = isNile);
                 } else {
                     [genericItineraryWrapper, itineraryTitle, itineraryCopy, addGenericItinerary].forEach(el => {
                         if (el) el.style.display = isNile ? 'none' : '';
                     });
-                    genericItineraryWrapper?.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled = isNile);
+                    genericItineraryWrapper?.querySelectorAll('input,select,textarea,button').forEach(el => el
+                        .disabled = isNile);
                     if (addGenericItinerary) addGenericItinerary.disabled = isNile;
                 }
 
                 if (pricesWrapper) {
                     pricesWrapper.style.display = isNile ? 'none' : '';
-                    pricesWrapper.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled = isNile);
+                    pricesWrapper.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled =
+                        isNile);
                 }
                 if (addGenericPrice) {
                     addGenericPrice.style.display = isNile ? 'none' : '';
@@ -3200,7 +3457,8 @@
                 }
                 if (groupPricingCard) {
                     groupPricingCard.style.display = isNile ? 'none' : '';
-                    groupPricingCard.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled = isNile);
+                    groupPricingCard.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled =
+                        isNile);
                 }
             }
 
@@ -3210,8 +3468,10 @@
                 if (packageTypeSelect.value === 'nile_cruise') {
                     nileTypeWrapper.style.display = 'block';
 
-                    const selectedTypeOpt = nileTypeSelect && nileTypeSelect.selectedIndex >= 0 ? nileTypeSelect.options[nileTypeSelect.selectedIndex] : null;
-                    const hasCategories = selectedTypeOpt && selectedTypeOpt.getAttribute('data-has-categories') === 'true';
+                    const selectedTypeOpt = nileTypeSelect && nileTypeSelect.selectedIndex >= 0 ? nileTypeSelect
+                        .options[nileTypeSelect.selectedIndex] : null;
+                    const hasCategories = selectedTypeOpt && selectedTypeOpt.getAttribute('data-has-categories') ===
+                        'true';
                     const typeId = selectedTypeOpt ? selectedTypeOpt.value : null;
 
                     if (hasCategories && typeId) {
@@ -3228,7 +3488,8 @@
                                     opt.disabled = true;
                                 }
                             });
-                            const currentCatOpt = nileCatSelect.selectedIndex >= 0 ? nileCatSelect.options[nileCatSelect.selectedIndex] : null;
+                            const currentCatOpt = nileCatSelect.selectedIndex >= 0 ? nileCatSelect.options[
+                                nileCatSelect.selectedIndex] : null;
                             if (currentCatOpt && currentCatOpt.disabled) {
                                 nileCatSelect.value = '';
                             }
@@ -3248,22 +3509,42 @@
 
             function syncNileChoiceCards() {
                 document.querySelectorAll('[data-nile-type-card]').forEach(card => {
-                    card.classList.toggle('is-selected', String(card.dataset.nileTypeCard) === String(nileTypeSelect?.value || ''));
+                    card.classList.toggle('is-selected', String(card.dataset.nileTypeCard) === String(
+                        nileTypeSelect?.value || ''));
                 });
                 document.querySelectorAll('[data-nile-category-card]').forEach(card => {
                     const sameType = String(card.dataset.typeId) === String(nileTypeSelect?.value || '');
                     card.style.display = sameType ? 'block' : 'none';
-                    card.classList.toggle('is-selected', String(card.dataset.nileCategoryCard) === String(nileCatSelect?.value || ''));
+                    card.classList.toggle('is-selected', String(card.dataset.nileCategoryCard) === String(
+                        nileCatSelect?.value || ''));
                 });
             }
-            document.querySelectorAll('[data-nile-type-card]').forEach(card => card.addEventListener('click', () => {
-                if (!nileTypeSelect) return; nileTypeSelect.value = card.dataset.nileTypeCard; nileTypeSelect.dispatchEvent(new Event('change', {bubbles:true})); syncNileChoiceCards();
+            document.querySelectorAll('[data-nile-type-card]').forEach(card => card.addEventListener('click',
+        () => {
+                if (!nileTypeSelect) return;
+                nileTypeSelect.value = card.dataset.nileTypeCard;
+                nileTypeSelect.dispatchEvent(new Event('change', {
+                    bubbles: true
+                }));
+                syncNileChoiceCards();
             }));
-            document.querySelectorAll('[data-nile-category-card]').forEach(card => card.addEventListener('click', () => {
-                if (!nileCatSelect) return; nileCatSelect.value = card.dataset.nileCategoryCard; nileCatSelect.dispatchEvent(new Event('change', {bubbles:true})); syncNileChoiceCards();
-            }));
-            if (packageTypeSelect) packageTypeSelect.addEventListener('change', () => { updateNileCruiseFields(); syncNileChoiceCards(); });
-            if (nileTypeSelect) nileTypeSelect.addEventListener('change', () => { updateNileCruiseFields(); syncNileChoiceCards(); });
+            document.querySelectorAll('[data-nile-category-card]').forEach(card => card.addEventListener('click',
+            () => {
+                    if (!nileCatSelect) return;
+                    nileCatSelect.value = card.dataset.nileCategoryCard;
+                    nileCatSelect.dispatchEvent(new Event('change', {
+                        bubbles: true
+                    }));
+                    syncNileChoiceCards();
+                }));
+            if (packageTypeSelect) packageTypeSelect.addEventListener('change', () => {
+                updateNileCruiseFields();
+                syncNileChoiceCards();
+            });
+            if (nileTypeSelect) nileTypeSelect.addEventListener('change', () => {
+                updateNileCruiseFields();
+                syncNileChoiceCards();
+            });
             if (nileCatSelect) nileCatSelect.addEventListener('change', syncNileChoiceCards);
             updateNileCruiseFields();
             syncNileChoiceCards();
@@ -3361,11 +3642,13 @@
                 stepButtons.forEach((button, index) => {
                     const step = index + 1;
                     button.classList.toggle('is-active', step === currentStep);
-                    button.classList.toggle('is-complete', step < currentStep || (step <= highestStep && step !== currentStep));
+                    button.classList.toggle('is-complete', step < currentStep || (step <= highestStep &&
+                        step !== currentStep));
                     button.classList.toggle('is-disabled', step > highestStep + 1);
                     const badge = button.querySelector('.wizard-step-badge');
                     if (badge) {
-                        badge.innerHTML = step < currentStep || (step < highestStep && step !== currentStep) ? '<i class="ti ti-check"></i>' : step;
+                        badge.innerHTML = step < currentStep || (step < highestStep && step !==
+                            currentStep) ? '<i class="ti ti-check"></i>' : step;
                     }
                 });
             }
@@ -3428,8 +3711,10 @@
                 const packageType = document.getElementById('package_type')?.value || '';
 
                 if (step === 1) {
-                    if (packageType === 'nile_cruise') {
+                    if (packageType === 'nile_cruise' || packageType === 'travel_package') {
                         requiredFields = requiredFields.filter(field => field !== 'destination_id');
+                    }
+                    if (packageType === 'nile_cruise') {
                         requiredFields.push('nile_cruise_type_id');
                     }
                 } else if (step === 3) {
@@ -3479,7 +3764,8 @@
                 if (!form) return {};
                 const data = {};
                 Array.from(form.elements).forEach(element => {
-                    if (!element.name || element.type === 'file' || element.type === 'password' || element.disabled) {
+                    if (!element.name || element.type === 'file' || element.type === 'password' || element
+                        .disabled) {
                         return;
                     }
 
@@ -3598,7 +3884,8 @@
                 const type = form?.querySelector('input[name="duration_type"]:checked')?.value || 'days';
                 const isHourly = packageType === 'day_tour' || type === 'hours';
                 const isTourPackage = packageType === 'travel_package';
-                const itineraryMode = document.querySelector('[data-tour-package-itinerary-mode]')?.value || 'simple';
+                const itineraryMode = document.querySelector('[data-tour-package-itinerary-mode]')?.value ||
+                    'simple';
                 const isAdvancedPackage = isTourPackage && itineraryMode === 'advanced';
 
                 const titleEl = document.getElementById('itinerarySectionTitle');
@@ -3606,11 +3893,11 @@
 
                 const copyEl = document.getElementById('itinerarySectionCopy');
                 if (copyEl) {
-                    copyEl.textContent = isHourly
-                        ? 'Build the Day Trip hour-by-hour / stop-by-stop with real start and end times.'
-                        : (isTourPackage
-                            ? 'Build the Tour Package day-by-day. Advanced mode supports multiple ordered activities inside each day.'
-                            : 'Split the trip into days with meal and activity details.');
+                    copyEl.textContent = isHourly ?
+                        'Build the Day Trip hour-by-hour / stop-by-stop with real start and end times.' :
+                        (isTourPackage ?
+                            'Build the Tour Package day-by-day. Advanced mode supports multiple ordered activities inside each day.' :
+                            'Split the trip into days with meal and activity details.');
                 }
 
                 const addBtnTextEl = document.getElementById('addItineraryText');
@@ -3622,39 +3909,45 @@
                     const durationInput = item.querySelector('[data-itinerary-duration-input]');
 
                     if (label) label.textContent = isHourly ? 'Step' : 'Day';
-                    if (durationLabel) durationLabel.textContent = isHourly ? 'Time / Duration label' : 'Date / Day label';
+                    if (durationLabel) durationLabel.textContent = isHourly ? 'Time / Duration label' :
+                        'Date / Day label';
                     if (durationInput) {
-                        durationInput.placeholder = isHourly
-                            ? 'Example: Morning / 2 hours (optional label)'
-                            : 'Optional date or day label';
+                        durationInput.placeholder = isHourly ?
+                            'Example: Morning / 2 hours (optional label)' :
+                            'Optional date or day label';
                     }
 
                     item.querySelectorAll('[data-itinerary-hour-fields]').forEach(section => {
                         section.style.display = isHourly ? '' : 'none';
-                        section.querySelectorAll('input,select,textarea').forEach(el => el.disabled = !isHourly);
+                        section.querySelectorAll('input,select,textarea').forEach(el => el
+                            .disabled = !isHourly);
                     });
 
                     item.querySelectorAll('[data-itinerary-day-fields]').forEach(section => {
                         section.style.display = isHourly ? 'none' : '';
-                        section.querySelectorAll('input,select,textarea').forEach(el => el.disabled = isHourly);
+                        section.querySelectorAll('input,select,textarea').forEach(el => el
+                            .disabled = isHourly);
                     });
 
                     item.querySelectorAll('[data-itinerary-tour-package-fields]').forEach(section => {
                         section.style.display = isTourPackage ? '' : 'none';
-                        section.querySelectorAll('input,select,textarea').forEach(el => el.disabled = !isTourPackage);
+                        section.querySelectorAll('input,select,textarea').forEach(el => el
+                            .disabled = !isTourPackage);
                     });
 
                     item.querySelectorAll('[data-itinerary-tour-package-advanced]').forEach(section => {
                         section.style.display = isAdvancedPackage ? '' : 'none';
                         // Preserve advanced activity data while toggling simple/advanced mode.
                         // Disable only when the selected top-level Tour Type is not Tour Package.
-                        section.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled = !isTourPackage);
+                        section.querySelectorAll('input,select,textarea,button').forEach(el => el
+                            .disabled = !isTourPackage);
                     });
                 });
 
                 const emptyMessage = document.querySelector('#itineraryEmptyState span');
                 if (emptyMessage) {
-                    emptyMessage.textContent = isHourly ? 'No activity timeline stops added yet.' : 'No itinerary days added yet.';
+                    emptyMessage.textContent = isHourly ? 'No activity timeline stops added yet.' :
+                        'No itinerary days added yet.';
                 }
             }
 
@@ -3762,7 +4055,7 @@
                             icon: '💬',
                             text: 'No FAQs added yet.'
                         }
-                    }[emptyId];
+                    } [emptyId];
 
                     if (dynamicState) {
                         const icon = document.createElement('strong');
@@ -3838,7 +4131,8 @@
                 const card = element.closest('.itinerary-item');
                 if (!card) return;
 
-                const checkedMeals = Array.from(card.querySelectorAll('.js-meal-checkbox:checked')).map(cb => cb.value);
+                const checkedMeals = Array.from(card.querySelectorAll('.js-meal-checkbox:checked')).map(cb => cb
+                    .value);
 
                 const bHidden = card.querySelector('.js-meal-hidden-breakfast');
                 const lHidden = card.querySelector('.js-meal-hidden-lunch');
@@ -3876,7 +4170,8 @@
 
             function addItinerary() {
                 const packageType = document.getElementById('package_type')?.value || '';
-                const isHourly = packageType === 'day_tour' || form?.querySelector('input[name="duration_type"]:checked')?.value === 'hours';
+                const isHourly = packageType === 'day_tour' || form?.querySelector(
+                    'input[name="duration_type"]:checked')?.value === 'hours';
                 appendAnimatedItem('itinerary-wrapper', `
                     <div class="repeat-box itinerary-item itinerary-item-card">
                         <div class="itinerary-item-grid">
@@ -4128,10 +4423,12 @@
             }
 
             function updateSummary() {
-                const destinationOption = destinationSelector && destinationSelector.selectedIndex >= 0 ? destinationSelector.options[destinationSelector.selectedIndex] : null;
+                const destinationOption = destinationSelector && destinationSelector.selectedIndex >= 0 ?
+                    destinationSelector.options[destinationSelector.selectedIndex] : null;
                 const categorySelect = document.getElementById('category_id');
-                const categoryOption = categorySelect && categorySelect.selectedIndex >= 0 ? categorySelect.options[categorySelect.selectedIndex] : null;
-                
+                const categoryOption = categorySelect && categorySelect.selectedIndex >= 0 ? categorySelect.options[
+                    categorySelect.selectedIndex] : null;
+
                 const durationTextEl = document.getElementById('duration_text');
                 const durationDaysEl = document.getElementById('duration_days');
                 const durationNightsEl = document.getElementById('duration_nights');
@@ -4155,38 +4452,63 @@
                 if (nileReview) nileReview.style.display = isNileReview ? '' : 'none';
                 if (dayTripReview) dayTripReview.style.display = isDayTripReview ? '' : 'none';
                 if (tourPackageReview) tourPackageReview.style.display = isTourPackageReview ? '' : 'none';
-                const nileTypeOption = nileTypeSelect && nileTypeSelect.selectedIndex >= 0 ? nileTypeSelect.options[nileTypeSelect.selectedIndex] : null;
-                const nileCategoryOption = nileCatSelect && nileCatSelect.selectedIndex >= 0 ? nileCatSelect.options[nileCatSelect.selectedIndex] : null;
+                const nileTypeOption = nileTypeSelect && nileTypeSelect.selectedIndex >= 0 ? nileTypeSelect.options[
+                    nileTypeSelect.selectedIndex] : null;
+                const nileCategoryOption = nileCatSelect && nileCatSelect.selectedIndex >= 0 ? nileCatSelect
+                    .options[nileCatSelect.selectedIndex] : null;
 
                 const summary = {
                     title: document.getElementById('title')?.value || texts.noData,
-                    destination: destinationOption && destinationOption.value ? destinationOption.textContent.trim() : texts.noData,
+                    destination: (isTourPackageReview || isNileReview || !destinationSelector ||
+                            destinationSelector.disabled) ?
+                        texts.noData :
+                        (destinationOption && destinationOption.value ? destinationOption.textContent.trim() :
+                            texts.noData),
                     duration: durationText || texts.noData,
                     price: document.getElementById('adult_price')?.value || texts.noData,
-                    category: categoryOption && categoryOption.value ? categoryOption.textContent.trim() : texts.noData,
-                    status: form?.querySelector('input[name="is_active"]')?.checked ? texts.active : texts.inactive,
+                    category: categoryOption && categoryOption.value ? categoryOption.textContent.trim() : texts
+                        .noData,
+                    status: form?.querySelector('input[name="is_active"]')?.checked ? texts.active : texts
+                        .inactive,
                     images: imagesCount,
                     daysCount: itineraryCount,
-                    nileType: isNileReview && nileTypeOption?.value ? nileTypeOption.textContent.trim() : texts.noData,
-                    nileCategory: isNileReview && nileCategoryOption?.value ? nileCategoryOption.textContent.trim() : texts.noData,
-                    nileCabins: isNileReview ? document.querySelectorAll('#nileCruiseExtendedSection [data-nc-cabin]').length : 0,
-                    nileDurations: isNileReview ? document.querySelectorAll('#nileCruiseExtendedSection [data-nc-duration]').length : 0,
-                    nileSchedules: isNileReview ? document.querySelectorAll('#nileCruiseExtendedSection [data-nc-schedule]').length : 0,
-                    nileRouteStops: isNileReview ? document.querySelectorAll('#nileCruiseExtendedSection [data-nc-route-row]').length : 0,
+                    nileType: isNileReview && nileTypeOption?.value ? nileTypeOption.textContent.trim() : texts
+                        .noData,
+                    nileCategory: isNileReview && nileCategoryOption?.value ? nileCategoryOption.textContent
+                        .trim() : texts.noData,
+                    nileCabins: isNileReview ? document.querySelectorAll(
+                        '#nileCruiseExtendedSection [data-nc-cabin]').length : 0,
+                    nileDurations: isNileReview ? document.querySelectorAll(
+                        '#nileCruiseExtendedSection [data-nc-duration]').length : 0,
+                    nileSchedules: isNileReview ? document.querySelectorAll(
+                        '#nileCruiseExtendedSection [data-nc-schedule]').length : 0,
+                    nileRouteStops: isNileReview ? document.querySelectorAll(
+                        '#nileCruiseExtendedSection [data-nc-route-row]').length : 0,
                     dayTripStops: isDayTripReview ? itineraryCount : 0,
-                    dayTripDepartureTimes: isDayTripReview
-                        ? ((form?.querySelector('[name="experience[departure_times]"]')?.value || '').split(/[\n,]+/).map(v => v.trim()).filter(Boolean).join(' · ') || texts.noData)
-                        : texts.noData,
-                    operatingDays: Array.from(form?.querySelectorAll('input[name="experience[operating_days][]"]:checked') || []).map(el => el.value).join(' · ') || texts.noData,
-                    tourPackageCities: isTourPackageReview
-                        ? (Array.from(form?.querySelectorAll('select[name="tour_city_ids[]"] option:checked') || []).map(el => el.textContent.trim()).filter(Boolean).join(' / ') || texts.noData)
-                        : texts.noData,
-                    tourPackageAccommodation: isTourPackageReview ? (form?.querySelector('[name="tour_package[accommodation_standard]"]')?.value || texts.noData) : texts.noData,
-                    tourPackageMeals: isTourPackageReview
-                        ? (Array.from(form?.querySelectorAll('input[name="tour_package[meals_included][]"]:checked') || []).map(el => el.value).join(' · ') || texts.noData)
-                        : texts.noData,
-                    tourPackageFlexible: isTourPackageReview ? (form?.querySelector('[name="tour_package[flexible_itinerary]"]')?.checked ? 'Yes' : 'No') : texts.noData,
-                    tourPackageItineraryMode: isTourPackageReview ? (form?.querySelector('[data-tour-package-itinerary-mode]')?.value || 'simple') : texts.noData
+                    dayTripDepartureTimes: isDayTripReview ?
+                        ((form?.querySelector('[name="experience[departure_times]"]')?.value || '').split(
+                            /[\n,]+/).map(v => v.trim()).filter(Boolean).join(' · ') || texts.noData) :
+                        texts.noData,
+                    operatingDays: Array.from(form?.querySelectorAll(
+                            'input[name="experience[operating_days][]"]:checked') || []).map(el => el.value)
+                        .join(' · ') || texts.noData,
+                    tourPackageCities: isTourPackageReview ?
+                        (Array.from(form?.querySelectorAll('select[name="tour_city_ids[]"] option:checked') ||
+                        []).map(el => el.textContent.trim()).filter(Boolean).join(' / ') || texts.noData) :
+                        texts.noData,
+                    tourPackageAccommodation: isTourPackageReview ? (form?.querySelector(
+                            '[name="tour_package[accommodation_standard]"]')?.value || texts.noData) : texts
+                        .noData,
+                    tourPackageMeals: isTourPackageReview ?
+                        (Array.from(form?.querySelectorAll(
+                            'input[name="tour_package[meals_included][]"]:checked') || []).map(el => el
+                            .value).join(' · ') || texts.noData) :
+                        texts.noData,
+                    tourPackageFlexible: isTourPackageReview ? (form?.querySelector(
+                            '[name="tour_package[flexible_itinerary]"]')?.checked ? 'Yes' : 'No') : texts
+                        .noData,
+                    tourPackageItineraryMode: isTourPackageReview ? (form?.querySelector(
+                        '[data-tour-package-itinerary-mode]')?.value || 'simple') : texts.noData
                 };
 
                 Object.entries(summary).forEach(([key, value]) => {
@@ -4364,11 +4686,16 @@
                         renumberDynamicItems('itinerary-wrapper', '.itinerary-item', true);
                         renumberDynamicItems('faq-wrapper', '.faq-item');
 
-                        ensureEmptyState('#itinerary-wrapper', '.itinerary-item', 'itineraryEmptyState', texts.noItinerary);
-                        ensureEmptyState('#included-wrapper', '.included-item', 'includedEmptyState', texts.noIncluded);
-                        ensureEmptyState('#excluded-wrapper', '.excluded-item', 'excludedEmptyState', texts.noExcluded);
-                        ensureEmptyState('#prices-wrapper', '.price-item', 'pricesEmptyState', texts.noPrices);
-                        ensureEmptyState('#faq-wrapper', '.faq-item', 'faqEmptyState', @json(admin_t('لا توجد أسئلة شائعة مضافة حتى الآن.')));
+                        ensureEmptyState('#itinerary-wrapper', '.itinerary-item',
+                            'itineraryEmptyState', texts.noItinerary);
+                        ensureEmptyState('#included-wrapper', '.included-item',
+                            'includedEmptyState', texts.noIncluded);
+                        ensureEmptyState('#excluded-wrapper', '.excluded-item',
+                            'excludedEmptyState', texts.noExcluded);
+                        ensureEmptyState('#prices-wrapper', '.price-item', 'pricesEmptyState', texts
+                            .noPrices);
+                        ensureEmptyState('#faq-wrapper', '.faq-item', 'faqEmptyState',
+                            @json(admin_t('لا توجد أسئلة شائعة مضافة حتى الآن.')));
                         updateItineraryMode();
                         updateSummary();
                     }, 260);
@@ -4384,7 +4711,8 @@
             });
 
             form?.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA' && currentStep !== totalSteps) {
+                if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA' && currentStep !==
+                    totalSteps) {
                     event.preventDefault();
                 }
             });
@@ -4408,7 +4736,8 @@
                 isSubmitting = true;
                 if (submitBtn) {
                     submitBtn.disabled = true;
-                    submitBtn.innerHTML = `<span class="btn-icon-text"><span class="spinner-border spinner-border-sm"></span><span>${texts.saving}</span></span>`;
+                    submitBtn.innerHTML =
+                        `<span class="btn-icon-text"><span class="spinner-border spinner-border-sm"></span><span>${texts.saving}</span></span>`;
                 }
                 localStorage.removeItem(draftKey);
             });
@@ -4445,16 +4774,16 @@
                     e.stopPropagation();
                     if (e.stopImmediatePropagation) e.stopImmediatePropagation();
                 }
-                
+
                 const form = document.getElementById('quickAddAttractionForm');
                 const nameInput = form?.querySelector('[name="name"]');
                 const saveBtn = document.getElementById('saveQuickAttractionBtn');
                 const alertBox = document.getElementById('quickAttractionAlert');
-                
+
                 if (!nameInput || !nameInput.value.trim()) {
                     if (alertBox) {
                         alertBox.className = 'alert alert-danger mt-2';
-                        alertBox.textContent = '{{ __("Please enter the place/facility name.") }}';
+                        alertBox.textContent = '{{ __('Please enter the place/facility name.') }}';
                         alertBox.classList.remove('d-none');
                     }
                     if (nameInput) nameInput.focus();
@@ -4463,40 +4792,42 @@
 
                 if (saveBtn) {
                     saveBtn.disabled = true;
-                    saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> {{ __("Saving...") }}';
+                    saveBtn.innerHTML =
+                        '<span class="spinner-border spinner-border-sm me-1"></span> {{ __('Saving...') }}';
                 }
                 if (alertBox) alertBox.classList.add('d-none');
 
                 const formData = new FormData(form);
 
-                fetch('{{ route("admin.attractions.quick-store") }}', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json',
-                    },
-                    body: formData
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (saveBtn) {
-                        saveBtn.disabled = false;
-                        saveBtn.innerHTML = '<i class="ti ti-check"></i> {{ __("Save & Select") }}';
-                    }
+                fetch('{{ route('admin.attractions.quick-store') }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json',
+                        },
+                        body: formData
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (saveBtn) {
+                            saveBtn.disabled = false;
+                            saveBtn.innerHTML = '<i class="ti ti-check"></i> {{ __('Save & Select') }}';
+                        }
 
-                    if (data.status === 'success' && data.attraction) {
-                        const attr = data.attraction;
-                        const picker = document.getElementById('attractionsPicker');
-                        
-                        if (picker) {
-                            const emptyState = picker.querySelector('.empty-state, .field-span-3, .text-white-50');
-                            if (emptyState) emptyState.remove();
+                        if (data.status === 'success' && data.attraction) {
+                            const attr = data.attraction;
+                            const picker = document.getElementById('attractionsPicker');
 
-                            const newCard = document.createElement('label');
-                            newCard.className = 'attraction-choice';
-                            newCard.dataset.attractionChoice = '';
-                            newCard.dataset.attractionSearch = attr.search_text;
-                            newCard.innerHTML = `
+                            if (picker) {
+                                const emptyState = picker.querySelector(
+                                    '.empty-state, .field-span-3, .text-white-50');
+                                if (emptyState) emptyState.remove();
+
+                                const newCard = document.createElement('label');
+                                newCard.className = 'attraction-choice';
+                                newCard.dataset.attractionChoice = '';
+                                newCard.dataset.attractionSearch = attr.search_text;
+                                newCard.innerHTML = `
                                 <input type="checkbox" name="attraction_ids[]" value="${attr.id}" checked>
                                 <span class="attraction-choice-icon"><i class="ti ti-map-pin"></i></span>
                                 <span class="attraction-choice-copy">
@@ -4505,50 +4836,55 @@
                                 </span>
                             `;
 
-                            picker.prepend(newCard);
-                            const chk = newCard.querySelector('input');
-                            if (chk) chk.dispatchEvent(new Event('change', { bubbles: true }));
-                        }
+                                picker.prepend(newCard);
+                                const chk = newCard.querySelector('input');
+                                if (chk) chk.dispatchEvent(new Event('change', {
+                                    bubbles: true
+                                }));
+                            }
 
-                        if (form) form.reset();
-                        const modalEl = document.getElementById('quickAddAttractionModal');
-                        if (modalEl) {
-                            const modal = (typeof bootstrap !== 'undefined' && bootstrap.Modal) ? (bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl)) : null;
-                            if (modal) {
-                                modal.hide();
-                            } else if (window.jQuery) {
-                                window.jQuery(modalEl).modal('hide');
+                            if (form) form.reset();
+                            const modalEl = document.getElementById('quickAddAttractionModal');
+                            if (modalEl) {
+                                const modal = (typeof bootstrap !== 'undefined' && bootstrap.Modal) ? (
+                                    bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl)
+                                    ) : null;
+                                if (modal) {
+                                    modal.hide();
+                                } else if (window.jQuery) {
+                                    window.jQuery(modalEl).modal('hide');
+                                }
+                            }
+
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '{{ __('Added!') }}',
+                                    text: data.message ||
+                                        'Facility added and selected successfully.',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                            }
+                        } else {
+                            if (alertBox) {
+                                alertBox.className = 'alert alert-danger mt-2';
+                                alertBox.textContent = data.message || 'Error adding facility.';
+                                alertBox.classList.remove('d-none');
                             }
                         }
-
-                        if (typeof Swal !== 'undefined') {
-                            Swal.fire({
-                                icon: 'success',
-                                title: '{{ __("Added!") }}',
-                                text: data.message || 'Facility added and selected successfully.',
-                                timer: 2000,
-                                showConfirmButton: false
-                            });
+                    })
+                    .catch(err => {
+                        if (saveBtn) {
+                            saveBtn.disabled = false;
+                            saveBtn.innerHTML = '<i class="ti ti-check"></i> {{ __('Save & Select') }}';
                         }
-                    } else {
                         if (alertBox) {
                             alertBox.className = 'alert alert-danger mt-2';
-                            alertBox.textContent = data.message || 'Error adding facility.';
+                            alertBox.textContent = 'An unexpected error occurred.';
                             alertBox.classList.remove('d-none');
                         }
-                    }
-                })
-                .catch(err => {
-                    if (saveBtn) {
-                        saveBtn.disabled = false;
-                        saveBtn.innerHTML = '<i class="ti ti-check"></i> {{ __("Save & Select") }}';
-                    }
-                    if (alertBox) {
-                        alertBox.className = 'alert alert-danger mt-2';
-                        alertBox.textContent = 'An unexpected error occurred.';
-                        alertBox.classList.remove('d-none');
-                    }
-                });
+                    });
 
                 return false;
             };
@@ -4559,25 +4895,34 @@
     </script>
 
     <!-- Quick Add Attraction Modal -->
-    <div class="modal fade" id="quickAddAttractionModal" tabindex="-1" aria-labelledby="quickAddAttractionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="quickAddAttractionModal" tabindex="-1"
+        aria-labelledby="quickAddAttractionModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background: var(--dark-card, #2b3b4c); color: #fff; border: 1px solid rgba(255,255,255,0.15);">
+            <div class="modal-content"
+                style="background: var(--dark-card, #2b3b4c); color: #fff; border: 1px solid rgba(255,255,255,0.15);">
                 <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                    <h5 class="modal-title text-white d-flex align-items-center gap-2" id="quickAddAttractionModalLabel">
+                    <h5 class="modal-title text-white d-flex align-items-center gap-2"
+                        id="quickAddAttractionModalLabel">
                         <i class="ti ti-map-pin-plus"></i> {{ __('Add New Facility / Place') }}
                     </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <form id="quickAddAttractionForm" action="javascript:void(0);" onsubmit="event.preventDefault(); return false;">
+                <form id="quickAddAttractionForm" action="javascript:void(0);"
+                    onsubmit="event.preventDefault(); return false;">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label text-white fw-bold">{{ __('Place / Facility Name') }} <span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control text-white" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2);" placeholder="e.g. Pyramids of Giza / Karnak Temple" required>
+                            <label class="form-label text-white fw-bold">{{ __('Place / Facility Name') }} <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" name="name" class="form-control text-white"
+                                style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2);"
+                                placeholder="e.g. Pyramids of Giza / Karnak Temple" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-white fw-bold">{{ __('City / Destination') }}</label>
-                            <select name="city_id" class="form-select text-white" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2);">
+                            <select name="city_id" class="form-select text-white"
+                                style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2);">
                                 <option value="">-- {{ __('Select City (Optional)') }} --</option>
                                 @foreach ($cities ?? collect() as $city)
                                     <option value="{{ $city->id }}">{{ adminTrans($city->name) }}</option>
@@ -4586,13 +4931,17 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-white fw-bold">{{ __('Description / Details') }}</label>
-                            <textarea name="description" rows="3" class="form-control text-white" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2);" placeholder="Brief details about this location..."></textarea>
+                            <textarea name="description" rows="3" class="form-control text-white"
+                                style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2);"
+                                placeholder="Brief details about this location..."></textarea>
                         </div>
                         <div id="quickAttractionAlert" class="alert d-none mt-2"></div>
                     </div>
                     <div class="modal-footer" style="border-top: 1px solid rgba(255,255,255,0.1);">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
-                        <button type="button" class="btn btn-primary d-inline-flex align-items-center gap-1" id="saveQuickAttractionBtn">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                        <button type="button" class="btn btn-primary d-inline-flex align-items-center gap-1"
+                            id="saveQuickAttractionBtn">
                             <i class="ti ti-check"></i> {{ __('Save & Select') }}
                         </button>
                     </div>

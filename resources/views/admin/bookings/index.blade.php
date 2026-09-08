@@ -269,6 +269,11 @@
                         <div class="row mb-3">
                             <div class="col-md-3"><strong>الباقة:</strong> {{ $booking->package->name ?? '-' }}</div>
                             <div class="col-md-3"><strong>عدد الأفراد:</strong> {{ $booking->travellers_count ?? '-' }}
+                                @if(($booking->adults ?? 0) > 0 || ($booking->children ?? 0) > 0 || ($booking->infants ?? 0) > 0)
+                                    <small class="text-light opacity-75 d-block" style="font-size: 11px;">
+                                        ({{ $booking->adults ?? 0 }} بالغ · {{ $booking->children ?? 0 }} طفل · {{ $booking->infants ?? 0 }} رضيع)
+                                    </small>
+                                @endif
                             </div>
                             <div class="col-md-3"><strong>إجمالي السعر:</strong>
                                 {{ number_format($booking->total_amount ?? 0, 2) }}</div>

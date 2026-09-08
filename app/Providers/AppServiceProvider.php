@@ -28,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \Illuminate\Pagination\Paginator::useBootstrapFive();
+        \Illuminate\Pagination\Paginator::defaultView('vendor.pagination.bootstrap-5');
+
         View::composer(['website.layouts.header', 'website.layouts.footer'], function ($view) {
             $view->with('navigationDestinations', app(WebsiteDestinationService::class)->homeDestinations(24));
         });

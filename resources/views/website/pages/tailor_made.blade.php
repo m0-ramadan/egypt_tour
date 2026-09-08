@@ -1,10 +1,12 @@
 @extends('website.layouts.master')
 
-@section('title', __('Tailor-Made Travel Experiences') . ' - Etro Tours')
-@section('description', __('Plan a tailor-made journey with Etro Tours and get a custom itinerary designed around your
+@section('title', __('Tailor-Made Travel Experiences') . ' - Egypt Tour Pro')
+@section('description',
+    __('Plan a tailor-made journey with Egypt Tour Pro and get a custom itinerary designed around your
     budget, interests, travel style, and dream destinations.'))
-@section('keywords', 'tailor made Egypt tours, custom travel itinerary, private Egypt holidays, luxury bespoke travel,
-    Etro Tours')
+@section('keywords',
+    'tailor made Egypt tours, custom travel itinerary, private Egypt holidays, luxury bespoke travel,
+    Egypt Tour Pro')
 @section('image', asset('website/photos/home2.webp'))
 
 @section('css')
@@ -69,13 +71,13 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(197, 149, 91, 0.3);
+            border: 1px solid rgba(243, 107, 10, 0.3);
             transition: all 0.3s ease;
         }
 
         .hero-feature:hover {
             transform: translateY(-5px);
-            background: rgba(197, 149, 91, 0.2);
+            background: rgba(243, 107, 10, 0.2);
         }
 
         .hero-feature i {
@@ -157,7 +159,7 @@
             border-radius: 25px;
             padding: 50px;
             box-shadow: var(--shadow-dramatic);
-            border: 2px solid rgba(197, 149, 91, 0.1);
+            border: 2px solid rgba(243, 107, 10, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -253,7 +255,7 @@
 
         .form-control:focus {
             border-color: var(--rich-gold);
-            box-shadow: 0 0 0 0.25rem rgba(197, 149, 91, 0.15);
+            box-shadow: 0 0 0 0.25rem rgba(243, 107, 10, 0.15);
             outline: none;
             transform: translateY(-2px);
         }
@@ -368,7 +370,7 @@
         }
 
         .custom-checkbox:hover {
-            background: rgba(197, 149, 91, 0.1);
+            background: rgba(243, 107, 10, 0.1);
             border-color: var(--rich-gold);
         }
 
@@ -439,8 +441,8 @@
 
         .submit-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(197, 149, 91, 0.4);
-            background: linear-gradient(135deg, #d4a574 0%, #c5955b 100%);
+            box-shadow: 0 12px 35px rgba(243, 107, 10, 0.4);
+            background: linear-gradient(135deg, #FF8A3D 0%, #F36B0A 100%);
         }
 
         .submit-btn:active {
@@ -471,7 +473,7 @@
             border-radius: 25px;
             padding: 40px;
             box-shadow: var(--shadow-medium);
-            border: 2px solid rgba(197, 149, 91, 0.1);
+            border: 2px solid rgba(243, 107, 10, 0.1);
             margin-bottom: 30px;
         }
 
@@ -497,7 +499,7 @@
 
         .sidebar-feature:hover {
             transform: translateX(5px);
-            background: rgba(197, 149, 91, 0.1);
+            background: rgba(243, 107, 10, 0.1);
         }
 
         .sidebar-feature i {
@@ -1054,8 +1056,11 @@
 
                                     <div class="contact-info">
                                         <p>{{ __('Speak with our travel experts') }}</p>
-                                        <p><a href="tel:+201553383000">+20 15 53383000</a></p>
-                                        <p><a href="mailto:reservations@etrotours.com">reservations@etrotours.com</a></p>
+                                        <p><a href="tel:+201553383000">+20</a></p>
+                                        <p><a href="mailto:reservations@etrotours.com">reservations@egypttourpro.com</a>
+                                        </p>
+                                        <p><a href="mailto:reservations@egypttourpro.com">reservations@egypttourpro.com</a>
+                                        </p>
                                     </div>
 
                                     <p style="font-size: 0.9rem; opacity: 0.9; margin: 0;">

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إدارة الباقات'))
+@section('title', 'Manage Packages')
 
 @section('css')
 
@@ -198,8 +198,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">الباقات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Packages</li>
             </ol>
         </nav>
 
@@ -210,7 +210,7 @@
                         <i class="fas fa-suitcase"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalPackages) }}</div>
-                    <div class="stats-label">إجمالي الباقات</div>
+                    <div class="stats-label">Total Packages</div>
                 </div>
             </div>
 
@@ -221,7 +221,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stats-number">{{ number_format($activePackages) }}</div>
-                    <div class="stats-label">باقات مفعلة</div>
+                    <div class="stats-label">Active Packages</div>
                 </div>
             </div>
 
@@ -232,7 +232,7 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <div class="stats-number">{{ number_format($featuredPackages) }}</div>
-                    <div class="stats-label">باقات مميزة</div>
+                    <div class="stats-label">Featured Packages</div>
                 </div>
             </div>
 
@@ -243,27 +243,42 @@
                         <i class="fas fa-file-circle-xmark"></i>
                     </div>
                     <div class="stats-number">{{ number_format($draftPackages) }}</div>
-                    <div class="stats-label">غير مفعلة</div>
+                    <div class="stats-label">Inactive Packages</div>
                 </div>
             </div>
         </div>
 
         <div class="filter-card">
+            @php
+                $activeFilters = collect(['search', 'category_id', 'status', 'is_featured'])
+                    ->filter(fn($k) => request()->filled($k))
+                    ->count();
+            @endphp
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">
+                    <i class="fas fa-filter me-2"></i> Advanced Filter
+                    @if ($activeFilters > 0)
+                        <span class="badge bg-primary ms-2">{{ $activeFilters }} Active
+                            {{ \Illuminate\Support\Str::plural('Filter', $activeFilters) }}</span>
+                    @endif
+                </h6>
+            </div>
             <form method="GET" action="{{ route('admin.packages.index') }}">
-                <div class="row g-3 align-items-end">
+                {{-- Row 1: Search + Category + Status --}}
+                <div class="row g-3 align-items-end mb-3">
                     <div class="col-md-4">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search by Name</label>
                         <div class="search-box">
                             <i class="fas fa-search search-icon"></i>
                             <input type="text" class="form-control" name="search" value="{{ request('search') }}"
-                                placeholder="ابحث باسم الرحلة أو الـ slug">
+                                placeholder="Search in any language...">
                         </div>
                     </div>
 
-                    <div class="col-md-3">
-                        <label class="form-label">التصنيف</label>
+                    <div class="col-md-4">
+                        <label class="form-label">Category</label>
                         <select name="category_id" class="form-select">
-                            <option value="">كل التصنيفات</option>
+                            <option value="">All Categories</option>
                             @foreach ($categories ?? collect() as $category)
                                 <option value="{{ $category->id }}"
                                     {{ request('category_id') == $category->id ? 'selected' : '' }}>
@@ -273,19 +288,47 @@
                         </select>
                     </div>
 
-                    <div class="col-md-3">
-                        <label class="form-label">الحالة</label>
+                    <div class="col-md-4">
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>مفعل</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>غير مفعل
+                            <option value="">All</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                {{-- Row 2: Featured + Per Page + Actions --}}
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label">Featured?</label>
+                        <select name="is_featured" class="form-select">
+                            <option value="">All</option>
+                            <option value="1" {{ request('is_featured') === '1' ? 'selected' : '' }}>Featured Only
+                            </option>
+                            <option value="0" {{ request('is_featured') === '0' ? 'selected' : '' }}>Not Featured
                             </option>
                         </select>
                     </div>
 
-                    <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.packages.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                    <div class="col-md-4">
+                        <label class="form-label">Per Page</label>
+                        <select name="per_page" class="form-select">
+                            @foreach ([15, 30, 50, 100] as $pp)
+                                <option value="{{ $pp }}"
+                                    {{ request('per_page', 15) == $pp ? 'selected' : '' }}>{{ $pp }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 d-flex gap-2">
+                        <button class="btn btn-primary w-100" type="submit">
+                            <i class="fas fa-search me-1"></i> Search
+                        </button>
+                        <a href="{{ route('admin.packages.index') }}" class="btn btn-secondary w-100">
+                            <i class="fas fa-redo me-1"></i> Reset
+                        </a>
                     </div>
                 </div>
             </form>
@@ -294,15 +337,15 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة الباقات</h5>
-                    <small class="opacity-75">إدارة جميع باقات السفر</small>
+                    <h5 class="mb-0">Packages List</h5>
+                    <small class="opacity-75">Manage all travel packages</small>
                 </div>
                 <div class="d-flex gap-2">
                     <a href="{{ route('admin.packages.create-with-ai') }}" class="btn btn-light">
-                        <i class="fas fa-wand-magic-sparkles me-2"></i>إنشاء بالذكاء الاصطناعي
+                        <i class="fas fa-wand-magic-sparkles me-2"></i>Create with AI
                     </a>
                     <a href="{{ route('admin.packages.create') }}" class="btn btn-light">
-                        <i class="fas fa-plus me-2"></i>إضافة رحلة
+                        <i class="fas fa-plus me-2"></i>Add Tour
                     </a>
                 </div>
             </div>
@@ -312,87 +355,88 @@
                     <div class="item-card">
                         <div class="item-header">
                             <div>
-                                <h6 class="mb-1">{{ adminTrans($package->name) ?: 'بدون اسم' }}</h6>
+                                <h6 class="mb-1">{{ adminTrans($package->name) ?: 'Untitled' }}</h6>
                                 <small class="text-light opacity-75">{{ $package->slug ?? '-' }}</small>
                             </div>
 
                             <div class="d-flex gap-2 flex-wrap">
                                 <span
                                     class="badge-status {{ $package->is_active ?? true ? 'status-active' : 'status-inactive' }}">
-                                    {{ $package->is_active ?? true ? 'مفعلة' : 'غير مفعلة' }}
+                                    {{ $package->is_active ?? true ? 'Active' : 'Inactive' }}
                                 </span>
                                 @if ($package->is_featured ?? false)
-                                    <span class="badge-status status-featured">مميزة</span>
+                                    <span class="badge-status status-featured">Featured</span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="detail-row">
                             <div>
-                                <span class="detail-label">التصنيف:</span>
+                                <span class="detail-label">Category:</span>
                                 <span>{{ adminTrans(optional($package->category)->name) ?: '-' }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">المدة:</span>
-                                <span>{{ $package->duration_days ?? '-' }} يوم</span>
+                                <span class="detail-label">Duration:</span>
+                                <span>{{ $package->duration_days ?? '-' }} Days</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">العملة:</span>
+                                <span class="detail-label">Currency:</span>
                                 <span>{{ $package->currency->code ?? '-' }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">السعر الأساسي:</span>
+                                <span class="detail-label">Base Price:</span>
                                 <span>{{ number_format($package->base_price ?? 0, 2) }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">المدينة:</span>
+                                <span class="detail-label">Destination:</span>
                                 <span>{{ adminTrans(optional(optional($package->destination)->city)->name) ?: (adminTrans(optional($package->destination)->name) ?: '-') }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">الترتيب:</span>
+                                <span class="detail-label">Sort Order:</span>
                                 <span>{{ $package->sort_order ?? 0 }}</span>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <span class="detail-label">الوصف:</span>
+                            <span class="detail-label">Description:</span>
                             <span>{{ \Illuminate\Support\Str::limit(adminTrans($package->short_description) ?: (adminTrans($package->description) ?: '-'), 180) }}</span>
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('admin.packages.show', $package) }}" class="btn btn-info btn-sm">عرض</a>
-                            <a href="{{ route('admin.packages.edit', $package) }}" class="btn btn-warning btn-sm">تعديل</a>
+                            <a href="{{ route('admin.packages.show', $package) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('admin.packages.edit', $package) }}"
+                                class="btn btn-warning btn-sm">Edit</a>
 
                             @if (Route::has('admin.package-prices.by-package'))
                                 <a href="{{ route('admin.package-prices.by-package', $package) }}"
                                     class="btn btn-secondary btn-sm">
-                                    الأسعار
+                                    Prices
                                 </a>
                             @endif
 
                             @if (Route::has('admin.packages.toggle-status'))
                                 <form action="{{ route('admin.packages.toggle-status', $package) }}" method="POST">
                                     @csrf
-                                    <button class="btn btn-dark btn-sm" type="submit">تبديل الحالة</button>
+                                    <button class="btn btn-dark btn-sm" type="submit">Toggle Status</button>
                                 </form>
                             @endif
 
                             @if (Route::has('admin.packages.duplicate'))
                                 <form action="{{ route('admin.packages.duplicate', $package) }}" method="POST">
                                     @csrf
-                                    <button class="btn btn-primary btn-sm" type="submit">نسخ</button>
+                                    <button class="btn btn-primary btn-sm" type="submit">Duplicate</button>
                                 </form>
                             @endif
 
                             <form action="{{ route('admin.packages.destroy', $package) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
@@ -401,8 +445,8 @@
                         <div class="empty-state-icon">
                             <i class="fas fa-suitcase"></i>
                         </div>
-                        <h5 class="empty-state-text">لا توجد باقات حالياً</h5>
-                        <a href="{{ route('admin.packages.create') }}" class="btn btn-primary">إضافة رحلة جديدة</a>
+                        <h5 class="empty-state-text">No packages found</h5>
+                        <a href="{{ route('admin.packages.create') }}" class="btn btn-primary">Add New Tour</a>
                     </div>
                 @endforelse
 

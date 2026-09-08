@@ -31,6 +31,6 @@
 }
 
 .is-navigation-card:focus-visible {
-    outline: 3px solid var(--rich-gold, #c9974c);
+    outline: 3px solid var(--etp-orange-500, #f36b0a);
     outline-offset: 4px;
 }

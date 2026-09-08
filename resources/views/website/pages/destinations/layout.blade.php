@@ -14,7 +14,7 @@
                 <div class="section-heading text-center mb-0">
                     <h2 class="section-header"
                         style="font-family: 'Playfair Display', serif; color: var(--primary-navy); font-size: clamp(1.5rem, 3vw, 2.2rem); margin-bottom: 20px;">
-                        {{ __('Why travel with Etro Tours?') }}
+                        {{ __('Why travel with Egypt Tour Pro?') }}
                     </h2>
                     <p class="section-subtitle"
                         style="color: var(--warm-gray); font-size: 1.2rem; max-width: 700px; margin: 0 auto 60px; line-height: 1.6;">
@@ -37,15 +37,15 @@
                         {{ __('100% Tailor made') }}</h3>
                     <div class="choose-features">
                         <div class="feature-item"
-                            style="padding: 12px 0; border-bottom: 1px solid rgba(197, 149, 91, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
+                            style="padding: 12px 0; border-bottom: 1px solid rgba(243, 107, 10, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
                             {{ __('Your entire vacation is designed around your requirements') }}
                         </div>
                         <div class="feature-item"
-                            style="padding: 12px 0; border-bottom: 1px solid rgba(197, 149, 91, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
+                            style="padding: 12px 0; border-bottom: 1px solid rgba(243, 107, 10, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
                             {{ __('Explore your interests at your own speed') }}
                         </div>
                         <div class="feature-item"
-                            style="padding: 12px 0; border-bottom: 1px solid rgba(197, 149, 91, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
+                            style="padding: 12px 0; border-bottom: 1px solid rgba(243, 107, 10, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
                             {{ __('Select your preferred style of accommodations') }}
                         </div>
                         <div class="feature-item"
@@ -69,11 +69,11 @@
                         {{ __('Expert knowledge') }}</h3>
                     <div class="choose-features">
                         <div class="feature-item"
-                            style="padding: 12px 0; border-bottom: 1px solid rgba(197, 149, 91, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
+                            style="padding: 12px 0; border-bottom: 1px solid rgba(243, 107, 10, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
                             {{ __('All our specialists have traveled extensively or lived in their specialist regions, We\'re with you every step of the way') }}
                         </div>
                         <div class="feature-item"
-                            style="padding: 12px 0; border-bottom: 1px solid rgba(197, 149, 91, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
+                            style="padding: 12px 0; border-bottom: 1px solid rgba(243, 107, 10, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
                             {{ __('The same specialist will handle your trip from start to finish') }}
                         </div>
                         <div class="feature-item"
@@ -97,11 +97,11 @@
                         {{ __('The best guides') }}</h3>
                     <div class="choose-features">
                         <div class="feature-item"
-                            style="padding: 12px 0; border-bottom: 1px solid rgba(197, 149, 91, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
+                            style="padding: 12px 0; border-bottom: 1px solid rgba(243, 107, 10, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
                             {{ __('Make the difference between a good trip and an outstanding one') }}
                         </div>
                         <div class="feature-item"
-                            style="padding: 12px 0; border-bottom: 1px solid rgba(197, 149, 91, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
+                            style="padding: 12px 0; border-bottom: 1px solid rgba(243, 107, 10, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
                             {{ __('Our leaders will be there to ensure your safety and wellbeing is the number one priority') }}
                         </div>
                         <div class="feature-item"
@@ -125,7 +125,7 @@
                         {{ __('Fully protected') }}</h3>
                     <div class="choose-features">
                         <div class="feature-item"
-                            style="padding: 12px 0; border-bottom: 1px solid rgba(197, 149, 91, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
+                            style="padding: 12px 0; border-bottom: 1px solid rgba(243, 107, 10, 0.2); color: var(--warm-gray); font-size: 0.95rem; line-height: 1.6;">
                             {{ __('Secure Payment - Use your debit card or credit card. Your transactions are protected by 3D Secure and SecureCode.') }}
                         </div>
                         <div class="feature-item" style="padding: 12px 0; text-align: center;">

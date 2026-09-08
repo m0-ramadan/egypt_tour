@@ -2,11 +2,14 @@
 
 @php
     $heroImage = asset('website/images/nile-cruises/luxor-aswan.jpg');
+    $heroImage = asset('website/images/nile-cruises/hero-nile-cruises.jpg');
 @endphp
 
-@section('title', $pageContent['title'] . ' - Etro Tours')
+@section('title', $pageContent['title'] . ' - Egypt Tour Pro')
 @section('description', $pageContent['subtitle'])
-@section('keywords', 'Egypt Nile Cruise, Luxor Aswan Nile Cruise, Dahabiya Nile Cruise, Lake Nasser Cruise, Nile River Voyages')
+@section('keywords',
+    'Egypt Nile Cruise, Luxor Aswan Nile Cruise, Dahabiya Nile Cruise, Lake Nasser Cruise, Nile River
+    Voyages')
 @section('image', $heroImage)
 
 @section('css')
@@ -19,7 +22,7 @@
             margin-top: -85px;
             padding: 150px 0 90px;
             color: #fff;
-            background: linear-gradient(rgba(16, 33, 63, 0.75), rgba(22, 60, 103, 0.65)),
+            background: linear-gradient(rgba(28, 28, 28, 0.75), rgba(43, 43, 43, 0.65)),
                 url('{{ $heroImage }}') center/cover no-repeat;
             overflow: hidden;
         }
@@ -28,7 +31,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at top right, rgba(255, 210, 125, 0.22), transparent 35%),
+            background: radial-gradient(circle at top right, rgba(243, 107, 10, 0.12), transparent 35%),
                 radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.08), transparent 30%);
         }
 
@@ -49,7 +52,7 @@
             backdrop-filter: blur(12px);
             font-weight: 600;
             margin-bottom: 22px;
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
         }
 
         .nile-title {
@@ -88,7 +91,7 @@
         .nile-stat-number {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
             margin-bottom: 4px;
         }
 
@@ -136,8 +139,8 @@
             position: absolute;
             top: 18px;
             left: 18px;
-            background: rgba(16, 33, 63, 0.85);
-            color: #ffd27d;
+            background: rgba(28, 28, 28, 0.85);
+            color: var(--etp-orange-400, #FB923C);
             padding: 6px 16px;
             border-radius: 999px;
             font-size: 0.82rem;
@@ -156,12 +159,12 @@
             font-family: 'Playfair Display', serif;
             font-size: 1.65rem;
             font-weight: 700;
-            color: #10213f;
+            color: #1c1c1c;
             margin-bottom: 12px;
         }
 
         .cruise-type-desc {
-            color: #5b6b7c;
+            color: #5b5854;
             font-size: 0.98rem;
             line-height: 1.7;
             margin-bottom: 22px;
@@ -176,8 +179,8 @@
         }
 
         .category-chip {
-            background: #f0f4f9;
-            color: #163c67;
+            background: #efe9e2;
+            color: #2b2b2b;
             padding: 6px 14px;
             border-radius: 12px;
             font-size: 0.82rem;
@@ -187,7 +190,7 @@
         }
 
         .category-chip:hover {
-            background: #163c67;
+            background: #2b2b2b;
             color: #fff;
         }
 
@@ -199,36 +202,36 @@
             width: 100%;
             padding: 14px 24px;
             border-radius: 16px;
-            background: linear-gradient(135deg, #10213f, #163c67);
+            background: linear-gradient(135deg, #1c1c1c, #2b2b2b);
             color: #fff;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(16, 33, 63, 0.18);
+            box-shadow: 0 8px 20px rgba(28, 28, 28, 0.18);
         }
 
         .cruise-btn:hover {
-            background: linear-gradient(135deg, #163c67, #20548a);
+            background: linear-gradient(135deg, #2b2b2b, #3d3d3d);
             color: #fff;
-            box-shadow: 0 12px 28px rgba(16, 33, 63, 0.28);
+            box-shadow: 0 12px 28px rgba(28, 28, 28, 0.28);
         }
 
         .feature-box {
             background: #fff;
             padding: 32px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             text-align: center;
             height: 100%;
-            border: 1px solid rgba(0,0,0,0.04);
+            border: 1px solid rgba(0, 0, 0, 0.04);
         }
 
         .feature-icon {
             width: 68px;
             height: 68px;
             border-radius: 50%;
-            background: rgba(22, 60, 103, 0.08);
-            color: #163c67;
+            background: rgba(43, 43, 43, 0.08);
+            color: #2b2b2b;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -238,7 +241,7 @@
 
         /* Dark Mode Support */
         html[data-theme='dark'] .cruise-type-card {
-            background: #111827 !important;
+            background: #111111 !important;
             border-color: rgba(255, 255, 255, 0.12) !important;
             box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4) !important;
         }
@@ -248,48 +251,48 @@
         }
 
         html[data-theme='dark'] .cruise-type-desc {
-            color: #cbd5e1 !important;
+            color: #d6d0c8 !important;
         }
 
         html[data-theme='dark'] .category-chip {
-            background: rgba(244, 195, 106, 0.12) !important;
-            color: #f4c36a !important;
-            border: 1px solid rgba(244, 195, 106, 0.25) !important;
+            background: rgba(243, 107, 10, 0.12) !important;
+            color: var(--etp-orange-400, #FB923C) !important;
+            border: 1px solid rgba(243, 107, 10, 0.25) !important;
         }
 
         html[data-theme='dark'] .category-chip:hover {
-            background: #f4c36a !important;
-            color: #0f172a !important;
+            background: var(--etp-orange-500, #F36B0A) !important;
+            color: #ffffff !important;
         }
 
         html[data-theme='dark'] .cruise-btn {
-            background: linear-gradient(135deg, #c5955b, #e7b762) !important;
-            color: #0f172a !important;
-            box-shadow: 0 8px 20px rgba(197, 149, 91, 0.25) !important;
+            background: var(--etp-gradient-orange, linear-gradient(135deg, #F36B0A 0%, #FF8A3D 100%)) !important;
+            color: #ffffff !important;
+            box-shadow: 0 8px 20px rgba(243, 107, 10, 0.25) !important;
         }
 
         html[data-theme='dark'] .cruise-btn:hover {
-            background: linear-gradient(135deg, #e7b762, #f4c36a) !important;
-            color: #0f172a !important;
+            background: linear-gradient(135deg, #FF8A3D 0%, #F36B0A 100%) !important;
+            color: #ffffff !important;
         }
 
         html[data-theme='dark'] .feature-box {
-            background: #111827 !important;
+            background: #111111 !important;
             border-color: rgba(255, 255, 255, 0.12) !important;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
         }
 
         html[data-theme='dark'] .feature-box h4 {
-            color: #f4c36a !important;
+            color: var(--etp-orange-400, #FB923C) !important;
         }
 
         html[data-theme='dark'] .feature-box p {
-            color: #cbd5e1 !important;
+            color: #d6d0c8 !important;
         }
 
         html[data-theme='dark'] .feature-icon {
-            background: rgba(244, 195, 106, 0.15) !important;
-            color: #f4c36a !important;
+            background: rgba(243, 107, 10, 0.15) !important;
+            color: var(--etp-orange-400, #FB923C) !important;
         }
     </style>
 @endsection
@@ -356,16 +359,20 @@
 
                                 @if ($type->slug === 'luxor-aswan-nile-cruises')
                                     <div class="category-chips">
-                                        <a href="{{ route('website.nile_cruises.luxor_aswan.category', 'standard-nile-cruises') }}" class="category-chip">
+                                        <a href="{{ route('website.nile_cruises.luxor_aswan.category', 'standard-nile-cruises') }}"
+                                            class="category-chip">
                                             {{ __('Standard') }}
                                         </a>
-                                        <a href="{{ route('website.nile_cruises.luxor_aswan.category', 'deluxe-nile-cruises') }}" class="category-chip">
+                                        <a href="{{ route('website.nile_cruises.luxor_aswan.category', 'deluxe-nile-cruises') }}"
+                                            class="category-chip">
                                             {{ __('Deluxe') }}
                                         </a>
-                                        <a href="{{ route('website.nile_cruises.luxor_aswan.category', 'ultra-deluxe-nile-cruises') }}" class="category-chip">
+                                        <a href="{{ route('website.nile_cruises.luxor_aswan.category', 'ultra-deluxe-nile-cruises') }}"
+                                            class="category-chip">
                                             {{ __('Ultra Deluxe') }}
                                         </a>
-                                        <a href="{{ route('website.nile_cruises.luxor_aswan.category', 'luxury-nile-cruises') }}" class="category-chip">
+                                        <a href="{{ route('website.nile_cruises.luxor_aswan.category', 'luxury-nile-cruises') }}"
+                                            class="category-chip">
                                             {{ __('Luxury') }}
                                         </a>
                                     </div>
@@ -390,9 +397,11 @@
         <div class="container py-3">
             <div class="text-center mb-5">
                 <h2 class="h1 font-serif fw-bold text-dark mb-2" style="font-family: 'Playfair Display', serif;">
-                    {{ __('Why Choose EtroTours Nile Cruises?') }}
+                    {{ __('Why Choose Egypt Tour Pro Nile Cruises?') }}
                 </h2>
-                <p class="text-muted fs-6">{{ __('Experience seamless river cruising with unmatched local expertise and 5-star standard service.') }}</p>
+                <p class="text-muted fs-6">
+                    {{ __('Experience seamless river cruising with unmatched local expertise and 5-star standard service.') }}
+                </p>
             </div>
 
             <div class="row g-4">

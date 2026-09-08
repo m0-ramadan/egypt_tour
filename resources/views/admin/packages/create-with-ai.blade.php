@@ -464,7 +464,7 @@
 
             function syncAiDestinationVisibility() {
                 if (!packageTypeSelect || !aiDestinationWrapper) return;
-                if (packageTypeSelect.value === 'nile_cruise') {
+                if (packageTypeSelect.value === 'nile_cruise' || packageTypeSelect.value === 'travel_package') {
                     aiDestinationWrapper.style.display = 'none';
                 } else {
                     aiDestinationWrapper.style.display = '';

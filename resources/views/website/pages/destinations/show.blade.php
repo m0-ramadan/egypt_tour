@@ -18,14 +18,14 @@
         : __('Trips in') . ' ' . $destination->display_name;
 @endphp
 
-@section('title', $pageTitle . ' - Etro Tours')
+@section('title', $pageTitle . ' - Egypt Tour Pro')
 @section('description', $pageDescription)
 @section('keywords',
     trim(
     collect([
     $destination->display_name,
     $countryName,
-    'Etro Tours',
+    'Egypt Tour Pro',
     'destination travel',
     'Egypt
     trips',
@@ -37,8 +37,8 @@
 @section('css')
     <style>
         .destination-breadcrumb {
-            background: var(--pearl-luxury, #faf8f3);
-            border-bottom: 1px solid rgba(197, 149, 91, 0.16);
+            background: var(--etp-surface-muted, #f8fafc);
+            border-bottom: 1px solid rgba(243, 107, 10, 0.16);
             padding: 16px 0;
         }
 
@@ -50,13 +50,13 @@
 
         .destination-breadcrumb .breadcrumb-item,
         .destination-breadcrumb .breadcrumb-item a {
-            color: #1c325c;
+            color: #061B3E;
             font-size: 0.95rem;
             text-decoration: none;
         }
 
         .destination-breadcrumb .breadcrumb-item.active {
-            color: #9b6a2c;
+            color: #F36B0A;
             font-weight: 700;
         }
 
@@ -77,7 +77,7 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(circle at top right, rgba(255, 210, 125, 0.16), transparent 28%),
+                radial-gradient(circle at top right, rgba(243, 107, 10, 0.16), transparent 28%),
                 radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.08), transparent 34%);
         }
 
@@ -154,9 +154,9 @@
         .filter-btn,
         .journey-btn,
         .cta-btn {
-            background: linear-gradient(135deg, #c5955b 0%, #b8860b 100%);
-            color: #1c325c;
-            box-shadow: 0 12px 26px rgba(197, 149, 91, 0.22);
+            background: linear-gradient(135deg, #F36B0A 0%, #b8860b 100%);
+            color: #061B3E;
+            box-shadow: 0 12px 26px rgba(243, 107, 10, 0.22);
         }
 
         .hero-btn,
@@ -179,7 +179,7 @@
         .cta-btn:hover,
         .attraction-link:hover {
             transform: translateY(-2px);
-            color: #1c325c;
+            color: #061B3E;
         }
 
         .hero-btn-outline:hover {
@@ -251,7 +251,7 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 18px;
-            color: #9b6a2c;
+            color: #F36B0A;
             font-size: 0.92rem;
             font-weight: 700;
             letter-spacing: 0.04em;
@@ -263,7 +263,7 @@
         .results-head h2,
         .cta-card h2 {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #061B3E;
             line-height: 1.2;
             margin-bottom: 16px;
         }
@@ -299,7 +299,7 @@
 
         .sidebar-card h3 {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #061B3E;
             font-size: 1.45rem;
             margin-bottom: 18px;
         }
@@ -324,7 +324,7 @@
         }
 
         .fact-item strong {
-            color: #1c325c;
+            color: #061B3E;
             font-weight: 700;
             text-align: right;
         }
@@ -341,7 +341,7 @@
             padding: 8px 13px;
             border-radius: 999px;
             background: #edf4fb;
-            color: #1c325c;
+            color: #061B3E;
             font-size: 0.84rem;
             font-weight: 700;
         }
@@ -391,7 +391,7 @@
 
         .attraction-title {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #061B3E;
             font-size: 1.35rem;
             margin-bottom: 12px;
         }
@@ -417,7 +417,7 @@
         }
 
         .attraction-meta i {
-            color: #c5955b;
+            color: #F36B0A;
         }
 
         .attraction-link {
@@ -426,7 +426,7 @@
             padding: 12px 18px;
             border-radius: 16px;
             background: #f8fbff;
-            color: #1c325c;
+            color: #061B3E;
             border: 1px solid rgba(26, 54, 93, 0.1);
         }
 
@@ -466,7 +466,7 @@
         .journey-type-card:hover,
         .journey-type-card.is-active {
             transform: translateY(-4px);
-            border-color: rgba(197, 149, 91, 0.42);
+            border-color: rgba(243, 107, 10, 0.42);
             box-shadow: 0 22px 48px rgba(16, 33, 63, 0.13);
             color: #fff;
         }
@@ -523,7 +523,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #1c325c;
+            color: #061B3E;
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
             margin-bottom: 22px;
@@ -553,8 +553,8 @@
 
         .filters-card .form-control:focus,
         .filters-card .form-select:focus {
-            border-color: #c5955b;
-            box-shadow: 0 0 0 0.2rem rgba(197, 149, 91, 0.14);
+            border-color: #F36B0A;
+            box-shadow: 0 0 0 0.2rem rgba(243, 107, 10, 0.14);
         }
 
         .filter-btn,
@@ -571,7 +571,7 @@
 
         .reset-btn {
             background: #fff;
-            color: #1c325c;
+            color: #061B3E;
             border: 1px solid rgba(26, 54, 93, 0.14);
         }
 
@@ -603,7 +603,7 @@
 
         .journey-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(197, 149, 91, 0.34);
+            border-color: rgba(243, 107, 10, 0.34);
             box-shadow: 0 24px 52px rgba(16, 33, 63, 0.14);
         }
 
@@ -647,8 +647,8 @@
         .journey-badge {
             top: 18px;
             right: 18px;
-            color: #1c325c;
-            background: rgba(255, 210, 125, 0.95);
+            color: #061B3E;
+            background: rgba(243, 107, 10, 0.95);
         }
 
         .journey-price {
@@ -656,7 +656,7 @@
             right: 18px;
             bottom: 18px;
             text-align: center;
-            color: #1c325c;
+            color: #061B3E;
             background: rgba(255, 255, 255, 0.96);
             box-shadow: 0 12px 28px rgba(16, 33, 63, 0.14);
         }
@@ -669,7 +669,7 @@
         }
 
         .journey-country {
-            color: #9b6a2c;
+            color: #F36B0A;
             font-size: 0.88rem;
             font-weight: 700;
             letter-spacing: 0.02em;
@@ -684,12 +684,12 @@
         }
 
         .journey-title a {
-            color: #1c325c;
+            color: #061B3E;
             text-decoration: none;
         }
 
         .journey-title a:hover {
-            color: #c5955b;
+            color: #F36B0A;
         }
 
         .journey-meta {
@@ -715,7 +715,7 @@
 
         .journey-meta i,
         .journey-schedule i {
-            color: #c5955b;
+            color: #F36B0A;
         }
 
         .journey-schedule {
@@ -747,7 +747,7 @@
 
         .journey-empty h3 {
             font-family: 'Playfair Display', serif;
-            color: #1c325c;
+            color: #061B3E;
             font-size: 2rem;
             margin-bottom: 12px;
         }
@@ -783,7 +783,7 @@
             padding: 36px;
             margin-top: 0;
             background:
-                radial-gradient(circle at top right, rgba(255, 210, 125, 0.14), transparent 28%),
+                radial-gradient(circle at top right, rgba(243, 107, 10, 0.14), transparent 28%),
                 #fff;
             display: flex;
             align-items: center;
@@ -810,7 +810,7 @@
 
         .cta-btn.secondary {
             background: #f8fbff;
-            color: #1c325c;
+            color: #061B3E;
             border: 1px solid rgba(26, 54, 93, 0.12);
             box-shadow: none;
         }
@@ -849,7 +849,7 @@
         html[data-theme='dark'] .journey-empty,
         html[data-theme='dark'] .cta-card,
         html[data-theme='dark'] .attraction-card {
-            background: #111827 !important;
+            background: #181818 !important;
             border-color: rgba(148, 163, 184, 0.16) !important;
             box-shadow: var(--shadow-medium) !important;
         }
@@ -912,13 +912,131 @@
         }
 
         html[data-theme='dark'] .pagination-wrap .page-link {
-            background: #111827 !important;
+            background: #181818 !important;
             color: var(--charcoal-deep) !important;
             border-color: rgba(148, 163, 184, 0.18) !important;
         }
 
-        html[data-theme='dark'] .pagination-wrap .page-item.active .page-link {
-            color: #0f172a !important;
+        .destination-cat-card {
+            background: #fff;
+            border-radius: 26px;
+            overflow: hidden;
+            box-shadow: 0 16px 45px rgba(16, 33, 63, 0.08);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(26, 54, 93, 0.08);
+        }
+
+        .destination-cat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 50px rgba(16, 33, 63, 0.16);
+        }
+
+        .cat-img-wrapper {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+        }
+
+        .cat-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .destination-cat-card:hover .cat-img-wrapper img {
+            transform: scale(1.06);
+        }
+
+        .cat-card-badge {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: rgba(16, 33, 63, 0.85);
+            color: #ffd27d;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+        }
+
+        .cat-card-body {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .cat-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #061B3E;
+            margin-bottom: 14px;
+            line-height: 1.25;
+        }
+
+        .cat-card-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .cat-card-title a:hover {
+            color: #F36B0A;
+        }
+
+        .cat-card-desc {
+            color: #5b6776;
+            font-size: 0.98rem;
+            line-height: 1.75;
+            margin-bottom: 26px;
+            flex-grow: 1;
+        }
+
+        .cat-card-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 24px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #061B3E, #0B2554);
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(16, 33, 63, 0.18);
+        }
+
+        .cat-card-btn:hover {
+            background: linear-gradient(135deg, #0B2554, #103570);
+            color: #fff;
+            box-shadow: 0 12px 28px rgba(16, 33, 63, 0.28);
+        }
+
+        html[data-theme='dark'] .destination-cat-card {
+            background: #181818 !important;
+            border-color: rgba(255, 255, 255, 0.12) !important;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        html[data-theme='dark'] .cat-card-title {
+            color: #f8fafc !important;
+        }
+
+        html[data-theme='dark'] .cat-card-desc {
+            color: #cbd5e1 !important;
+        }
+
+        html[data-theme='dark'] .cat-card-btn {
+            background: linear-gradient(135deg, #F36B0A, #FF8A33) !important;
+            color: #ffffff !important;
         }
 
         @media (max-width: 1199px) {
@@ -1056,164 +1174,49 @@
     </section>
     <section class="destination-results" id="destination-journeys">
         <div class="container">
-            @if ($typeCards->count())
-                <div class="results-head">
-                    <div>
-                        <h2>{{ __('Explore :destination by trip type', ['destination' => $destination->display_name]) }}</h2>
-                        <p>{{ __('Choose a section to see matching trips only for this city.') }}</p>
-                    </div>
+            <div class="text-center mx-auto mb-5" style="max-width: 820px;">
+                <div class="section-kicker justify-content-center">
+                    <i class="la la-compass"></i>
+                    {{ __('Explore By Trip Type') }}
                 </div>
-
-                <div class="journey-type-grid" aria-label="{{ __('Journey types') }}">
-                    @foreach ($typeCards as $typeCard)
-                        <a href="{{ $typeCard['url'] }}"
-                            class="journey-type-card{{ $typeCard['active'] ? ' is-active' : '' }}">
-                            <img src="{{ asset($typeCard['image']) }}"
-                                alt="{{ $typeCard['label'] }}"
-                                class="journey-type-image"
-                                loading="lazy">
-                            <span class="journey-type-content">
-                                <strong>{{ $typeCard['label'] }}</strong>
-                                <span>{{ trans_choice(':count trip|:count trips', $typeCard['count'], ['count' => $typeCard['count']]) }}</span>
-                            </span>
-                        </a>
-                    @endforeach
-                </div>
-            @endif
-
-            <div class="filters-card">
-                <h2 class="filters-title">
-                    <i class="la la-sliders-h"></i>
-                    {{ __('Filter Trips in :destination', ['destination' => $destination->display_name]) }}
-                </h2>
-
-                <form action="{{ $indexRoute }}" method="GET">
-                    <div class="filters-grid">
-                        <div>
-                            <label for="destination-search">{{ __('Search by keyword') }}</label>
-                            <input id="destination-search" type="text" name="q" class="form-control"
-                                value="{{ $search }}"
-                                placeholder="{{ __('Search packages, tours, cruises, or highlights...') }}">
-                        </div>
-
-                        <div>
-                            <label for="destination-type">{{ __('Journey Type') }}</label>
-                            <select id="destination-type" name="type" class="form-select">
-                                <option value="">{{ __('All Journey Types') }}</option>
-                                @foreach ($typeOptions as $option)
-                                    <option value="{{ $option['value'] }}" @selected($selectedType === $option['value'])>
-                                        {{ $option['label'] }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <button type="submit" class="filter-btn">
-                            <i class="la la-search"></i>
-                            {{ __('Filter Results') }}
-                        </button>
-
-                        <a href="{{ $indexRoute }}" class="reset-btn">
-                            <i class="la la-undo"></i>
-                            {{ __('Reset Filters') }}
-                        </a>
-                    </div>
-                </form>
+                <h2>{{ __('Discover :destination by Journey Type', ['destination' => $destination->display_name]) }}</h2>
+                @if ($typeCards->contains('value', 'nile_cruise'))
+                    <p>{{ __('Choose from our private day excursions, luxury Nile cruises, or comprehensive multi-day vacation packages.') }}
+                    </p>
+                @else
+                    <p>{{ __('Choose from our private day excursions or comprehensive multi-day vacation packages.') }}</p>
+                @endif
             </div>
 
-            <div class="results-head">
-                <div>
-                    <h2>{{ $resultsTitle }}</h2>
-                    <p>{{ __('Matching results') }}: {{ number_format($packages->total()) }}</p>
-                </div>
-            </div>
-
-            @if ($packages->count())
-                <div class="row results-grid">
-                    @foreach ($packages as $package)
-                        <div class="col-lg-4 col-md-6">
-                            <article class="journey-card">
-                                <div class="journey-image">
-                                    <div class="journey-type">{{ $package['type_label'] }}</div>
-
-                                    @if ($package['badge'])
-                                        <div class="journey-badge">{{ $package['badge'] }}</div>
-                                    @endif
-
-                                    <a href="{{ $package['url'] }}">
-                                        <img src="{{ $package['image'] }}" alt="{{ $package['title'] }}" loading="lazy"
-                                            onerror="this.onerror=null;this.src='{{ asset('website/photos/home2.webp') }}';">
-                                    </a>
-
-                                    @if ($package['price'])
-                                        <div class="journey-price">{{ $package['price'] }}</div>
-                                    @endif
+            <div class="row g-4 justify-content-center">
+                @foreach ($typeCards as $typeCard)
+                    <div class="{{ count($typeCards) === 2 ? 'col-lg-6 col-md-6' : 'col-lg-4 col-md-6' }}">
+                        <div class="destination-cat-card">
+                            <div class="cat-img-wrapper">
+                                <img src="{{ asset($typeCard['image']) }}" alt="{{ $typeCard['label'] }}"
+                                    loading="lazy"
+                                    onerror="this.onerror=null;this.src='{{ asset('website/photos/home2.webp') }}';">
+                                <div class="cat-card-badge">
+                                    <i class="la la-compass"></i> {{ $typeCard['badge'] }}
                                 </div>
+                            </div>
+                            <div class="cat-card-body">
+                                <h3 class="cat-card-title">
+                                    <a href="{{ $typeCard['url'] }}">{{ $typeCard['label'] }}</a>
+                                </h3>
+                                <p class="cat-card-desc">{{ $typeCard['description'] }}</p>
 
-                                <div class="journey-body">
-                                    @if ($package['country'])
-                                        <div class="journey-country">{{ $package['country'] }}</div>
-                                    @endif
-
-                                    <h3 class="journey-title">
-                                        <a href="{{ $package['url'] }}">{{ $package['title'] }}</a>
-                                    </h3>
-
-                                    <div class="journey-meta">
-                                        <span><i class="la la-clock"></i>{{ $package['duration'] }}</span>
-                                        <span><i class="la la-users"></i>{{ $package['tour_type'] }}</span>
-                                    </div>
-
-                                    @if ($package['schedule'])
-                                        <div class="journey-schedule">
-                                            <i class="la la-calendar-alt"></i>
-                                            <span>{{ $package['schedule'] }}</span>
-                                        </div>
-                                    @endif
-
-                                    <p class="journey-description">{{ $package['description'] }}</p>
-
-                                    @if (!empty($package['highlights']))
-                                        <div class="journey-highlights">
-                                            @foreach ($package['highlights'] as $highlight)
-                                                <span>{{ $highlight }}</span>
-                                            @endforeach
-                                        </div>
-                                    @endif
-
-                                    <a href="{{ $package['url'] }}" class="journey-btn">
-                                        {{ $package['button_text'] }}
+                                <div class="mt-auto">
+                                    <a href="{{ $typeCard['url'] }}" class="cat-card-btn">
+                                        <span>{{ $typeCard['btn_text'] }}</span>
                                         <i class="la la-arrow-right"></i>
                                     </a>
                                 </div>
-                            </article>
+                            </div>
                         </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="journey-empty">
-                    <h3>{{ __('No trips found for this destination') }}</h3>
-                    <p>
-                        {{ __('Try adjusting your filters or contact our travel experts to create a tailor-made itinerary in :destination.', ['destination' => $destination->display_name]) }}
-                    </p>
-                    <div class="empty-actions">
-                        <a href="{{ $indexRoute }}" class="journey-btn" style="width:auto;">
-                            <i class="la la-refresh"></i>
-                            {{ __('Show All Trips') }}
-                        </a>
-                        <a href="{{ route('website.contact.index') }}" class="reset-btn">
-                            <i class="la la-phone"></i>
-                            {{ __('Contact Us') }}
-                        </a>
                     </div>
-                </div>
-            @endif
-
-            @if ($packages->hasPages())
-                <div class="pagination-wrap">
-                    {{ $packages->links() }}
-                </div>
-            @endif
+                @endforeach
+            </div>
         </div>
     </section>
 
@@ -1274,7 +1277,8 @@
                                 </div>
                                 <div class="attraction-body">
                                     <h3 class="attraction-title">
-                                        <a href="{{ $attraction['url'] }}" style="color: inherit; text-decoration: none;">
+                                        <a href="{{ $attraction['url'] }}"
+                                            style="color: inherit; text-decoration: none;">
                                             {{ $attraction['title'] }}
                                         </a>
                                     </h3>
@@ -1311,5 +1315,5 @@
         </section>
     @endif
 
- 
+
 @endsection

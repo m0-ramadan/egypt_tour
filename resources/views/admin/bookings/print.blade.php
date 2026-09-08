@@ -71,7 +71,7 @@
     <div class="box">
         <div class="row"><span class="label">الباقة:</span> {{ $booking->package->name ?? '-' }}</div>
         <div class="row"><span class="label">الحالة:</span> {{ $booking->status ?? '-' }}</div>
-        <div class="row"><span class="label">عدد الأفراد:</span> {{ $booking->travellers_count ?? '-' }}</div>
+        <div class="row"><span class="label">عدد الأفراد:</span> {{ $booking->travellers_count ?? '-' }} ({{ $booking->adults ?? 0 }} بالغين · {{ $booking->children ?? 0 }} أطفال · {{ $booking->infants ?? 0 }} رضع)</div>
         <div class="row"><span class="label">تاريخ السفر:</span>
             {{ optional($booking->travel_date)->translatedFormat('d M Y') ?? '-' }}</div>
     </div>
@@ -97,7 +97,14 @@
         <div class="box">
             <div class="row"><span class="label">المسافرون:</span></div>
             @foreach($booking->travelers as $traveler)
-                <div class="row">{{ $loop->iteration }}. {{ $traveler->title }} {{ $traveler->first_name }} {{ $traveler->last_name }} ({{ $traveler->traveler_type }})</div>
+                @php
+                    $typeLabel = match($traveler->traveler_type) {
+                        'infant' => 'رضيع',
+                        'child' => 'طفل',
+                        default => 'بالغ',
+                    };
+                @endphp
+                <div class="row">{{ $loop->iteration }}. {{ $traveler->title }} {{ $traveler->first_name }} {{ $traveler->last_name }} ({{ $typeLabel }})</div>
             @endforeach
         </div>
     @endif

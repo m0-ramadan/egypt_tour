@@ -1,8 +1,8 @@
 @extends('website.layouts.master')
 
-@section('title', ($pageContent['title'] ?? __('Egypt Nile Cruise')) . ' - Etro Tours')
+@section('title', ($pageContent['title'] ?? __('Egypt Nile Cruise')) . ' - Egypt Tour Pro')
 @section('description', $pageContent['description'] ?? $pageContent['overview_text'])
-@section('keywords', 'Egypt Nile Cruise, Nile cruises in Egypt, Luxor to Aswan cruise, luxury Nile cruise, Etro Tours Nile cruise')
+@section('keywords', 'Egypt Nile Cruise, Nile cruises in Egypt, Luxor to Aswan cruise, luxury Nile cruise, Egypt Tour Pro Nile cruise')
 @section('image', $heroImage)
 
 @section('css')
@@ -13,7 +13,7 @@
             display: flex;
             align-items: center;
             overflow: hidden;
-            background: #10213f;
+            background: #1c1c1c;
         }
 
         .hero-media,
@@ -31,15 +31,15 @@
         }
 
         .hero-overlay {
-            background: linear-gradient(rgba(16, 33, 63, 0.68), rgba(23, 58, 99, 0.58));
+            background: linear-gradient(rgba(28, 28, 28, 0.68), rgba(43, 43, 43, 0.58));
             z-index: 1;
         }
 
         .hero-pattern {
             background:
                 radial-gradient(circle at top left, rgba(255, 210, 125, 0.22), transparent 34%),
-                radial-gradient(circle at bottom right, rgba(103, 197, 255, 0.16), transparent 28%),
-                linear-gradient(135deg, rgba(8, 18, 36, 0.04), rgba(255, 255, 255, 0));
+                radial-gradient(circle at bottom right, rgba(255, 155, 74, 0.16), transparent 28%),
+                linear-gradient(135deg, rgba(17, 17, 17, 0.04), rgba(255, 255, 255, 0));
             opacity: 1;
             z-index: 2;
         }
@@ -68,7 +68,7 @@
         }
 
         .hero-badge i {
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
         }
 
         .hero-title {
@@ -116,7 +116,7 @@
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
             line-height: 1;
-            color: #ffd27d;
+            color: var(--etp-orange-400, #FB923C);
             margin-bottom: 8px;
         }
 
@@ -128,7 +128,7 @@
         .breadcrumb-top-bar {
             background: var(--pearl-luxury);
             padding: 15px 0;
-            border-bottom: 1px solid rgba(197, 149, 91, 0.16);
+            border-bottom: 1px solid rgba(243, 107, 10, 0.16);
         }
 
         .breadcrumb-list ul {
@@ -168,8 +168,8 @@
             padding: 32px;
             border-radius: 24px;
             background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-            border: 1px solid rgba(26, 54, 93, 0.08);
-            box-shadow: 0 18px 42px rgba(16, 33, 63, 0.08);
+            border: 1px solid rgba(43, 43, 43, 0.08);
+            box-shadow: 0 18px 42px rgba(28, 28, 28, 0.08);
             text-align: center;
         }
 
@@ -221,7 +221,7 @@
             width: 100%;
             min-height: 52px;
             padding: 12px 15px;
-            border: 2px solid rgba(197, 149, 91, 0.2);
+            border: 2px solid rgba(243, 107, 10, 0.2);
             border-radius: 14px;
             background: #fff;
             color: var(--primary-navy);
@@ -237,14 +237,14 @@
         .filter-select:focus,
         .filter-select:hover {
             border-color: var(--rich-gold);
-            box-shadow: 0 0 0 0.2rem rgba(197, 149, 91, 0.14);
+            box-shadow: 0 0 0 0.2rem rgba(243, 107, 10, 0.14);
             outline: none;
         }
 
         .filter-reset {
             min-height: 52px;
             border-radius: 14px;
-            border: 1px solid rgba(26, 54, 93, 0.12);
+            border: 1px solid rgba(43, 43, 43, 0.12);
             background: #fff;
             color: var(--primary-navy);
             font-weight: 700;
@@ -292,7 +292,7 @@
             border-radius: 24px;
             overflow: hidden;
             box-shadow: var(--shadow-medium);
-            border: 1px solid rgba(197, 149, 91, 0.12);
+            border: 1px solid rgba(243, 107, 10, 0.12);
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -310,7 +310,7 @@
             display: block;
             height: 245px;
             overflow: hidden;
-            background: #dce8f5;
+            background: #ffd0a8;
         }
 
         .tour-image img {
@@ -339,7 +339,7 @@
         .tour-badge {
             left: 18px;
             color: #fff;
-            background: rgba(16, 33, 63, 0.82);
+            background: rgba(28, 28, 28, 0.82);
         }
 
         .price-badge {
@@ -392,7 +392,7 @@
             gap: 6px;
             color: var(--warm-gray);
             font-size: 0.9rem;
-            background: rgba(197, 149, 91, 0.1);
+            background: rgba(243, 107, 10, 0.1);
             padding: 7px 12px;
             border-radius: 999px;
         }
@@ -416,7 +416,7 @@
         }
 
         .tour-tag {
-            background: rgba(197, 149, 91, 0.14);
+            background: rgba(243, 107, 10, 0.14);
             color: var(--primary-navy);
             padding: 6px 12px;
             border-radius: 999px;
@@ -447,7 +447,7 @@
             text-align: center;
             color: var(--primary-navy);
             box-shadow: var(--shadow-medium);
-            border: 1px solid rgba(197, 149, 91, 0.15);
+            border: 1px solid rgba(243, 107, 10, 0.15);
         }
 
         .empty-tours-box h3 {

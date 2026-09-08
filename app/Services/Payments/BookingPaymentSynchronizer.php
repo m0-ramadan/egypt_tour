@@ -46,11 +46,9 @@ class BookingPaymentSynchronizer
                     Payment::STATUS_PARTIALLY_REFUNDED,
                     Payment::STATUS_REFUNDED,
                 ], true)) {
-                    $grossMinor += Money::toMinor((string) $payment->amount, $factor);
                     $grossMinor += Money::toMinor((string) $paymentAmount, $factor);
                 }
 
-                $refundCacheMinor = Money::toMinor((string) ($payment->refunded_amount ?? 0), $factor);
                 $refundCache = (float) ($payment->refunded_amount ?? 0);
                 if ($paymentCurrency !== $bookingCurrency && $refundCache > 0) {
                     $refundCache = Currency::convert($refundCache, $paymentCurrency, $bookingCurrency);
@@ -59,7 +57,6 @@ class BookingPaymentSynchronizer
                 $refundRowsMinor = 0;
 
                 foreach ($payment->refunds as $refund) {
-                    $refundRowsMinor += Money::toMinor((string) $refund->amount, $factor);
                     $refundCurrency = strtoupper((string) ($refund->currency_code ?: $paymentCurrency));
                     $refundAmount = (float) $refund->amount;
                     if ($refundCurrency !== $bookingCurrency) {

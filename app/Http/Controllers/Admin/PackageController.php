@@ -56,18 +56,32 @@ class PackageController extends Controller
     {
         $packages = Package::query()
             ->with(['category', 'primaryCountry', 'currency', 'destination.city'])
-            ->when($request->filled('q'), function ($query) use ($request) {
+            ->when($request->filled('search'), function ($query) use ($request) {
                 $this->applyTranslatedSearch(
                     $query,
-                    ['title', 'subtitle', 'short_description', 'description'],
-                    $request->string('q')
+                    ['title'],
+                    $request->string('search')
                 );
+            })
+            ->when($request->filled('category_id'), function ($query) use ($request) {
+                $query->where('category_id', $request->integer('category_id'));
+            })
+            ->when($request->filled('status'), function ($query) use ($request) {
+                $query->where('is_active', $request->string('status') === 'active');
+            })
+            ->when($request->filled('package_type'), function ($query) use ($request) {
+                $query->where('package_type', $request->string('package_type'));
+            })
+            ->when($request->filled('is_featured'), function ($query) use ($request) {
+                $query->where('is_featured', (bool) $request->integer('is_featured'));
             })
             ->latest()
             ->paginate($this->perPage($request))
             ->withQueryString();
 
-        return view('admin.packages.index', compact('packages'));
+        $categories = PackageCategory::orderBy('name')->get();
+
+        return view('admin.packages.index', compact('packages', 'categories'));
     }
     protected function perPage(Request $request, int $default = 15): int
     {
@@ -110,10 +124,34 @@ class PackageController extends Controller
         return redirect()->route('admin.packages.index')->with('success', 'تم إنشاء الرحلة بنجاح.');
     }
 
+    private function packageMediaData(Package $package): array
+    {
+        $mediaUrl = static function ($image) {
+            $path = is_array($image) ? ($image['path'] ?? $image['url'] ?? '') : $image;
+            if (!is_string($path) || trim($path) === '') {
+                return null;
+            }
+            if (preg_match('~^https?://~i', $path)) {
+                return $path;
+            }
+            $path = ltrim($path, '/');
+            if (!file_exists(public_path($path)) && file_exists(public_path('storage/' . $path))) {
+                $path = 'storage/' . $path;
+            }
+            return asset($path);
+        };
+
+        return [
+            'savedFeaturedUrl' => $mediaUrl($package->featured_image),
+            'savedGalleryUrls' => collect($package->gallery_images ?? [])->map($mediaUrl)->filter()->values()->all(),
+        ];
+    }
+
     public function show(Package $package): View
     {
         $package->load([
             'category',
+            'primaryCountry',
             'destination.city',
             'currency',
             'facilities',
@@ -133,7 +171,8 @@ class PackageController extends Controller
             'nileCruiseAddons.currency',
             'addons.currency',
             'tourPackageDetail',
-            'tourPackageAccommodations.seasons.items.currency',
+            'tourPackageAccommodations.seasons.items',
+            'tourPackageAccommodations.seasons.currency',
             'tourPackageAccommodations.hotels',
             'tags',
             'nileCruiseDurations.currency',
@@ -144,7 +183,7 @@ class PackageController extends Controller
             'nileCruiseDurations.seasonPrices.items.cabin',
         ]);
 
-        return view('admin.packages.show', compact('package'));
+        return view('admin.packages.show', array_merge(compact('package'), $this->packageMediaData($package)));
     }
 
     public function edit(Package $package): View
@@ -165,14 +204,15 @@ class PackageController extends Controller
             'nileCruiseAddons.currency',
             'addons.currency',
             'tourPackageDetail',
-            'tourPackageAccommodations.seasons.items.currency',
+            'tourPackageAccommodations.seasons.items',
+            'tourPackageAccommodations.seasons.currency',
             'tourPackageAccommodations.hotels',
             'tags',
             'nileCruiseDurations.itineraryDays.activities.attraction',
             'nileCruiseDurations.seasonPrices.items.cabin',
         ]);
 
-        return view('admin.packages.edit', [
+        return view('admin.packages.edit', array_merge($this->packageMediaData($package), [
             'package' => $package,
             'categories' => PackageCategory::all(),
             'destinations' => $this->packageCities(),
@@ -182,7 +222,7 @@ class PackageController extends Controller
             ),
             'nileCruiseTypes' => \App\Models\NileCruiseType::where('is_active', true)->with('categories')->orderBy('sort_order')->get(),
             'paymentMethods' => PaymentMethod::active()->orderBy('id')->get(),
-        ]);
+        ]));
     }
 
     public function update(Request $request, Package $package): RedirectResponse
@@ -856,8 +896,10 @@ class PackageController extends Controller
                 $paxMin = $price['pax_min'] ?? null;
                 $paxMax = $price['pax_max'] ?? null;
 
-                if ($paxMin !== null && $paxMin !== '' && $paxMax !== null && $paxMax !== ''
-                    && (int) $paxMax < (int) $paxMin) {
+                if (
+                    $paxMin !== null && $paxMin !== '' && $paxMax !== null && $paxMax !== ''
+                    && (int) $paxMax < (int) $paxMin
+                ) {
                     $validator->errors()->add(
                         "prices.{$index}.pax_max",
                         'الحد الأقصى لعدد الأفراد يجب أن يساوي أو يزيد عن الحد الأدنى.'
@@ -901,7 +943,7 @@ class PackageController extends Controller
             : null;
 
         $data['package_type'] = $this->normalizePackageType($data['package_type'] ?? null);
-        if ($data['package_type'] === 'nile_cruise') {
+        if (in_array($data['package_type'], ['nile_cruise', 'travel_package'], true)) {
             $data['destination_id'] = null;
         }
 
@@ -1032,9 +1074,9 @@ class PackageController extends Controller
             $data['price_4_persons'] ?? null,
             $data['price_5_persons'] ?? null,
             $data['price_6_plus_persons'] ?? null,
-        ])->filter(fn ($price) => $price !== null && $price !== '');
+        ])->filter(fn($price) => $price !== null && $price !== '');
 
-        $paidPrices = $prices->filter(fn ($price) => (float) $price > 0);
+        $paidPrices = $prices->filter(fn($price) => (float) $price > 0);
 
         $priceFrom = (float) ($paidPrices->min() ?? 0);
         $priceTo = (float) ($prices->max() ?? 0);
@@ -1145,7 +1187,7 @@ class PackageController extends Controller
     private function syncPackageAttractions(Package $package, Request $request): void
     {
         $selectedIds = collect((array) $request->input('attraction_ids', []))
-            ->map(fn ($id) => (int) $id)
+            ->map(fn($id) => (int) $id)
             ->filter()
             ->unique()
             ->values();
@@ -1183,7 +1225,7 @@ class PackageController extends Controller
 
         if ($request && $package->package_type === 'travel_package' && $request->has('tour_city_ids')) {
             $cityIds = collect((array) $request->input('tour_city_ids', []))
-                ->map(fn ($id) => (int) $id)
+                ->map(fn($id) => (int) $id)
                 ->filter()
                 ->unique()
                 ->values();
@@ -1293,7 +1335,7 @@ class PackageController extends Controller
     private function normalizeTourPackageActivities(mixed $activities): array
     {
         return collect((array) $activities)
-            ->filter(fn ($row) => is_array($row))
+            ->filter(fn($row) => is_array($row))
             ->map(function (array $row) {
                 return [
                     'time' => trim((string) ($row['time'] ?? '')) ?: null,
@@ -1303,7 +1345,7 @@ class PackageController extends Controller
                     'description' => trim((string) ($row['description'] ?? '')) ?: null,
                 ];
             })
-            ->filter(fn (array $row) => collect($row)->filter(fn ($value) => $value !== null && $value !== '')->isNotEmpty())
+            ->filter(fn(array $row) => collect($row)->filter(fn($value) => $value !== null && $value !== '')->isNotEmpty())
             ->values()
             ->all();
     }

@@ -41,9 +41,19 @@ class InquiryController extends BaseWebsiteController
             ? Package::query()->with('currency')->find($validated['package_id'])
             : null;
 
+        $isCruiseEnquiry = $package?->package_type === 'nile_cruise';
+        if ($isCruiseEnquiry) {
+            $request->validate([
+                'nationality' => ['required', 'string', 'max:120'],
+                'travel_date' => ['required', 'date'],
+                'adults' => ['required', 'integer', 'min:1'],
+                'children' => ['required', 'integer', 'min:0'],
+            ]);
+        }
+
         $adults = (int) $request->input('adults', 1);
         $children = (int) $request->input('children', $request->input('child', 0));
-        $infants = (int) $request->input('infants', 0);
+        $infants = $isCruiseEnquiry ? 0 : (int) $request->input('infants', 0);
 
         $tierKey = match (true) {
             $adults <= 1 => '1_person',
@@ -57,7 +67,7 @@ class InquiryController extends BaseWebsiteController
         $calculatedTotal = 0;
         $tierSummaryText = null;
 
-        if ($package) {
+        if ($package && !$isCruiseEnquiry) {
             $groupTiers = collect($package->group_pricing_tiers)->keyBy('id');
             $tierData = $groupTiers->get($tierKey) ?: $groupTiers->first();
 

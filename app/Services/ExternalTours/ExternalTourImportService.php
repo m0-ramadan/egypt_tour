@@ -98,6 +98,9 @@ class ExternalTourImportService
 
         // 6. Resolve Taxonomy & Dependencies
         $resolvedTaxonomy = $this->resolveTaxonomy($data, $warnings);
+        $cruiseTaxonomy = app(ExternalNileCruiseTaxonomyResolver::class)->resolve($parsedData);
+        $resolvedTaxonomy['nile_cruise'] = $cruiseTaxonomy;
+        $resolvedTaxonomy['warnings'] = array_merge($resolvedTaxonomy['warnings'], $cruiseTaxonomy['warnings']);
         $warnings = $resolvedTaxonomy['warnings'];
 
         // 7. Atomic DB Transaction (All writes in single transaction)
@@ -147,8 +150,52 @@ class ExternalTourImportService
     }
 
     /**
-     * Validate URL against SSRF, allowed schemes, and allowed hosts.
+     * Refresh only itinerary programs for an existing import.
      */
+    public function repairCruiseItinerary(Package $package, string $url): bool
+    {
+        $this->validateUrl($url);
+        $data = $this->parser->parse($this->fetchHtml($url), $url);
+        if ($data['source_id'] !== $package->source_remote_id) {
+            throw new \RuntimeException('Source URL does not match the imported package.');
+        }
+
+        return DB::transaction(fn () => app(NileCruiseItineraryImporter::class)
+            ->sync($package, $data['itinerary']));
+    }
+
+    public function repairCruisePricingPeriods(Package $package, string $url): int
+    {
+        $this->validateUrl($url);
+        $data = $this->parser->parse($this->fetchHtml($url), $url);
+        if ($package->package_type !== 'nile_cruise' || $data['source_id'] !== $package->source_remote_id) {
+            throw new \RuntimeException('Source URL does not match the imported cruise.');
+        }
+
+        return DB::transaction(function () use ($package, $data) {
+            $updated = 0;
+            foreach ($package->tourPackageAccommodations as $accommodation) {
+                $sourceSeasons = collect($data['pricing']['accommodations'][$accommodation->name]['seasons'] ?? []);
+                foreach ($accommodation->seasons as $season) {
+                    $source = $sourceSeasons->firstWhere('sort_order', $season->sort_order);
+                    if (!$source || empty($source['period']) || ($season->name['en'] ?? '') !== $source['name']) {
+                        continue;
+                    }
+                    // Verify prices too: ordering alone cannot identify a changed source season.
+                    $storedPrices = $season->items->mapWithKeys(fn ($item) => [$item->occupancy_type => (float) $item->price])->sortKeys()->all();
+                    $sourcePrices = collect($source['items'])->mapWithKeys(fn ($item) => [$item['occupancy_type'] => (float) $item['price']])->sortKeys()->all();
+                    if ($storedPrices !== $sourcePrices) {
+                        continue;
+                    }
+                    $season->update(['period' => $source['period']]);
+                    $updated++;
+                }
+            }
+
+            return $updated;
+        });
+    }
+
     public function validateUrl(string $url): void
     {
         $parsed = parse_url($url);
@@ -596,6 +643,18 @@ class ExternalTourImportService
             'is_active' => true,
         ];
 
+        foreach (['nile_cruise_type_id', 'nile_cruise_category_id'] as $field) {
+            // Keep a manual assignment when the source does not provide a usable classification.
+            $packageAttributes[$field] = $taxonomy['nile_cruise'][$field] ?? $existingPackage?->{$field};
+        }
+        if ($data['package_type'] !== 'nile_cruise' ||
+            ($existingPackage?->nile_cruise_type_id && $existingPackage->nile_cruise_type_id !== $packageAttributes['nile_cruise_type_id'])) {
+            $packageAttributes['nile_cruise_category_id'] = $taxonomy['nile_cruise']['nile_cruise_category_id'] ?? null;
+        }
+        if ($data['package_type'] !== 'nile_cruise') {
+            $packageAttributes['nile_cruise_type_id'] = null;
+        }
+
         if ($existingPackage && $updateMode) {
             $existingPackage->update($packageAttributes);
             $package = $existingPackage->fresh();
@@ -648,8 +707,9 @@ class ExternalTourImportService
         }
 
         // 3. Create Daily Itineraries
+        $hasCruisePrograms = app(NileCruiseItineraryImporter::class)->sync($package, $data['itinerary'] ?? []);
         $seenDayNumbers = [];
-        foreach ($data['itinerary'] ?? [] as $index => $day) {
+        foreach ($hasCruisePrograms ? [] : ($data['itinerary'] ?? []) as $index => $day) {
             $dayNumber = (int) ($day['day_number'] ?? ($index + 1));
             if (in_array($dayNumber, $seenDayNumbers, true)) {
                 $dayNumber = count($seenDayNumbers) > 0 ? max($seenDayNumbers) + 1 : ($index + 1);
@@ -657,7 +717,6 @@ class ExternalTourImportService
             $seenDayNumbers[] = $dayNumber;
 
             $package->itineraries()->create([
-                'day_number' => $day['day_number'] ?? ($index + 1),
                 'day_number' => $dayNumber,
                 'title' => ['en' => $day['title'], 'ar' => ''],
                 'description' => ['en' => $day['description'], 'ar' => ''],
@@ -669,7 +728,6 @@ class ExternalTourImportService
                 'accommodation' => ['en' => $day['accommodation'] ?? '', 'ar' => ''],
                 'transport_notes' => ['en' => $day['transport_notes'] ?? '', 'ar' => ''],
                 'activities' => $day['activities'] ?? [],
-                'sort_order' => $day['day_number'] ?? ($index + 1),
                 'sort_order' => $dayNumber,
             ]);
         }
@@ -693,6 +751,7 @@ class ExternalTourImportService
                 $season = $accommodation->seasons()->create([
                     'package_id' => $package->id,
                     'name' => ['en' => $seasonData['name'], 'ar' => $seasonData['name']],
+                    'period' => $seasonData['period'] ?? null,
                     'currency_id' => $taxonomy['currency']?->id,
                     'is_active' => true,
                     'sort_order' => $seasonData['sort_order'] ?? 1,

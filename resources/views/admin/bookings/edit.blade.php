@@ -124,9 +124,21 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">عدد الأفراد</label>
-                            <input type="number" name="travellers_count" class="form-control"
-                                value="{{ old('travellers_count', $booking->travellers_count) }}">
+                            <label class="form-label">البالغين</label>
+                            <input type="number" min="1" name="adults" class="form-control"
+                                value="{{ old('adults', $booking->adults ?? 1) }}">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">الأطفال</label>
+                            <input type="number" min="0" name="children" class="form-control"
+                                value="{{ old('children', $booking->children ?? 0) }}">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">الرضع (Infants)</label>
+                            <input type="number" min="0" name="infants" class="form-control"
+                                value="{{ old('infants', $booking->infants ?? 0) }}">
                         </div>
 
                         <div class="col-md-4 mb-3">

@@ -1,0 +1,1211 @@
+/* ================================================================
+   EGYPT TOUR PRO — FINAL PUBLIC FRONTEND BRAND LAYER
+   Palette: Charcoal / Black + Egyptian Orange + Cream + White
+   Scope: public website only (body.website-theme-shell)
+   ================================================================ */
+
+:root {
+    --etp-black: #111111;
+    --etp-charcoal-950: #161616;
+    --etp-charcoal-900: #1c1c1c;
+    --etp-charcoal-850: #222222;
+    --etp-charcoal-800: #282828;
+    --etp-charcoal-700: #343434;
+    --etp-charcoal-600: #4a4743;
+    --etp-orange-700: #d95600;
+    --etp-orange-600: #eb6205;
+    --etp-orange-500: #f36b0a;
+    --etp-orange-400: #ff7a12;
+    --etp-orange-300: #ff9b4a;
+    --etp-cream: #fff7ed;
+    --etp-cream-2: #fff3e4;
+    --etp-ivory: #fffcf8;
+    --etp-white: #ffffff;
+    --etp-text: #222222;
+    --etp-text-secondary: #625e58;
+    --etp-text-muted: #827b73;
+    --etp-border: #ebe5de;
+    --etp-border-strong: #ded5ca;
+
+    /* Compatibility: retain existing token names, remove navy/blue output. */
+    --etp-navy-950: var(--etp-black) !important;
+    --etp-navy-900: var(--etp-charcoal-950) !important;
+    --etp-navy-850: var(--etp-charcoal-900) !important;
+    --etp-navy-800: var(--etp-charcoal-850) !important;
+    --etp-navy-700: var(--etp-charcoal-700) !important;
+    --brand-navy-950: var(--etp-black) !important;
+    --brand-navy-900: var(--etp-charcoal-950) !important;
+    --brand-navy-800: var(--etp-charcoal-900) !important;
+    --brand-navy-700: var(--etp-charcoal-850) !important;
+    --brand-navy-600: var(--etp-charcoal-700) !important;
+    --primary-navy: var(--etp-charcoal-900) !important;
+    --deep-teal: var(--etp-charcoal-700) !important;
+    --tour-navy: var(--etp-charcoal-900) !important;
+    --tour-dark: var(--etp-charcoal-950) !important;
+    --charcoal-deep: var(--etp-charcoal-900) !important;
+    --warm-gray: var(--etp-text-secondary) !important;
+    --cream-elegant: var(--etp-cream) !important;
+    --pearl-luxury: var(--etp-ivory) !important;
+    --light-sand: var(--etp-cream-2) !important;
+    --rich-gold: var(--etp-orange-500) !important;
+    --warm-bronze: var(--etp-orange-600) !important;
+    --tour-gold: var(--etp-orange-500) !important;
+    --accent-gold: var(--etp-orange-500) !important;
+    --hero-gold: var(--etp-orange-400) !important;
+    --badge-gold: var(--etp-orange-500) !important;
+    --brand-gold-500: var(--etp-orange-500) !important;
+    --brand-gold-400: var(--etp-orange-400) !important;
+    --brand-gold-gradient: linear-gradient(
+        135deg,
+        #f36b0a 0%,
+        #ff861c 100%
+    ) !important;
+    --gradient-gold: linear-gradient(
+        135deg,
+        #f36b0a 0%,
+        #ff861c 100%
+    ) !important;
+    --etp-navy-gradient: linear-gradient(
+        135deg,
+        #111111 0%,
+        #1c1c1c 52%,
+        #292929 100%
+    ) !important;
+    --etp-help-banner-gradient: linear-gradient(
+        135deg,
+        #111111 0%,
+        #2b2b2b 100%
+    ) !important;
+    --gradient-hero: linear-gradient(
+        135deg,
+        #111111 0%,
+        #1c1c1c 58%,
+        #2a2a2a 100%
+    ) !important;
+    --gradient-elegant: linear-gradient(
+        135deg,
+        #171717 0%,
+        #303030 100%
+    ) !important;
+    --bg-primary: var(--etp-white) !important;
+    --bg-secondary: var(--etp-ivory) !important;
+    --bg-tertiary: var(--etp-cream) !important;
+    --bg-surface: var(--etp-white) !important;
+    --bg-surface-elevated: var(--etp-white) !important;
+    --bg-navy-panel: var(--etp-charcoal-950) !important;
+    --text-primary: var(--etp-text) !important;
+    --text-secondary: var(--etp-text-secondary) !important;
+    --text-muted: var(--etp-text-muted) !important;
+    --text-inverse: var(--etp-white) !important;
+    --border-subtle: var(--etp-border) !important;
+    --border-medium: var(--etp-border-strong) !important;
+    --shadow-sm: 0 2px 8px rgba(17, 17, 17, 0.05) !important;
+    --shadow-md: 0 8px 24px rgba(17, 17, 17, 0.08) !important;
+    --shadow-card: 0 12px 34px rgba(17, 17, 17, 0.08) !important;
+    --shadow-card-hover: 0 18px 46px rgba(17, 17, 17, 0.14) !important;
+
+    /* Bootstrap compatibility */
+    --bs-primary: #f36b0a !important;
+    --bs-primary-rgb: 243, 107, 10 !important;
+    --bs-link-color: #d95600 !important;
+    --bs-link-hover-color: #b94700 !important;
+    --bs-body-color: #222222 !important;
+    --bs-body-bg: #ffffff !important;
+    --bs-border-color: #ebe5de !important;
+}
+
+html {
+    accent-color: #f36b0a;
+}
+
+body.website-theme-shell {
+    background: #ffffff !important;
+    color: #222222 !important;
+}
+
+body.website-theme-shell a {
+    text-decoration-color: rgba(243, 107, 10, 0.35);
+}
+
+body.website-theme-shell a:hover,
+body.website-theme-shell a:focus {
+    text-decoration-color: #f36b0a;
+}
+
+/* ----------------------------------------------------------------
+   NAVIGATION — charcoal shell, orange interaction, zero blue
+   ---------------------------------------------------------------- */
+body.website-theme-shell .navbar {
+    background: rgba(20, 20, 20, 0.97) !important;
+    border-bottom: 1px solid rgba(243, 107, 10, 0.24) !important;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18) !important;
+    backdrop-filter: blur(18px) saturate(120%);
+}
+
+body.website-theme-shell .navbar .logo-dark,
+body.website-theme-shell .modern-mobile-menu .logo-dark {
+    display: block !important;
+}
+
+body.website-theme-shell .navbar .logo-light,
+body.website-theme-shell .modern-mobile-menu .logo-light {
+    display: none !important;
+}
+
+body.website-theme-shell .navbar .nav-link,
+body.website-theme-shell .navbar .dropdown-toggle,
+body.website-theme-shell .navbar .action-btn,
+body.website-theme-shell .navbar .language-toggle,
+body.website-theme-shell .mobile-toggle {
+    color: #ffffff !important;
+}
+
+body.website-theme-shell .navbar .nav-link:hover,
+body.website-theme-shell .navbar .nav-link:focus,
+body.website-theme-shell .navbar .nav-link.is-active,
+body.website-theme-shell .navbar .special-offer,
+body.website-theme-shell .navbar .special-offer:hover,
+body.website-theme-shell .navbar .special-offer.is-active {
+    color: #ff8a33 !important;
+}
+
+body.website-theme-shell .navbar .nav-link.is-active::after,
+body.website-theme-shell .navbar .nav-link:hover::after {
+    background: #f36b0a !important;
+}
+
+body.website-theme-shell .navbar .action-btn,
+body.website-theme-shell .navbar .language-toggle,
+body.website-theme-shell .mobile-action-btn,
+body.website-theme-shell .mobile-toggle {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+body.website-theme-shell .navbar .action-btn:hover,
+body.website-theme-shell .navbar .language-toggle:hover,
+body.website-theme-shell .mobile-action-btn:hover,
+body.website-theme-shell .mobile-toggle:hover {
+    background: rgba(243, 107, 10, 0.16) !important;
+    border-color: rgba(243, 107, 10, 0.45) !important;
+    color: #ff9348 !important;
+}
+
+body.website-theme-shell .btn-tailor,
+body.website-theme-shell .mobile-enquiry-btn2 {
+    background: linear-gradient(135deg, #f36b0a 0%, #ff861c 100%) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+    box-shadow: 0 10px 26px rgba(243, 107, 10, 0.28) !important;
+}
+
+body.website-theme-shell .btn-tailor:hover,
+body.website-theme-shell .mobile-enquiry-btn2:hover {
+    background: #d95600 !important;
+    color: #ffffff !important;
+}
+
+body.website-theme-shell .dropdown-menu {
+    background: #ffffff !important;
+    color: #222222 !important;
+    border: 1px solid #ebe5de !important;
+    box-shadow: 0 18px 45px rgba(17, 17, 17, 0.16) !important;
+}
+
+body.website-theme-shell .dropdown-item {
+    color: #2b2b2b !important;
+}
+
+body.website-theme-shell .dropdown-item:hover,
+body.website-theme-shell .dropdown-item:focus,
+body.website-theme-shell .dropdown-item.active {
+    color: #d95600 !important;
+    background: #fff3e4 !important;
+}
+
+body.website-theme-shell .dropdown-item i {
+    color: #f36b0a !important;
+}
+
+body.website-theme-shell .modern-mobile-menu,
+body.website-theme-shell .mobile-menu-header {
+    background: #171717 !important;
+    border-color: rgba(243, 107, 10, 0.22) !important;
+}
+
+body.website-theme-shell .mobile-menu-content {
+    background: #1c1c1c !important;
+}
+
+body.website-theme-shell .mobile-nav-link,
+body.website-theme-shell .mobile-destinations-toggle,
+body.website-theme-shell .mobile-language-toggle,
+body.website-theme-shell .mobile-submenu-link,
+body.website-theme-shell .mobile-language-link,
+body.website-theme-shell .mobile-close-btn,
+body.website-theme-shell .mobile-action-card {
+    color: #ffffff !important;
+}
+
+body.website-theme-shell .mobile-nav-link:hover,
+body.website-theme-shell .mobile-nav-link.is-active,
+body.website-theme-shell .mobile-destinations-toggle:hover,
+body.website-theme-shell .mobile-destinations-toggle.is-active,
+body.website-theme-shell .mobile-language-toggle:hover,
+body.website-theme-shell .mobile-submenu-link:hover,
+body.website-theme-shell .mobile-language-link:hover,
+body.website-theme-shell .mobile-language-link.active {
+    background: rgba(243, 107, 10, 0.14) !important;
+    color: #ff9348 !important;
+}
+
+body.website-theme-shell .mobile-destinations-submenu,
+body.website-theme-shell .mobile-language-submenu {
+    background: #222222 !important;
+    border-color: rgba(243, 107, 10, 0.18) !important;
+}
+
+body.website-theme-shell .hamburger span {
+    background: #ffffff !important;
+}
+
+/* ----------------------------------------------------------------
+   HERO / BANNERS
+   ---------------------------------------------------------------- */
+body.website-theme-shell .hero-section,
+body.website-theme-shell .search-hero,
+body.website-theme-shell .page-hero,
+body.website-theme-shell .inner-hero,
+body.website-theme-shell .attraction-hero,
+body.website-theme-shell .listing-hero,
+body.website-theme-shell .offers-hero,
+body.website-theme-shell .cruise-hero {
+    color: #ffffff !important;
+}
+
+body.website-theme-shell .hero-media::after {
+    background: linear-gradient(
+        110deg,
+        rgba(17, 17, 17, 0.94) 0%,
+        rgba(28, 28, 28, 0.76) 48%,
+        rgba(28, 28, 28, 0.3) 100%
+    ) !important;
+}
+
+body.website-theme-shell .hero-section::before {
+    background:
+        radial-gradient(
+            circle at 20% 25%,
+            rgba(0, 0, 0, 0.28),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 75% 28%,
+            rgba(243, 107, 10, 0.1),
+            transparent 30%
+        ) !important;
+}
+
+body.website-theme-shell .hero-title,
+body.website-theme-shell .hero-subtitle,
+body.website-theme-shell .hero-stat,
+body.website-theme-shell .hero-stat span {
+    color: #ffffff !important;
+}
+
+body.website-theme-shell .hero-title-gold,
+body.website-theme-shell .hero-title-orange,
+body.website-theme-shell .hero-badge i,
+body.website-theme-shell .premium-tour-badge,
+body.website-theme-shell .mini-route i {
+    color: #ff8a33 !important;
+}
+
+body.website-theme-shell .hero-badge,
+body.website-theme-shell .premium-tour-badge {
+    background: rgba(243, 107, 10, 0.13) !important;
+    border-color: rgba(255, 147, 72, 0.35) !important;
+}
+
+body.website-theme-shell.home-reference-page .premium-tour-badge {
+    color: #ff861c !important;
+    background: rgba(17, 17, 17, 0.92) !important;
+    border-color: rgba(243, 107, 10, 0.3) !important;
+}
+
+body.website-theme-shell .hero-floating-card-inner,
+body.website-theme-shell .floating-info {
+    border-color: rgba(243, 107, 10, 0.22) !important;
+}
+
+/* ----------------------------------------------------------------
+   CORE LIGHT SURFACES
+   ---------------------------------------------------------------- */
+body.website-theme-shell .light-section,
+body.website-theme-shell .results-section,
+body.website-theme-shell .offers-section,
+body.website-theme-shell .listing-results,
+body.website-theme-shell .overview-section,
+body.website-theme-shell .tours-section,
+body.website-theme-shell .card-area,
+body.website-theme-shell .why-choose-section,
+body.website-theme-shell .content-area,
+body.website-theme-shell .main-container {
+    background: #ffffff !important;
+}
+
+body.website-theme-shell .cream-section,
+body.website-theme-shell .offers-summary,
+body.website-theme-shell .filters-section,
+body.website-theme-shell .breadcrumb-top-bar,
+body.website-theme-shell .offers-breadcrumb,
+body.website-theme-shell .trust-section {
+    background: linear-gradient(180deg, #fff7ed 0%, #fffcf8 100%) !important;
+}
+
+body.website-theme-shell
+    :where(
+        .section-title,
+        .section-header,
+        .card-title,
+        .tour-title,
+        .journey-title,
+        .offer-title,
+        .deal-title,
+        .feature-title,
+        .overview-card h2,
+        .results-head h3,
+        .form-title,
+        .sidebar-title,
+        .contact-title,
+        .choose-title,
+        .related-card-title,
+        .award-title,
+        .article-title,
+        .destination-title,
+        .cruise-title,
+        .package-title,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6
+    ) {
+    color: #222222;
+}
+
+body.website-theme-shell
+    :where(
+        .section-subtitle,
+        .tour-description,
+        .journey-description,
+        .offer-description,
+        .card-description,
+        .overview-card p,
+        .results-head p,
+        .contact-info p,
+        .deal-meta,
+        .deal-description,
+        .feature-description,
+        .detail-value,
+        .award-subtitle,
+        .breadcrumb-list li,
+        .feature-item
+    ) {
+    color: #625e58;
+}
+
+body.website-theme-shell
+    :where(
+        .overview-card,
+        .filters-card,
+        .offers-summary-card,
+        .offer-card,
+        .journey-card,
+        .result-card,
+        .tour-card,
+        .trust-item,
+        .tripadvisor-award,
+        .feature-card,
+        .deal-card,
+        .destination-card,
+        .article-card,
+        .testimonial-card,
+        .newsletter-box,
+        .modern-blog-card,
+        .luxury-sidebar,
+        .cruise-card,
+        .sidebar,
+        .related-card,
+        .content-section,
+        .day-card,
+        .review-card,
+        .choose-card,
+        .main-form,
+        .sidebar-card,
+        .contact-card,
+        .form-container,
+        .search-form-container,
+        .offer-price-panel,
+        .empty-state,
+        .no-results,
+        .offers-empty,
+        .journey-empty,
+        .empty-tours-box
+    ) {
+    background: #ffffff !important;
+    border-color: #ebe5de !important;
+    box-shadow: 0 12px 34px rgba(17, 17, 17, 0.08) !important;
+}
+
+body.website-theme-shell
+    :where(
+        .overview-card,
+        .offer-card,
+        .journey-card,
+        .result-card,
+        .tour-card,
+        .feature-card,
+        .deal-card,
+        .destination-card,
+        .article-card,
+        .testimonial-card,
+        .modern-blog-card,
+        .cruise-card,
+        .choose-card
+    ):hover {
+    border-color: rgba(243, 107, 10, 0.34) !important;
+    box-shadow: 0 20px 48px rgba(17, 17, 17, 0.13) !important;
+}
+
+/* ----------------------------------------------------------------
+   BUTTONS / LINKS / BADGES / PAGINATION
+   ---------------------------------------------------------------- */
+body.website-theme-shell
+    :where(
+        .gold-btn,
+        .btn-gold,
+        .btn-primary,
+        .btn-primary-orange,
+        .btn-pro-orange,
+        .primary-btn,
+        .search-btn,
+        .submit-btn,
+        .book-btn,
+        .book-now-btn,
+        .luxury-cta-btn,
+        .cta-button,
+        .view-more-btn
+    ) {
+    background: linear-gradient(135deg, #f36b0a 0%, #ff861c 100%) !important;
+    border-color: #f36b0a !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 26px rgba(243, 107, 10, 0.25) !important;
+}
+
+body.website-theme-shell
+    :where(
+        .gold-btn,
+        .btn-gold,
+        .btn-primary,
+        .btn-primary-orange,
+        .btn-pro-orange,
+        .primary-btn,
+        .search-btn,
+        .submit-btn,
+        .book-btn,
+        .book-now-btn,
+        .luxury-cta-btn,
+        .cta-button,
+        .view-more-btn
+    ):hover {
+    background: #d95600 !important;
+    border-color: #d95600 !important;
+    color: #ffffff !important;
+}
+
+body.website-theme-shell :where(.text-primary, .link-primary) {
+    color: #d95600 !important;
+}
+
+body.website-theme-shell :where(.bg-primary) {
+    background-color: #f36b0a !important;
+}
+
+body.website-theme-shell :where(.border-primary) {
+    border-color: #f36b0a !important;
+}
+
+body.website-theme-shell .page-link {
+    color: #2b2b2b !important;
+    border-color: #ebe5de !important;
+    background: #ffffff !important;
+}
+
+body.website-theme-shell .page-link:hover {
+    color: #d95600 !important;
+    background: #fff3e4 !important;
+    border-color: rgba(243, 107, 10, 0.34) !important;
+}
+
+body.website-theme-shell .page-item.active .page-link {
+    background: #f36b0a !important;
+    border-color: #f36b0a !important;
+    color: #ffffff !important;
+}
+
+body.website-theme-shell
+    :where(
+        .section-kicker,
+        .feature-tag,
+        .result-type,
+        .badge,
+        .tour-badge,
+        .offer-badge,
+        .category-badge,
+        .status-badge
+    ) {
+    border-color: rgba(243, 107, 10, 0.25) !important;
+}
+
+body.website-theme-shell :where(.section-kicker, .feature-tag, .result-type) {
+    background: rgba(243, 107, 10, 0.1) !important;
+    color: #d95600 !important;
+}
+
+body.website-theme-shell
+    :where(.section-kicker i, .feature-tag i, .result-type i) {
+    color: #f36b0a !important;
+}
+
+/* ----------------------------------------------------------------
+   FORMS / SEARCH / COUNTRY PICKER
+   ---------------------------------------------------------------- */
+body.website-theme-shell
+    :where(input, textarea, select, .form-control, .form-select) {
+    background-color: #ffffff !important;
+    color: #222222 !important;
+    border-color: #ded5ca !important;
+}
+
+body.website-theme-shell
+    :where(input, textarea, select, .form-control, .form-select):focus {
+    border-color: #f36b0a !important;
+    box-shadow: 0 0 0 0.2rem rgba(243, 107, 10, 0.15) !important;
+    outline-color: #f36b0a !important;
+}
+
+body.website-theme-shell :where(input, textarea)::placeholder {
+    color: #8a837b !important;
+}
+
+body.website-theme-shell .iti__selected-dial-code,
+body.website-theme-shell .iti__country-name,
+body.website-theme-shell .iti__dial-code,
+body.website-theme-shell .iti__search-input {
+    color: #2b2b2b !important;
+}
+
+body.website-theme-shell .iti__dropdown-content,
+body.website-theme-shell .iti__search-input,
+body.website-theme-shell .iti__country-list {
+    background: #ffffff !important;
+    border-color: #ded5ca !important;
+}
+
+body.website-theme-shell .iti__country:hover,
+body.website-theme-shell .iti__country.iti__highlight {
+    background: #fff3e4 !important;
+}
+
+/* ----------------------------------------------------------------
+   ICONS / DECORATIVE UI
+   ---------------------------------------------------------------- */
+body.website-theme-shell
+    :where(
+        .trust-icon,
+        .choose-icon,
+        .feature-icon,
+        .contact-icon,
+        .cta-icon-container,
+        .card-icon
+    ) {
+    background: linear-gradient(135deg, #f36b0a 0%, #ff861c 100%) !important;
+    color: #ffffff !important;
+    border-color: rgba(243, 107, 10, 0.3) !important;
+}
+
+body.website-theme-shell
+    :where(
+        .section-heading i,
+        .price i,
+        .meta i,
+        .tour-meta i,
+        .journey-meta i,
+        .offer-meta i,
+        .detail-label i,
+        .contact-info i
+    ) {
+    color: #f36b0a !important;
+}
+
+body.website-theme-shell hr,
+body.website-theme-shell .divider,
+body.website-theme-shell .card-divider {
+    border-color: #ebe5de !important;
+}
+
+/* ----------------------------------------------------------------
+   CTA SECTION (Light & Dark Mode)
+   ---------------------------------------------------------------- */
+/* Common section background as originally designed */
+body.website-theme-shell .luxury-cta-section {
+    background: linear-gradient(135deg, #171717 0%, #292929 100%) !important;
+}
+
+/* Light Mode - White floating card with crisp dark text */
+body.website-theme-shell .luxury-cta-content {
+    background: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.25) !important;
+}
+
+body.website-theme-shell .luxury-cta-section .cta-title {
+    color: #1a1a1a !important;
+    font-family: "Playfair Display", serif !important;
+    font-weight: 700 !important;
+}
+
+body.website-theme-shell .luxury-cta-section .cta-subtitle {
+    color: #4a5568 !important;
+}
+
+body.website-theme-shell
+    .luxury-cta-section
+    :where(.trust-feature, .trust-feature span) {
+    color: #2d3748 !important;
+    font-weight: 600 !important;
+}
+
+body.website-theme-shell .luxury-cta-section .trust-feature i {
+    color: #f36b0a !important;
+}
+
+body.website-theme-shell .luxury-cta-section .cta-icon-container {
+    background: #282828 !important;
+    border: 2px solid rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.website-theme-shell .luxury-cta-section .cta-icon-container i {
+    color: #ffffff !important;
+}
+
+body.website-theme-shell .luxury-cta-section .luxury-cta-btn {
+    background: linear-gradient(135deg, #f36b0a 0%, #ff861c 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 24px rgba(243, 107, 10, 0.3) !important;
+}
+
+/* Dark Mode - Exactly as it was originally in the user's reference image */
+html[data-theme="dark"] body.website-theme-shell .luxury-cta-section {
+    background: linear-gradient(135deg, #171717 0%, #292929 100%) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .luxury-cta-content {
+    background: #181818 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-theme="dark"]
+    body.website-theme-shell
+    .luxury-cta-section
+    .cta-title {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"]
+    body.website-theme-shell
+    .luxury-cta-section
+    .cta-subtitle {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+html[data-theme="dark"]
+    body.website-theme-shell
+    .luxury-cta-section
+    :where(.trust-feature, .trust-feature span) {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"]
+    body.website-theme-shell
+    .luxury-cta-section
+    .trust-feature
+    i {
+    color: #f36b0a !important;
+}
+
+html[data-theme="dark"]
+    body.website-theme-shell
+    .luxury-cta-section
+    .cta-icon-container {
+    background: #282828 !important;
+    border: 2px solid rgba(255, 255, 255, 0.18) !important;
+}
+
+html[data-theme="dark"]
+    body.website-theme-shell
+    .luxury-cta-section
+    .cta-icon-container
+    i {
+    color: #ffffff !important;
+}
+
+/* ----------------------------------------------------------------
+   TRIP PLANNING / QUOTE SECTION
+   ---------------------------------------------------------------- */
+/* Light Mode (Default) - Warm website cream background, NOT white */
+body.website-theme-shell .quote-section {
+    position: relative !important;
+    padding: 100px 0 !important;
+    color: #1c1c1c !important;
+    overflow: hidden !important;
+    background:
+        radial-gradient(
+            circle at 10% 15%,
+            rgba(243, 107, 10, 0.08),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 85%,
+            rgba(243, 107, 10, 0.05),
+            transparent 30%
+        ),
+        linear-gradient(180deg, #fff7ed 0%, #fffcf8 100%) !important;
+}
+
+body.website-theme-shell .quote-section::before {
+    background: radial-gradient(
+        circle,
+        rgba(243, 107, 10, 0.08) 0%,
+        transparent 70%
+    ) !important;
+    filter: blur(8px) !important;
+}
+
+body.website-theme-shell .quote-section::after {
+    background: radial-gradient(
+        circle,
+        rgba(243, 107, 10, 0.05) 0%,
+        transparent 70%
+    ) !important;
+    filter: blur(8px) !important;
+}
+
+body.website-theme-shell .quote-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(243, 107, 10, 0.18) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow:
+        0 25px 50px -12px rgba(17, 17, 17, 0.08),
+        0 0 1px rgba(17, 17, 17, 0.06) !important;
+}
+
+body.website-theme-shell .quote-title,
+body.website-theme-shell :where(.quote-title) {
+    color: #111111 !important;
+    font-family: "Playfair Display", serif !important;
+    font-weight: 800 !important;
+    text-shadow: none !important;
+}
+
+body.website-theme-shell .quote-card > p {
+    color: #5b5854 !important;
+}
+
+body.website-theme-shell .quote-feature {
+    background: #ffffff !important;
+    border: 1px solid #ebdcd0 !important;
+}
+
+body.website-theme-shell .quote-feature:hover {
+    background: #ffffff !important;
+    border-color: rgba(243, 107, 10, 0.45) !important;
+    box-shadow: 0 10px 25px -5px rgba(243, 107, 10, 0.15) !important;
+}
+
+body.website-theme-shell .quote-feature span {
+    color: #111111 !important;
+    font-weight: 700 !important;
+}
+
+body.website-theme-shell .quote-feature i {
+    background: rgba(243, 107, 10, 0.1) !important;
+    border: 1px solid rgba(243, 107, 10, 0.25) !important;
+    color: #f36b0a !important;
+    box-shadow: 0 4px 12px rgba(243, 107, 10, 0.1) !important;
+}
+
+body.website-theme-shell .quote-card .gold-btn {
+    background: linear-gradient(135deg, #f36b0a 0%, #ff8a3d 100%) !important;
+    color: #ffffff !important;
+    border: 0 !important;
+    box-shadow: 0 10px 28px rgba(243, 107, 10, 0.38) !important;
+}
+
+/* Dark Mode - Neutral charcoal matching the rest of the website, ZERO blue tint */
+html[data-theme="dark"] body.website-theme-shell .quote-section {
+    color: #efe9e2 !important;
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(243, 107, 10, 0.12) 0%,
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 15% 80%,
+            rgba(243, 107, 10, 0.08) 0%,
+            transparent 40%
+        ),
+        linear-gradient(135deg, #111111 0%, #1c1c1c 50%, #111111 100%) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .quote-section::before {
+    background: radial-gradient(
+        circle,
+        rgba(243, 107, 10, 0.15) 0%,
+        transparent 70%
+    ) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .quote-section::after {
+    background: radial-gradient(
+        circle,
+        rgba(243, 107, 10, 0.1) 0%,
+        transparent 70%
+    ) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .quote-card {
+    background: #181818 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .quote-title,
+html[data-theme="dark"] body.website-theme-shell :where(.quote-title) {
+    color: #ffffff !important;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .quote-card > p {
+    color: #d6d0c8 !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .quote-feature {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .quote-feature:hover {
+    background: rgba(243, 107, 10, 0.14) !important;
+    border-color: rgba(243, 107, 10, 0.45) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .quote-feature span {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .quote-feature i {
+    background: rgba(243, 107, 10, 0.18) !important;
+    color: #f36b0a !important;
+    border: 1px solid rgba(243, 107, 10, 0.3) !important;
+}
+
+body.website-theme-shell .footer {
+    background: #111111 !important;
+    color: rgba(255, 255, 255, 0.82) !important;
+    border-top: 1px solid rgba(243, 107, 10, 0.25) !important;
+}
+
+body.website-theme-shell .footer :where(p, li, span) {
+    color: rgba(255, 255, 255, 0.76) !important;
+}
+
+body.website-theme-shell .footer a {
+    color: rgba(255, 255, 255, 0.84) !important;
+}
+
+body.website-theme-shell .footer a:hover,
+body.website-theme-shell .footer a:focus,
+body.website-theme-shell .footer .footer-heading,
+body.website-theme-shell .footer .award-trophy,
+body.website-theme-shell .footer .award-badge,
+body.website-theme-shell .footer .stat-item i {
+    color: #ff8a33 !important;
+}
+
+body.website-theme-shell .footer .tripadvisor-award {
+    background: #1c1c1c !important;
+    border-color: rgba(243, 107, 10, 0.25) !important;
+}
+
+body.website-theme-shell .footer .award-image {
+    background: #ffffff !important;
+    border-color: rgba(243, 107, 10, 0.2) !important;
+}
+
+/* WhatsApp / fixed communication UI strictly on the LEFT, Chat on the RIGHT */
+body.website-theme-shell .whatsapp-fixed,
+body.website-theme-shell .floating-whatsapp {
+    position: fixed !important;
+    left: 24px !important;
+    right: auto !important;
+    bottom: 24px !important;
+    z-index: 99999 !important;
+    background: #f36b0a !important;
+    border-color: #f36b0a !important;
+    color: #ffffff !important;
+}
+
+html[dir="rtl"] body.website-theme-shell .whatsapp-fixed,
+html[dir="rtl"] body.website-theme-shell .floating-whatsapp {
+    left: 24px !important;
+    right: auto !important;
+}
+
+body.website-theme-shell .communication-btn,
+body.website-theme-shell .whatsapp,
+body.website-theme-shell .viber {
+    background: #f36b0a !important;
+    border-color: #f36b0a !important;
+    color: #ffffff !important;
+}
+
+body.website-theme-shell .whatsapp-fixed:hover,
+body.website-theme-shell .floating-whatsapp:hover,
+body.website-theme-shell .communication-btn:hover,
+body.website-theme-shell .whatsapp:hover,
+body.website-theme-shell .viber:hover {
+    background: #d95600 !important;
+    border-color: #d95600 !important;
+    color: #ffffff !important;
+}
+
+/* ----------------------------------------------------------------
+   DARK MODE — black / charcoal + orange only
+   ---------------------------------------------------------------- */
+html[data-theme="dark"] {
+    color-scheme: dark;
+    --dark-bg: #111111 !important;
+    --dark-surface: #1c1c1c !important;
+    --dark-surface-2: #262626 !important;
+    --dark-surface-soft: #242424 !important;
+    --dark-surface-muted: #171717 !important;
+    --dark-border: rgba(255, 255, 255, 0.11) !important;
+    --cream-elegant: #111111 !important;
+    --pearl-luxury: #1c1c1c !important;
+    --light-sand: #242424 !important;
+    --charcoal-deep: #ffffff !important;
+    --warm-gray: #d1cbc4 !important;
+    --primary-navy: #ffffff !important;
+    --deep-teal: #ff8a33 !important;
+    --bg-primary: #111111 !important;
+    --bg-secondary: #171717 !important;
+    --bg-tertiary: #242424 !important;
+    --bg-surface: #1c1c1c !important;
+    --bg-surface-elevated: #262626 !important;
+    --bg-navy-panel: #111111 !important;
+    --text-primary: #ffffff !important;
+    --text-secondary: #d1cbc4 !important;
+    --text-muted: #aaa39b !important;
+    --text-inverse: #111111 !important;
+    --bs-body-color: #f8f8f8 !important;
+    --bs-body-bg: #111111 !important;
+    --bs-border-color: rgba(255, 255, 255, 0.11) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell,
+html[data-theme="dark"]
+    body.website-theme-shell
+    :where(
+        .light-section,
+        .results-section,
+        .offers-section,
+        .listing-results,
+        .overview-section,
+        .tours-section,
+        .card-area,
+        .content-area,
+        .main-container,
+        .cream-section,
+        .offers-summary,
+        .filters-section,
+        .breadcrumb-top-bar,
+        .offers-breadcrumb,
+        .trust-section,
+        .why-choose-section
+    ) {
+    background: #111111 !important;
+    color: #f8f8f8 !important;
+}
+
+html[data-theme="dark"]
+    body.website-theme-shell
+    :where(
+        .overview-card,
+        .filters-card,
+        .offers-summary-card,
+        .offer-card,
+        .journey-card,
+        .result-card,
+        .tour-card,
+        .trust-item,
+        .tripadvisor-award,
+        .feature-card,
+        .deal-card,
+        .destination-card,
+        .article-card,
+        .testimonial-card,
+        .newsletter-box,
+        .modern-blog-card,
+        .luxury-sidebar,
+        .cruise-card,
+        .sidebar,
+        .related-card,
+        .content-section,
+        .day-card,
+        .review-card,
+        .choose-card,
+        .main-form,
+        .sidebar-card,
+        .contact-card,
+        .form-container,
+        .search-form-container,
+        .offer-price-panel,
+        .empty-state,
+        .no-results,
+        .offers-empty,
+        .journey-empty,
+        .empty-tours-box,
+        .dropdown-menu,
+        .modal-content
+    ) {
+    background: #1c1c1c !important;
+    color: #f8f8f8 !important;
+    border-color: rgba(255, 255, 255, 0.11) !important;
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.36) !important;
+}
+
+html[data-theme="dark"]
+    body.website-theme-shell
+    :where(
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .section-title,
+        .section-header,
+        .card-title,
+        .tour-title,
+        .journey-title,
+        .offer-title,
+        .deal-title,
+        .feature-title,
+        .overview-card h2,
+        .results-head h3,
+        .form-title,
+        .sidebar-title,
+        .contact-title,
+        .choose-title,
+        .related-card-title,
+        .award-title,
+        .article-title,
+        .destination-title,
+        .cruise-title,
+        .package-title,
+        .dropdown-item
+    ) {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"]
+    body.website-theme-shell
+    :where(
+        p,
+        li,
+        .section-subtitle,
+        .tour-description,
+        .journey-description,
+        .offer-description,
+        .card-description,
+        .overview-card p,
+        .results-head p,
+        .contact-info p,
+        .deal-meta,
+        .deal-description,
+        .feature-description,
+        .detail-value,
+        .award-subtitle,
+        .breadcrumb-list li,
+        .feature-item
+    ) {
+    color: #d1cbc4;
+}
+
+html[data-theme="dark"]
+    body.website-theme-shell
+    :where(input, textarea, select, .form-control, .form-select) {
+    background: #171717 !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .dropdown-item:hover,
+html[data-theme="dark"] body.website-theme-shell .dropdown-item.active {
+    color: #ff9348 !important;
+    background: rgba(243, 107, 10, 0.13) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .iti__dropdown-content,
+html[data-theme="dark"] body.website-theme-shell .iti__search-input,
+html[data-theme="dark"] body.website-theme-shell .iti__country-list {
+    background: #1c1c1c !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .iti__selected-dial-code,
+html[data-theme="dark"] body.website-theme-shell .iti__country-name,
+html[data-theme="dark"] body.website-theme-shell .iti__dial-code,
+html[data-theme="dark"] body.website-theme-shell .iti__search-input {
+    color: #ffffff !important;
+}
+
+/* ----------------------------------------------------------------
+   Accessibility / native controls
+   ---------------------------------------------------------------- */
+body.website-theme-shell
+    :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 3px solid #f36b0a !important;
+    outline-offset: 3px;
+}
+
+body.website-theme-shell ::selection {
+    background: #f36b0a;
+    color: #ffffff;
+}
+
+body.website-theme-shell input[type="checkbox"],
+body.website-theme-shell input[type="radio"],
+body.website-theme-shell input[type="range"] {
+    accent-color: #f36b0a !important;
+}

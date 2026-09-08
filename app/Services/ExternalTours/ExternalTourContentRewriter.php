@@ -89,6 +89,8 @@ class ExternalTourContentRewriter
             'highlights' => array_map(fn($h) => is_array($h) ? ($h['title'] ?? '') : $h, $data['highlights'] ?? []),
             'itinerary' => array_map(function ($day) {
                 return [
+                    'program_id' => $day['program']['id'] ?? null,
+                    'program_title' => $day['program']['title'] ?? null,
                     'day_number' => $day['day_number'] ?? 1,
                     'title' => $day['title'] ?? '',
                     'description' => $day['description'] ?? '',
@@ -108,7 +110,7 @@ class ExternalTourContentRewriter
             . "  \"short_description\": \"Compelling 2-3 sentence overview\",\n"
             . "  \"description\": \"Full polished multi-paragraph tour description\",\n"
             . "  \"highlights\": [{\"title\": \"...\", \"description\": \"...\"}],\n"
-            . "  \"itinerary\": [{\"day_number\": 1, \"title\": \"...\", \"description\": \"...\"}],\n"
+            . "  \"itinerary\": [{\"program_id\": null, \"day_number\": 1, \"title\": \"...\", \"description\": \"...\"}],\n"
             . "  \"faq\": [{\"question\": \"...\", \"answer\": \"...\"}],\n"
             . "  \"seo_title\": \"SEO title under 65 chars without source brand\",\n"
             . "  \"seo_description\": \"SEO meta description under 155-160 chars\",\n"
@@ -137,7 +139,7 @@ Rules:
 - Preserve included services.
 - Preserve excluded services.
 - Preserve transportation facts.
-- Preserve itinerary day order.
+- Preserve itinerary day order and program_id exactly. Each program is a separate alternative, with its own day numbering.
 
 Do NOT invent:
 - attractions
@@ -213,12 +215,13 @@ PROMPT;
             $rewrittenMap = [];
             foreach ($rewritten['itinerary'] as $item) {
                 if (isset($item['day_number'])) {
-                    $rewrittenMap[(int) $item['day_number']] = $item;
+                    $key = ($item['program_id'] ?? '') . ':' . (int) $item['day_number'];
+                    $rewrittenMap[$key] = $item;
                 }
             }
 
             foreach ($merged['itinerary'] as $idx => $day) {
-                $dayNum = (int) ($day['day_number'] ?? ($idx + 1));
+                $dayNum = ($day['program']['id'] ?? '') . ':' . (int) ($day['day_number'] ?? ($idx + 1));
                 if (isset($rewrittenMap[$dayNum])) {
                     if (!empty($rewrittenMap[$dayNum]['title'])) {
                         $merged['itinerary'][$idx]['title'] = trim($rewrittenMap[$dayNum]['title']);

@@ -15,6 +15,7 @@ class TourPackageSeason extends Model
         'package_id',
         'accommodation_id',
         'name',
+        'period',
         'date_from',
         'date_to',
         'currency_id',

@@ -51,8 +51,8 @@
 
         @if($ncWhatToBring->isNotEmpty())
             <div class="mt-4 pt-3">
-                <h4 class="box-title fw-bold mb-3" style="color: var(--primary-navy, #1c325c); font-family: 'Playfair Display', serif;">
-                    <i class="la la-suitcase me-2" style="color: var(--rich-gold, #c5955b);"></i>{{ __('What to Bring') }}
+                <h4 class="box-title fw-bold mb-3" style="color: var(--primary-navy, #2b2b2b); font-family: 'Playfair Display', serif;">
+                    <i class="la la-suitcase me-2" style="color: var(--rich-gold, #F36B0A);"></i>{{ __('What to Bring') }}
                 </h4>
                 <div class="styled-list">
                     <ul>

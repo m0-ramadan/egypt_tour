@@ -31,7 +31,7 @@ class PayPalService
         $payment = Payment::create([
             'booking_id' => $booking->id,
             'payment_method_id' => $method->id,
-            'transaction_reference' => 'PAYPAL-'.strtoupper((string) Str::uuid()),
+            'transaction_reference' => 'PAYPAL-' . strtoupper((string) Str::uuid()),
             'amount' => Money::fromMinor($remaining, $factor),
             'currency_code' => strtoupper((string) $booking->currency_code),
             'status' => Payment::STATUS_PENDING,
@@ -47,7 +47,7 @@ class PayPalService
                     'purchase_units' => [[
                         'reference_id' => $payment->transaction_reference,
                         'custom_id' => $payment->transaction_reference,
-                        'description' => 'Travel booking '.$booking->booking_number,
+                        'description' => 'Travel booking ' . $booking->booking_number,
                         'amount' => [
                             'currency_code' => $payment->currency_code,
                             'value' => number_format((float) $payment->amount, 2, '.', ''),
@@ -56,7 +56,7 @@ class PayPalService
                     'payment_source' => [
                         'paypal' => [
                             'experience_context' => [
-                                'brand_name' => config('app.name', 'Etro Tours'),
+                                'brand_name' => config('app.name', 'Egypt Tour Pro'),
                                 'shipping_preference' => 'NO_SHIPPING',
                                 'user_action' => 'PAY_NOW',
                                 'return_url' => route('website.checkout.paypal.capture', [
@@ -110,7 +110,7 @@ class PayPalService
         }
 
         $response = $this->request($this->accessToken())
-            ->post('/v2/checkout/orders/'.rawurlencode($orderId).'/capture');
+            ->post('/v2/checkout/orders/' . rawurlencode($orderId) . '/capture');
         $response->throw();
         $payload = (array) $response->json();
         $capture = data_get($payload, 'purchase_units.0.payments.captures.0', []);
@@ -120,7 +120,8 @@ class PayPalService
         if (($payload['status'] ?? null) !== 'COMPLETED'
             || ($capture['status'] ?? null) !== 'COMPLETED'
             || $receivedCurrency !== strtoupper((string) $payment->currency_code)
-            || Money::toMinor($receivedAmount, 100) !== Money::toMinor((string) $payment->amount, 100)) {
+            || Money::toMinor($receivedAmount, 100) !== Money::toMinor((string) $payment->amount, 100)
+        ) {
             throw new RuntimeException('PayPal capture details do not match the booking payment.');
         }
 
@@ -176,9 +177,11 @@ class PayPalService
 
     private function ensureConfigured(): void
     {
-        if (! config('services.paypal.enabled')
+        if (
+            ! config('services.paypal.enabled')
             || blank(config('services.paypal.client_id'))
-            || blank(config('services.paypal.secret'))) {
+            || blank(config('services.paypal.secret'))
+        ) {
             throw new RuntimeException('PayPal is not configured.');
         }
     }

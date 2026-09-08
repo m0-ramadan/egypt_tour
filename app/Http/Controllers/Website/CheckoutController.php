@@ -26,6 +26,54 @@ class CheckoutController extends BaseWebsiteController
 
         abort_unless($bookingService->hasBookablePrice($package), 404);
 
+        $hasAccommodations = $package->tourPackageAccommodations->where('is_active', true)->isNotEmpty()
+            || ! empty($bookingService->getTravelPackageMatrix($package)['accommodations']);
+        $isTravelPackage = $package->package_type === 'travel_package'
+            && $hasAccommodations
+            && request('pricing_option') !== 'category'
+            && (request('pricing_option') === 'travel_package' || request()->filled('accommodation') || request()->has('room_1_adults') || request()->has('room_1_accommodation') || $package->prices->isEmpty());
+        $travelPackageQuote = null;
+        $roomsData = [];
+        $accommodation = request('accommodation');
+        $roomsCount = max(1, (int) request('rooms', 1));
+
+        for ($i = 1; $i <= $roomsCount; $i++) {
+            if (request()->has("room_{$i}_adults") || request()->has("room_{$i}_children") || request()->has("room_{$i}_accommodation")) {
+                $roomsData[] = [
+                    'accommodation' => request("room_{$i}_accommodation") ?: $accommodation,
+                    'adults' => max(1, (int) request("room_{$i}_adults", 1)),
+                    'children' => max(0, (int) request("room_{$i}_children", 0)),
+                ];
+            }
+        }
+
+        if (empty($roomsData) && $isTravelPackage) {
+            $adultsPerRoom = max(1, (int) request('adults', 2));
+            $childrenPerRoom = max(0, (int) request('children', 0));
+            for ($i = 1; $i <= $roomsCount; $i++) {
+                $roomsData[] = [
+                    'accommodation' => request("room_{$i}_accommodation") ?: $accommodation,
+                    'adults' => $i === 1 ? $adultsPerRoom : 1,
+                    'children' => $i === 1 ? $childrenPerRoom : 0,
+                ];
+            }
+        }
+
+        if ($isTravelPackage && request()->filled('travel_date')) {
+            try {
+                $travelPackageQuote = $bookingService->quoteTravelPackage(
+                    $package,
+                    $accommodation,
+                    request('travel_date'),
+                    $roomsData
+                );
+            } catch (\Exception $e) {
+                // Ignore initial validation if date/accommodation incomplete
+            }
+        }
+
+        $countries = \App\Support\CountryList::all();
+
         return view('website.pages.checkout.show', [
             'package' => $package,
             'title' => $package->display_title,
@@ -33,6 +81,11 @@ class CheckoutController extends BaseWebsiteController
             'durationText' => $this->packageDuration($package),
             'pricingOptions' => $bookingService->pricingOptions($package),
             'paymentMethods' => $bookingService->paymentMethods($package),
+            'isTravelPackage' => $isTravelPackage,
+            'travelPackageQuote' => $travelPackageQuote,
+            'roomsData' => $roomsData,
+            'accommodation' => $accommodation,
+            'countries' => $countries,
         ]);
     }
 
@@ -45,6 +98,29 @@ class CheckoutController extends BaseWebsiteController
     ): RedirectResponse {
         $package = $bookingService->loadForCheckout($slug);
         abort_unless($bookingService->hasBookablePrice($package), 404);
+
+        if (! $request->has('travelers') && $request->filled('lead_first_name')) {
+            $travelers = [
+                [
+                    'title' => $request->input('lead_title', 'Mr'),
+                    'first_name' => $request->input('lead_first_name'),
+                    'last_name' => $request->input('lead_last_name'),
+                ]
+            ];
+            $totalPax = (int) $request->input('adults', 1) + (int) $request->input('children', 0) + (int) $request->input('infants', 0);
+            for ($t = 2; $t <= $totalPax; $t++) {
+                $travelers[] = [
+                    'title' => $request->input("traveler_{$t}_title", 'Mr'),
+                    'first_name' => $request->input("traveler_{$t}_first_name") ?: "Guest {$t}",
+                    'last_name' => $request->input("traveler_{$t}_last_name") ?: $request->input('lead_last_name'),
+                ];
+            }
+            $request->merge(['travelers' => $travelers]);
+        }
+
+        if ($request->filled('country') && ! $request->filled('nationality')) {
+            $request->merge(['nationality' => $request->input('country')]);
+        }
 
         $availableMethods = $bookingService->paymentMethods($package);
         $providers = $availableMethods->pluck('provider')->all();
@@ -75,6 +151,18 @@ class CheckoutController extends BaseWebsiteController
             ]);
         }
 
+        $roomsData = [];
+        $roomsCount = max(1, (int) $data['rooms']);
+        for ($i = 1; $i <= $roomsCount; $i++) {
+            if ($request->has("room_{$i}_adults") || $request->has("room_{$i}_children") || $request->has("room_{$i}_accommodation")) {
+                $roomsData[] = [
+                    'accommodation' => $request->input("room_{$i}_accommodation") ?: $request->input('accommodation'),
+                    'adults' => max(1, (int) $request->input("room_{$i}_adults", 1)),
+                    'children' => max(0, (int) $request->input("room_{$i}_children", 0)),
+                ];
+            }
+        }
+
         $quote = $bookingService->quote(
             $package,
             $data['pricing_option'],
@@ -83,6 +171,8 @@ class CheckoutController extends BaseWebsiteController
             (int) $data['children'],
             (int) $data['infants'],
             (int) $data['rooms'],
+            $roomsData,
+            $request->input('accommodation')
         );
 
         $selectedMethod = $availableMethods->firstWhere('provider', $data['payment_method']);
@@ -126,6 +216,9 @@ class CheckoutController extends BaseWebsiteController
                     'pricing_option' => $quote['id'],
                     'option_label' => $quote['label'],
                     'rooms' => $quote['rooms'],
+                    'room_breakdown' => $quote['room_breakdown'] ?? null,
+                    'deposit_amount' => $quote['deposit_amount'] ?? null,
+                    'remaining_balance' => $quote['remaining_balance'] ?? null,
                     'payment_provider' => $data['payment_method'],
                 ],
             ]);
@@ -146,20 +239,23 @@ class CheckoutController extends BaseWebsiteController
             }
 
             $booking->items()->create([
-                'pricing_source' => $quote['source'],
-                'source_id' => $quote['source_id'],
-                'cabin_id' => $quote['cabin_id'],
-                'option_label' => $quote['label'],
-                'occupancy_type' => $quote['occupancy_type'],
-                'unit_price' => $quote['amount'],
-                'quantity' => $quote['quantity'],
-                'room_count' => $quote['rooms'],
+                'pricing_source' => $quote['source'] ?? 'tour_package',
+                'source_id' => $quote['source_id'] ?? null,
+                'cabin_id' => $quote['cabin_id'] ?? null,
+                'option_label' => $quote['label'] ?? '',
+                'occupancy_type' => $quote['occupancy_type'] ?? null,
+                'unit_price' => $quote['amount'] ?? $quote['total'],
+                'quantity' => $quote['quantity'] ?? 1,
+                'room_count' => $quote['rooms'] ?? 1,
                 'total_amount' => $quote['total'],
                 'meta' => [
-                    'description' => $quote['description'],
-                    'price_unit' => $quote['price_unit'],
-                    'valid_from' => $quote['valid_from'],
-                    'valid_to' => $quote['valid_to'],
+                    'description' => $quote['description'] ?? null,
+                    'price_unit' => $quote['price_unit'] ?? null,
+                    'valid_from' => $quote['valid_from'] ?? null,
+                    'valid_to' => $quote['valid_to'] ?? null,
+                    'room_breakdown' => $quote['room_breakdown'] ?? null,
+                    'deposit_amount' => $quote['deposit_amount'] ?? null,
+                    'remaining_balance' => $quote['remaining_balance'] ?? null,
                 ],
             ]);
 

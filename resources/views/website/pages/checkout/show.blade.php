@@ -14,9 +14,9 @@
         }
 
         .checkout-shell {
-            background: #f8f6f1;
+            background: #f8fafc;
             padding: 130px 0 80px;
-            color: #263b61;
+            color: #061B3E;
             min-height: 70vh
         }
 
@@ -31,9 +31,9 @@
         .booking-summary {
             background: #fff;
             border-radius: 22px;
-            box-shadow: 0 18px 45px rgba(21, 39, 67, .09);
+            box-shadow: 0 18px 45px rgba(6, 27, 62, .09);
             overflow: hidden;
-            border: 1px solid rgba(28, 50, 92, .07)
+            border: 1px solid rgba(6, 27, 62, .07)
         }
 
         .booking-summary {
@@ -43,10 +43,10 @@
 
         .checkout-head,
         .summary-head {
-            background: linear-gradient(135deg, #173b63, #26576b);
+            background: linear-gradient(135deg, #061B3E, #0B2554);
             color: #fff;
             padding: 26px 32px;
-            border-top: 5px solid #e6ba7d
+            border-top: 5px solid var(--etp-orange-500, #F36B0A)
         }
 
         .checkout-head h1,
@@ -70,7 +70,7 @@
         .checkout-section {
             padding-bottom: 30px;
             margin-bottom: 30px;
-            border-bottom: 1px solid #eadfce
+            border-bottom: 1px solid #e2e8f0
         }
 
         .checkout-section:last-of-type {
@@ -83,7 +83,7 @@
             gap: 12px;
             font-family: 'Playfair Display', serif;
             font-size: 1.35rem;
-            color: #1c325c;
+            color: #061B3E;
             margin: 0 0 22px
         }
 
@@ -91,8 +91,8 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #e7b676;
-            color: #1c325c;
+            background: var(--etp-orange-500, #F36B0A);
+            color: #061B3E;
             display: grid;
             place-items: center;
             font-size: 1.2rem
@@ -113,7 +113,7 @@
             font-weight: 700;
             font-size: .82rem;
             margin: 0 0 8px;
-            color: #30466e
+            color: #334155
         }
 
         .checkout-field input,
@@ -202,7 +202,7 @@
 
         .price-option-title {
             font-weight: 800;
-            color: #1c325c
+            color: #061B3E
         }
 
         .price-option-desc {
@@ -290,7 +290,7 @@
         .payment-name {
             display: block;
             font-weight: 800;
-            color: #1c325c
+            color: #061B3E
         }
 
         .payment-desc {
@@ -325,7 +325,7 @@
             border: 0;
             border-radius: 999px;
             padding: 17px;
-            background: linear-gradient(90deg, #ca934e, #e9b879);
+            background: linear-gradient(90deg, var(--etp-orange-500, #F36B0A), #e9b879);
             color: #173763;
             font-weight: 900;
             font-size: 1rem;
@@ -366,7 +366,7 @@
         .summary-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.25rem;
-            color: #1c325c;
+            color: #061B3E;
             margin: 16px 0
         }
 
@@ -420,7 +420,7 @@
             margin-top: 7px;
             padding-top: 15px;
             font-weight: 900;
-            color: #1c325c
+            color: #061B3E
         }
 
         .total-row.grand strong {
@@ -562,34 +562,54 @@
                                         id="travel_date" name="travel_date" type="date"
                                         min="{{ today()->toDateString() }}"
                                         value="{{ old('travel_date', request('travel_date')) }}" required></div>
-                                <div class="checkout-field"><label
-                                        for="rooms">{{ $package->package_type === 'nile_cruise' ? __('Number of Cabins') : __('Number of Rooms') }}
-                                        *</label><input id="rooms" name="rooms" type="number" min="1"
-                                        max="20" value="{{ old('rooms', request('rooms', 1)) }}" required></div>
-                                <div class="field-full price-options" id="priceOptions">
-                                    @foreach ($pricingOptions as $option)
-                                        <label class="price-option">
-                                            <input type="radio" name="pricing_option" value="{{ $option['id'] }}"
-                                                @checked(old('pricing_option', request('pricing_option', $pricingOptions->first()['id'] ?? '')) === $option['id']) required>
-                                            <span class="price-option-body">
-                                                <span><span class="price-option-title">{{ $option['label'] }}</span><span
-                                                        class="price-option-desc">{{ $option['description'] }}@if ($option['available_rooms'] !== null)
-                                                            ·
-                                                            {{ trans_choice(':count cabin available|:count cabins available', $option['available_rooms'], ['count' => $option['available_rooms']]) }}
-                                                        @endif
-                                                    </span>
-                                                </span>
-                                                <span
-                                                    class="price-option-amount">{{ $option['currency_symbol'] }}{{ number_format($option['amount'], 2) }}<span
-                                                        class="price-option-unit">{{ match ($option['price_unit']) {'per_room' => __('per room'),'per_booking' => __('per booking'),'category' => __('by traveler'),'per_adult' => __('per adult'),default => __('per person')} }}</span></span>
-                                            </span>
-                                        </label>
+                                @if ($package->package_type === 'day_tour')
+                                    <input id="rooms" name="rooms" type="hidden" value="1">
+                                @else
+                                    <div class="checkout-field"><label
+                                            for="rooms">{{ $package->package_type === 'nile_cruise' ? __('Number of Cabins') : __('Number of Rooms') }}
+                                            *</label><input id="rooms" name="rooms" type="number" min="1"
+                                            max="20" value="{{ old('rooms', request('rooms', 1)) }}" required></div>
+                                @endif
+                                @if ($isTravelPackage)
+                                    <input type="hidden" name="pricing_option" value="travel_package">
+                                    @if ($accommodation)
+                                        <input type="hidden" name="accommodation" value="{{ $accommodation }}">
+                                    @endif
+                                    @foreach ($roomsData as $idx => $r)
+                                        <input type="hidden" name="room_{{ $idx + 1 }}_adults"
+                                            value="{{ $r['adults'] }}">
+                                        <input type="hidden" name="room_{{ $idx + 1 }}_children"
+                                            value="{{ $r['children'] }}">
                                     @endforeach
-                                </div>
-                                <div class="checkout-alert field-full" id="noPriceForDate" style="display:none">
-                                    {{ __('There is no online booking price for the selected date. Please choose another date or submit an enquiry.') }}
-                                </div>
-                                <div class="field-full guest-grid">
+                                @else
+                                    <div class="field-full price-options" id="priceOptions">
+                                        @foreach ($pricingOptions as $option)
+                                            <label class="price-option">
+                                                <input type="radio" name="pricing_option" value="{{ $option['id'] }}"
+                                                    @checked(old('pricing_option', request('pricing_option', $pricingOptions->first()['id'] ?? '')) === $option['id']) required>
+                                                <span class="price-option-body">
+                                                    <span><span
+                                                            class="price-option-title">{{ $option['label'] }}</span><span
+                                                            class="price-option-desc">{{ $option['description'] }}
+                                                            @if ($option['available_rooms'] !== null)
+                                                                ·
+                                                                {{ trans_choice(':count cabin available|:count cabins available', $option['available_rooms'], ['count' => $option['available_rooms']]) }}
+                                                            @endif
+                                                        </span>
+                                                    </span>
+                                                    <span
+                                                        class="price-option-amount">{{ $option['currency_symbol'] }}{{ number_format($option['amount'], 2) }}<span
+                                                            class="price-option-unit">{{ match ($option['price_unit']) {'per_room' => __('per room'),'per_booking' => __('per booking'),'category' => __('by traveler'),'per_adult' => __('per adult'),default => __('per person')} }}</span></span>
+                                                </span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                    <div class="checkout-alert field-full" id="noPriceForDate" style="display:none">
+                                        {{ __('There is no online booking price for the selected date. Please choose another date or submit an enquiry.') }}
+                                    </div>
+                                @endif
+                                <div class="field-full guest-grid"
+                                    @if ($isTravelPackage) style="display:none;" @endif>
                                     <div class="guest-box"><label for="adults">{{ __('Adults') }}</label><input
                                             id="adults" name="adults" type="number" min="1" max="40"
                                             value="{{ old('adults', request('adults', 1)) }}" required></div>
@@ -614,6 +634,15 @@
                                 <div class="checkout-field"><label for="phone">{{ __('Phone Number') }} *</label><input
                                         id="phone" name="phone" type="tel" value="{{ old('phone') }}"
                                         autocomplete="tel" required></div>
+                                <div class="checkout-field field-full"><label for="country">{{ __('Country') }}</label>
+                                    <select id="country" name="country">
+                                        <option value="">{{ __('Select your country') }}</option>
+                                        @foreach ($countries as $cName)
+                                            <option value="{{ $cName }}" @selected(old('country') === $cName)>
+                                                {{ __($cName) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </section>
 
@@ -622,13 +651,17 @@
                             </h2>
                             <div class="checkout-fields">
                                 <div class="checkout-field field-full"><label
-                                        for="pickup_location">{{ __('Pickup Location') }}</label><input
+                                        for="pickup_location">{{ __('Pickup Location') }} *</label><input
                                         id="pickup_location" name="pickup_location" value="{{ old('pickup_location') }}"
-                                        placeholder="{{ __('Hotel name, airport, or specific address') }}"></div>
+                                        placeholder="{{ __('Hotel name, airport, or specific address in Egypt') }}"
+                                        required>
+                                    <small
+                                        style="color: #6c757d; font-size: 12px; margin-top: 4px; display: block;">{{ __('Please provide your hotel name, airport, or specific pickup address in Egypt') }}</small>
+                                </div>
                                 <div class="checkout-field field-full"><label
                                         for="special_requests">{{ __('Special Requests') }}</label>
                                     <textarea id="special_requests" name="special_requests"
-                                        placeholder="{{ __('Dietary requirements, accessibility needs, or special occasions') }}">{{ old('special_requests') }}</textarea>
+                                        placeholder="{{ __('Tell us about any dietary requirements, accessibility needs, special occasions, or other requests...') }}">{{ old('special_requests') }}</textarea>
                                 </div>
                             </div>
                         </section>
@@ -683,23 +716,88 @@
                         <h3 class="summary-title">{{ $title }}</h3>
                         <div class="summary-meta">
                             <div class="summary-line"><i class="la la-calendar"></i>
-                                <div><span>{{ __('Travel Date') }}</span><strong id="summaryDate">—</strong></div>
+                                <div><span>{{ __('Travel Date') }}</span><strong
+                                        id="summaryDate">{{ request('travel_date') ?: '—' }}</strong></div>
                             </div>
-                            <div class="summary-line"><i class="la la-bed"></i>
-                                <div><span>{{ __('Accommodation') }}</span><strong id="summaryOption">—</strong></div>
-                            </div>
+                            @if ($package->package_type === 'day_tour')
+                                <div class="summary-line"><i class="la la-compass"></i>
+                                    <div><span>{{ __('Tour Type') }}</span><strong>{{ __('Day Tour') }}</strong></div>
+                                </div>
+                            @else
+                                <div class="summary-line"><i class="la la-bed"></i>
+                                    <div><span>{{ __('Accommodation') }}</span><strong
+                                            id="summaryOption">{{ $travelPackageQuote['accommodation_name'] ?? ($accommodation ?: '—') }}</strong>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="summary-line"><i class="la la-users"></i>
-                                <div><span>{{ __('Total Guests') }}</span><strong id="summaryGuests">1</strong></div>
+                                <div><span>{{ __('Total Guests') }}</span><strong
+                                        id="summaryGuests">{{ (int) request('adults', 1) + (int) request('children', 0) + (int) request('infants', 0) }}</strong>
+                                </div>
                             </div>
                         </div>
+
+                        @if ($isTravelPackage && !empty($travelPackageQuote['room_breakdown']))
+                            <div class="checkout-room-details mt-3 pt-3" style="border-top: 1px solid #e2e8f0;">
+                                <h4
+                                    style="font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #061B3E; margin-bottom: 12px;">
+                                    {{ __('Room Details') }}</h4>
+                                @foreach ($travelPackageQuote['room_breakdown'] as $r)
+                                    <div class="room-summary-box mb-2 p-2 rounded"
+                                        style="background: #fdfbf7; border: 1px solid rgba(6, 27, 62, 0.08);">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <strong style="color: #061B3E;">{{ __('Room') }}
+                                                {{ $r['room_number'] }}</strong>
+                                            <strong style="color: #061B3E;">{{ __('Room') }} {{ $r['room_number'] }}
+                                                @if (!empty($r['accommodation']))
+                                                    <span class="badge"
+                                                        style="background: rgba(243, 107, 10, 0.15); color: #8c6721; font-weight: 600; font-size: 11px;">{{ $r['accommodation'] }}</span>
+                                                @endif
+                                            </strong>
+                                            <span
+                                                style="color: var(--rich-gold, var(--etp-orange-500, #F36B0A)); font-weight: 700;">{{ $travelPackageQuote['currency_symbol'] }}{{ number_format($r['price'], 0) }}</span>
+                                        </div>
+                                        <small class="text-muted"><i class="la la-users"></i> {{ $r['adults'] }}
+                                            {{ __('Adults') }}{{ $r['children'] > 0 ? ', ' . $r['children'] . ' ' . __('Children') : '' }}</small>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
                         <div class="summary-total">
                             <div class="total-row"><span>{{ __('Package Price') }}</span><strong
-                                    id="summarySubtotal">—</strong></div>
+                                    id="summarySubtotal">{{ $travelPackageQuote ? $travelPackageQuote['currency_symbol'] . number_format($travelPackageQuote['total'], 0) : '—' }}</strong>
+                            </div>
                             <div class="total-row">
                                 <span>{{ __('Taxes & Fees') }}</span><strong>{{ __('Included') }}</strong>
                             </div>
-                            <div class="total-row grand"><span>{{ __('Pay Today') }}</span><strong
-                                    id="summaryTotal">—</strong></div>
+                            <div class="total-row grand">
+                                <span>{{ $isTravelPackage ? __('Pay Today (50% Deposit)') : __('Pay Today') }}</span><strong
+                                    id="summaryTotal">{{ $travelPackageQuote ? $travelPackageQuote['currency_symbol'] . number_format($travelPackageQuote['deposit_amount'], 0) : '—' }}</strong>
+                            </div>
+                        </div>
+
+                        @if ($isTravelPackage && !empty($travelPackageQuote['remaining_balance']))
+                            <div
+                                style="background: #e8f5e8; border-radius: 10px; padding: 12px; margin-top: 14px; border-left: 4px solid #28a745;">
+                                <small style="color: #28a745; font-weight: 600; display: block; line-height: 1.4;">
+                                    💡
+                                    {{ __('Remaining balance of :symbol:amount due 30 days before travel', [
+                                        'symbol' => $travelPackageQuote['currency_symbol'],
+                                        'amount' => number_format($travelPackageQuote['remaining_balance'], 0),
+                                    ]) }}
+                                </small>
+                            </div>
+                        @endif
+
+                        <div class="security-strip mt-3"
+                            style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: #4b5563; border-top: 1px solid #e2e8f0; padding-top: 14px;">
+                            <span><i class="la la-shield-alt text-success"
+                                    style="font-size: 16px; margin-right: 4px;"></i> {{ __('Secure Booking') }}</span>
+                            <span><i class="la la-headset text-primary" style="font-size: 16px; margin-right: 4px;"></i>
+                                {{ __('24/7 Support') }}</span>
+                            <span><i class="la la-award text-warning" style="font-size: 16px; margin-right: 4px;"></i>
+                                {{ __('Licensed Operator') }}</span>
                         </div>
                     </div>
                 </aside>
@@ -738,6 +836,8 @@
                     });
             }
 
+            const isTravelPkg = @json($isTravelPackage ?? false);
+
             function total(option) {
                 if (!option) return 0;
                 if (option.price_unit === 'per_booking') return Number(option.amount);
@@ -750,6 +850,14 @@
             }
 
             function syncSummary() {
+                if (isTravelPkg) {
+                    const guests = number(adults) + number(children) + number(infants);
+                    const sumDate = document.getElementById('summaryDate');
+                    const sumGuests = document.getElementById('summaryGuests');
+                    if (sumDate && date) sumDate.textContent = date.value || '—';
+                    if (sumGuests) sumGuests.textContent = guests;
+                    return;
+                }
                 const option = selectedOption();
                 const guests = number(adults) + number(children) + number(infants);
                 document.getElementById('summaryDate').textContent = date.value || '—';
@@ -761,6 +869,7 @@
             }
 
             function syncOptionAvailability() {
+                if (isTravelPkg) return;
                 const selectedDate = date.value;
                 const guests = number(adults) + number(children) + number(infants);
                 let firstAvailable = null;
@@ -794,12 +903,24 @@
                 const types = [...Array(number(adults)).fill(@json(__('Adult'))), ...Array(number(
                     children)).fill(@json(__('Child'))), ...Array(number(infants)).fill(
                     @json(__('Infant')))];
-                travelerContainer.innerHTML = types.map((type, index) => {
+                let html = '';
+                types.forEach((type, index) => {
                     const value = travelerValues[index] || {};
                     const opts = ['Mr', 'Mrs', 'Ms', 'Miss', 'Dr'].map(v =>
                         `<option value="${v}" ${value.title===v?'selected':''}>${v}</option>`).join('');
-                    return `<div class="traveler-card"><div class="traveler-label">${index===0 ? @json(__('Lead Traveler')) : @json(__('Traveler'))+' '+(index+1)} · ${type}</div><div class="traveler-fields"><select name="travelers[${index}][title]" required><option value="">${@json(__('Title'))}</option>${opts}</select><input data-first name="travelers[${index}][first_name]" value="${String(value.first_name||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}" placeholder="${@json(__('First name as shown on passport'))}" required><input data-last name="travelers[${index}][last_name]" value="${String(value.last_name||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}" placeholder="${@json(__('Last name as shown on passport'))}" required></div></div>`;
-                }).join('');
+                    if (isTravelPkg) {
+                        if (index === 0) {
+                            html +=
+                                `<div class="traveler-section-header mb-3"><h5 style="color: #061B3E; font-weight: 600; font-family: 'Playfair Display', serif;">{{ __('Lead Traveler Information') }}</h5></div>`;
+                        } else if (index === 1) {
+                            html +=
+                                `<div class="traveler-section-header mt-4 mb-3 pt-3" style="border-top: 1px dashed #e2e8f0;"><h5 style="color: #061B3E; font-weight: 600; font-family: 'Playfair Display', serif;">{{ __('Other Travelers Information') }}</h5><p class="text-muted" style="font-size: 13px;">{{ __('Please provide details for the remaining travelers') }}</p></div>`;
+                        }
+                    }
+                    html +=
+                        `<div class="traveler-card"><div class="traveler-label">${index===0 ? @json(__('Lead Traveler')) : @json(__('Traveler'))+' '+(index+1)} · ${type}</div><div class="traveler-fields"><select name="travelers[${index}][title]" required><option value="">${@json(__('Title'))}</option>${opts}</select><input data-first name="travelers[${index}][first_name]" value="${String(value.first_name||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}" placeholder="${@json(__('First name as shown on passport'))}" required><input data-last name="travelers[${index}][last_name]" value="${String(value.last_name||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}" placeholder="${@json(__('Last name as shown on passport'))}" required></div></div>`;
+                });
+                travelerContainer.innerHTML = html;
             }
             [adults, children, infants].forEach(input => input.addEventListener('change', () => {
                 renderTravelers();

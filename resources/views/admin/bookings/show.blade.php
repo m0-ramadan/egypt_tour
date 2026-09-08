@@ -105,7 +105,12 @@
                     <div class="col-md-4">
                         <div class="info-box">
                             <div class="info-label">عدد الأفراد</div>
-                            <div class="info-value">{{ $booking->travellers_count ?? '-' }}</div>
+                            <div class="info-value">
+                                {{ $booking->travellers_count ?? '-' }}
+                                <div class="small opacity-75 mt-1" style="font-size: 13px;">
+                                    {{ $booking->adults ?? 0 }} بالغين · {{ $booking->children ?? 0 }} أطفال · {{ $booking->infants ?? 0 }} رضع
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -195,7 +200,24 @@
                                 <div class="table-responsive">
                                     <table class="table table-dark table-striped mb-0">
                                         <thead><tr><th>#</th><th>الفئة</th><th>اللقب</th><th>الاسم كما في جواز السفر</th></tr></thead>
-                                        <tbody>@foreach($booking->travelers as $traveler)<tr><td>{{ $loop->iteration }}</td><td>{{ $traveler->traveler_type }}</td><td>{{ $traveler->title }}</td><td>{{ $traveler->first_name }} {{ $traveler->last_name }}</td></tr>@endforeach</tbody>
+                                        <tbody>
+                                            @foreach($booking->travelers as $traveler)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>
+                                                        @if($traveler->traveler_type === 'infant')
+                                                            <span class="badge bg-info text-dark">رضيع (Infant)</span>
+                                                        @elseif($traveler->traveler_type === 'child')
+                                                            <span class="badge bg-warning text-dark">طفل (Child)</span>
+                                                        @else
+                                                            <span class="badge bg-primary">بالغ (Adult)</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $traveler->title }}</td>
+                                                    <td>{{ $traveler->first_name }} {{ $traveler->last_name }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>

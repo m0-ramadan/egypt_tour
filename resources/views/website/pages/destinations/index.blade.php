@@ -1,10 +1,10 @@
 @extends('website.layouts.master')
 
-@section('title', ($pageTitle ?? __('Destinations')) . ' - Etro Tours')
+@section('title', ($pageTitle ?? __('Destinations')) . ' - Egypt Tour Pro')
 @section('description', $overviewText ?? $heroSubtitle)
 @section('keywords',
     trim(
-    collect([$pageTitle ?? __('Destinations'), 'Etro Tours', 'Egypt destinations', 'travel
+    collect([$pageTitle ?? __('Destinations'), 'Egypt Tour Pro', 'Egypt destinations', 'travel
     experiences'])->filter()->implode(', '),
     ', ',
     ))
@@ -17,7 +17,7 @@
             height: 60vh;
             min-height: 500px;
             max-height: 700px;
-            background: linear-gradient(rgba(28, 50, 92, 0.5), rgba(26, 75, 102, 0.6)), var(--hero-bg);
+            background: linear-gradient(rgba(43, 43, 43, 0.5), rgba(43, 43, 43, 0.6)), var(--hero-bg);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -157,7 +157,7 @@
         }
 
         .hero-badge {
-            background: rgba(197, 149, 91, 0.9);
+            background: rgba(243, 107, 10, 0.9);
             color: var(--primary-navy);
             padding: 10px 25px;
             border-radius: 50px;
@@ -168,7 +168,7 @@
             gap: 10px;
             margin-bottom: 25px;
             backdrop-filter: blur(10px);
-            border: 2px solid rgba(197, 149, 91, 0.3);
+            border: 2px solid rgba(243, 107, 10, 0.3);
         }
 
         @media (max-width: 575px) {
@@ -185,7 +185,7 @@
             font-weight: 700;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, #ffffff 0%, #f8f0e0 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #efe9e2 100%);
             -webkit-background-clip: text;
             background-clip: text;
         }
@@ -216,7 +216,7 @@
         .breadcrumb-section {
             background: var(--pearl-luxury);
             padding: 15px 0;
-            border-bottom: 1px solid rgba(197, 149, 91, 0.2);
+            border-bottom: 1px solid rgba(243, 107, 10, 0.2);
         }
 
         .breadcrumb-container {
@@ -271,13 +271,13 @@
             border-radius: 25px;
             padding: 50px;
             box-shadow: var(--shadow-medium);
-            border: 2px solid rgba(197, 149, 91, 0.1);
+            border: 2px solid rgba(243, 107, 10, 0.1);
             transition: all 0.3s ease;
         }
 
         .overview-content:hover {
             box-shadow: var(--shadow-dramatic);
-            border-color: rgba(197, 149, 91, 0.3);
+            border-color: rgba(243, 107, 10, 0.3);
         }
 
         .overview-title {
@@ -405,12 +405,12 @@
             padding: 11px 18px;
             border-radius: 999px;
             background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(197, 149, 91, 0.25);
+            border: 1px solid rgba(243, 107, 10, 0.25);
             color: var(--primary-navy);
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 24px rgba(28, 50, 92, 0.06);
+            box-shadow: 0 10px 24px rgba(43, 43, 43, 0.06);
         }
 
         .country-filter:hover,
@@ -418,7 +418,7 @@
             background: var(--gradient-gold);
             color: var(--primary-navy);
             transform: translateY(-2px);
-            border-color: rgba(197, 149, 91, 0.4);
+            border-color: rgba(243, 107, 10, 0.4);
         }
 
         @media (max-width: 480px) {
@@ -439,7 +439,7 @@
             overflow: hidden;
             box-shadow: var(--shadow-medium);
             transition: all 0.4s ease;
-            border: 2px solid rgba(197, 149, 91, 0.1);
+            border: 2px solid rgba(243, 107, 10, 0.1);
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -465,7 +465,7 @@
             top: 18px;
             left: 18px;
             z-index: 2;
-            background: rgba(28, 50, 92, 0.82);
+            background: rgba(43, 43, 43, 0.82);
             color: white;
             padding: 8px 14px;
             border-radius: 999px;
@@ -493,7 +493,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(28, 50, 92, 0.7) 0%, rgba(197, 149, 91, 0.6) 100%);
+            background: linear-gradient(135deg, rgba(43, 43, 43, 0.7) 0%, rgba(243, 107, 10, 0.6) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -590,7 +590,7 @@
 
         .cruise-footer {
             padding-top: 20px;
-            border-top: 1px solid rgba(197, 149, 91, 0.2);
+            border-top: 1px solid rgba(243, 107, 10, 0.2);
             margin-top: auto;
         }
 
@@ -630,7 +630,7 @@
 
         .btn-cruise:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(197, 149, 91, 0.4);
+            box-shadow: 0 8px 25px rgba(243, 107, 10, 0.4);
             color: var(--primary-navy);
         }
 
@@ -663,7 +663,7 @@
             background: var(--pearl-luxury);
             padding: 80px 0;
             position: relative;
-            border-top: 1px solid rgba(197, 149, 91, 0.2);
+            border-top: 1px solid rgba(243, 107, 10, 0.2);
         }
 
         .choose-card {
@@ -734,7 +734,7 @@
 
         .feature-item {
             padding: 12px 0;
-            border-bottom: 1px solid rgba(197, 149, 91, 0.2);
+            border-bottom: 1px solid rgba(243, 107, 10, 0.2);
             color: var(--warm-gray);
             font-size: 0.95rem;
             line-height: 1.6;
@@ -750,7 +750,7 @@
             padding: 70px 0;
             position: relative;
             overflow: hidden;
-            border-top: 1px solid rgba(197, 149, 91, 0.3);
+            border-top: 1px solid rgba(243, 107, 10, 0.3);
         }
 
         .luxury-cta-section::before {
@@ -771,7 +771,7 @@
             backdrop-filter: blur(15px);
             border-radius: 25px;
             padding: 50px;
-            border: 1px solid rgba(197, 149, 91, 0.3);
+            border: 1px solid rgba(243, 107, 10, 0.3);
             box-shadow: var(--shadow-dramatic);
             display: flex;
             align-items: center;
@@ -859,7 +859,7 @@
 
         .luxury-cta-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(197, 149, 91, 0.4);
+            box-shadow: 0 8px 25px rgba(243, 107, 10, 0.4);
             color: var(--primary-navy);
         }
 
