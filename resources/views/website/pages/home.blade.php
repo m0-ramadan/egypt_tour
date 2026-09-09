@@ -194,56 +194,6 @@
                 </div>
             </div>
         </section> --}}
-
-        <section class="section-pad">
-            <div class="container">
-                <div class="section-heading reveal-up">
-                    <div class="section-kicker">
-                        <i class="la la-star"></i>
-                        {{ __('Why Egypt Tour Pro') }}
-                    </div>
-                    <h2 class="section-title">{{ __('Travel Egypt With Confidence') }}</h2>
-                    <p class="section-subtitle">
-                        {{ __('A modern tourism experience combining expert planning, premium service, authentic culture, and smooth operations.') }}
-                    </p>
-                </div>
-
-                <div class="features-grid">
-                    <div class="feature-card reveal-up">
-                        <div class="feature-icon"><i class="la la-user-graduate"></i></div>
-                        <h3 class="feature-title">{{ __('Expert Egyptologists') }}</h3>
-                        <p class="feature-description">
-                            {{ __('Certified guides bring temples, tombs, museums, and ancient stories to life with rich knowledge.') }}
-                        </p>
-                    </div>
-
-                    <div class="feature-card reveal-up">
-                        <div class="feature-icon"><i class="la la-shield-alt"></i></div>
-                        <h3 class="feature-title">{{ __('Safe Operations') }}</h3>
-                        <p class="feature-description">
-                            {{ __('Trusted transport, organized itineraries, and reliable local support for a comfortable journey.') }}
-                        </p>
-                    </div>
-
-                    <div class="feature-card reveal-up">
-                        <div class="feature-icon"><i class="la la-gem"></i></div>
-                        <h3 class="feature-title">{{ __('Luxury Touch') }}</h3>
-                        <p class="feature-description">
-                            {{ __('Premium experiences, carefully selected services, and details designed for a refined holiday.') }}
-                        </p>
-                    </div>
-
-                    <div class="feature-card reveal-up">
-                        <div class="feature-icon"><i class="la la-headset"></i></div>
-                        <h3 class="feature-title">{{ __('Tailor-Made Service') }}</h3>
-                        <p class="feature-description">
-                            {{ __('Every trip can be customized around your schedule, budget, interests, and travel style.') }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="deals" class="section-pad cream-section">
             <div class="container">
                 <div class="section-heading reveal-up">
@@ -368,6 +318,56 @@
                 </div>
             </div>
         </section>
+        <section class="section-pad">
+            <div class="container">
+                <div class="section-heading reveal-up">
+                    <div class="section-kicker">
+                        <i class="la la-star"></i>
+                        {{ __('Why Egypt Tour Pro') }}
+                    </div>
+                    <h2 class="section-title">{{ __('Travel Egypt With Confidence') }}</h2>
+                    <p class="section-subtitle">
+                        {{ __('A modern tourism experience combining expert planning, premium service, authentic culture, and smooth operations.') }}
+                    </p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card reveal-up">
+                        <div class="feature-icon"><i class="la la-user-graduate"></i></div>
+                        <h3 class="feature-title">{{ __('Expert Egyptologists') }}</h3>
+                        <p class="feature-description">
+                            {{ __('Certified guides bring temples, tombs, museums, and ancient stories to life with rich knowledge.') }}
+                        </p>
+                    </div>
+
+                    <div class="feature-card reveal-up">
+                        <div class="feature-icon"><i class="la la-shield-alt"></i></div>
+                        <h3 class="feature-title">{{ __('Safe Operations') }}</h3>
+                        <p class="feature-description">
+                            {{ __('Trusted transport, organized itineraries, and reliable local support for a comfortable journey.') }}
+                        </p>
+                    </div>
+
+                    <div class="feature-card reveal-up">
+                        <div class="feature-icon"><i class="la la-gem"></i></div>
+                        <h3 class="feature-title">{{ __('Luxury Touch') }}</h3>
+                        <p class="feature-description">
+                            {{ __('Premium experiences, carefully selected services, and details designed for a refined holiday.') }}
+                        </p>
+                    </div>
+
+                    <div class="feature-card reveal-up">
+                        <div class="feature-icon"><i class="la la-headset"></i></div>
+                        <h3 class="feature-title">{{ __('Tailor-Made Service') }}</h3>
+                        <p class="feature-description">
+                            {{ __('Every trip can be customized around your schedule, budget, interests, and travel style.') }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
 
         @if ($featuredPackages->isNotEmpty())
             <section class="section-pad" id="featured-packages">
@@ -384,7 +384,7 @@
                     </div>
 
                     <div class="cards-grid">
-                        @foreach ($featuredPackages as $package)
+                        @foreach ($featuredPackages->take(3) as $package)
                             <div class="deal-card reveal-up">
                                 <div class="card-image">
                                     @if (!empty($package['is_ultra_luxury']))
