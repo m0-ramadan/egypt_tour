@@ -30,8 +30,8 @@
 @section('content')
     <div class="tour-page">
 
-        <section class="hero-section" id="home">
-            <picture class="hero-media" aria-hidden="true">
+        <section class="showcase-hero" id="home">
+            <picture class="showcase-hero__media" aria-hidden="true">
                 <source media="(max-width: 767px)" type="image/webp"
                     srcset="{{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }}">
                 <source type="image/webp"
@@ -40,88 +40,112 @@
                 <img src="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }}" alt=""
                     width="1677" height="938" fetchpriority="high" loading="eager" decoding="async">
             </picture>
-            <div class="container">
-                <div class="hero-grid">
-                    <div class="hero-content" dir="{{ $isRtl ? 'rtl' : 'ltr' }}"
-                        style="text-align: {{ $isRtl ? 'right' : 'left' }} !important;">
-                        <div class="hero-badge">
-                            <i class="la la-map-marked"></i>
-                            <span>{{ __('Luxury Egypt Travel Experiences') }}</span>
+            <div class="showcase-hero__flight" aria-hidden="true">
+                <span class="showcase-hero__flight-path"></span>
+                <i class="la la-plane"></i>
+            </div>
+            <div class="showcase-hero__signature" aria-hidden="true">
+                <span>Egypt</span>
+                <small>{{ __('More Than a Destination') }}</small>
+            </div>
+
+            <div class="container showcase-hero__container">
+                <div class="showcase-hero__grid">
+                    <div class="showcase-hero__content" dir="{{ $isRtl ? 'rtl' : 'ltr' }}">
+                        <div class="showcase-hero__eyebrow">
+                            <i class="la la-landmark"></i>
+                            <span>{{ __('Discover Timeless Wonders') }}</span>
                         </div>
 
-                        <h1 class="hero-title">
+                        <h1 class="showcase-hero__title">
                             {{ __('Explore Egypt') }}
-                            <span class="hero-title-line">
-                                <span class="hero-title-prefix">{{ __('With') }}</span>
-                                <span class="hero-title-gold">{{ __('Egypt Tour Pro') }}</span>
+                            <span>
+                                {{ __('With') }} <em>{{ __('Egypt Tour Pro') }}</em>
                             </span>
                         </h1>
-                        <div class="hero-title-rule" aria-hidden="true"></div>
 
-                        <p class="hero-subtitle">
-                            {{ __('Discover timeless monuments, Nile cruises, desert escapes, and private journeys designed with comfort, style, and local expertise from arrival to departure.') }}
+                        <p class="showcase-hero__subtitle">
+                            {{ __('Discover breathtaking destinations, Nile cruises, cultural treasures, and unforgettable experiences across Egypt. Let us turn your travel dreams into reality.') }}
                         </p>
 
-                        <div class="hero-actions">
-                            <a href="#deals" class="gold-btn">
-                                <i class="la la-compass"></i>
-                                {{ __('Discover Experiences') }}
+                        <div class="showcase-hero__actions">
+                            <a href="#featured-packages" class="showcase-hero__primary-btn">
+                                <i class="la la-long-arrow-right"></i>
+                                {{ __('Browse Tours') }}
                             </a>
-                            <a href="#quote" class="outline-btn">
-                                <i class="la la-paper-plane"></i>
-                                {{ __('Plan My Trip') }}
+                            <a href="#showcase-tour" class="showcase-hero__video-btn">
+                                <i class="la la-play-circle"></i>
+                                {{ __('Watch Video') }}
                             </a>
                         </div>
 
-                        <div class="hero-stats">
-                            <div class="hero-stat">
-                                <strong>10+</strong>
-                                <span>{{ __('Years Experience') }}</span>
+                        <div class="showcase-hero__features">
+                            <div class="showcase-hero__feature">
+                                <i class="la la-map-marker"></i>
+                                <span>{{ __('Handpicked Destinations') }}</span>
                             </div>
-                            <div class="hero-stat">
-                                <strong>24/7</strong>
-                                <span>{{ __('Local Support') }}</span>
+                            <div class="showcase-hero__feature">
+                                <i class="la la-gem"></i>
+                                <span>{{ __('Best Price Guarantee') }}</span>
                             </div>
-                            <div class="hero-stat">
-                                <strong>5★</strong>
-                                <span>{{ __('Guest Reviews') }}</span>
+                            <div class="showcase-hero__feature">
+                                <i class="la la-users"></i>
+                                <span>{{ __('Local Experts & Support') }}</span>
+                            </div>
+                            <div class="showcase-hero__feature">
+                                <i class="la la-shield-alt"></i>
+                                <span>{{ __('Safe & Reliable Travel') }}</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="hero-floating-card">
-                        <div class="hero-floating-card-inner">
-                            <div class="premium-tour-badge">
-                                <i class="la la-star"></i>
-                                {{ __('Premium Tour') }}
+                    <div class="showcase-hero__visuals" id="showcase-tour">
+                        <a href="{{ route('website.nile_cruises.index') }}" class="showcase-tour-card">
+                            <div class="showcase-tour-card__image">
+                                <img src="{{ asset('website/photos/optimized/home-nile-cruise-900.webp') }}"
+                                    alt="{{ __('Luxury Nile cruise at sunset') }}" width="900" height="473"
+                                    loading="eager" decoding="sync">
+                                <span class="showcase-tour-card__category">
+                                    <i class="la la-map-marker"></i>{{ __('Nile Cruise') }}
+                                </span>
                             </div>
-                            <img src="{{ asset('website/photos/optimized/home-nile-cruise-900.webp') }}"
-                                alt="{{ __('Luxury Nile cruise at sunset') }}" width="900" height="473"
-                                loading="eager" decoding="sync">
-                            <div class="floating-info">
-                                <h2>{{ __('Nile Cruise Experience') }}</h2>
-                                <p>{{ __('Sail the timeless Nile in comfort and style, with hand-picked itineraries and expert guides.') }}
-                                </p>
-                                <div class="mini-route">
-                                    @if ($isRtl)
-                                        <span><i class="la la-map-marker"></i>{{ __('Abu Simbel') }}</span>
-                                        <span><i class="la la-long-arrow-left"></i></span>
-                                        <span><i class="la la-map-marker"></i>{{ __('Aswan') }}</span>
-                                        <span><i class="la la-long-arrow-left"></i></span>
-                                        <span><i class="la la-map-marker"></i> {{ __('Luxor') }}</span>
-                                    @else
-                                        <span><i class="la la-map-marker"></i> {{ __('Luxor') }}</span>
-                                        <span><i class="la la-long-arrow-right"></i></span>
-                                        <span><i class="la la-map-marker"></i>{{ __('Aswan') }}</span>
-                                        <span><i class="la la-long-arrow-right"></i></span>
-                                        <span><i class="la la-map-marker"></i>{{ __('Abu Simbel') }}</span>
-                                    @endif
+                            <div class="showcase-tour-card__body">
+                                <div class="showcase-tour-card__heading">
+                                    <h2>{{ __('Nile Cruise Experience') }}</h2>
+                                    <span class="showcase-tour-card__rating">
+                                        <strong aria-label="{{ __('Five stars') }}">★★★★★</strong>
+                                        <small>{{ __('(128 reviews)') }}</small>
+                                    </span>
+                                </div>
+                                <p>{{ __('Sail the timeless Nile, visit iconic temples, and enjoy unforgettable views.') }}
+                                <div class="showcase-tour-card__meta">
+                                    <span><i class="la la-clock"></i>{{ __('4 Days') }}</span>
+                                    <span><i class="la la-user-friends"></i>{{ __('From $499') }}</span>
+                                    <b><i class="la la-long-arrow-right"></i></b>
                                 </div>
                             </div>
+                        </a>
+
+                        <div class="showcase-hero__destinations">
+                            <a href="{{ route('website.nile_cruises.index') }}" class="showcase-destination-card">
+                                <img src="{{ asset('website/admin/uploads/1603406020abu-simbel.jpg') }}"
+                                    alt="{{ __('Abu Simbel') }}" width="1000" height="300" loading="eager">
+                                <span><i class="la la-map-marker"></i>{{ __('Abu Simbel') }}</span>
+                            </a>
+                            <a href="{{ route('website.nile_cruises.index') }}" class="showcase-destination-card">
+                                <img src="{{ asset('website/images/day-tours/aswan-destination.jpg') }}"
+                                    alt="{{ __('Aswan') }}" width="1264" height="848" loading="eager">
+                                <span><i class="la la-map-marker"></i>{{ __('Aswan') }}</span>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <svg class="showcase-hero__wave" viewBox="0 0 2170 82" preserveAspectRatio="none" aria-hidden="true">
+                <path class="showcase-hero__wave-fill" d="M0,18 C205,88 455,40 720,56 C1120,82 1540,88 2170,8 L2170,85 L0,85 Z"></path>
+                <path class="showcase-hero__wave-line" d="M0,18 C205,88 455,40 720,56 C1120,82 1540,88 2170,8"></path>
+            </svg>
         </section>
 
         <section class="trust-section">
