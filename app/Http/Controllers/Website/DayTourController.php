@@ -15,7 +15,6 @@ class DayTourController extends BaseWebsiteController
     public function index(Request $request): View
     {
         $heroImage = asset('website/images/day-tours/cairo-day-tours.jpg');
-        $heroImage = asset('website/images/day-tours/hero-day-tours.jpg');
 
         $pageContent = [
             'badge' => __('Egypt Excursions & Sightseeing'),
