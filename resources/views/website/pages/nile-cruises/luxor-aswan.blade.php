@@ -6,7 +6,8 @@
 
 @section('title', $pageContent['title'] . ' - Egypt Tour Pro')
 @section('description', $pageContent['subtitle'])
-@section('keywords', 'Luxor and Aswan Nile Cruises, Standard Nile Cruises, Deluxe Nile Cruises, Ultra Deluxe Nile
+@section('keywords',
+    'Luxor and Aswan Nile Cruises, Standard Nile Cruises, Deluxe Nile Cruises, Ultra Deluxe Nile
     Cruises, Luxury Nile Cruises')
 @section('image', $heroImage)
 
@@ -19,7 +20,7 @@
             display: flex;
             align-items: center;
             margin-top: -85px;
-            padding: 145px 0 85px;
+            padding: 180px 0 85px;
             color: #fff;
             background: linear-gradient(rgba(28, 28, 28, 0.75), rgba(43, 43, 43, 0.65)),
                 url('{{ $heroImage }}') center/cover no-repeat;
