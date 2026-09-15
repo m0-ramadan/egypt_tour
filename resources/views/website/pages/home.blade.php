@@ -143,7 +143,8 @@
             </div>
 
             <svg class="showcase-hero__wave" viewBox="0 0 2170 82" preserveAspectRatio="none" aria-hidden="true">
-                <path class="showcase-hero__wave-fill" d="M0,18 C205,88 455,40 720,56 C1120,82 1540,88 2170,8 L2170,85 L0,85 Z"></path>
+                <path class="showcase-hero__wave-fill"
+                    d="M0,18 C205,88 455,40 720,56 C1120,82 1540,88 2170,8 L2170,85 L0,85 Z"></path>
                 <path class="showcase-hero__wave-line" d="M0,18 C205,88 455,40 720,56 C1120,82 1540,88 2170,8"></path>
             </svg>
         </section>
@@ -531,6 +532,10 @@
                         <div class="destination-card reveal-up">
                             <div class="card-image">
                                 <div class="badge-top">{{ $destination['country'] ?: __('Destination') }}</div>
+                                <div class="destination-watermark-logo">
+                                    <img src="{{ asset('website/logo/egypt-tour-pro-light.png') }}" alt="Egypt Tour Pro"
+                                        loading="lazy">
+                                </div>
                                 <a href="{{ $destination['url'] }}">
                                     <img src="{{ $destination['image'] }}" alt="{{ $destination['title'] }}"
                                         width="800" height="500" loading="lazy" decoding="async">

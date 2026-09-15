@@ -1517,6 +1517,29 @@ img {
     font-size: 0.78rem;
 }
 
+.destination-watermark-logo {
+    position: absolute;
+    bottom: 14px;
+    inset-inline-end: 14px;
+    z-index: 4;
+    background: rgba(15, 15, 15, 0.45);
+    padding: 6px 12px;
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.destination-watermark-logo img {
+    height: 22px !important;
+    width: auto !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
 .deal-price {
     inset-inline-end: 18px;
     bottom: 18px;

@@ -20,7 +20,7 @@
             display: flex;
             align-items: center;
             margin-top: -85px;
-            padding: 150px 0 90px;
+            padding: 185px 0 90px;
             color: #fff;
             background: linear-gradient(rgba(28, 28, 28, 0.75), rgba(43, 43, 43, 0.65)),
                 url('{{ $heroImage }}') center/cover no-repeat;
