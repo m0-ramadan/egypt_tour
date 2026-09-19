@@ -465,7 +465,7 @@
     </main>
 
     <!-- Fixed WhatsApp Button -->
-    <a href="https://wa.me/201553383000" target="_blank" rel="noopener noreferrer" class="whatsapp-fixed"
+    <a href="https://wa.me/201005877285" target="_blank" rel="noopener noreferrer" class="whatsapp-fixed"
         aria-label="{{ __('Chat with Egypt Tour Pro on WhatsApp') }}">
         <i class="lab la-whatsapp" aria-hidden="true"></i>
     </a>
