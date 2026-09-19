@@ -79,8 +79,8 @@ class ContactController extends BaseWebsiteController
                     'icon' => 'la la-envelope',
                     'title' => __('Email'),
                     'lines' => [
-                        'info@etrotours.com',
-                        'reservations@etrotours.com',
+                        'info@egypttourpro.com',
+                        'reservations@egypttourpro.com',
                     ],
                     'type' => 'email',
                 ],

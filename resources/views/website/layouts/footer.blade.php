@@ -22,9 +22,7 @@
                     <li><i class="lab la-whatsapp" style="color: var(--etp-orange-500); margin-right: 8px;"></i><a
                             href="https://wa.me/201" target="_blank" rel="noopener noreferrer">+20</a></li>
                     <li><i class="la la-envelope" style="color: var(--etp-orange-500); margin-right: 8px;"></i><a
-                            href="mailto:info@etrotours.com">#</a></li>
-                    <li><i class="la la-envelope" style="color: var(--etp-orange-500); margin-right: 8px;"></i><a
-                            href="mailto:#">#</a></li>
+                            href="mailto:info@egypttourpro.com">info@egypttourpro.com</a></li>
                 </ul>
             </div>
 
