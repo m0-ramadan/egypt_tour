@@ -58,9 +58,6 @@
             'name' => $siteName,
             'url' => $siteUrl,
             'logo' => $logoUrl,
-            'image' => $logoUrl,
-            'telephone' => '+1-917-267-8628',
-            'email' => 'info@etrotours.com',
             'telephone' => '+20 15 53383000',
             'email' => 'info@egypttourpro.com',
             'address' => [

@@ -1056,9 +1056,6 @@
 
                                     <div class="contact-info">
                                         <p>{{ __('Speak with our travel experts') }}</p>
-                                        <p><a href="tel:+201553383000">+20</a></p>
-                                        <p><a href="mailto:reservations@etrotours.com">reservations@egypttourpro.com</a>
-                                        </p>
                                         <p><a href="mailto:reservations@egypttourpro.com">reservations@egypttourpro.com</a>
                                         </p>
                                     </div>

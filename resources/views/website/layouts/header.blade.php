@@ -3,7 +3,6 @@
     $dayToursUrl = route('website.day_tours.index');
     $shoreExcursionsUrl = route('website.tours.all', ['type' => 'shore_excursion']);
     $tailorMadeUrl = route('website.tailor_made.index');
-    $contactEmail = 'info@etrotours.com';
     $contactEmail = 'info@egypttourpro.com';
     $navigationDestinations = collect($navigationDestinations ?? []);
     $isHomePage = request()->routeIs('website.home');
