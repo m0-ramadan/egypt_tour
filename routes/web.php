@@ -179,8 +179,8 @@ Route::name('website.')->group(function () {
         Route::get('/{categorySlug}/{slug}', [BlogController::class, 'show'])
             ->name('show.legacy');
     });
-    Route::get('blog/{slug}', [BlogController::class, 'category'])
-        ->name('blogs.category');
+    Route::get('/blog/{slug}', [BlogController::class, 'show']);
+    Route::get('/blog/{categorySlug}/{slug}', [BlogController::class, 'show']);
     // Route::get('/blogs', [BlogController::class, 'index'])
     //     ->name('blogs');
 
@@ -289,6 +289,14 @@ Route::name('website.')->group(function () {
     Route::get('/{slug}', [PageController::class, 'show'])
         ->where('slug', '[A-Za-z0-9\-]+')
         ->name('pages.show');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fallback Legacy URLs Handler (SEO Preservation 301 Redirects)
+    |--------------------------------------------------------------------------
+    */
+    Route::fallback([\App\Http\Controllers\Website\LegacyRedirectController::class, 'handle'])
+        ->name('legacy.fallback');
 });
 
 

@@ -151,7 +151,7 @@ class ExternalTourImageDownloader
         foreach ($uniqueUrls as $url) {
             $lower = strtolower($url);
 
-            if (str_starts_with($lower, 'data:')) {
+            if (str_starts_with($lower, 'data:') || str_contains($lower, 'schema.org') || str_contains($lower, 'imageobject')) {
                 continue;
             }
 

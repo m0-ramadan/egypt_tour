@@ -17,7 +17,11 @@ class PageController extends BaseWebsiteController
         $page = Page::query()
             ->publiclyVisible()
             ->where('slug', $slug)
-            ->firstOrFail();
+            ->first();
+
+        if (!$page) {
+            return app(\App\Http\Controllers\Website\LegacyRedirectController::class)->handle(request());
+        }
 
         if ($page->slug === 'contact-us') {
             return redirect()->route('website.contact.index');

@@ -355,7 +355,7 @@ abstract class BaseWebsiteController extends Controller
 
     protected function imageUrl(?string $path, ?string $fallback = null): string
     {
-        $fallback = $fallback ?: asset('website/photos/home2.webp');
+        $fallback = $fallback ?: '/website/photos/home2.webp';
 
         if (!$path) {
             return $fallback;
@@ -370,21 +370,21 @@ abstract class BaseWebsiteController extends Controller
         if (Str::startsWith($path, 'storage/')) {
             $storagePath = Str::after($path, 'storage/');
 
-            return Storage::disk('public')->exists($storagePath) || file_exists(public_path($path))
-                ? asset($path)
+            return (Storage::disk('public')->exists($storagePath) || file_exists(public_path($path)))
+                ? '/' . $path
                 : $fallback;
         }
 
-        if (Str::startsWith($path, 'website/')) {
-            return file_exists(public_path($path)) ? asset($path) : $fallback;
+        if (Str::startsWith($path, ['website/', 'images/'])) {
+            return file_exists(public_path($path)) ? '/' . $path : $fallback;
         }
 
-        if (Storage::disk('public')->exists($path)) {
-            return asset('storage/' . $path);
+        if (Storage::disk('public')->exists($path) || file_exists(public_path('storage/' . $path))) {
+            return '/storage/' . $path;
         }
 
         if (file_exists(public_path($path))) {
-            return asset($path);
+            return '/' . $path;
         }
 
         return $fallback;

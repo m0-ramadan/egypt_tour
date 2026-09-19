@@ -8,6 +8,13 @@ class LocaleNormalizer
         'english' => 'en',
         'en-us' => 'en',
         'en_us' => 'en',
+        'french' => 'fr',
+        'fr-fr' => 'fr',
+        'fr_fr' => 'fr',
+        'german' => 'de',
+        'ge' => 'de',
+        'de-de' => 'de',
+        'de_de' => 'de',
         'arabic' => 'ar',
         'ar-eg' => 'ar',
         'ar_eg' => 'ar',
@@ -44,7 +51,7 @@ class LocaleNormalizer
     public function normalizeList(array $locales): array
     {
         return array_values(array_unique(array_map(
-            fn (mixed $locale): string => $this->normalize((string) $locale),
+            fn(mixed $locale): string => $this->normalize((string) $locale),
             $locales
         )));
     }

@@ -18,7 +18,7 @@ if (!function_exists('get_user_image')) {
             return $image;
         }
         // الرابط نسبي في قاعدة البيانات
-        return asset('storage/' . $image);
+        return '/' . ltrim($image, '/');
     }
 }
 
@@ -46,7 +46,7 @@ if (!function_exists('get_product_image')) {
         }
 
         // صورة مخزنة محليًا
-        return asset('storage/' . ltrim($image, '/'));
+        return '/' . ltrim($image, '/');
     }
 }
 

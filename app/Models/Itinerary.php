@@ -79,4 +79,27 @@ class Itinerary extends Model
     {
         return $this->translatedValue('title');
     }
+
+    public function getDisplayDescriptionAttribute(): string
+    {
+        return $this->translatedValue('description');
+    }
+
+    public function getDisplayActivitiesListAttribute(): array
+    {
+        $val = $this->getAttribute('activities');
+        if (is_array($val)) {
+            $locale = app()->getLocale();
+            if (isset($val[$locale]) && is_array($val[$locale])) {
+                return $val[$locale];
+            }
+            if (isset($val['en']) && is_array($val['en'])) {
+                return $val['en'];
+            }
+            foreach ($val as $arr) {
+                if (is_array($arr)) return $arr;
+            }
+        }
+        return [];
+    }
 }

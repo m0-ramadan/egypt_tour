@@ -34,8 +34,9 @@ class TripController extends BaseWebsiteController
         return view('website.pages.trips.index', compact('packages'));
     }
 
-    public function show(string $slug)
+    public function show(string $countryOrSlug, ?string $slug = null)
     {
+        $slug = $slug ?? $countryOrSlug;
         $package = Package::query()
             ->with([
                 'currency',
@@ -191,6 +192,7 @@ class TripController extends BaseWebsiteController
                     ->values();
                 return $item;
             })
+            ->filter(fn($item) => $item->display_title !== '' || $item->display_description !== '' || $item->display_activities->isNotEmpty())
             ->values();
 
         $highlights = $package->highlights
