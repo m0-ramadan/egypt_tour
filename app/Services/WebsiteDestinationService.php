@@ -54,7 +54,7 @@ class WebsiteDestinationService
     protected function imageUrl(?string $path, string $fallback): string
     {
         if (!$path) {
-            return asset($fallback);
+            return '/' . ltrim($fallback, '/');
         }
 
         if (Str::startsWith($path, ['http://', 'https://'])) {
@@ -64,13 +64,13 @@ class WebsiteDestinationService
         $path = ltrim($path, '/');
 
         if (Str::startsWith($path, ['storage/', 'website/', 'images/'])) {
-            return asset($path);
+            return '/' . $path;
         }
 
         if (Storage::disk('public')->exists($path)) {
-            return asset('storage/' . $path);
+            return '/storage/' . $path;
         }
 
-        return asset($path);
+        return '/' . $path;
     }
 }

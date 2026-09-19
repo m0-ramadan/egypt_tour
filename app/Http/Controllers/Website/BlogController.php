@@ -43,7 +43,7 @@ class BlogController extends Controller
                 });
             })
             ->latest('published_at')
-            ->paginate(12)
+            ->paginate(10)
             ->withQueryString();
 
         $popularArticles = Article::query()
@@ -77,7 +77,11 @@ class BlogController extends Controller
             ->active()
             ->published()
             ->where('slug', $articleSlug)
-            ->firstOrFail();
+            ->first();
+
+        if (!$article) {
+            return app(\App\Http\Controllers\Website\LegacyRedirectController::class)->handle(request());
+        }
 
         if (
             $requestedCategorySlug !== null &&
@@ -139,7 +143,7 @@ class BlogController extends Controller
             ->published()
             ->where('category_id', $category->id)
             ->latest('published_at')
-            ->paginate(12);
+            ->paginate(10);
 
         return view('website.pages.blogs.index', compact('articles', 'category'));
     }

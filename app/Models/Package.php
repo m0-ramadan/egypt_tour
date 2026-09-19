@@ -515,10 +515,10 @@ class Package extends Model
                 return $path;
             }
             if (file_exists(public_path($path))) {
-                return asset($path);
+                return '/' . $path;
             }
             if (file_exists(public_path('storage/' . $path))) {
-                return asset('storage/' . $path);
+                return '/storage/' . $path;
             }
         }
 
@@ -531,10 +531,10 @@ class Package extends Model
                     if ($p) {
                         $p = ltrim((string) $p, '/');
                         if (file_exists(public_path($p))) {
-                            return asset($p);
+                            return '/' . $p;
                         }
                         if (file_exists(public_path('storage/' . $p))) {
-                            return asset('storage/' . $p);
+                            return '/storage/' . $p;
                         }
                     }
                 }
@@ -548,10 +548,10 @@ class Package extends Model
             if ($this->nileCruiseType?->image_url) {
                 return $this->nileCruiseType->image_url;
             }
-            return asset('website/images/nile-cruises/luxor-aswan.jpg');
+            return '/website/images/nile-cruises/luxor-aswan.jpg';
         }
 
-        return asset('website/photos/home2.webp');
+        return '/website/photos/home2.webp';
     }
 
     public function getGroupPricingTiersAttribute(): array

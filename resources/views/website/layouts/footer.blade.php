@@ -70,9 +70,10 @@
                     </div>
                     <div class="award-image-container">
 
-                        <img loading="lazy" decoding="async" width="1009" height="1031"
-                            src="{{ request()->root() }}/website/photos/tripadvisor/TA2026.png"
-                            alt="{{ __('Tripadvisor 2026 Travelers\' Choice Award') }}" class="award-image">
+                        <img loading="lazy" decoding="async" width="500" height="500"
+                            src="{{ asset('website/photos/google-reviews-badge.jpg') }}"
+                            alt="{{ __('Google Reviews Rating') }}" class="award-image"
+                            style="border-radius: 12px; max-width: 160px; margin: 0 auto; display: block;">
                         <div class="award-glow"></div>
                     </div>
                     <div class="award-content">

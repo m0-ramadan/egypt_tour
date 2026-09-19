@@ -10,13 +10,17 @@ use Illuminate\View\View;
 
 class AttractionController extends BaseWebsiteController
 {
-    public function show(Request $request, string $slug): View
+    public function show(Request $request, string $slug): View|\Illuminate\Http\RedirectResponse
     {
         $attraction = Attraction::query()
             ->with(['city.country'])
             ->where('slug', $slug)
             ->where('is_active', true)
-            ->firstOrFail();
+            ->first();
+
+        if (!$attraction) {
+            return app(\App\Http\Controllers\Website\LegacyRedirectController::class)->handle($request);
+        }
 
         $packages = Package::query()
             ->with(['currency', 'primaryCountry', 'highlights', 'tags', 'cruise', 'category'])
@@ -38,7 +42,7 @@ class AttractionController extends BaseWebsiteController
             ->withQueryString();
 
         $packages->getCollection()->transform(
-            fn (Package $package) => $this->packageListingCard($package)
+            fn(Package $package) => $this->packageListingCard($package)
         );
 
         $relatedAttractions = Attraction::query()

@@ -2063,3 +2063,69 @@ html[data-theme="dark"] .nc-media-box {
     background: transparent !important;
     border: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
+
+/* Dark Mode Overrides for Booking Widget & Forms */
+html[data-theme="dark"] .room-group-container {
+    background: #232323 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+html[data-theme="dark"] .room-header {
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html[data-theme="dark"] .room-title {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .room-inline-label {
+    color: #d6d0c8 !important;
+}
+
+html[data-theme="dark"] .age-info {
+    color: #aaa39b !important;
+}
+
+html[data-theme="dark"] .select-inline,
+html[data-theme="dark"] .tp-room-acc-select,
+html[data-theme="dark"] .tp-adult-select,
+html[data-theme="dark"] .tp-child-select,
+html[data-theme="dark"] .form-select.select-inline {
+    background-color: #181818 !important;
+    color: #f8fafc !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+html[data-theme="dark"] .select-inline option,
+html[data-theme="dark"] .tp-room-acc-select option,
+html[data-theme="dark"] .tp-adult-select option,
+html[data-theme="dark"] .tp-child-select option {
+    background-color: #181818 !important;
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .tp-price-summary-box {
+    background: #232323 !important;
+    border-color: rgba(243, 107, 10, 0.4) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-theme="dark"] .tp-price-summary-header {
+    color: #f8fafc !important;
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html[data-theme="dark"] .tp-price-row {
+    color: #d6d0c8 !important;
+}
+
+html[data-theme="dark"] .tp-price-row strong,
+html[data-theme="dark"] #tp_displayBalance {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .tp-price-summary-box .text-muted,
+html[data-theme="dark"] .tp-price-summary-box small {
+    color: #aaa39b !important;
+}

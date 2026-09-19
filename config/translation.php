@@ -13,8 +13,8 @@ return [
     'log_cooldown' => max(60, (int) env('TRANSLATION_LOG_COOLDOWN', 3600)),
     'source_locale' => env('TRANSLATION_SOURCE_LOCALE', 'en'),
     'supported_locales' => array_values(array_filter(array_map(
-        static fn (string $locale): string => strtolower(trim($locale)),
-        explode(',', (string) env('TRANSLATION_SUPPORTED_LOCALES', 'en,ar'))
+        static fn(string $locale): string => strtolower(trim($locale)),
+        explode(',', (string) env('TRANSLATION_SUPPORTED_LOCALES', 'en,fr,de'))
     ))),
     'lang_path' => env('TRANSLATION_LANG_PATH', 'lang'),
     'legacy_admin_html_enabled' => (bool) env('TRANSLATION_LEGACY_ADMIN_HTML_ENABLED', true),

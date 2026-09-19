@@ -39,7 +39,8 @@
     $title,
     $tourTypeText ?? null,
     $package->primaryCountry?->display_name ?? null,
-    'Egypt Tour Pro',
+    'Egypt Tour
+    Pro',
     ])->filter()->implode(', '),
     ', ',
     ))
@@ -1893,6 +1894,230 @@
             color: #a0aec0;
         }
 
+        /* Attraction Details Modal */
+        .attraction-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 27, 62, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .attraction-modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .attraction-modal-card {
+            background: #ffffff;
+            border-radius: 24px;
+            max-width: 540px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            transform: scale(0.92) translateY(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .attraction-modal-overlay.open .attraction-modal-card {
+            transform: scale(1) translateY(0);
+        }
+
+        .attraction-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        html[dir="rtl"] .attraction-modal-close,
+        body.rtl .attraction-modal-close {
+            right: auto;
+            left: 16px;
+        }
+
+        .attraction-modal-close:hover {
+            background: #F36B0A;
+            transform: rotate(90deg);
+        }
+
+        .attraction-modal-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background: #f1f5f9;
+            flex-shrink: 0;
+        }
+
+        .attraction-modal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .attraction-modal-body {
+            padding: 22px 24px 24px;
+            overflow-y: auto;
+        }
+
+        .attraction-modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #061B3E;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .attraction-modal-teaser {
+            font-size: 0.95rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .attraction-modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(6, 27, 62, 0.08);
+        }
+
+        .attraction-modal-btn-more {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #F36B0A 0%, #e05a00 100%);
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 12px 26px;
+            border-radius: 12px;
+            text-decoration: none !important;
+            box-shadow: 0 4px 15px rgba(243, 107, 10, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .attraction-modal-btn-more:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(243, 107, 10, 0.45);
+            background: linear-gradient(135deg, #ff7819 0%, #F36B0A 100%);
+        }
+
+        @media (max-width: 767.98px) {
+            .attraction-modal-overlay {
+                padding: 14px;
+            }
+
+            .attraction-modal-card {
+                border-radius: 20px;
+                max-height: 88vh;
+            }
+
+            .attraction-modal-img-wrap {
+                height: 200px;
+            }
+
+            .attraction-modal-body {
+                padding: 18px 20px 20px;
+            }
+
+            .attraction-modal-title {
+                font-size: 1.25rem;
+            }
+
+            .attraction-modal-teaser {
+                font-size: 0.9rem;
+                margin-bottom: 16px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .attraction-modal-overlay {
+                padding: 10px;
+            }
+
+            .attraction-modal-card {
+                border-radius: 16px;
+                max-height: 85vh;
+            }
+
+            .attraction-modal-img-wrap {
+                height: 170px;
+            }
+
+            .attraction-modal-body {
+                padding: 14px 16px 16px;
+            }
+
+            .attraction-modal-title {
+                font-size: 1.15rem;
+                margin-bottom: 6px;
+            }
+
+            .attraction-modal-teaser {
+                font-size: 0.85rem;
+                line-height: 1.5;
+                margin-bottom: 14px;
+            }
+
+            .attraction-modal-footer {
+                padding-top: 12px;
+            }
+
+            .attraction-modal-btn-more {
+                width: 100%;
+                padding: 10px 16px;
+                font-size: 0.88rem;
+            }
+        }
+
+        html[data-theme='dark'] .attraction-modal-card {
+            background: #1a233a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        html[data-theme='dark'] .attraction-modal-title {
+            color: #ffffff;
+        }
+
+        html[data-theme='dark'] .attraction-modal-teaser {
+            color: #cbd5e0;
+        }
+
+        html[data-theme='dark'] .attraction-modal-footer {
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
         html[data-theme='dark'] .pricing-showcase {
             background: #111827;
             border-color: rgba(243, 107, 10, 0.3);
@@ -2175,8 +2400,8 @@
 
 
         /* =========================================================
-                               Nile Cruise body redesign — body only, shared header/footer untouched
-                               ========================================================= */
+                                                           Nile Cruise body redesign — body only, shared header/footer untouched
+                                                           ========================================================= */
         .nile-cruise-page .main-container {
             background:
                 radial-gradient(circle at 8% 8%, rgba(215, 239, 250, .58), transparent 34%),
@@ -2918,24 +3143,40 @@
 
         @media (max-width: 576px) {
             .attractions-highlight-section {
-                padding: 24px 16px;
-                border-radius: 20px;
+                padding: 20px 12px;
+                border-radius: 18px;
+            }
+
+            .attractions-highlight-list {
+                grid-template-columns: 1fr;
+                gap: 10px;
             }
 
             .attraction-highlight-card {
-                padding: 14px 16px;
-                gap: 14px;
+                padding: 10px 12px;
+                gap: 12px;
+                border-radius: 14px;
+                width: 100%;
+                box-sizing: border-box;
             }
 
             .attraction-highlight-img {
-                width: 54px;
-                height: 54px;
-                min-width: 54px;
-                border-radius: 12px;
+                width: 50px;
+                height: 50px;
+                min-width: 50px;
+                border-radius: 10px;
             }
 
             .attraction-highlight-name {
-                font-size: 1rem;
+                font-size: 0.95rem;
+            }
+
+            .attraction-highlight-sub {
+                font-size: 0.8rem;
+            }
+
+            .attraction-highlight-arrow {
+                font-size: 1.1rem;
             }
         }
 
@@ -3642,17 +3883,26 @@
                                             $target = '_self';
                                         }
 
-                                        if ($attraction->image) {
-                                            $imgSrc = asset('storage/' . ltrim($attraction->image, '/'));
-                                        } elseif ($attractionModel && $attractionModel->image) {
-                                            $imgSrc = asset('storage/' . ltrim($attractionModel->image, '/'));
+                                        $rawImg = $attraction->image ?: $attractionModel?->image;
+                                        if ($rawImg) {
+                                            $rawImg = ltrim($rawImg, '/');
+                                            if (Str::startsWith($rawImg, ['http://', 'https://'])) {
+                                                $imgSrc = $rawImg;
+                                            } elseif (Str::startsWith($rawImg, 'storage/')) {
+                                                $imgSrc = '/' . $rawImg;
+                                            } else {
+                                                $imgSrc = '/storage/' . $rawImg;
+                                            }
                                         } else {
-                                            $imgSrc = asset('website/photos/home2.webp');
+                                            $imgSrc = '/website/photos/home2.webp';
                                         }
                                     @endphp
-                                    <a href="{{ $attractionUrl }}" target="{{ $target }}"
-                                        class="attraction-highlight-card"
-                                        @if ($target === '_blank') rel="noopener noreferrer" @endif>
+                                    <button type="button" class="attraction-highlight-card js-attraction-modal-trigger"
+                                        data-attraction-title="{{ $attractionTitle }}"
+                                        data-attraction-teaser="{{ strip_tags((string) $attractionTeaser) }}"
+                                        data-attraction-img="{{ $imgSrc }}"
+                                        data-attraction-url="{{ $attractionUrl }}"
+                                        data-attraction-target="{{ $target }}">
                                         <img src="{{ $imgSrc }}" alt="{{ $attractionTitle }}"
                                             class="attraction-highlight-img" loading="lazy">
                                         <div class="attraction-highlight-content">
@@ -3663,7 +3913,7 @@
                                             <i
                                                 class="la {{ app()->getLocale() === 'ar' ? 'la-angle-left' : 'la-angle-right' }}"></i>
                                         </div>
-                                    </a>
+                                    </button>
                                 @endforeach
                             </div>
                         </section>
@@ -3714,40 +3964,22 @@
                                             id="day-{{ $day->id }}">
                                             <div class="day-content">
                                                 @if ($day->display_description)
-                                                    {!! nl2br(e($day->display_description)) !!}
+                                                    {!! $day->display_description !!}
                                                 @endif
 
-                                                @if (
-                                                    $package->package_type === 'travel_package' &&
-                                                        ($day->display_activities ?? collect())->isNotEmpty() &&
-                                                        ($package->itinerary_mode ?? 'simple') === 'advanced')
-                                                    <div class="mt-3">
-                                                        @foreach ($day->display_activities as $activity)
-                                                            <div class="nc-activity">
-                                                                <div class="d-flex flex-wrap align-items-center gap-2">
-                                                                    @if ($activity['time'])
-                                                                        <span class="meal-badge"><i
-                                                                                class="la la-clock"></i>
-                                                                            {{ substr($activity['time'], 0, 5) }}</span>
-                                                                    @endif
-                                                                    @if ($activity['title'])
-                                                                        <strong>{{ $activity['title'] }}</strong>
-                                                                    @endif
-                                                                    @if ($activity['location'])
-                                                                        <span class="price-meta"><i
-                                                                                class="la la-map-marker"></i>
-                                                                            {{ $activity['location'] }}</span>
-                                                                    @endif
-                                                                    @if ($activity['duration'])
-                                                                        <span
-                                                                            class="price-meta">{{ $activity['duration'] }}</span>
-                                                                    @endif
-                                                                </div>
-                                                                @if ($activity['description'])
-                                                                    <div class="mt-1">{!! nl2br(e($activity['description'])) !!}</div>
-                                                                @endif
-                                                            </div>
-                                                        @endforeach
+                                                @if (!empty($day->display_activities_list))
+                                                    <div class="mt-3 p-3 rounded"
+                                                        style="background: rgba(243, 107, 10, 0.05); border: 1px solid rgba(243, 107, 10, 0.2);">
+                                                        <span class="d-block mb-2"
+                                                            style="font-size: 13px; font-weight: 700; color: #F36B0A;">{{ __('Activities') }}</span>
+                                                        <div class="d-flex flex-wrap gap-2">
+                                                            @foreach ($day->display_activities_list as $actName)
+                                                                <span class="badge"
+                                                                    style="background: #F36B0A; color: #ffffff; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 20px;">
+                                                                    {{ $actName }}
+                                                                </span>
+                                                            @endforeach
+                                                        </div>
                                                     </div>
                                                 @endif
 
@@ -3913,7 +4145,7 @@
                                         <div class="group-tier-card">
                                             <div class="group-tier-header">
                                                 <div>
-                                                    <h3 class="group-tier-title">{{ $tierLabel ?: __('Group Price') }}
+                                                    <h3 class="group-tier-title">{{ __($tierLabel) ?: __('Group Price') }}
                                                     </h3>
                                                     <span class="group-tier-pax-tag">{{ $personsLabel }}</span>
                                                 </div>
@@ -4690,6 +4922,27 @@
             </div>
         </div>
     </div>
+
+    <!-- Attraction Details Modal -->
+    <div class="attraction-modal-overlay" id="attractionModalOverlay" aria-hidden="true">
+        <div class="attraction-modal-card" role="dialog" aria-modal="true">
+            <button type="button" class="attraction-modal-close" id="attractionModalClose"
+                aria-label="{{ __('Close') }}">×</button>
+            <div class="attraction-modal-img-wrap">
+                <img src="" alt="" class="attraction-modal-img" id="attractionModalImg">
+            </div>
+            <div class="attraction-modal-body">
+                <h3 class="attraction-modal-title" id="attractionModalTitle"></h3>
+                <p class="attraction-modal-teaser" id="attractionModalTeaser"></p>
+                <div class="attraction-modal-footer">
+                    <a href="#" class="attraction-modal-btn-more" id="attractionModalBtnMore">
+                        <span>{{ __('Learn More') }}</span>
+                        <i class="la {{ app()->getLocale() === 'ar' ? 'la-arrow-left' : 'la-arrow-right' }}"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')
@@ -4707,6 +4960,72 @@
         };
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Attraction Details Modal Script
+            const attractionModal = document.getElementById('attractionModalOverlay');
+            const attractionModalImg = document.getElementById('attractionModalImg');
+            const attractionModalTitle = document.getElementById('attractionModalTitle');
+            const attractionModalTeaser = document.getElementById('attractionModalTeaser');
+            const attractionModalBtnMore = document.getElementById('attractionModalBtnMore');
+            const attractionModalClose = document.getElementById('attractionModalClose');
+
+            if (attractionModal) {
+                const openAttractionModal = (data) => {
+                    if (attractionModalImg) {
+                        attractionModalImg.src = data.img;
+                        attractionModalImg.alt = data.title;
+                    }
+                    if (attractionModalTitle) attractionModalTitle.textContent = data.title;
+                    if (attractionModalTeaser) attractionModalTeaser.textContent = data.teaser;
+                    if (attractionModalBtnMore) {
+                        attractionModalBtnMore.href = data.url;
+                        attractionModalBtnMore.target = data.target || '_self';
+                    }
+
+                    attractionModal.classList.add('open');
+                    attractionModal.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                };
+
+                const closeAttractionModal = () => {
+                    attractionModal.classList.remove('open');
+                    attractionModal.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                };
+
+                document.querySelectorAll('.js-attraction-modal-trigger').forEach((trigger) => {
+                    trigger.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openAttractionModal({
+                            title: this.dataset.attractionTitle || '',
+                            teaser: this.dataset.attractionTeaser || '',
+                            img: this.dataset.attractionImg || '',
+                            url: this.dataset.attractionUrl || '#',
+                            target: this.dataset.attractionTarget || '_self'
+                        });
+                    });
+                });
+
+                if (attractionModalClose) {
+                    attractionModalClose.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        closeAttractionModal();
+                    });
+                }
+
+                attractionModal.addEventListener('click', function(e) {
+                    if (e.target === attractionModal) {
+                        closeAttractionModal();
+                    }
+                });
+
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && attractionModal.classList.contains('open')) {
+                        closeAttractionModal();
+                    }
+                });
+            }
+
             const reserveTabs = document.querySelectorAll('[data-reserve-tab]');
             const reserveBookingPanel = document.getElementById('reserveBookingPanel');
             const reserveEnquiryPanel = document.getElementById('reserveEnquiryPanel');
@@ -4803,7 +5122,7 @@
                     const toIso = date => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(
                         date.getDate()).padStart(2, '0')].join('-');
                     const isAvailable = date => date >= minDate && (daily || allowedIndexes.includes(date
-                .getDay()));
+                        .getDay()));
                     const renderCalendar = () => {
                         const locale = document.documentElement.lang || 'en';
                         title.textContent = viewedMonth.toLocaleDateString(locale, {
@@ -4904,7 +5223,7 @@
                         if (available && !firstAvailable) firstAvailable = input;
                         if (available) {
                             if (!bestOption || (min > 0 && Number(bestOption.dataset.paxMin || 0) ===
-                                0)) {
+                                    0)) {
                                 bestOption = input;
                             }
                         }
@@ -5092,20 +5411,20 @@
                         });
 
                         const roomHtml = `
-                                    <div class="room-group-container mb-2 p-3 rounded" style="background: #fff; border: 1px solid rgba(6, 27, 62, 0.12); box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
-                                        <div class="room-header d-flex justify-content-between align-items-center mb-2" style="border-bottom: 1px dashed rgba(6, 27, 62, 0.1); padding-bottom: 6px;">
-                                            <h6 class="room-title mb-0" style="font-weight: 700; color: #061B3E; font-size: 14.5px;">{{ __('Room') }} ${i}</h6>
+                                    <div class="room-group-container mb-2 p-3 rounded">
+                                        <div class="room-header d-flex justify-content-between align-items-center mb-2" style="padding-bottom: 6px;">
+                                            <h6 class="room-title mb-0" style="font-weight: 700; font-size: 14.5px;">{{ __('Room') }} ${i}</h6>
                                             <span class="room-price-badge" id="tp_room_${i}_priceTag">$0.00</span>
                                         </div>
                                         <div class="input-box mb-2">
-                                            <label class="room-inline-label" style="font-size: 12px; font-weight: 600; color: #4b5563; margin-bottom: 4px; display: block;">{{ __('Accommodations Type') }} *</label>
+                                            <label class="room-inline-label">{{ __('Accommodations Type') }} *</label>
                                             <select name="room_${i}_accommodation" class="form-select select-inline tp-room-acc-select" required style="border-radius: 8px; font-size: 13px; height: 38px;">
                                                 ${accOptions}
                                             </select>
                                         </div>
                                         <div class="room-inline-row d-flex gap-2">
                                             <div class="room-inline-option flex-fill">
-                                                <label class="room-inline-label" style="font-size: 12px; font-weight: 600; color: #4b5563; margin-bottom: 4px; display: block;">{{ __('Adults') }} <span class="age-info">(+12)</span></label>
+                                                <label class="room-inline-label">{{ __('Adults') }} <span class="age-info">(+12)</span></label>
                                                 <select name="room_${i}_adults" class="form-select select-inline tp-adult-select" autocomplete="off" style="border-radius: 8px; font-size: 13px; height: 38px;">
                                                     <option value="1" ${selectedAdults === 1 ? 'selected' : ''}>1</option>
                                                     <option value="2" ${selectedAdults === 2 ? 'selected' : ''}>2</option>
@@ -5113,7 +5432,7 @@
                                                 </select>
                                             </div>
                                             <div class="room-inline-option flex-fill">
-                                                <label class="room-inline-label" style="font-size: 12px; font-weight: 600; color: #4b5563; margin-bottom: 4px; display: block;">{{ __('Children') }} <span class="age-info">(2-11)</span></label>
+                                                <label class="room-inline-label">{{ __('Children') }} <span class="age-info">(2-11)</span></label>
                                                 <select name="room_${i}_children" class="form-select select-inline tp-child-select" autocomplete="off" style="border-radius: 8px; font-size: 13px; height: 38px;">
                                                     <option value="0" ${selectedChildren === 0 ? 'selected' : ''}>0</option>
                                                     <option value="1" ${selectedChildren === 1 ? 'selected' : ''}>1</option>
@@ -5332,87 +5651,77 @@
             const galleryImages = @json(array_values($gallery ?? []));
             const lightbox = document.getElementById('galleryLightbox');
 
-            if (!lightbox || !galleryImages.length) {
-                return;
-            }
+            if (lightbox && galleryImages.length) {
+                const lightboxImage = document.getElementById('galleryLightboxImage');
+                const lightboxCounter = document.getElementById('galleryLightboxCounter');
+                const closeButton = document.getElementById('galleryLightboxClose');
+                const prevButton = document.getElementById('galleryLightboxPrev');
+                const nextButton = document.getElementById('galleryLightboxNext');
+                const triggers = document.querySelectorAll('.js-gallery-trigger');
+                let currentIndex = 0;
 
-            const lightboxImage = document.getElementById('galleryLightboxImage');
-            const lightboxCounter = document.getElementById(
-                'galleryLightboxCounter');
-            const closeButton = document.getElementById('galleryLightboxClose');
-            const prevButton = document.getElementById('galleryLightboxPrev');
-            const nextButton = document.getElementById('galleryLightboxNext');
-            const triggers = document.querySelectorAll('.js-gallery-trigger');
-            let currentIndex = 0;
+                const updateLightbox = () => {
+                    lightboxImage.src = galleryImages[currentIndex];
+                    lightboxCounter.textContent = `${currentIndex + 1} / ${galleryImages.length}`;
+                    prevButton.style.display = galleryImages.length > 1 ? 'inline-flex' : 'none';
+                    nextButton.style.display = galleryImages.length > 1 ? 'inline-flex' : 'none';
+                };
 
-            const updateLightbox = () => {
-                lightboxImage.src = galleryImages[currentIndex];
-                lightboxCounter.textContent =
-                    `${currentIndex + 1} / ${galleryImages.length}`;
-                prevButton.style.display = galleryImages.length > 1 ?
-                    'inline-flex' : 'none';
-                nextButton.style.display = galleryImages.length > 1 ?
-                    'inline-flex' : 'none';
-            };
+                const openLightbox = (index) => {
+                    currentIndex = index;
+                    updateLightbox();
+                    lightbox.classList.add('open');
+                    lightbox.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                };
 
-            const openLightbox = (index) => {
-                currentIndex = index;
-                updateLightbox();
-                lightbox.classList.add('open');
-                lightbox.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden';
-            };
+                const closeLightbox = () => {
+                    lightbox.classList.remove('open');
+                    lightbox.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                };
 
-            const closeLightbox = () => {
-                lightbox.classList.remove('open');
-                lightbox.setAttribute('aria-hidden', 'true');
-                document.body.style.overflow = '';
-            };
+                const showNext = () => {
+                    currentIndex = (currentIndex + 1) % galleryImages.length;
+                    updateLightbox();
+                };
 
-            const showNext = () => {
-                currentIndex = (currentIndex + 1) % galleryImages.length;
-                updateLightbox();
-            };
+                const showPrev = () => {
+                    currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+                    updateLightbox();
+                };
 
-            const showPrev = () => {
-                currentIndex = (currentIndex - 1 + galleryImages.length) %
-                    galleryImages.length;
-                updateLightbox();
-            };
-
-            triggers.forEach((trigger) => {
-                trigger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openLightbox(Number(this.dataset.galleryIndex ||
-                        0));
+                triggers.forEach((trigger) => {
+                    trigger.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        openLightbox(Number(this.dataset.galleryIndex || 0));
+                    });
                 });
-            });
 
-            closeButton.addEventListener('click', closeLightbox);
-            nextButton
-                .addEventListener('click', showNext);
-            prevButton.addEventListener(
-                'click', showPrev);
+                if (closeButton) closeButton.addEventListener('click', closeLightbox);
+                if (nextButton) nextButton.addEventListener('click', showNext);
+                if (prevButton) prevButton.addEventListener('click', showPrev);
 
-            lightbox.addEventListener('click', function(e) {
-                if (e.target === lightbox) {
-                    closeLightbox();
-                }
-            });
+                lightbox.addEventListener('click', function(e) {
+                    if (e.target === lightbox) {
+                        closeLightbox();
+                    }
+                });
 
-            document.addEventListener('keydown', function(e) {
-                if (!lightbox.classList.contains('open')) {
-                    return;
-                }
+                document.addEventListener('keydown', function(e) {
+                    if (!lightbox.classList.contains('open')) {
+                        return;
+                    }
 
-                if (e.key === 'Escape') {
-                    closeLightbox();
-                } else if (e.key === 'ArrowRight') {
-                    showNext();
-                } else if (e.key === 'ArrowLeft') {
-                    showPrev();
-                }
-            });
+                    if (e.key === 'Escape') {
+                        closeLightbox();
+                    } else if (e.key === 'ArrowRight') {
+                        showNext();
+                    } else if (e.key === 'ArrowLeft') {
+                        showPrev();
+                    }
+                });
+            }
         });
     </script>
 @endsection

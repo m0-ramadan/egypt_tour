@@ -21,7 +21,7 @@ return [
     */
     'allowed_hosts' => array_values(array_filter(array_map('trim', explode(
         ',',
-        env('TOUR_IMPORT_ALLOWED_HOSTS', 'luxorandaswan.com,www.luxorandaswan.com')
+        env('TOUR_IMPORT_ALLOWED_HOSTS', 'luxorandaswan.com,www.luxorandaswan.com,egypttourpro.com,www.egypttourpro.com')
     )))),
 
     /*

@@ -592,6 +592,10 @@
                     @forelse ($latestArticles as $article)
                         <div class="article-card reveal-up">
                             <div class="card-image">
+                                <div class="destination-watermark-logo">
+                                    <img src="{{ asset('website/logo/egypt-tour-pro-light.png') }}" alt="Egypt Tour Pro"
+                                        loading="lazy">
+                                </div>
                                 <a href="{{ $article['url'] }}">
                                     <img src="{{ $article['image'] }}" alt="{{ $article['title'] }}" width="800"
                                         height="500" loading="lazy" decoding="async">
@@ -620,6 +624,13 @@
                     @empty
                         <div class="empty-state">{{ __('No active articles found.') }}</div>
                     @endforelse
+                </div>
+
+                <div class="text-center mt-5 reveal-up">
+                    <a href="{{ route('website.blogs.index') }}" class="gold-btn btn-lg">
+                        {{ __('View All Articles') }}
+                        <i class="la la-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </section>

@@ -149,7 +149,7 @@
                             'active_languages',
                             3600,
                             function () {
-                                return \App\Models\Language::where('is_active', 1)->get();
+                                return \App\Models\Language::where('is_active', 1)->orderBy('sort_order')->get();
                             },
                         );
                     @endphp

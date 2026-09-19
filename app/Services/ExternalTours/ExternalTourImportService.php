@@ -160,7 +160,7 @@ class ExternalTourImportService
             throw new \RuntimeException('Source URL does not match the imported package.');
         }
 
-        return DB::transaction(fn () => app(NileCruiseItineraryImporter::class)
+        return DB::transaction(fn() => app(NileCruiseItineraryImporter::class)
             ->sync($package, $data['itinerary']));
     }
 
@@ -182,8 +182,8 @@ class ExternalTourImportService
                         continue;
                     }
                     // Verify prices too: ordering alone cannot identify a changed source season.
-                    $storedPrices = $season->items->mapWithKeys(fn ($item) => [$item->occupancy_type => (float) $item->price])->sortKeys()->all();
-                    $sourcePrices = collect($source['items'])->mapWithKeys(fn ($item) => [$item['occupancy_type'] => (float) $item['price']])->sortKeys()->all();
+                    $storedPrices = $season->items->mapWithKeys(fn($item) => [$item->occupancy_type => (float) $item->price])->sortKeys()->all();
+                    $sourcePrices = collect($source['items'])->mapWithKeys(fn($item) => [$item['occupancy_type'] => (float) $item['price']])->sortKeys()->all();
                     if ($storedPrices !== $sourcePrices) {
                         continue;
                     }
@@ -253,14 +253,16 @@ class ExternalTourImportService
     {
         $timeout = (int) config('tour_import.timeout', 30);
         $connectTimeout = (int) config('tour_import.connect_timeout', 10);
-        $userAgent = (string) config('tour_import.user_agent', 'TravelNest Tour Importer/1.0 (+https://travelnest.com)');
+        $userAgent = (string) config('tour_import.user_agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
 
         try {
             $response = Http::timeout($timeout)
                 ->connectTimeout($connectTimeout)
                 ->withUserAgent($userAgent)
+                ->withOptions(['allow_redirects' => true])
                 ->withHeaders([
-                    'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                    'Accept-Language' => 'en-US,en;q=0.9',
                 ])
                 ->get($url);
 
@@ -474,6 +476,9 @@ class ExternalTourImportService
     protected function findMatchingCity(string $name, $cities): ?City
     {
         $lower = strtolower(trim($name));
+        if ($lower === 'giza') {
+            $lower = 'cairo';
+        }
 
         // Exact match on English name or slug
         foreach ($cities as $city) {
@@ -483,10 +488,10 @@ class ExternalTourImportService
             }
         }
 
-        // Word boundary match
+        // Word boundary / substring match (minimum 3 chars to prevent false positives)
         foreach ($cities as $city) {
             $enName = strtolower(trim($city->getTranslation('name', 'en') ?: ''));
-            if (!empty($enName) && (str_contains($enName, $lower) || str_contains($lower, $enName))) {
+            if (!empty($enName) && strlen($enName) >= 3 && strlen($lower) >= 3 && (str_contains($enName, $lower) || str_contains($lower, $enName))) {
                 return $city;
             }
         }
@@ -647,8 +652,10 @@ class ExternalTourImportService
             // Keep a manual assignment when the source does not provide a usable classification.
             $packageAttributes[$field] = $taxonomy['nile_cruise'][$field] ?? $existingPackage?->{$field};
         }
-        if ($data['package_type'] !== 'nile_cruise' ||
-            ($existingPackage?->nile_cruise_type_id && $existingPackage->nile_cruise_type_id !== $packageAttributes['nile_cruise_type_id'])) {
+        if (
+            $data['package_type'] !== 'nile_cruise' ||
+            ($existingPackage?->nile_cruise_type_id && $existingPackage->nile_cruise_type_id !== $packageAttributes['nile_cruise_type_id'])
+        ) {
             $packageAttributes['nile_cruise_category_id'] = $taxonomy['nile_cruise']['nile_cruise_category_id'] ?? null;
         }
         if ($data['package_type'] !== 'nile_cruise') {
