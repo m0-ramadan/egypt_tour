@@ -33,6 +33,15 @@ class TourController extends BaseWebsiteController
 
     public function show(string $slug)
     {
+        $package = Package::query()
+            ->where('slug', $slug)
+            ->where('is_active', true)
+            ->first(['slug', 'package_type']);
+
+        if ($package && in_array($package->package_type, ['day_tour', 'shore_excursion'], true)) {
+            return redirect($this->packageRoute($package), 301);
+        }
+
         return app(TripController::class)->show($slug);
     }
 

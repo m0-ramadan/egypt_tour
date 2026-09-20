@@ -112,12 +112,18 @@ class TripController extends BaseWebsiteController
         $durationText = $this->packageDuration($package);
         $tourTypeText = $this->packageTourTypeLabel($package);
         $videoEmbedUrl = $this->videoEmbedUrl($package->video_url);
-        $listingUrl = in_array($package->package_type, ['day_tour', 'shore_excursion'], true)
-            ? route('website.tours.all')
-            : route('website.trips');
-        $listingLabel = in_array($package->package_type, ['day_tour', 'shore_excursion'], true)
-            ? __('Tours')
-            : __('Trips');
+        $listingUrl = match ((string) $package->package_type) {
+            'day_tour', 'shore_excursion' => route('website.day_tours.index'),
+            'travel_package' => route('website.travel_packages.index'),
+            'nile_cruise' => route('website.nile_cruises.index'),
+            default => route('website.trips'),
+        };
+        $listingLabel = match ((string) $package->package_type) {
+            'day_tour', 'shore_excursion' => __('Tours'),
+            'travel_package' => __('Tour Packages'),
+            'nile_cruise' => __('Nile Cruises'),
+            default => __('Trips'),
+        };
         $rawCanonicalUrl = trim((string) ($package->canonical_url ?? ''));
 
         if ($rawCanonicalUrl === '' || trim($rawCanonicalUrl, '/') === trim((string) $package->slug, '/')) {

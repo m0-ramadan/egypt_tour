@@ -1,6 +1,6 @@
 <!-- Mobile WhatsApp Button -->
 {{-- <div class="fixed-mobile-btn d-lg-none">
-    <a href="https://wa.me/201005877285" target="_blank" class="mobile-enquiry-btn">
+    <a href="https://wa.me/201062217720" target="_blank" class="mobile-enquiry-btn">
         <i class="lab la-whatsapp"></i>
         {{ __('WhatsApp Us') }}
     </a>

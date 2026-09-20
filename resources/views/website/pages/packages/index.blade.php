@@ -1,8 +1,8 @@
 @extends('website.layouts.master')
 
 @php
-    $isToursPage = request()->routeIs('website.tours.*');
-    $indexRoute = $isToursPage ? route('website.tours.all') : route('website.trips');
+    $isToursPage = request()->routeIs('website.tours.*') || request()->routeIs('website.day_tours.*');
+    $indexRoute = $isToursPage ? route('website.tours.all') : route('website.travel_packages.index');
     $firstPackage = $packages->first();
     $heroImage = is_array($firstPackage)
         ? $firstPackage['image'] ?? asset('website/photos/home2.webp')
@@ -643,12 +643,6 @@
 
                 <form action="{{ $indexRoute }}" method="GET">
                     <div class="filters-grid">
-                        <div>
-                            <label for="listing-search">{{ __('Search by keyword') }}</label>
-                            <input id="listing-search" type="text" name="q" class="form-control"
-                                value="{{ $search }}" placeholder="{{ __('Search packages, cruises, tours...') }}">
-                        </div>
-
                         <div>
                             <label for="listing-type">{{ __('Type') }}</label>
                             <select id="listing-type" name="type" class="form-select">

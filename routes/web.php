@@ -80,12 +80,19 @@ Route::name('website.')->group(function () {
         Route::get('/{typeSlug}', 'showType')->where('typeSlug', 'dahabiya-nile-cruise|lake-nasser-cruise')->name('type');
     });
 
+    Route::get('/nile-cruises/{slug}', [PackageController::class, 'showNileCruise'])
+        ->name('nile_cruises.show');
+
     /*
     |--------------------------------------------------------------------------
     | Day Tours
     |--------------------------------------------------------------------------
     */
     Route::get('/day-tours', [DayTourController::class, 'index'])->name('day_tours.index');
+    Route::get('/day-tours/{destination}-day-tours', [PackageController::class, 'dayTourDestination'])
+        ->where('destination', 'cairo|luxor|aswan|hurghada|sharm-el-sheikh|marsa-alam|dahab')
+        ->name('day_tours.destination');
+    Route::get('/day-tours/{slug}', [PackageController::class, 'showDayTour'])->name('day_tours.show');
     Route::get('/Egypt/day-tours', [DayTourController::class, 'index']);
 
     /*
@@ -93,9 +100,10 @@ Route::name('website.')->group(function () {
     | Travel Packages
     |--------------------------------------------------------------------------
     */
-    Route::get('/travel-packages', [TravelPackageController::class, 'index'])->name('travel_packages.index');
-    Route::get('/Egypt/travel-packages', [TravelPackageController::class, 'index']);
-    Route::get('/Egypt/travel-pakages', [TravelPackageController::class, 'index']);
+    Route::get('/tour-packages', [PackageController::class, 'index'])->name('travel_packages.index');
+    Route::permanentRedirect('/travel-packages', '/tour-packages');
+    Route::permanentRedirect('/Egypt/travel-packages', '/tour-packages');
+    Route::permanentRedirect('/Egypt/travel-pakages', '/tour-packages');
 
     /*
     |--------------------------------------------------------------------------
@@ -173,14 +181,21 @@ Route::name('website.')->group(function () {
         Route::get('/', [BlogController::class, 'index'])
             ->name('index');
 
+        Route::get('/category/{slug}', [BlogController::class, 'category'])
+            ->name('category');
+
         Route::get('/{slug}', [BlogController::class, 'show'])
-            ->name('show');
+            ->name('show.old');
 
         Route::get('/{categorySlug}/{slug}', [BlogController::class, 'show'])
             ->name('show.legacy');
     });
-    Route::get('/blog/{slug}', [BlogController::class, 'show']);
-    Route::get('/blog/{categorySlug}/{slug}', [BlogController::class, 'show']);
+
+    Route::get('/blog/{slug}', [BlogController::class, 'show'])
+        ->name('blogs.show');
+
+    Route::get('/blog/{categorySlug}/{slug}', [BlogController::class, 'show'])
+        ->name('blogs.show.legacy_singular');
     // Route::get('/blogs', [BlogController::class, 'index'])
     //     ->name('blogs');
 
@@ -189,6 +204,17 @@ Route::name('website.')->group(function () {
     | Trips
     |--------------------------------------------------------------------------
     */
+    Route::get('/tour-packages/{days}-day-egypt-tours', [PackageController::class, 'duration'])
+        ->whereNumber('days')
+        ->name('tour_packages.duration');
+
+    Route::get('/tour-packages/{category}', [PackageController::class, 'category'])
+        ->where('category', 'egypt-vacation-packages|private-egypt-tours|egypt-luxury-tours|family-egypt-tours')
+        ->name('tour_packages.category');
+
+    Route::get('/tour-packages/{slug}', [PackageController::class, 'showTravelPackage'])
+        ->name('tour_packages.show');
+
     Route::prefix('trips')->name('trips.')->group(function () {
 
         Route::get('/', [PackageController::class, 'index'])

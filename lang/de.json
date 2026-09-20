@@ -1190,7 +1190,7 @@
     "trips.age_policy": "trip.age_policy",
     "trips.children": "Ausflüge.Kinder",
     "trips.children_age": "trip.children_age",
-    "trips.from_price": "trip.from_price",
+    "trips.from_price": "Ab :currency:amount",
     "trips.infants": "Reisen.Kleinkinder",
     "trips.infants_age": "trip.infants_age",
     "Trips in": "Ausflüge in",

@@ -115,21 +115,22 @@ class DestinationAndCategoryLandingPagesTest extends TestCase
 
     public function test_travel_packages_landing_page_renders_with_duration_cards_and_faqs(): void
     {
-        $response = $this->get('/travel-packages');
+        $response = $this->get('/tour-packages');
 
         $response->assertOk();
         $response->assertSee('Best Egypt Vacation');
         $response->assertSee('Travel Packages');
-        $response->assertSee('2 Days Egypt Vacation');
-        $response->assertSee('7 Days Egypt Tour Packages');
-        $response->assertSee('10 Days Egypt Long Stay Holidays Tours');
-        $response->assertSee('15 Days Egypt Tour Packages');
+        $response->assertSee('2-Day Egypt Tours');
+        $response->assertSee('7-Day Egypt Tours');
+        $response->assertSee('10-Day Egypt Tours');
+        $response->assertSee('15-Day Egypt Tours');
         $response->assertSee('Luxury Egypt Tour');
         $response->assertSee('Egypt Tours Packages FAQs');
 
-        // Legacy / mirror routes
-        $this->get('/Egypt/travel-packages')->assertOk();
-        $this->get('/Egypt/travel-pakages')->assertOk();
+        // Legacy / mirror routes redirect to the canonical URL
+        $this->get('/travel-packages')->assertRedirect('/tour-packages');
+        $this->get('/Egypt/travel-packages')->assertRedirect('/tour-packages');
+        $this->get('/Egypt/travel-pakages')->assertRedirect('/tour-packages');
     }
 
     public function test_trips_route_only_shows_travel_packages_and_never_day_tours_or_nile_cruises(): void

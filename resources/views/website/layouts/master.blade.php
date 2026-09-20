@@ -58,7 +58,7 @@
             'name' => $siteName,
             'url' => $siteUrl,
             'logo' => $logoUrl,
-            'telephone' => '+20 15 53383000',
+            'telephone' => '+20 106 221 7720',
             'email' => 'info@egypttourpro.com',
             'address' => [
                 '@type' => 'PostalAddress',
@@ -176,6 +176,26 @@
             z-index: 5;
         }
 
+        .iti__flag-box {
+            width: 20px !important;
+            min-width: 20px !important;
+            flex: 0 0 20px !important;
+        }
+
+        .iti__flag {
+            width: 20px !important;
+            height: 15px !important;
+            flex: 0 0 auto !important;
+            background-image: url("{{ asset('website/vendor/intl-tel-input/img/flags.png') }}") !important;
+            background-size: 5762px 15px !important;
+        }
+
+        @media (min-resolution: 2dppx) {
+            .iti__flag {
+                background-image: url("{{ asset('website/vendor/intl-tel-input/img/flags@2x.png') }}") !important;
+            }
+        }
+
         .iti__selected-country {
             padding: 0 12px !important;
             border-radius: 14px 0 0 14px !important;
@@ -272,7 +292,7 @@
         }
     </style>
     <meta name="google-site-verification" content="OKwZFMPi1pE0RpnHtt6lJnyE_qPXCNqW8E7-U4BHPRw" />
-    <link rel="stylesheet" href="{{ asset('website/css/egypt-tour-pro-final.css') }}?v=20260906-final">
+    <link rel="stylesheet" href="{{ asset('website/css/egypt-tour-pro-final.css') }}?v=20260920-whatsapp-right">
 </head>
 
 <body
@@ -465,26 +485,12 @@
     </main>
 
     <!-- Fixed WhatsApp Button -->
-    <a href="https://wa.me/201005877285" target="_blank" rel="noopener noreferrer" class="whatsapp-fixed"
+    <a href="https://wa.me/201062217720" target="_blank" rel="noopener noreferrer" class="whatsapp-fixed"
         aria-label="{{ __('Chat with Egypt Tour Pro on WhatsApp') }}">
         <i class="lab la-whatsapp" aria-hidden="true"></i>
     </a>
 
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-        var Tawk_API = Tawk_API || {},
-            Tawk_LoadStart = new Date();
-        (function() {
-            var s1 = document.createElement("script"),
-                s0 = document.getElementsByTagName("script")[0];
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/6a722c3be998931d47ff34ee/1jv6vpiou';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            s0.parentNode.insertBefore(s1, s0);
-        })();
-    </script>
-    <!--End of Tawk.to Script-->
+
 
     @include('website.layouts.footer')
 

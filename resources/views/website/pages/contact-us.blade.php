@@ -12,8 +12,8 @@
         .contact-hero {
             position: relative;
             overflow: hidden;
-            margin-top: -85px;
-            padding: 150px 0 95px;
+            margin-top: 0;
+            padding: 125px 0 95px;
             background:
                 linear-gradient(rgba(28, 28, 28, 0.7), rgba(43, 43, 43, 0.72)),
                 url('{{ asset('website/photos/home2.webp') }}') center/cover no-repeat;
@@ -564,7 +564,7 @@
 
         @media (max-width: 767px) {
             .contact-hero {
-                padding: 135px 0 75px;
+                padding: 110px 0 75px;
             }
 
             .hero-stats,

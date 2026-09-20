@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Website;
 use App\Models\City;
 use App\Models\Package;
 use App\Models\PackageCategory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PackageController extends BaseWebsiteController
 {
-    public function index(Request $request): View
+    public function index(Request $request): View|RedirectResponse
     {
         $selectedType = $request->input('type');
         $duration = $request->input('duration') ?: $request->input('days');
@@ -18,7 +19,25 @@ class PackageController extends BaseWebsiteController
         $search = trim((string) $request->input('q', ''));
         $category = trim((string) $request->input('category', ''));
 
-        if ($selectedType === 'travel_package' && !$duration && $destinationSlug === '' && $search === '' && $category === '') {
+        if ($request->routeIs('website.travel_packages.index') && $destinationSlug === '' && $search === '' && !$selectedType) {
+            if ($duration && !$category && !$request->boolean('luxury')) {
+                return redirect()->route('website.tour_packages.duration', ['days' => (int) $duration], 301);
+            }
+
+            if ($category !== '' && !$duration && !$request->boolean('luxury')) {
+                $cleanCategories = ['egypt-vacation-packages', 'private-egypt-tours', 'family-egypt-tours'];
+
+                if (in_array($category, $cleanCategories, true)) {
+                    return redirect()->route('website.tour_packages.category', ['category' => $category], 301);
+                }
+            }
+
+            if ($request->boolean('luxury') && !$duration && $category === '') {
+                return redirect()->route('website.tour_packages.category', ['category' => 'egypt-luxury-tours'], 301);
+            }
+        }
+
+        if (($selectedType === null || $selectedType === 'travel_package') && !$duration && $destinationSlug === '' && $search === '' && $category === '') {
             return app(TravelPackageController::class)->index($request);
         }
 
@@ -43,12 +62,40 @@ class PackageController extends BaseWebsiteController
         );
     }
 
-    public function tours(Request $request): View
+    public function duration(Request $request, int $days): View
+    {
+        abort_unless($days >= 1 && $days <= 30, 404);
+
+        $request->merge(['duration' => $days]);
+
+        return $this->index($request);
+    }
+
+    public function category(Request $request, string $category): View
+    {
+        if ($category === 'egypt-luxury-tours') {
+            $request->merge(['luxury' => true]);
+        } else {
+            $request->merge(['category' => $category]);
+        }
+
+        return $this->index($request);
+    }
+
+    public function tours(Request $request): View|RedirectResponse
     {
         $selectedType = $request->input('type');
         $destinationSlug = trim((string) ($request->input('destination') ?: $request->input('city', '')));
         $search = trim((string) $request->input('q', ''));
         $category = trim((string) $request->input('category', ''));
+
+        if ($request->routeIs('website.tours.all') && $selectedType === 'day_tour' && $destinationSlug !== '' && $search === '' && $category === '') {
+            $cleanDestinations = ['cairo', 'luxor', 'aswan', 'hurghada', 'sharm-el-sheikh', 'marsa-alam', 'dahab'];
+
+            if (in_array($destinationSlug, $cleanDestinations, true)) {
+                return redirect()->route('website.day_tours.destination', ['destination' => $destinationSlug], 301);
+            }
+        }
 
         if ($selectedType === 'day_tour' && $destinationSlug === '' && $search === '' && $category === '') {
             return app(DayTourController::class)->index($request);
@@ -86,12 +133,66 @@ class PackageController extends BaseWebsiteController
         );
     }
 
+    public function dayTourDestination(Request $request, string $destination): View
+    {
+        $request->merge([
+            'destination' => $destination,
+            'type' => 'day_tour',
+        ]);
+
+        return $this->tours($request);
+    }
+
     public function show(Request $request, ?string $country = null, string $slug = null)
     {
         if ($slug === null) {
             $slug = $country;
             $country = null;
         }
+
+        if ($request->routeIs('website.trips.show')) {
+            $package = Package::query()
+                ->where('slug', $slug)
+                ->where('is_active', true)
+                ->first(['slug', 'package_type']);
+
+            if (in_array($package?->package_type, ['travel_package', 'nile_cruise', 'day_tour', 'shore_excursion'], true)) {
+                return redirect($this->packageRoute($package), 301);
+            }
+        }
+
+        return app(\App\Http\Controllers\Website\TripController::class)->show($slug);
+    }
+
+    public function showTravelPackage(string $slug)
+    {
+        Package::query()
+            ->where('slug', $slug)
+            ->where('package_type', 'travel_package')
+            ->where('is_active', true)
+            ->firstOrFail(['id']);
+
+        return app(\App\Http\Controllers\Website\TripController::class)->show($slug);
+    }
+
+    public function showNileCruise(string $slug)
+    {
+        Package::query()
+            ->where('slug', $slug)
+            ->where('package_type', 'nile_cruise')
+            ->where('is_active', true)
+            ->firstOrFail(['id']);
+
+        return app(\App\Http\Controllers\Website\TripController::class)->show($slug);
+    }
+
+    public function showDayTour(string $slug)
+    {
+        Package::query()
+            ->where('slug', $slug)
+            ->whereIn('package_type', ['day_tour', 'shore_excursion'])
+            ->where('is_active', true)
+            ->firstOrFail(['id']);
 
         return app(\App\Http\Controllers\Website\TripController::class)->show($slug);
     }

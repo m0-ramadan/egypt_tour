@@ -18,9 +18,10 @@
                         {{ __('Luxor, Egypt') }}
                     </li>
                     <li><i class="la la-phone" style="color: var(--etp-orange-500); margin-right: 8px;"></i><a
-                            href="tel:+201">+20</a></li>
+                            href="tel:+201062217720">+20 106 221 7720</a></li>
                     <li><i class="lab la-whatsapp" style="color: var(--etp-orange-500); margin-right: 8px;"></i><a
-                            href="https://wa.me/201" target="_blank" rel="noopener noreferrer">+20</a></li>
+                            href="https://wa.me/201062217720" target="_blank" rel="noopener noreferrer">+20 106 221
+                            7720</a></li>
                     <li><i class="la la-envelope" style="color: var(--etp-orange-500); margin-right: 8px;"></i><a
                             href="mailto:info@egypttourpro.com">info@egypttourpro.com</a></li>
                 </ul>
@@ -42,6 +43,8 @@
             <div class="footer-section">
                 <h3 class="footer-heading">{{ __('General') }}</h3>
                 <ul>
+                    <li><a href="{{ route('website.destinations.index') }}"><i
+                                class="las la-chevron-right mr-1"></i>{{ __('Attractions') }} &amp; {{ __('Sights') }}</a></li>
                     <li><a href="{{ route('website.pages.show', 'about-etrotours') }}"><i
                                 class="las la-chevron-right mr-1"></i>{{ __('About Egypt Tour Pro') }}</a></li>
                     <li><a href="{{ route('website.pages.show', 'why-etrotours') }}"><i
@@ -118,12 +121,12 @@
                     <div class="social-links" style="text-align: right;">
                         <ul
                             style="display: flex; list-style: none; padding: 0; margin: 0; gap: 15px; justify-content: flex-end;">
-                            <li><a href="https://www.facebook.com/share/1CwkGsZJXe/?mibextid=wwXIfr" target="_blank"
+                            <li><a href="https://www.facebook.com/Egypttourpro/" target="_blank"
                                     rel="noopener noreferrer" aria-label="{{ __('Facebook') }}"
                                     style="color: #fff; font-size: 1.5rem; transition: all 0.3s ease;"><i
                                         class="lab la-facebook-f"></i></a></li>
-                            <li><a href="https://www.instagram.com/etro_tours?igsh=MTl5cXpqeXlpMWtvZg%3D%3D&utm_source=qr"
-                                    target="_blank" rel="noopener noreferrer" aria-label="{{ __('Instagram') }}"
+                            <li><a href="https://www.instagram.com/egypt_tour_pro" target="_blank"
+                                    rel="noopener noreferrer" aria-label="{{ __('Instagram') }}"
                                     style="color: #fff; font-size: 1.5rem; transition: all 0.3s ease;"><i
                                         class="lab la-instagram"></i></a></li>
                             <li><a href="https://www.tripadvisor.com/" target="_blank" rel="noopener noreferrer"

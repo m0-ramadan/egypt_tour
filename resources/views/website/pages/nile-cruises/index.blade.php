@@ -21,7 +21,7 @@
             align-items: center;
             margin-top: -85px;
             padding: 185px 0 90px;
-            color: #fff;
+            color: #fff !important;
             background: linear-gradient(rgba(28, 28, 28, 0.75), rgba(43, 43, 43, 0.65)),
                 url('{{ $heroImage }}') center/cover no-repeat;
             overflow: hidden;
@@ -60,7 +60,7 @@
             font-size: clamp(2.5rem, 5.5vw, 4.2rem);
             line-height: 1.1;
             margin-bottom: 18px;
-            color: #fff;
+            color: #fff !important;
         }
 
         .nile-subtitle {

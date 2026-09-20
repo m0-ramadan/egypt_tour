@@ -4,7 +4,12 @@
     $title = $article->display_title;
     $description = $article->display_seo_description ?: Str::limit(strip_tags($article->display_excerpt), 160);
     $content = $article->display_content;
-    $image = asset('storage/' . $article->featured_image);
+    $imagePath = ltrim((string) $article->featured_image, '/');
+    $image = str_starts_with($imagePath, 'http://') || str_starts_with($imagePath, 'https://')
+        ? $imagePath
+        : ($imagePath
+            ? asset((str_starts_with($imagePath, 'storage/') || str_starts_with($imagePath, 'website/')) ? $imagePath : 'storage/' . $imagePath)
+            : asset('website/photos/home2.webp'));
 
     $categoryTitle = $article->category?->display_title ?? ($article->category?->title ?? 'Travel Article');
 
@@ -22,7 +27,11 @@
 
 @section('title', $article->display_seo_title ?: $title . ' - Egypt Tour Pro')
 @section('description', $description)
-@section('keywords', trim(collect([$title, $categoryTitle, 'Egypt Tour Pro blog', 'Egypt travel guide'])->filter()->implode(', '), ', '))
+@section('keywords',
+    trim(
+    collect([$title, $categoryTitle, 'Egypt Tour Pro blog', 'Egypt travel guide'])->filter()->implode(', '),
+    ', ',
+    ))
 @section('image', $image)
 @section('og_type', 'article')
 @section('published_time', optional($date)->toIso8601String())
@@ -264,6 +273,19 @@
             padding: 24px;
         }
 
+        body.website-theme-shell .luxury-sidebar {
+            border: 0 !important;
+            box-shadow: 0 10px 30px rgba(43, 43, 43, .09) !important;
+        }
+
+        body.website-theme-shell .luxury-sidebar .sidebar-widget {
+            padding: 0 !important;
+            background: transparent !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+
         .sidebar-title {
             font-family: 'Playfair Display', serif;
             color: var(--primary-navy, #2b2b2b);
@@ -292,6 +314,7 @@
 
         .search-input {
             flex: 1;
+            min-width: 0;
             border: 2px solid #e9ecef;
             border-radius: 14px;
             padding: 13px 15px;
@@ -309,6 +332,8 @@
             color: var(--primary-navy, #2b2b2b);
             border-radius: 14px;
             width: 48px;
+            min-width: 48px;
+            height: 48px;
             font-size: 1.2rem;
             font-weight: 800;
         }
@@ -324,6 +349,11 @@
             gap: 14px;
             padding: 14px 0;
             border-bottom: 1px solid rgba(243, 107, 10, .14);
+        }
+
+        .popular-content {
+            min-width: 0;
+            flex: 1;
         }
 
         .popular-article:last-child {
@@ -473,6 +503,17 @@
             border: 1px solid rgba(243, 107, 10, .15);
         }
 
+
+        body.website-theme-shell .luxury-sidebar .empty-state {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(243, 107, 10, .06) !important;
+            border: 0 !important;
+            border-radius: 12px !important;
+            box-shadow: none !important;
+            text-align: left;
+        }
+
         @media(max-width: 991px) {
             .article-hero {
                 min-height: 430px;
@@ -493,6 +534,35 @@
         }
 
         @media(max-width: 575px) {
+            .article-content-area {
+                padding: 40px 0;
+            }
+
+            .luxury-sidebar {
+                padding: 20px;
+                border-radius: 20px;
+                margin-bottom: 20px;
+            }
+
+            .sidebar-title {
+                font-size: 1.2rem;
+                margin-bottom: 16px;
+            }
+
+            .popular-article {
+                gap: 12px;
+                padding: 13px 0;
+            }
+
+            .popular-img {
+                width: 72px;
+                height: 64px;
+            }
+
+            .popular-content h4 {
+                font-size: .9rem;
+            }
+
             .article-info {
                 flex-direction: column;
                 align-items: center;
@@ -693,7 +763,12 @@
                                 @php
                                     $popularTitle = $popular->display_title ?: 'Article';
 
-                                    $popularImage = $popular->featured_image ?? asset('website/photos/home2.webp');
+                                    $popularImagePath = ltrim((string) $popular->featured_image, '/');
+                                    $popularImage = str_starts_with($popularImagePath, 'http://') || str_starts_with($popularImagePath, 'https://')
+                                        ? $popularImagePath
+                                        : ($popularImagePath
+                                            ? asset((str_starts_with($popularImagePath, 'storage/') || str_starts_with($popularImagePath, 'website/')) ? $popularImagePath : 'storage/' . $popularImagePath)
+                                            : asset('website/photos/home2.webp'));
 
                                     $popularDate = $popular->published_at ?? ($popular->created_at ?? now());
 
@@ -707,13 +782,13 @@
                                 @endphp
 
                                 <div class="popular-article">
-                                    <img src="{{ asset('storage/' . $popularImage) }}" alt="{{ $popularTitle }}"
-                                        class="popular-img">
+                                    <img src="{{ $popularImage }}" alt="{{ $popularTitle }}" class="popular-img"
+                                        loading="lazy" onerror="this.onerror=null;this.src='{{ asset('website/photos/home2.webp') }}';">
 
                                     <div class="popular-content">
                                         <h4>
                                             <a
-                                                href="{{ route('website.blogs.show.legacy', [$popularCategorySlug, $popular->slug]) }}">
+                                                href="{{ route('website.blogs.show', $popular->slug) }}">
                                                 {{ $popularTitle }}
                                             </a>
                                         </h4>
@@ -734,7 +809,7 @@
                             <h3 class="sidebar-title">{{ __('Follow & Connect') }}</h3>
 
                             <div class="social-links">
-                                <a href="https://www.facebook.com/" target="_blank" class="social-link">
+                                <a href="https://www.facebook.com/Egypttourpro/" target="_blank" class="social-link">
                                     <i class="lab la-facebook-f"></i>
                                 </a>
 
@@ -742,7 +817,7 @@
                                     <i class="lab la-twitter"></i>
                                 </a>
 
-                                <a href="https://www.instagram.com/" target="_blank" class="social-link">
+                                <a href="https://www.instagram.com/egypt_tour_pro" target="_blank" class="social-link">
                                     <i class="lab la-instagram"></i>
                                 </a>
 
