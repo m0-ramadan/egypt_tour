@@ -22,7 +22,7 @@
             'Discover the wonders of Egypt through our expert travel insights, destination guides, and cultural explorations.',
         );
 
-    $blogsRoute = Route::has('website.blogs') ? route('website.blogs') : url('/blogs');
+    $blogsRoute = Route::has('website.blogs') ? route('website.blogs') : url('/blog');
 @endphp
 
 @section('title', $pageTitle)

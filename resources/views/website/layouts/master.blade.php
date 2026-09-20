@@ -292,7 +292,7 @@
         }
     </style>
     <meta name="google-site-verification" content="OKwZFMPi1pE0RpnHtt6lJnyE_qPXCNqW8E7-U4BHPRw" />
-    <link rel="stylesheet" href="{{ asset('website/css/egypt-tour-pro-final.css') }}?v=20260920-whatsapp-right">
+    <link rel="stylesheet" href="{{ asset('website/css/egypt-tour-pro-final.css') }}?v=20260920-whatsapp-raised-3">
 </head>
 
 <body

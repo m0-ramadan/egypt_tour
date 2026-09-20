@@ -23,7 +23,8 @@
 @section('description', $pageDescription)
 @section('keywords',
     trim(
-    collect([$attraction->display_name, $cityName, $countryName, 'Attraction details', 'Egypt Tour Pro'])->filter()->implode(',
+    collect([$attraction->display_name, $cityName, $countryName, 'Attraction details', 'Egypt Tour
+    Pro'])->filter()->implode(',
     '),
     ', ',
     ))
@@ -232,6 +233,40 @@
 
         .overview-body p {
             margin-bottom: 1.4rem;
+        }
+
+        .overview-body p.lead {
+            font-size: 1.12rem;
+            font-weight: 500;
+            color: #222222;
+            line-height: 1.85;
+            margin-bottom: 1.6rem;
+        }
+
+        .overview-body h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--etp-orange-600, #d95d00);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .overview-body h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2b2b2b;
+            margin-top: 1.6rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .overview-body ul {
+            padding-left: 1.4rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .overview-body ul li {
+            margin-bottom: 0.7rem;
+            line-height: 1.75;
         }
 
         .overview-body p:last-child {
@@ -623,6 +658,16 @@
         html[data-theme='dark'] .cta-card p,
         html[data-theme='dark'] .fact-item span {
             color: var(--warm-gray) !important;
+        }
+
+        html[data-theme='dark'] .overview-body h3,
+        html[data-theme='dark'] .overview-body h4 {
+            color: var(--etp-orange-400, #FB923C) !important;
+        }
+
+        html[data-theme='dark'] .overview-body p.lead,
+        html[data-theme='dark'] .overview-body strong {
+            color: #f3f4f6 !important;
         }
 
         html[data-theme='dark'] .fact-item,

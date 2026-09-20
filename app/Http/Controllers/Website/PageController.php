@@ -35,9 +35,9 @@ class PageController extends BaseWebsiteController
         return redirect()->route('website.pages.show', ['slug' => $slug], 301);
     }
 
-    public function services()
+    public function services(): RedirectResponse
     {
-        return view('website.pages.services');
+        return redirect()->route('website.travel_packages.index', [], 301);
     }
 
     public function multiCountry(Request $request)

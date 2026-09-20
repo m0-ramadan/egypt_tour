@@ -43,8 +43,9 @@
             <div class="footer-section">
                 <h3 class="footer-heading">{{ __('General') }}</h3>
                 <ul>
-                    <li><a href="{{ route('website.destinations.index') }}"><i
-                                class="las la-chevron-right mr-1"></i>{{ __('Attractions') }} &amp; {{ __('Sights') }}</a></li>
+                    <li><a href="{{ route('website.attractions.index') }}"><i
+                                class="las la-chevron-right mr-1"></i>{{ __('Attractions') }} &amp;
+                            {{ __('Sights') }}</a></li>
                     <li><a href="{{ route('website.pages.show', 'about-etrotours') }}"><i
                                 class="las la-chevron-right mr-1"></i>{{ __('About Egypt Tour Pro') }}</a></li>
                     <li><a href="{{ route('website.pages.show', 'why-etrotours') }}"><i

@@ -369,6 +369,7 @@ input[type="date"]:focus {
     right: 24px !important;
     left: auto !important;
     bottom: 24px !important;
+    bottom: 80px !important;
     z-index: 99999 !important;
     width: 58px !important;
     height: 58px !important;

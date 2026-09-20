@@ -65,7 +65,13 @@ class LegacyRedirectController extends Controller
                 $rawSlug = urldecode(end($segments));
                 $cleanSlug = Str::slug($rawSlug);
 
-                $pkg = Package::where('slug', $cleanSlug)->orWhere('slug', Str::lower($rawSlug))->first();
+                $pkg = Package::query()
+                    ->where('is_active', true)
+                    ->where(function ($query) use ($cleanSlug, $rawSlug) {
+                        $query->where('slug', $cleanSlug)
+                            ->orWhere('slug', Str::lower($rawSlug));
+                    })
+                    ->first();
                 if ($pkg) {
                     $route = match ($pkg->package_type) {
                         'day_tour', 'shore_excursion' => route('website.day_tours.show', $pkg->slug),
@@ -124,7 +130,13 @@ class LegacyRedirectController extends Controller
             $rawSlug = urldecode(end($segments));
             $cleanSlug = Str::slug($rawSlug);
 
-            $attraction = Attraction::where('slug', $cleanSlug)->orWhere('slug', Str::lower($rawSlug))->first();
+            $attraction = Attraction::query()
+                ->where('is_active', true)
+                ->where(function ($query) use ($cleanSlug, $rawSlug) {
+                    $query->where('slug', $cleanSlug)
+                        ->orWhere('slug', Str::lower($rawSlug));
+                })
+                ->first();
             if ($attraction) {
                 return redirect()->route('website.attractions.show', $attraction->slug, 301);
             }
