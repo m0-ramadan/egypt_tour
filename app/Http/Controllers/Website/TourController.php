@@ -42,7 +42,7 @@ class TourController extends BaseWebsiteController
             return redirect($this->packageRoute($package), 301);
         }
 
-        return app(TripController::class)->show($slug);
+        return app(LegacyRedirectController::class)->handle(request());
     }
 
     public function legacyShow(string $country, string $slug)

@@ -166,11 +166,15 @@ class PackageController extends BaseWebsiteController
 
     public function showTravelPackage(string $slug)
     {
-        Package::query()
+        $package = Package::query()
             ->where('slug', $slug)
             ->where('package_type', 'travel_package')
             ->where('is_active', true)
-            ->firstOrFail(['id']);
+            ->first(['id']);
+
+        if (! $package) {
+            return app(LegacyRedirectController::class)->handle(request());
+        }
 
         return app(\App\Http\Controllers\Website\TripController::class)->show($slug);
     }

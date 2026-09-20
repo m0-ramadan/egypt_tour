@@ -95,6 +95,12 @@
                                     <i class="la la-map"></i> {{ __('View Destinations') }}
                                 </a></li>
                         @endforelse
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{{ route('website.attractions.index') }}">
+                                <i class="la la-landmark"></i> {{ __('Attractions & Sights') }}
+                            </a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -152,8 +158,8 @@
                             },
                         );
                     @endphp
-                    <button type="button" class="language-toggle" data-bs-toggle="dropdown" data-navbar-dropdown-toggle
-                        aria-expanded="false" aria-controls="desktopLanguageMenu">
+                    <button type="button" class="language-toggle" data-bs-toggle="dropdown"
+                        data-navbar-dropdown-toggle aria-expanded="false" aria-controls="desktopLanguageMenu">
                         <i class="la la-language"></i>
                         <span>{{ strtoupper($currentLocale) }}</span>
                     </button>
@@ -220,6 +226,12 @@
                         </a>
                     </div>
                 @endforelse
+                <div class="mobile-submenu-item"
+                    style="border-top: 1px solid var(--color-border, #e8e3da); margin-top: 6px; padding-top: 6px;">
+                    <a href="{{ route('website.attractions.index') }}" class="mobile-submenu-link">
+                        <i class="la la-landmark"></i> {{ __('Attractions & Sights') }}
+                    </a>
+                </div>
             </div>
         </div>
 

@@ -4657,6 +4657,7 @@ html[data-theme] body.home-reference-page .whatsapp-fixed {
     right: 28px;
     left: auto;
     bottom: 28px;
+    bottom: 80px;
     width: 72px;
     height: 72px;
 }
@@ -4797,6 +4798,9 @@ html[data-theme] body.home-reference-page .whatsapp-fixed::before {
         left: 18px;
         right: auto;
         bottom: 20px;
+        right: 18px;
+        left: auto;
+        bottom: 70px;
         width: 64px;
         height: 64px;
     }

@@ -96,12 +96,12 @@ class WebsiteSitemapTest extends TestCase
         $response->assertSee(url('/'), false);
         $response->assertSee(url('/about-etrotours'), false);
         $response->assertSee(url('/destinations/cairo'), false);
-        $response->assertSee(url('/blogs/category/travel-guides'), false);
+        $response->assertSee(url('/blog/category/travel-guides'), false);
         $response->assertSee(url('/blog/best-of-cairo'), false);
         $response->assertSee(url('/tour-packages/classic-egypt/'), false);
         $response->assertSee(url('/day-tours/luxor-day-tour'), false);
         $response->assertDontSee(url('/future-page'), false);
-        $response->assertDontSee(url('/blogs/coming-soon'), false);
+        $response->assertDontSee(url('/blog/coming-soon'), false);
         $response->assertDontSee(url('/lang/en'), false);
         $response->assertDontSee(url('/search'), false);
         $response->assertDontSee(url('/package/classic-egypt'), false);

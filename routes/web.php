@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Website\AttractionController;
+use App\Http\Controllers\Website\AttractionsIndexController;
 use App\Http\Controllers\Website\BlogController;
 use App\Http\Controllers\Website\CheckoutController;
 use App\Http\Controllers\Website\ContactController;
@@ -155,6 +156,8 @@ Route::name('website.')->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::prefix('attractions')->name('attractions.')->group(function () {
+        Route::get('/', [AttractionsIndexController::class, 'index'])->name('index');
+        Route::get('/city/{city}', [AttractionsIndexController::class, 'byCity'])->name('by-city');
         Route::get('/{slug}', [AttractionController::class, 'show'])->name('show');
     });
 
@@ -176,7 +179,7 @@ Route::name('website.')->group(function () {
     | Blogs
     |--------------------------------------------------------------------------
     */
-    Route::prefix('blogs')->name('blogs.')->group(function () {
+    Route::prefix('blog')->name('blogs.')->group(function () {
 
         Route::get('/', [BlogController::class, 'index'])
             ->name('index');
@@ -185,17 +188,13 @@ Route::name('website.')->group(function () {
             ->name('category');
 
         Route::get('/{slug}', [BlogController::class, 'show'])
-            ->name('show.old');
+            ->name('show');
 
         Route::get('/{categorySlug}/{slug}', [BlogController::class, 'show'])
             ->name('show.legacy');
     });
 
-    Route::get('/blog/{slug}', [BlogController::class, 'show'])
-        ->name('blogs.show');
-
-    Route::get('/blog/{categorySlug}/{slug}', [BlogController::class, 'show'])
-        ->name('blogs.show.legacy_singular');
+    Route::redirect('/blogs', '/blog', 301);
     // Route::get('/blogs', [BlogController::class, 'index'])
     //     ->name('blogs');
 
