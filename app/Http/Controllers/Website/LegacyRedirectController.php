@@ -67,9 +67,12 @@ class LegacyRedirectController extends Controller
 
                 $pkg = Package::where('slug', $cleanSlug)->orWhere('slug', Str::lower($rawSlug))->first();
                 if ($pkg) {
-                    $route = $pkg->package_type === 'day_tour'
-                        ? route('website.tours.show', $pkg->slug)
-                        : route('website.trips.show', $pkg->slug);
+                    $route = match ($pkg->package_type) {
+                        'day_tour', 'shore_excursion' => route('website.day_tours.show', $pkg->slug),
+                        'travel_package' => route('website.tour_packages.show', $pkg->slug) . '/',
+                        'nile_cruise' => route('website.nile_cruises.show', $pkg->slug),
+                        default => route('website.trips.show', $pkg->slug),
+                    };
                     return redirect($route, 301);
                 }
             }
@@ -135,9 +138,12 @@ class LegacyRedirectController extends Controller
 
         $pkg = Package::where('slug', $cleanSlug)->first();
         if ($pkg) {
-            $route = $pkg->package_type === 'day_tour'
-                ? route('website.tours.show', $pkg->slug)
-                : route('website.trips.show', $pkg->slug);
+            $route = match ($pkg->package_type) {
+                'day_tour', 'shore_excursion' => route('website.day_tours.show', $pkg->slug),
+                'travel_package' => route('website.tour_packages.show', $pkg->slug) . '/',
+                'nile_cruise' => route('website.nile_cruises.show', $pkg->slug),
+                default => route('website.trips.show', $pkg->slug),
+            };
             return redirect($route, 301);
         }
 

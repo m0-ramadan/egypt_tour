@@ -265,6 +265,7 @@
 
 .showcase-tour-card {
     width: clamp(455px, 24.2vw, 525px);
+    margin-left: 32px;
     display: block;
     overflow: hidden;
     color: #222 !important;
@@ -614,6 +615,7 @@ html[dir="rtl"] .showcase-destination-card span {
 
     .showcase-tour-card {
         width: 525px;
+        margin-left: 0;
     }
 
     .showcase-tour-card__image {
@@ -3367,8 +3369,8 @@ html[data-theme="dark"] body.home-reference-page .trust-line {
 }
 
 html[data-theme="dark"] body.home-reference-page .whatsapp-fixed {
-    left: 28px;
-    right: auto;
+    right: 28px;
+    left: auto;
     bottom: 28px;
     width: 64px;
     height: 64px;
@@ -4107,8 +4109,8 @@ html[data-theme="light"] body.home-reference-page .trust-line {
 }
 
 html[data-theme="light"] body.home-reference-page .whatsapp-fixed {
-    left: 28px;
-    right: auto;
+    right: 28px;
+    left: auto;
     bottom: 28px;
     width: 72px;
     height: 72px;
@@ -4652,8 +4654,8 @@ html[data-theme] body.home-reference-page .trust-line {
 }
 
 html[data-theme] body.home-reference-page .whatsapp-fixed {
-    left: 28px;
-    right: auto;
+    right: 28px;
+    left: auto;
     bottom: 28px;
     width: 72px;
     height: 72px;
@@ -4797,5 +4799,112 @@ html[data-theme] body.home-reference-page .whatsapp-fixed::before {
         bottom: 20px;
         width: 64px;
         height: 64px;
+    }
+}
+
+/* --------------------------------------------------
+   Testimonials Slider Styling
+   -------------------------------------------------- */
+.testimonials-slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 -12px;
+    padding: 10px 12px 20px;
+}
+
+.testimonials-slider {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px 4px 24px;
+    width: 100%;
+    scrollbar-width: none; /* Firefox */
+}
+
+.testimonials-slider::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+
+.testimonials-slider .testimonial-card {
+    flex: 0 0 calc(33.333% - 16px);
+    min-width: 300px;
+    scroll-snap-align: start;
+    margin-bottom: 0;
+}
+
+.testimonials-nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(243, 107, 10, 0.22);
+    color: var(--etp-orange-500, #f36b0a);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(28, 28, 28, 0.08);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    z-index: 5;
+}
+
+.testimonials-nav-btn:hover {
+    background: var(--etp-orange-500, #f36b0a);
+    color: #ffffff;
+    border-color: var(--etp-orange-500, #f36b0a);
+    transform: scale(1.08);
+    box-shadow: 0 12px 28px rgba(243, 107, 10, 0.3);
+}
+
+.testimonials-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.testimonials-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(243, 107, 10, 0.25);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.testimonials-dot.active {
+    width: 28px;
+    background: var(--etp-orange-500, #f36b0a);
+}
+
+@media (max-width: 1199px) {
+    .testimonials-slider .testimonial-card {
+        flex: 0 0 calc(50% - 12px);
+    }
+}
+
+@media (max-width: 767px) {
+    .testimonials-slider-wrapper {
+        margin: 0;
+        gap: 8px;
+    }
+
+    .testimonials-nav-btn {
+        display: none; /* Hide side arrows on mobile for clean touch swipe */
+    }
+
+    .testimonials-slider .testimonial-card {
+        flex: 0 0 88%;
+        min-width: 260px;
     }
 }

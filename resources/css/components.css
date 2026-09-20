@@ -366,8 +366,8 @@ input[type="date"]:focus {
 .whatsapp-fixed,
 .floating-whatsapp {
     position: fixed !important;
-    left: 24px !important;
-    right: auto !important;
+    right: 24px !important;
+    left: auto !important;
     bottom: 24px !important;
     z-index: 99999 !important;
     width: 58px !important;
@@ -398,8 +398,8 @@ input[type="date"]:focus {
 
 html[dir="rtl"] .whatsapp-fixed,
 html[dir="rtl"] .floating-whatsapp {
-    left: 24px !important;
-    right: auto !important;
+    right: 24px !important;
+    left: auto !important;
 }
 
 /* --------------------------------------------------
@@ -407,4 +407,123 @@ html[dir="rtl"] .floating-whatsapp {
    -------------------------------------------------- */
 .section-warm {
     background: linear-gradient(135deg, #ffffff, #fff8f0) !important;
+}
+
+/* --------------------------------------------------
+   9. TESTIMONIALS SLIDER STYLING
+   -------------------------------------------------- */
+.testimonials-slider-wrapper {
+    position: relative;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 16px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 10px 0 20px !important;
+}
+
+.testimonials-slider {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 24px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 16px 8px 24px !important;
+    width: 100% !important;
+    scrollbar-width: none !important;
+}
+
+.testimonials-slider::-webkit-scrollbar {
+    display: none !important;
+}
+
+.testimonials-slider .testimonial-card {
+    flex: 0 0 calc(33.333% - 16px) !important;
+    width: calc(33.333% - 16px) !important;
+    max-width: calc(33.333% - 16px) !important;
+    min-width: 280px !important;
+    scroll-snap-align: start !important;
+    margin-bottom: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.testimonials-nav-btn {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(243, 107, 10, 0.25) !important;
+    color: var(--etp-orange-500, #f36b0a) !important;
+    font-size: 1.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    box-shadow: 0 8px 24px rgba(28, 28, 28, 0.1) !important;
+    transition: all 0.3s ease !important;
+    flex-shrink: 0 !important;
+    z-index: 10 !important;
+}
+
+.testimonials-nav-btn:hover {
+    background: var(--etp-orange-500, #f36b0a) !important;
+    color: #ffffff !important;
+    border-color: var(--etp-orange-500, #f36b0a) !important;
+    transform: scale(1.08) !important;
+    box-shadow: 0 12px 28px rgba(243, 107, 10, 0.3) !important;
+}
+
+.testimonials-dots {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-top: 15px !important;
+    width: 100% !important;
+}
+
+.testimonials-dot {
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 999px !important;
+    background: rgba(243, 107, 10, 0.25) !important;
+    border: none !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.testimonials-dot.active {
+    width: 28px !important;
+    background: var(--etp-orange-500, #f36b0a) !important;
+}
+
+@media (max-width: 1199px) {
+    .testimonials-slider .testimonial-card {
+        flex: 0 0 calc(50% - 12px) !important;
+        width: calc(50% - 12px) !important;
+        max-width: calc(50% - 12px) !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .testimonials-slider-wrapper {
+        gap: 8px !important;
+    }
+
+    .testimonials-nav-btn {
+        display: none !important;
+    }
+
+    .testimonials-slider .testimonial-card {
+        flex: 0 0 88% !important;
+        width: 88% !important;
+        max-width: 88% !important;
+        min-width: 260px !important;
+    }
 }

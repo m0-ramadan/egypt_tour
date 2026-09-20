@@ -70,7 +70,6 @@ class BlogController extends Controller
     public function show(string $categorySlugOrSlug, ?string $slug = null)
     {
         $articleSlug = $slug ?? $categorySlugOrSlug;
-        $requestedCategorySlug = $slug ? $categorySlugOrSlug : null;
 
         $article = Article::query()
             ->with(['category', 'author', 'tags'])
@@ -83,13 +82,8 @@ class BlogController extends Controller
             return app(\App\Http\Controllers\Website\LegacyRedirectController::class)->handle(request());
         }
 
-        if (
-            $requestedCategorySlug !== null &&
-            $article->category?->slug &&
-            $requestedCategorySlug !== $article->category->slug
-        ) {
-            return redirect()->route('website.blogs.show.legacy', [
-                'categorySlug' => $article->category->slug,
+        if (! request()->routeIs('website.blogs.show')) {
+            return redirect()->route('website.blogs.show', [
                 'slug' => $article->slug,
             ], 301);
         }

@@ -39,7 +39,7 @@
             align-items: center;
             margin-top: -85px;
             padding: 150px 0 90px;
-            color: #fff;
+            color: #fff !important;
             background: linear-gradient(rgba(16, 33, 63, 0.78), rgba(22, 60, 103, 0.68)),
                 url('{{ $heroImage }}') center/cover no-repeat;
             overflow: hidden;
@@ -78,7 +78,7 @@
             font-size: clamp(2.4rem, 5.5vw, 4rem);
             line-height: 1.12;
             margin-bottom: 18px;
-            color: #fff;
+            color: #fff !important;
         }
 
         .hero-subtitle-lead {

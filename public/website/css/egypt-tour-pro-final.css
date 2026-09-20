@@ -961,12 +961,12 @@ body.website-theme-shell .footer .award-image {
     border-color: rgba(243, 107, 10, 0.2) !important;
 }
 
-/* WhatsApp / fixed communication UI strictly on the LEFT, Chat on the RIGHT */
+/* WhatsApp / fixed communication UI on the RIGHT */
 body.website-theme-shell .whatsapp-fixed,
 body.website-theme-shell .floating-whatsapp {
     position: fixed !important;
-    left: 24px !important;
-    right: auto !important;
+    right: 24px !important;
+    left: auto !important;
     bottom: 24px !important;
     z-index: 99999 !important;
     background: #f36b0a !important;
@@ -976,8 +976,8 @@ body.website-theme-shell .floating-whatsapp {
 
 html[dir="rtl"] body.website-theme-shell .whatsapp-fixed,
 html[dir="rtl"] body.website-theme-shell .floating-whatsapp {
-    left: 24px !important;
-    right: auto !important;
+    right: 24px !important;
+    left: auto !important;
 }
 
 body.website-theme-shell .communication-btn,

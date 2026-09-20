@@ -179,7 +179,9 @@ abstract class BaseWebsiteController extends Controller
     protected function packageRoute(Package $package): string
     {
         return match ($package->package_type) {
-            'day_tour', 'shore_excursion' => route('website.tours.show', $package->slug),
+            'day_tour', 'shore_excursion' => route('website.day_tours.show', $package->slug),
+            'travel_package' => route('website.tour_packages.show', $package->slug) . '/',
+            'nile_cruise' => route('website.nile_cruises.show', $package->slug),
             default => route('website.trips.show', $package->slug),
         };
     }

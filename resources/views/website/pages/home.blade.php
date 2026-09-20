@@ -73,9 +73,9 @@
                                 <i class="la la-long-arrow-right"></i>
                                 {{ __('Browse Tours') }}
                             </a>
-                            <a href="#showcase-tour" class="showcase-hero__video-btn">
-                                <i class="la la-play-circle"></i>
-                                {{ __('Watch Video') }}
+                            <a href="{{ route('website.tailor_made.index') }}" class="showcase-hero__video-btn">
+                                <i class="la la-route"></i>
+                                {{ __('Plan My Trip') }}
                             </a>
                         </div>
 
@@ -125,19 +125,6 @@
                                 </div>
                             </div>
                         </a>
-
-                        <div class="showcase-hero__destinations">
-                            <a href="{{ route('website.nile_cruises.index') }}" class="showcase-destination-card">
-                                <img src="{{ asset('website/admin/uploads/1603406020abu-simbel.jpg') }}"
-                                    alt="{{ __('Abu Simbel') }}" width="1000" height="300" loading="eager">
-                                <span><i class="la la-map-marker"></i>{{ __('Abu Simbel') }}</span>
-                            </a>
-                            <a href="{{ route('website.nile_cruises.index') }}" class="showcase-destination-card">
-                                <img src="{{ asset('website/images/day-tours/aswan-destination.jpg') }}"
-                                    alt="{{ __('Aswan') }}" width="1264" height="848" loading="eager">
-                                <span><i class="la la-map-marker"></i>{{ __('Aswan') }}</span>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -648,48 +635,61 @@
                     </p>
                 </div>
 
-                <div class="testimonials-grid">
-                    @forelse ($testimonials as $testimonial)
-                        <div class="testimonial-card reveal-up">
-                            <div class="rating-stars">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    <i class="la {{ $i <= $testimonial['rating'] ? 'la-star' : 'la-star-o' }}"></i>
-                                @endfor
+                <div class="testimonials-slider-wrapper reveal-up">
+                    <button type="button" class="testimonials-nav-btn prev-btn"
+                        aria-label="{{ __('Previous Review') }}">
+                        <i class="la la-angle-left"></i>
+                    </button>
 
-                                @if ($testimonial['is_verified'])
-                                    <span class="verified-badge">{{ __('Verified') }}</span>
-                                @endif
-                            </div>
+                    <div class="testimonials-slider" id="testimonialsSlider">
+                        @forelse ($testimonials as $testimonial)
+                            <div class="testimonial-card">
+                                <div class="rating-stars">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <i class="la {{ $i <= $testimonial['rating'] ? 'la-star' : 'la-star-o' }}"></i>
+                                    @endfor
 
-                            <p class="testimonial-text">“{{ $testimonial['content'] }}”</p>
-
-                            <div class="author-section">
-                                <div class="author-avatar">
-                                    @if ($testimonial['avatar'])
-                                        <img src="{{ $testimonial['avatar'] }}" alt="{{ $testimonial['name'] }}"
-                                            width="80" height="80" loading="lazy" decoding="async">
-                                    @else
-                                        {{ $testimonial['initials'] }}
+                                    @if ($testimonial['is_verified'])
+                                        <span class="verified-badge">{{ __('Verified') }}</span>
                                     @endif
                                 </div>
 
-                                <div>
-                                    <h5 class="author-name">{{ $testimonial['name'] }}</h5>
-                                    <p class="mb-0 text-muted">
-                                        <i class="la la-check-circle"></i>
-                                        {{ __('Guest Review') }}
-                                    </p>
+                                <p class="testimonial-text">“{{ $testimonial['content'] }}”</p>
+
+                                <div class="author-section">
+                                    <div class="author-avatar">
+                                        @if ($testimonial['avatar'])
+                                            <img src="{{ $testimonial['avatar'] }}" alt="{{ $testimonial['name'] }}"
+                                                width="80" height="80" loading="lazy" decoding="async">
+                                        @else
+                                            {{ $testimonial['initials'] }}
+                                        @endif
+                                    </div>
+
+                                    <div>
+                                        <h5 class="author-name">{{ $testimonial['name'] }}</h5>
+                                        <p class="mb-0 text-muted">
+                                            <i class="la la-check-circle"></i>
+                                            {{ __('Guest Review') }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @empty
-                        <div class="empty-state">
-                            {{ __('No testimonials found. Add active testimonials from the admin panel.') }}
-                        </div>
-                    @endforelse
+                        @empty
+                            <div class="empty-state">
+                                {{ __('No testimonials found. Add active testimonials from the admin panel.') }}
+                            </div>
+                        @endforelse
+                    </div>
+
+                    <button type="button" class="testimonials-nav-btn next-btn" aria-label="{{ __('Next Review') }}">
+                        <i class="la la-angle-right"></i>
+                    </button>
                 </div>
 
-                <div class="text-center mt-5 reveal-up">
+                <div class="testimonials-dots" id="testimonialsDots"></div>
+
+                <div class="text-center mt-4 reveal-up">
                     <a href="#" target="_blank" class="gold-btn">
                         <i class="la la-external-link"></i>
                         {{ __('Read All Reviews on TripAdvisor') }}
@@ -835,5 +835,134 @@
         } else {
             initReveal();
         }
+
+        // Testimonials Slider JS
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.getElementById('testimonialsSlider');
+            const prevBtn = document.querySelector('.testimonials-nav-btn.prev-btn');
+            const nextBtn = document.querySelector('.testimonials-nav-btn.next-btn');
+            const dotsContainer = document.getElementById('testimonialsDots');
+
+            if (!slider) return;
+
+            const cards = slider.querySelectorAll('.testimonial-card');
+            if (cards.length === 0) return;
+
+            // Generate dots based on scroll positions
+            function updateDots() {
+                dotsContainer.innerHTML = '';
+                const cardWidth = cards[0].offsetWidth + 24; // width + gap
+                const visibleCount = Math.round(slider.offsetWidth / cardWidth) || 1;
+                const totalPages = Math.ceil(cards.length / visibleCount);
+
+                if (totalPages <= 1) {
+                    dotsContainer.style.display = 'none';
+                    return;
+                }
+                dotsContainer.style.display = 'flex';
+
+                const currentPage = Math.round(slider.scrollLeft / (cardWidth * visibleCount));
+
+                for (let i = 0; i < totalPages; i++) {
+                    const dot = document.createElement('button');
+                    dot.type = 'button';
+                    dot.classList.add('testimonials-dot');
+                    if (i === currentPage) dot.classList.add('active');
+                    dot.setAttribute('aria-label', 'Go to page ' + (i + 1));
+                    dot.addEventListener('click', function() {
+                        slider.scrollTo({
+                            left: i * cardWidth * visibleCount,
+                            behavior: 'smooth'
+                        });
+                    });
+                    dotsContainer.appendChild(dot);
+                }
+            }
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', function() {
+                    const cardWidth = cards[0].offsetWidth + 24;
+                    const isRtl = document.documentElement.getAttribute('dir') === 'rtl';
+                    const scrollAmount = isRtl ? cardWidth : -cardWidth;
+                    slider.scrollBy({
+                        left: scrollAmount,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', function() {
+                    const cardWidth = cards[0].offsetWidth + 24;
+                    const isRtl = document.documentElement.getAttribute('dir') === 'rtl';
+                    const scrollAmount = isRtl ? -cardWidth : cardWidth;
+                    slider.scrollBy({
+                        left: scrollAmount,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // --- Mouse Drag to Scroll ---
+            let isDown = false;
+            let startX = 0;
+            let scrollLeftStart = 0;
+            let dragged = false;
+
+            slider.addEventListener('mousedown', function(e) {
+                isDown = true;
+                dragged = false;
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeftStart = slider.scrollLeft;
+                slider.style.cursor = 'grabbing';
+                slider.style.userSelect = 'none';
+                e.preventDefault();
+            });
+
+            window.addEventListener('mouseup', function() {
+                if (!isDown) return;
+                isDown = false;
+                slider.style.cursor = 'grab';
+                slider.style.userSelect = '';
+            });
+
+            slider.addEventListener('mouseleave', function() {
+                if (isDown) {
+                    isDown = false;
+                    slider.style.cursor = 'grab';
+                    slider.style.userSelect = '';
+                }
+            });
+
+            slider.addEventListener('mousemove', function(e) {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 1.5;
+                if (Math.abs(walk) > 5) dragged = true;
+                slider.scrollLeft = scrollLeftStart - walk;
+            });
+
+            // Prevent click on cards when dragging
+            slider.addEventListener('click', function(e) {
+                if (dragged) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    dragged = false;
+                }
+            }, true);
+
+            // Set grab cursor on hover
+            slider.style.cursor = 'grab';
+
+            let scrollTimer;
+            slider.addEventListener('scroll', function() {
+                clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(updateDots, 100);
+            });
+
+            window.addEventListener('resize', updateDots);
+            updateDots();
+        });
     </script>
 @endsection

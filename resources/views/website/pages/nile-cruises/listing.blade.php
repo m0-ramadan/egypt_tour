@@ -144,15 +144,17 @@
             <h1 class="nile-title">{{ $pageContent['title'] }}</h1>
             <p class="nile-subtitle">{{ $pageContent['subtitle'] }}</p>
 
-            <div class="search-box-wrapper">
-                <form action="{{ url()->current() }}" method="GET" class="search-box">
-                    <input type="text" name="q" value="{{ $search }}"
-                        placeholder="{{ __('Search Nile cruise packages...') }}">
-                    <button type="submit">
-                        <i class="la la-search"></i> {{ __('Search') }}
-                    </button>
-                </form>
-            </div>
+            @unless (in_array($type->slug, ['dahabiya-nile-cruise', 'lake-nasser-cruise'], true))
+                <div class="search-box-wrapper">
+                    <form action="{{ url()->current() }}" method="GET" class="search-box">
+                        <input type="text" name="q" value="{{ $search }}"
+                            placeholder="{{ __('Search Nile cruise packages...') }}">
+                        <button type="submit">
+                            <i class="la la-search"></i> {{ __('Search') }}
+                        </button>
+                    </form>
+                </div>
+            @endunless
         </div>
     </section>
 
@@ -170,7 +172,7 @@
                     </p>
                 </div>
 
-                @if ($search !== '')
+                @if ($search !== '' && !in_array($type->slug, ['dahabiya-nile-cruise', 'lake-nasser-cruise'], true))
                     <div>
                         <a href="{{ url()->current() }}" class="btn btn-sm btn-outline-secondary rounded-pill">
                             <i class="la la-times"></i> {{ __('Clear Search') }}

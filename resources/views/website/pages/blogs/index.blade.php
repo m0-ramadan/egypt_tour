@@ -438,9 +438,17 @@
             margin-bottom: 30px;
         }
 
-        .sidebar-widget {
+        body.website-theme-shell .luxury-sidebar {
+            border: 0 !important;
+            box-shadow: 0 10px 30px rgba(43, 43, 43, .09) !important;
+        }
+
+        body.website-theme-shell .luxury-sidebar .sidebar-widget {
             padding: 25px;
-            border-bottom: 1px solid rgba(243, 107, 10, 0.1);
+            border: 0 !important;
+            background: transparent !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
         }
 
         .sidebar-widget:last-child {
@@ -655,6 +663,16 @@
             color: var(--warm-gray, #777);
             border: 1px solid rgba(243, 107, 10, 0.15);
             box-shadow: var(--shadow-medium, 0 8px 30px rgba(43, 43, 43, .12));
+        }
+
+        body.website-theme-shell .luxury-sidebar .empty-state {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(243, 107, 10, .06) !important;
+            border: 0 !important;
+            border-radius: 12px !important;
+            box-shadow: none !important;
+            text-align: left;
         }
 
         .why-choose-section {
@@ -1131,11 +1149,9 @@
                                 $articleExcerpt =
                                     $article->display_excerpt ?: Str::limit(strip_tags($article->display_content), 120);
 
-                                $articleUrl = Route::has('website.blogs.show.legacy')
-                                    ? route('website.blogs.show.legacy', [$articleCategorySlug, $article->slug])
-                                    : (Route::has('website.blogs.show')
-                                        ? route('website.blogs.show', $article->slug)
-                                        : url('/blogs/' . $article->slug));
+                                $articleUrl = Route::has('website.blogs.show')
+                                    ? route('website.blogs.show', $article->slug)
+                                    : url('/blog/' . $article->slug);
                             @endphp
 
                             <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
@@ -1262,16 +1278,14 @@
                                     $popularCategorySlug =
                                         $popular->category?->slug ?? Str::slug($popularCategoryTitle);
 
-                                    $popularUrl = Route::has('website.blogs.show.legacy')
-                                        ? route('website.blogs.show.legacy', [$popularCategorySlug, $popular->slug])
-                                        : (Route::has('website.blogs.show')
-                                            ? route('website.blogs.show', $popular->slug)
-                                            : url('/blogs/' . $popular->slug));
+                                    $popularUrl = Route::has('website.blogs.show')
+                                        ? route('website.blogs.show', $popular->slug)
+                                        : url('/blog/' . $popular->slug);
                                 @endphp
 
                                 <div class="popular-article">
                                     <img src="{{ $popularImage }}" alt="{{ $popularTitle }}" class="popular-img"
-                                        loading="lazy">
+                                        loading="lazy" onerror="this.onerror=null;this.src='{{ asset('website/photos/home2.webp') }}';">
 
                                     <div class="popular-content">
                                         <h4>
@@ -1298,7 +1312,7 @@
                             <h3 class="sidebar-title">{{ __('Follow & Connect') }}</h3>
 
                             <div class="social-links">
-                                <a href="https://www.facebook.com/" target="_blank" class="social-link">
+                                <a href="https://www.facebook.com/Egypttourpro/" target="_blank" class="social-link">
                                     <i class="lab la-facebook-f"></i>
                                 </a>
 
@@ -1306,7 +1320,7 @@
                                     <i class="lab la-twitter"></i>
                                 </a>
 
-                                <a href="https://www.instagram.com/" target="_blank" class="social-link">
+                                <a href="https://www.instagram.com/egypt_tour_pro" target="_blank" class="social-link">
                                     <i class="lab la-instagram"></i>
                                 </a>
 
@@ -1324,7 +1338,7 @@
     </section>
 
     {{-- <div class="fixed-mobile-btn d-lg-none">
-        <a href="https://api.whatsapp.com/send?phone=201005877285" target="_blank" class="mobile-enquiry-btn">
+        <a href="https://api.whatsapp.com/send?phone=201062217720" target="_blank" class="mobile-enquiry-btn">
             <i class="lab la-whatsapp"></i>
             {{ __('WhatsApp Us') }}
         </a>

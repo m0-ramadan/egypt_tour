@@ -44,14 +44,14 @@
             <a href="mailto:{{ $contactEmail }}" aria-label="{{ __('Email Us') }}" class="mobile-action-btn">
                 <i class="la la-envelope"></i>
             </a>
-            <a href="tel:+201005877285" aria-label="{{ __('Call Us') }}" class="mobile-action-btn call-btn">
+            <a href="tel:+201062217720" aria-label="{{ __('Call Us') }}" class="mobile-action-btn call-btn">
                 <i class="la la-phone"></i>
             </a>
-            {{-- <a href="viber://chat?number=201005877285" target="_blank" rel="noopener noreferrer"
+            {{-- <a href="viber://chat?number=201062217720" target="_blank" rel="noopener noreferrer"
                  aria-label="{{ __('Viber') }}" class="mobile-action-btn viber communication-btn">
                  <i class="lab la-viber"></i>
              </a> --}}
-            <a href="https://wa.me/201005877285" target="_blank" rel="noopener noreferrer"
+            <a href="https://wa.me/201062217720" target="_blank" rel="noopener noreferrer"
                 aria-label="{{ __('WhatsApp') }}" class="mobile-action-btn whatsapp communication-btn">
                 <i class="lab la-whatsapp"></i>
             </a>
@@ -297,7 +297,7 @@
                 {{ __('Toggle Theme') }}
             </button>
 
-            <a href="tel:+201005877285" class="mobile-action-card">
+            <a href="tel:+201062217720" class="mobile-action-card">
                 <i class="la la-phone"></i>
                 {{ __('Call Us') }}
             </a>

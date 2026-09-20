@@ -38,7 +38,7 @@ class DayTourController extends BaseWebsiteController
                 'badge' => __('Top Destination'),
                 'image' => 'website/images/day-tours/cairo-destination.jpg',
                 'desc' => __('There are a lot of things you can do in Cairo. Egypt Tour Pro will assist you to have a great time in Cairo. Our Cairo Excursions will take you to Giza Pyramids, Sphinx, the Egyptian Museum, Old Cairo, and Khan El Khalili market.'),
-                'url' => route('website.tours.all', ['destination' => 'cairo', 'type' => 'day_tour']),
+                'url' => route('website.day_tours.destination', ['destination' => 'cairo']),
             ],
             [
                 'city_slug' => 'luxor',
@@ -46,7 +46,7 @@ class DayTourController extends BaseWebsiteController
                 'badge' => __('Open-Air Museum'),
                 'image' => 'website/images/day-tours/luxor-destination.jpg',
                 'desc' => __('Luxor Tours has a rich heritage of attractions that can keep you busy for days. Our Luxor excursions & day tours are private, ensuring you make maximum use of your time visiting Karnak, Luxor Temple, and the Valley of the Kings.'),
-                'url' => route('website.tours.all', ['destination' => 'luxor', 'type' => 'day_tour']),
+                'url' => route('website.day_tours.destination', ['destination' => 'luxor']),
             ],
             [
                 'city_slug' => 'aswan',
@@ -54,7 +54,7 @@ class DayTourController extends BaseWebsiteController
                 'badge' => __('Nubian Heritage'),
                 'image' => 'website/images/day-tours/aswan-destination.jpg',
                 'desc' => __('Aswan is a serene Egyptian city located along the Nile near Luxor. Aswan has a sunny atmosphere perfect for tours all year round visiting Philae Temple, the High Dam, the Unfinished Obelisk, and breathtaking Abu Simbel.'),
-                'url' => route('website.tours.all', ['destination' => 'aswan', 'type' => 'day_tour']),
+                'url' => route('website.day_tours.destination', ['destination' => 'aswan']),
             ],
             [
                 'city_slug' => 'hurghada',
@@ -62,7 +62,7 @@ class DayTourController extends BaseWebsiteController
                 'badge' => __('Red Sea & Desert'),
                 'image' => 'website/images/day-tours/hurghada-destination.jpg',
                 'desc' => __('Hurghada is not only for relaxing and beach holidays; there are plenty of exciting activities including Red Sea snorkeling, Giftun Island boat trips, Quad desert safaris, and day trips to Luxor and Cairo.'),
-                'url' => route('website.tours.all', ['destination' => 'hurghada', 'type' => 'day_tour']),
+                'url' => route('website.day_tours.destination', ['destination' => 'hurghada']),
             ],
             [
                 'city_slug' => 'sharm-el-sheikh',
@@ -70,7 +70,7 @@ class DayTourController extends BaseWebsiteController
                 'badge' => __('Sinai Coast'),
                 'image' => 'website/images/day-tours/sharm-el-sheikh-destination.jpg',
                 'desc' => __('Sharm El Sheikh offers an array of activities: dive in Ras Mohamed National Park, climb Mount Sinai for sunrise, visit the ancient Saint Catherine Monastery, or enjoy vibrant desert stargazing dinner excursions.'),
-                'url' => route('website.tours.all', ['destination' => 'sharm-el-sheikh', 'type' => 'day_tour']),
+                'url' => route('website.day_tours.destination', ['destination' => 'sharm-el-sheikh']),
             ],
             [
                 'city_slug' => 'marsa-alam',
@@ -78,7 +78,7 @@ class DayTourController extends BaseWebsiteController
                 'badge' => __('Pristine Coral Reefs'),
                 'image' => 'website/images/day-tours/marsa-alam-destination.jpg',
                 'desc' => __('First enjoy the unspoilt beaches and coral reefs of Marsa Alam, then explore more of Egypt with guided day excursions to Luxor, Abu Simbel, and Sataya Dolphin Reef.'),
-                'url' => route('website.tours.all', ['destination' => 'marsa-alam', 'type' => 'day_tour']),
+                'url' => route('website.day_tours.destination', ['destination' => 'marsa-alam']),
             ],
             [
                 'city_slug' => 'dahab',
@@ -86,7 +86,7 @@ class DayTourController extends BaseWebsiteController
                 'badge' => __('Bohemian Charm'),
                 'image' => 'website/images/day-tours/dahab-day-tours.jpg',
                 'desc' => __('Are you looking for Dahab Day Tours! Choose from a wide range of day tours to visit the world-famous Blue Hole, Three Pools, Colored Canyon, Saint Catherine, and day trips to Petra.'),
-                'url' => route('website.tours.all', ['destination' => 'dahab', 'type' => 'day_tour']),
+                'url' => route('website.day_tours.destination', ['destination' => 'dahab']),
             ],
         ];
 

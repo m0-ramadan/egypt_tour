@@ -2129,3 +2129,34 @@ html[data-theme="dark"] .tp-price-summary-box .text-muted,
 html[data-theme="dark"] .tp-price-summary-box small {
     color: #aaa39b !important;
 }
+
+/* Keep package, cruise, and day-tour card titles readable in both themes. */
+html[data-theme="light"] body.website-theme-shell :is(
+        .package-card-title a,
+        .journey-title a,
+        .cruise-title a,
+        .excursion-title a,
+        .cat-title a
+    ) {
+    color: #1c1c1c !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell :is(
+        .package-card-title a,
+        .journey-title a,
+        .cruise-title a,
+        .excursion-title a,
+        .cat-title a
+    ) {
+    color: #f8fafc !important;
+}
+
+html[data-theme] body.website-theme-shell :is(
+        .package-card-title a,
+        .journey-title a,
+        .cruise-title a,
+        .excursion-title a,
+        .cat-title a
+    ):hover {
+    color: var(--etp-orange-500, #f36b0a) !important;
+}
