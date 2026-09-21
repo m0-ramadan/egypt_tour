@@ -1,9 +1,12 @@
 @include('admin.i18n.locale')
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="{{ route('admin.index') }}" class="app-brand-link">
-            <span style="width: 75px !important ; height:75px !important" class="app-brand-logo demo"></span>
-            <span class="app-brand-text demo menu-text fw-bold" style="font-size: 0.90rem">{{ env('APP_NAME') }}</span>
+        <a href="{{ route('admin.index') }}" class="app-brand-link d-flex align-items-center gap-2">
+            <span class="app-brand-logo demo d-flex align-items-center justify-content-center">
+                <img src="{{ asset('website/logo/favicon-pro.png') }}"
+                    style="width: 36px; height: 36px; object-fit: contain;" alt="{{ env('APP_NAME') }}">
+            </span>
+            <span class="app-brand-text demo menu-text fw-bold" style="font-size: 0.95rem">{{ env('APP_NAME') }}</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">

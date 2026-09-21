@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 */
 // use Spatie\Sitemap\SitemapGenerator;
 
-// SitemapGenerator::create('https://etrotours.com')->writeToFile(public_path('sitemap.xml'));
+// SitemapGenerator::create('https://egypttourpro.com')->writeToFile(public_path('sitemap.xml'));
 
 Route::name('website.')->group(function () {
     Route::get('/lang/{locale}', function (Illuminate\Http\Request $request, $locale) {
@@ -122,11 +122,11 @@ Route::name('website.')->group(function () {
             ->name('services');
 
         Route::get('/about-us', 'redirectLegacy')
-            ->defaults('slug', 'about-etrotours')
+            ->defaults('slug', 'about-us')
             ->name('pages.about.legacy');
 
         Route::get('/why-luxor-and-aswan-travel', 'redirectLegacy')
-            ->defaults('slug', 'why-etrotours')
+            ->defaults('slug', 'why-us')
             ->name('pages.why.legacy');
     });
 

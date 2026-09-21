@@ -39,7 +39,7 @@ return [
         'api_key' => env('PAYMOB_API_KEY'),
         'hmac_secret' => env('PAYMOB_HMAC_SECRET'),
         'integration_ids' => array_values(array_filter(array_map(
-            static fn ($id) => is_numeric(trim($id)) ? (int) trim($id) : null,
+            static fn($id) => is_numeric(trim($id)) ? (int) trim($id) : null,
             explode(',', (string) env('PAYMOB_INTEGRATION_IDS', ''))
         ))),
         'currency' => strtoupper(env('PAYMOB_CURRENCY', 'EGP')),
@@ -71,7 +71,7 @@ return [
 
     'savvyhost' => [
         'base_url' => env('SAVVYHOST_API_URL', 'https://api.savvyhost.net'),
-        'tenant' => env('SAVVYHOST_TENANT_SUBDOMAIN', 'etrotours'),
+        'tenant' => env('SAVVYHOST_TENANT_SUBDOMAIN', 'egypttourpro'),
         'email' => env('SAVVYHOST_LOGIN_EMAIL'),
         'password' => env('SAVVYHOST_LOGIN_PASSWORD'),
         'token' => env('SAVVYHOST_API_TOKEN'),

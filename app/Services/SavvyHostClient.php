@@ -43,7 +43,7 @@ class SavvyHostClient
     public function request(string $method, string $uri, array $options = [], bool $canRetryAuth = true): Response
     {
         $baseUrl = config('services.savvyhost.base_url', 'https://api.savvyhost.net');
-        $tenant = config('services.savvyhost.tenant', 'etrotours');
+        $tenant = config('services.savvyhost.tenant', 'egypttourpro');
         $url = str_starts_with($uri, 'http') ? $uri : (rtrim($baseUrl, '/') . '/' . ltrim($uri, '/'));
 
         // 1. Get valid token (cached or fresh)
