@@ -105,11 +105,11 @@ class SavvyHostAuthService
                 'Content-Type' => 'application/json',
                 'x-tenant-subdomain' => $tenant,
             ])
-            ->timeout(15)
-            ->post($endpoint, [
-                'email' => $email,
-                'password' => $password,
-            ]);
+                ->timeout(15)
+                ->post($endpoint, [
+                    'email' => $email,
+                    'password' => $password,
+                ]);
         } catch (Exception $e) {
             Log::error('SavvyHost login connection error');
             throw new Exception('Failed to connect to SavvyHost authentication service.');
@@ -179,7 +179,7 @@ class SavvyHostAuthService
      */
     public function getTenant(): string
     {
-        return config('services.savvyhost.tenant', 'etrotours');
+        return config('services.savvyhost.tenant', 'egypttourpro');
     }
 
     public function getTokenCacheKey(): string

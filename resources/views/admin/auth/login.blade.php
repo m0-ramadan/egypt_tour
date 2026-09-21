@@ -30,9 +30,10 @@
                 <div class="w-px-400 mx-auto">
 
                     <!-- الشعار -->
-                    <div class="app-brand mb-5 d-flex justify-content-center align-items-center">
+                    <div class="app-brand mb-4 d-flex justify-content-center align-items-center">
                         <a href="{{ url('/') }}" class="app-brand-link">
-                            <img height="100" width="300" src="{{ asset('dashboard/assets/img/tala.png') }}"
+                            <img src="{{ asset('website/logo/egypt-tour-pro.png') }}"
+                                style="max-height: 85px; width: auto; max-width: 280px; object-fit: contain;"
                                 alt="شعار {{ env('APP_NAME') }}">
                         </a>
                     </div>

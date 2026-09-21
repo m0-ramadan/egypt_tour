@@ -37,7 +37,7 @@ class LegacyRedirectController extends Controller
 
         // 2. Direct static mappings
         $staticMap = [
-            'about' => route('website.pages.show', 'about-etrotours'),
+            'about' => route('website.pages.show', 'about-us'),
             'contact' => route('website.contact.index'),
             'services' => route('website.services'),
             'stories' => route('website.blogs.index'),
@@ -46,7 +46,7 @@ class LegacyRedirectController extends Controller
             'cities' => route('website.destinations.index'),
             'accommodations' => route('website.home'),
             'testimonials' => route('website.home'),
-            'faqs' => route('website.pages.show', 'why-etrotours'),
+            'faqs' => route('website.pages.show', 'why-us'),
             'dyks' => route('website.blogs.index'),
             'tailor_made/tours' => route('website.tailor_made.index'),
             'policies/Cookies' => route('website.pages.show', 'privacy-policy'),

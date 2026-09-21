@@ -46,9 +46,9 @@
                     <li><a href="{{ route('website.attractions.index') }}"><i
                                 class="las la-chevron-right mr-1"></i>{{ __('Attractions') }} &amp;
                             {{ __('Sights') }}</a></li>
-                    <li><a href="{{ route('website.pages.show', 'about-etrotours') }}"><i
+                    <li><a href="{{ route('website.pages.show', 'about-us') }}"><i
                                 class="las la-chevron-right mr-1"></i>{{ __('About Egypt Tour Pro') }}</a></li>
-                    <li><a href="{{ route('website.pages.show', 'why-etrotours') }}"><i
+                    <li><a href="{{ route('website.pages.show', 'why-us') }}"><i
                                 class="las la-chevron-right mr-1"></i>{{ __('Why Egypt Tour Pro') }}</a></li>
                     <li><a href="{{ route('website.pages.show', 'terms-and-conditions') }}"><i
                                 class="las la-chevron-right mr-1"></i>{{ __('Terms and Conditions') }}</a></li>
@@ -109,7 +109,7 @@
                             <li><a href="{{ route('website.pages.show', 'terms-and-conditions') }}"
                                     style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s ease;">{{ __('Terms and Conditions') }}</a>
                             </li>
-                            <li><a href="{{ route('website.pages.show', 'about-etrotours') }}"
+                            <li><a href="{{ route('website.pages.show', 'about-us') }}"
                                     style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s ease;">{{ __('About Us') }}</a>
                             </li>
                             <li><a href="{{ route('website.contact.index') }}"
