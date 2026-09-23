@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إدارة الأدوار'))
+@section('title', admin_t('Manage Roles'))
 
 @section('css')
 
@@ -314,8 +314,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">الأدوار</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Roles</li>
             </ol>
         </nav>
 
@@ -324,7 +324,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-total"><i class="fas fa-user-shield"></i></div>
                     <div class="stats-number">{{ number_format($total) }}</div>
-                    <div class="stats-label">إجمالي الأدوار</div>
+                    <div class="stats-label">Total Roles</div>
                 </div>
             </div>
 
@@ -332,7 +332,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-permissions"><i class="fas fa-key"></i></div>
                     <div class="stats-number">{{ number_format($totalPermissions) }}</div>
-                    <div class="stats-label">إجمالي الصلاحيات</div>
+                    <div class="stats-label">Total Permissions</div>
                 </div>
             </div>
 
@@ -340,7 +340,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-admins"><i class="fas fa-users-cog"></i></div>
                     <div class="stats-number">{{ number_format($adminsCount) }}</div>
-                    <div class="stats-label">عدد المديرين</div>
+                    <div class="stats-label">Number of Admins</div>
                 </div>
             </div>
 
@@ -348,46 +348,46 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-custom"><i class="fas fa-sitemap"></i></div>
                     <div class="stats-number">{{ number_format($custom) }}</div>
-                    <div class="stats-label">أدوار مخصصة</div>
+                    <div class="stats-label">Roles Custom</div>
                 </div>
             </div>
         </div>
 
         <div class="filter-card">
-            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>فلترة متقدمة</h6>
+            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>Advanced Filters</h6>
 
             <div class="filter-row">
                 <div class="search-box">
                     <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="form-control" placeholder="بحث باسم الدور..." id="searchInput"
+                    <input type="text" class="form-control" placeholder="Search Named Role..." id="searchInput"
                         value="{{ request('search') }}">
                 </div>
 
                 <div class="sort-dropdown">
                     <button class="sort-btn">
                         <i class="fas fa-sort-amount-down"></i>
-                        الترتيب حسب
+                        Sort By
                     </button>
                     <div class="sort-dropdown-content">
                         <div class="sort-item {{ request('sort_by') == 'name' && request('sort_direction') == 'asc' ? 'active' : '' }}"
-                            onclick="sortBy('name', 'asc')">الاسم أ - ي</div>
+                            onclick="sortBy('name', 'asc')">Name A - Z</div>
                         <div class="sort-item {{ request('sort_by') == 'name' && request('sort_direction') == 'desc' ? 'active' : '' }}"
-                            onclick="sortBy('name', 'desc')">الاسم ي - أ</div>
+                            onclick="sortBy('name', 'desc')">Name Z - A</div>
                         <div class="sort-item {{ request('sort_by') == 'created_at' && request('sort_direction') == 'desc' ? 'active' : '' }}"
-                            onclick="sortBy('created_at', 'desc')">الأحدث أولاً</div>
+                            onclick="sortBy('created_at', 'desc')">Newest First</div>
                     </div>
                 </div>
             </div>
 
             <div class="filter-row">
                 <button class="btn btn-primary" onclick="applyFilters()">
-                    <i class="fas fa-filter me-2"></i>تطبيق الفلاتر
+                    <i class="fas fa-filter me-2"></i>Apply Filters
                 </button>
                 <button class="btn btn-outline-secondary" onclick="resetFilters()">
-                    <i class="fas fa-redo me-2"></i>إعادة تعيين
+                    <i class="fas fa-redo me-2"></i>Reset
                 </button>
                 <a href="{{ route('admin.roles.assign.index') }}" class="btn btn-secondary">
-                    <i class="fas fa-user-tag me-2"></i>إسناد أدوار
+                    <i class="fas fa-user-tag me-2"></i>Assign Roles
                 </a>
             </div>
         </div>
@@ -398,12 +398,12 @@
                     <div class="order-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="mb-0">قائمة الأدوار</h5>
-                                <small class="opacity-75">إدارة جميع أدوار النظام</small>
+                                <h5 class="mb-0">Roles List</h5>
+                                <small class="opacity-75">Manage All Roles System</small>
                             </div>
                             <div class="d-flex gap-3">
                                 <a href="{{ route('admin.roles.create') }}" class="btn btn-light">
-                                    <i class="fas fa-plus me-2"></i>إضافة دور
+                                    <i class="fas fa-plus me-2"></i>Add Role
                                 </a>
                             </div>
                         </div>
@@ -413,10 +413,10 @@
                         @if ($roles->isEmpty())
                             <div class="empty-state">
                                 <div class="empty-state-icon"><i class="fas fa-user-shield"></i></div>
-                                <h5 class="empty-state-text">لا توجد أدوار</h5>
-                                <p class="text-muted">لم يتم إنشاء أي دور حتى الآن</p>
+                                <h5 class="empty-state-text">No There are Roles</h5>
+                                <p class="text-muted">No Role have been created yet</p>
                                 <a href="{{ route('admin.roles.create') }}" class="btn btn-primary">
-                                    <i class="fas fa-plus me-2"></i>إضافة دور جديد
+                                    <i class="fas fa-plus me-2"></i>Add New Role
                                 </a>
                             </div>
                         @else
@@ -437,23 +437,23 @@
 
                                     <div class="order-details">
                                         <div class="detail-item">
-                                            <span class="detail-label">المعرف:</span>
+                                            <span class="detail-label">ID:</span>
                                             <span class="detail-value">#{{ $role->id }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">الحارس:</span>
+                                            <span class="detail-label">Guard:</span>
                                             <span class="detail-value">{{ $role->guard_name ?? 'admin' }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">الصلاحيات:</span>
+                                            <span class="detail-label">Permissions:</span>
                                             <span
                                                 class="detail-value">{{ method_exists($role, 'permissions') ? $role->permissions->count() : 0 }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">تاريخ الإنشاء:</span>
+                                            <span class="detail-label">Created At:</span>
                                             <span
                                                 class="detail-value">{{ optional($role->created_at)->translatedFormat('d M Y') ?? '-' }}</span>
                                         </div>
@@ -461,18 +461,18 @@
 
                                     <div class="order-actions">
                                         <a href="{{ route('admin.roles.show', $role) }}" class="btn btn-sm btn-info">
-                                            <i class="fas fa-eye me-1"></i>عرض التفاصيل
+                                            <i class="fas fa-eye me-1"></i>View Details
                                         </a>
                                         <a href="{{ route('admin.roles.edit', $role) }}" class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit me-1"></i>تعديل
+                                            <i class="fas fa-edit me-1"></i>Edit
                                         </a>
                                         <a href="{{ route('admin.roles.permissions', $role) }}"
                                             class="btn btn-sm btn-secondary">
-                                            <i class="fas fa-key me-1"></i>الصلاحيات
+                                            <i class="fas fa-key me-1"></i>Permissions
                                         </a>
                                         <button type="button" class="btn btn-sm btn-danger delete-btn"
                                             data-id="{{ $role->id }}" data-name="{{ $role->name }}">
-                                            <i class="fas fa-trash me-1"></i>حذف
+                                            <i class="fas fa-trash me-1"></i>Delete
                                         </button>
                                     </div>
                                 </div>
@@ -509,14 +509,14 @@
                 const roleName = $(this).data('name');
 
                 Swal.fire({
-                    title: 'هل أنت متأكد؟',
-                    text: `سيتم حذف الدور "${roleName}" نهائياً`,
+                    title: 'Are you sure?',
+                    text: `Will be Delete Role "${roleName}" Will be Delete Article`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'نعم، احذف',
-                    cancelButtonText: 'إلغاء',
+                    confirmButtonText: 'Yes, Delete',
+                    cancelButtonText: 'Cancel',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -530,8 +530,8 @@
                             success: function() {
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'تم الحذف',
-                                    text: 'تم حذف الدور بنجاح',
+                                    title: 'Was Deletion',
+                                    text: 'Was Delete Role Successfully',
                                     timer: 1500,
                                     showConfirmButton: false
                                 }).then(() => location.reload());
@@ -539,8 +539,8 @@
                             error: function() {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'خطأ',
-                                    text: 'حدث خطأ أثناء الحذف',
+                                    title: 'Error',
+                                    text: 'Event Error While Deletion',
                                     timer: 1500,
                                     showConfirmButton: false
                                 });

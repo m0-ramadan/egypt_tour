@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('طلبات المستخدم') . ': ' . $user->name)
+@section('title', admin_t('User Orders') . ': ' . $user->name)
 
 @section('css')
 
@@ -232,19 +232,19 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.index') }}">الرئيسية</a>
+                    <a href="{{ route('admin.index') }}">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.users.index') }}">المستخدمين</a>
+                    <a href="{{ route('admin.users.index') }}">Users</a>
                 </li>
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.users.show', $user) }}">{{ $user->name }}</a>
                 </li>
-                <li class="breadcrumb-item active">الطلبات</li>
+                <li class="breadcrumb-item active">Orders</li>
             </ol>
         </nav>
 
-        <!-- معلومات المستخدم -->
+        <!-- Information User -->
         <div class="user-info-card" bis_skin_checked="1">
             <div class="row align-items-center" bis_skin_checked="1">
                 <div class="col-auto" bis_skin_checked="1">
@@ -271,13 +271,13 @@
                 </div>
                 <div class="col-auto" bis_skin_checked="1">
                     <a href="{{ route('admin.users.show', $user) }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-right me-2"></i>العودة للتفاصيل
+                        <i class="fas fa-arrow-right me-2"></i>Back to Details
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- الإحصائيات -->
+        <!-- Statistics -->
         <div class="row mb-4" bis_skin_checked="1">
             <div class="col-lg-3 col-md-6 mb-4" bis_skin_checked="1">
                 <div class="stats-card" bis_skin_checked="1">
@@ -287,7 +287,7 @@
                     <div class="stats-number" bis_skin_checked="1">
                         {{ $orders->total() }}
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">إجمالي الطلبات</div>
+                    <div class="stats-label" bis_skin_checked="1">Total Orders</div>
                 </div>
             </div>
 
@@ -300,9 +300,9 @@
                         <i class="fas fa-money-bill-wave"></i>
                     </div>
                     <div class="stats-number" bis_skin_checked="1">
-                        {{ number_format($totalAmount, 2) }} ج.م
+                        {{ number_format($totalAmount, 2) }} EGP
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">إجمالي القيمة</div>
+                    <div class="stats-label" bis_skin_checked="1">Total Value</div>
                 </div>
             </div>
 
@@ -317,7 +317,7 @@
                     <div class="stats-number" bis_skin_checked="1">
                         {{ $pendingOrders }}
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">طلبات قيد الانتظار</div>
+                    <div class="stats-label" bis_skin_checked="1">Orders Pending Wait</div>
                 </div>
             </div>
 
@@ -332,7 +332,7 @@
                     <div class="stats-number" bis_skin_checked="1">
                         {{ $deliveredOrders }}
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">طلبات مكتملة</div>
+                    <div class="stats-label" bis_skin_checked="1">Orders Completed</div>
                 </div>
             </div>
         </div>
@@ -343,15 +343,15 @@
                     <div class="order-header" bis_skin_checked="1">
                         <div class="d-flex justify-content-between align-items-center" bis_skin_checked="1">
                             <div bis_skin_checked="1">
-                                <h5 class="mb-1">طلبات المستخدم</h5>
-                                <p class="text-muted mb-0">عرض جميع طلبات {{ $user->name }}</p>
+                                <h5 class="mb-1">User Orders</h5>
+                                <p class="text-muted mb-0">View all orders for {{ $user->name }}</p>
                             </div>
                             <div class="btn-group" bis_skin_checked="1">
                                 <a href="{{ route('admin.users.show', $user) }}" class="btn btn-outline-info">
-                                    <i class="fas fa-user me-2"></i>تفاصيل المستخدم
+                                    <i class="fas fa-user me-2"></i>User Details
                                 </a>
                                 <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
-                                    <i class="fas fa-arrow-right me-2"></i>جميع المستخدمين
+                                    <i class="fas fa-arrow-right me-2"></i>All Users
                                 </a>
                             </div>
                         </div>
@@ -362,8 +362,8 @@
                             <div class="empty-state-icon" bis_skin_checked="1">
                                 <i class="fas fa-shopping-cart"></i>
                             </div>
-                            <h5 class="empty-state-text">لا توجد طلبات لهذا المستخدم</h5>
-                            <p class="text-muted">المستخدم لم يقم بأي طلبات حتى الآن</p>
+                            <h5 class="empty-state-text">No There are Orders For this User</h5>
+                            <p class="text-muted">User Not Do With Any Orders Until Now</p>
                         </div>
                     @else
                         @foreach ($orders as $order)
@@ -371,7 +371,7 @@
                                 <div class="order-item-header" bis_skin_checked="1">
                                     <div class="order-item-title" bis_skin_checked="1">
                                         <div class="d-flex align-items-center gap-3" bis_skin_checked="1">
-                                            <span>الطلب #{{ $order->order_number }}</span>
+                                            <span>Order #{{ $order->order_number }}</span>
                                             <span class="badge-status status-{{ $order->status }}">
                                                 {{ $order->status_label }}
                                             </span>
@@ -384,30 +384,30 @@
 
                                 <div class="order-item-details" bis_skin_checked="1">
                                     <div class="detail-item" bis_skin_checked="1">
-                                        <span class="detail-label">القيمة:</span>
+                                        <span class="detail-label">Value:</span>
                                         <span class="detail-value">
-                                            {{ number_format($order->total_amount, 2) }} ج.م
+                                            {{ number_format($order->total_amount, 2) }} EGP.EGP
                                         </span>
                                     </div>
 
                                     <div class="detail-item" bis_skin_checked="1">
-                                        <span class="detail-label">العنوان:</span>
+                                        <span class="detail-label">Title:</span>
                                         <span class="detail-value">
                                             {{ Str::limit($order->shipping_address, 50) }}
                                         </span>
                                     </div>
 
                                     <div class="detail-item" bis_skin_checked="1">
-                                        <span class="detail-label">طريقة الدفع:</span>
+                                        <span class="detail-label">Method Payment:</span>
                                         <span class="detail-value">
                                             {{ $order->payment_method }}
                                         </span>
                                     </div>
 
                                     <div class="detail-item" bis_skin_checked="1">
-                                        <span class="detail-label">عدد المنتجات:</span>
+                                        <span class="detail-label">Number of Products:</span>
                                         <span class="detail-value">
-                                            {{ $order->items->count() }} منتج
+                                            {{ $order->items->count() }} Product
                                         </span>
                                     </div>
                                 </div>
@@ -415,7 +415,7 @@
                                 <div class="mt-3" bis_skin_checked="1">
                                     <a href="{{ route('admin.orders.show', $order) }}"
                                         class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-eye me-2"></i>عرض تفاصيل الطلب
+                                        <i class="fas fa-eye me-2"></i>View Details Request
                                     </a>
                                 </div>
                             </div>

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إضافة وسيلة دفع'))
+@section('title', admin_t('Add Payment Method'))
 
 @section('css')
     <style>
@@ -61,19 +61,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.payment-methods.index') }}">وسائل الدفع</a></li>
-                <li class="breadcrumb-item active">إضافة وسيلة دفع</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.payment-methods.index') }}">Payment Methods</a></li>
+                <li class="breadcrumb-item active">Add Payment Method</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">إضافة وسيلة دفع جديدة</h5>
-                    <small class="opacity-75">إدخال بيانات وسيلة الدفع</small>
+                    <h5 class="mb-0">Add New Method Payment</h5>
+                    <small class="opacity-75">Enter Details Method Payment</small>
                 </div>
-                <a href="{{ route('admin.payment-methods.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.payment-methods.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="form-body">
@@ -82,34 +82,34 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">اسم الوسيلة</label>
+                            <label class="form-label">Method Name</label>
                             <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">النوع</label>
+                            <label class="form-label">Type</label>
                             <input type="text" name="type" class="form-control" value="{{ old('type') }}"
                                 placeholder="card / cash / bank_transfer">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">العملة</label>
+                            <label class="form-label">Currency</label>
                             <input type="text" name="currency_code" class="form-control"
                                 value="{{ old('currency_code', 'USD') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الترتيب</label>
+                            <label class="form-label">Sort Order</label>
                             <input type="number" name="sort_order" class="form-control" value="{{ old('sort_order', 0) }}">
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">الوصف</label>
+                            <label class="form-label">Description</label>
                             <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">الإعدادات / Data</label>
+                            <label class="form-label">Settings / Data</label>
                             <textarea name="config" class="form-control" rows="5">{{ old('config') }}</textarea>
                         </div>
 
@@ -117,20 +117,20 @@
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" name="is_active"
                                     id="is_active" {{ old('is_active', true) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">مفعل</label>
+                                <label class="form-check-label" for="is_active">Enabled</label>
                             </div>
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" name="is_default"
                                     id="is_default" {{ old('is_default') ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_default">افتراضي</label>
+                                <label class="form-check-label" for="is_default">Default</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.payment-methods.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.payment-methods.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('الحجوزات'))
+@section('title', admin_t('Bookings'))
 
 @section('css')
 
@@ -140,8 +140,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">الحجوزات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Bookings</li>
             </ol>
         </nav>
 
@@ -152,7 +152,7 @@
                         <i class="fas fa-calendar-check"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalBookings) }}</div>
-                    <div class="stats-label">إجمالي الحجوزات</div>
+                    <div class="stats-label">Total Bookings</div>
                 </div>
             </div>
 
@@ -163,7 +163,7 @@
                         <i class="fas fa-hourglass-half"></i>
                     </div>
                     <div class="stats-number">{{ number_format($pendingBookings) }}</div>
-                    <div class="stats-label">قيد الانتظار</div>
+                    <div class="stats-label">Pending</div>
                 </div>
             </div>
 
@@ -174,7 +174,7 @@
                         <i class="fas fa-circle-check"></i>
                     </div>
                     <div class="stats-number">{{ number_format($confirmedBookings) }}</div>
-                    <div class="stats-label">مؤكدة</div>
+                    <div class="stats-label">Confirmed</div>
                 </div>
             </div>
 
@@ -185,7 +185,7 @@
                         <i class="fas fa-flag-checkered"></i>
                     </div>
                     <div class="stats-number">{{ number_format($completedBookings) }}</div>
-                    <div class="stats-label">مكتملة</div>
+                    <div class="stats-label">Completed</div>
                 </div>
             </div>
         </div>
@@ -194,15 +194,15 @@
             <form method="GET" action="{{ route('admin.bookings.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-3">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <input type="text" class="form-control" name="search" value="{{ request('search') }}"
-                            placeholder="اسم العميل أو المرجع">
+                            placeholder="Client Or Reference Name">
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">الباقة</label>
+                        <label class="form-label">Package</label>
                         <select name="package_id" class="form-select">
-                            <option value="">كل الباقات</option>
+                            <option value="">All Packages</option>
                             @foreach ($packages ?? collect() as $package)
                                 <option value="{{ $package->id }}"
                                     {{ request('package_id') == $package->id ? 'selected' : '' }}>
@@ -213,9 +213,9 @@
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
+                            <option value="">All</option>
                             <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>pending</option>
                             <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>confirmed
                             </option>
@@ -227,13 +227,13 @@
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">من تاريخ</label>
+                        <label class="form-label">From Date</label>
                         <input type="date" class="form-control" name="from" value="{{ request('from') }}">
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.bookings.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.bookings.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -242,11 +242,11 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة الحجوزات</h5>
-                    <small class="opacity-75">إدارة جميع الحجوزات السياحية</small>
+                    <h5 class="mb-0">Bookings List</h5>
+                    <small class="opacity-75">Manage All Bookings Tourist</small>
                 </div>
                 <a href="{{ route('admin.bookings.create') }}" class="btn btn-light">
-                    <i class="fas fa-plus me-2"></i>إضافة حجز
+                    <i class="fas fa-plus me-2"></i>Add Booking
                 </a>
             </div>
 
@@ -255,7 +255,7 @@
                     <div class="item-card">
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
                             <div>
-                                <h6 class="mb-1">{{ $booking->booking_reference ?? 'بدون مرجع' }}</h6>
+                                <h6 class="mb-1">{{ $booking->booking_reference ?? 'Without Reference' }}</h6>
                                 <small class="text-light opacity-75">
                                     {{ $booking->client->name ?? ($booking->client_name ?? '-') }}
                                 </small>
@@ -267,33 +267,33 @@
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-md-3"><strong>الباقة:</strong> {{ $booking->package->name ?? '-' }}</div>
-                            <div class="col-md-3"><strong>عدد الأفراد:</strong> {{ $booking->travellers_count ?? '-' }}
+                            <div class="col-md-3"><strong>Package:</strong> {{ $booking->package->name ?? '-' }}</div>
+                            <div class="col-md-3"><strong>Number of Guests:</strong> {{ $booking->travellers_count ?? '-' }}
                                 @if(($booking->adults ?? 0) > 0 || ($booking->children ?? 0) > 0 || ($booking->infants ?? 0) > 0)
                                     <small class="text-light opacity-75 d-block" style="font-size: 11px;">
-                                        ({{ $booking->adults ?? 0 }} بالغ · {{ $booking->children ?? 0 }} طفل · {{ $booking->infants ?? 0 }} رضيع)
+                                        ({{ $booking->adults ?? 0 }} Adults · {{ $booking->children ?? 0 }} Children · {{ $booking->infants ?? 0 }} Infants)
                                     </small>
                                 @endif
                             </div>
-                            <div class="col-md-3"><strong>إجمالي السعر:</strong>
+                            <div class="col-md-3"><strong>Total Price:</strong>
                                 {{ number_format($booking->total_amount ?? 0, 2) }}</div>
-                            <div class="col-md-3"><strong>العملة:</strong> {{ $booking->currency_code ?? '-' }}</div>
+                            <div class="col-md-3"><strong>Currency:</strong> {{ $booking->currency_code ?? '-' }}</div>
                         </div>
 
                         <div class="row mb-3 align-items-center">
-                            <div class="col-md-3"><strong>تاريخ السفر:</strong>
+                            <div class="col-md-3"><strong>Travel Date:</strong>
                                 {{ optional($booking->travel_date)->translatedFormat('d M Y') ?? '-' }}</div>
-                            <div class="col-md-3"><strong>تاريخ الحجز:</strong>
+                            <div class="col-md-3"><strong>Booking: Date</strong>
                                 {{ optional($booking->created_at)->translatedFormat('d M Y') ?? '-' }}</div>
                             <div class="col-md-3">
-                                <strong>الهاتف:</strong>
+                                <strong>Phone:</strong>
                                 @if(!empty($booking->phone))
                                     @php($cleanBPhone = preg_replace('/[^0-9]/', '', $booking->phone))
                                     <span class="dir-ltr d-inline-block font-monospace mx-1">{{ $booking->phone }}</span>
-                                    <a href="https://wa.me/{{ $cleanBPhone }}" target="_blank" class="btn btn-sm btn-success rounded-circle px-2 py-1 me-1" title="مراسلة عبر واتساب">
+                                    <a href="https://wa.me/{{ $cleanBPhone }}" target="_blank" class="btn btn-sm btn-success rounded-circle px-2 py-1 me-1" title="Message via WhatsApp">
                                         <i class="fab fa-whatsapp fs-6"></i>
                                     </a>
-                                    <a href="tel:{{ $booking->phone }}" class="btn btn-sm btn-info rounded-circle px-2 py-1" title="اتصال هاتفي">
+                                    <a href="tel:{{ $booking->phone }}" class="btn btn-sm btn-info rounded-circle px-2 py-1" title="Phone Call">
                                         <i class="fas fa-phone-alt fs-6"></i>
                                     </a>
                                 @else
@@ -301,9 +301,9 @@
                                 @endif
                             </div>
                             <div class="col-md-3">
-                                <strong>البريد:</strong>
+                                <strong>Email:</strong>
                                 @if(!empty($booking->email))
-                                    <a href="mailto:{{ $booking->email }}" class="text-info text-decoration-none" title="مراسلة عبر البريد الإلكتروني">
+                                    <a href="mailto:{{ $booking->email }}" class="text-info text-decoration-none" title="Message via Email">
                                         <i class="fas fa-envelope text-primary me-1"></i>{{ $booking->email }}
                                     </a>
                                 @else
@@ -313,10 +313,10 @@
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('admin.bookings.show', $booking) }}" class="btn btn-info btn-sm">عرض</a>
-                            <a href="{{ route('admin.bookings.edit', $booking) }}" class="btn btn-warning btn-sm">تعديل</a>
+                            <a href="{{ route('admin.bookings.show', $booking) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('admin.bookings.edit', $booking) }}" class="btn btn-warning btn-sm">Edit</a>
                             <a href="{{ route('admin.bookings.print', $booking) }}"
-                                class="btn btn-secondary btn-sm">طباعة</a>
+                                class="btn btn-secondary btn-sm">Print</a>
 
                             @if (Route::has('admin.bookings.update-status'))
                                 <form action="{{ route('admin.bookings.update-status', $booking) }}" method="POST"
@@ -328,19 +328,19 @@
                                         <option value="completed">completed</option>
                                         <option value="cancelled">cancelled</option>
                                     </select>
-                                    <button class="btn btn-dark btn-sm" type="submit">تحديث</button>
+                                    <button class="btn btn-dark btn-sm" type="submit">Update</button>
                                 </form>
                             @endif
 
                             <form action="{{ route('admin.bookings.destroy', $booking) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد حجوزات حالياً</div>
+                    <div class="text-center py-5">No bookings available</div>
                 @endforelse
 
                 @if (method_exists($bookings, 'links'))

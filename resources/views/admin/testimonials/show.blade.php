@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض رأي عميل'))
+@section('title', admin_t('View Testimonial'))
 
 @section('css')
 
@@ -204,43 +204,43 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.testimonials.index') }}">آراء العملاء</a></li>
-                <li class="breadcrumb-item active">عرض الرأي</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.testimonials.index') }}">Testimonials</a></li>
+                <li class="breadcrumb-item active">View alray</li>
             </ol>
         </nav>
 
         <div class="panel-card">
             <div class="panel-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">{{ $testimonial->client_name ?? (adminTrans($testimonial->name) ?: 'بدون اسم') }}
+                    <h5 class="mb-0">{{ $testimonial->client_name ?? (adminTrans($testimonial->name) ?: 'No Name') }}
                     </h5>
                     <small class="opacity-75">{{ adminTrans($testimonial->title) ?: '-' }}</small>
                 </div>
-                <a href="{{ route('admin.testimonials.index') }}" class="btn btn-outline-light">رجوع</a>
+                <a href="{{ route('admin.testimonials.index') }}" class="btn btn-outline-light">Back</a>
             </div>
             <div class="panel-body">
                 <div class="info-box">
-                    <div class="info-label">المحتوى</div>
+                    <div class="info-label">Content</div>
                     <div class="info-value">
                         {{ adminTrans($testimonial->content) ?: (adminTrans($testimonial->message) ?: '-') }}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">مميز</div>
-                            <div class="info-value">{{ $testimonial->is_featured ?? false ? 'نعم' : 'لا' }}</div>
+                            <div class="info-label">Featured</div>
+                            <div class="info-value">{{ $testimonial->is_featured ?? false ? 'Yes' : 'No' }}</div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">نشط</div>
-                            <div class="info-value">{{ $testimonial->is_active ?? true ? 'نعم' : 'لا' }}</div>
+                            <div class="info-label">Active</div>
+                            <div class="info-value">{{ $testimonial->is_active ?? true ? 'Yes' : 'No' }}</div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">التاريخ</div>
+                            <div class="info-label">Date</div>
                             <div class="info-value">
                                 {{ optional($testimonial->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
                         </div>

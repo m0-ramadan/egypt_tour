@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تعديل وسيلة تواصل'))
+@section('title', admin_t('Edit Social Media Link'))
 
 @section('css')
     <style>
@@ -59,19 +59,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.social-media.index') }}">وسائل التواصل</a></li>
-                <li class="breadcrumb-item active">تعديل</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.social-media.index') }}">Social Media</a></li>
+                <li class="breadcrumb-item active">Edit</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">تعديل وسيلة التواصل</h5>
+                    <h5 class="mb-0">Edit Method Communication</h5>
                     <small class="opacity-75">{{ $socialMedium->platform ?? ($socialMedium->name ?? '') }}</small>
                 </div>
-                <a href="{{ route('admin.social-media.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.social-media.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="form-body">
@@ -82,25 +82,25 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">اسم المنصة</label>
+                            <label class="form-label">Platform Name</label>
                             <input type="text" name="platform" class="form-control"
                                 value="{{ old('platform', $socialMedium->platform ?? $socialMedium->name) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الرابط</label>
+                            <label class="form-label">Link</label>
                             <input type="text" name="url" class="form-control"
                                 value="{{ old('url', $socialMedium->url) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الأيقونة</label>
+                            <label class="form-label">Icon</label>
                             <input type="text" name="icon" class="form-control"
                                 value="{{ old('icon', $socialMedium->icon) }}" placeholder="fab fa-facebook-f">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الترتيب</label>
+                            <label class="form-label">Sort Order</label>
                             <input type="number" name="sort_order" class="form-control"
                                 value="{{ old('sort_order', $socialMedium->sort_order ?? 0) }}">
                         </div>
@@ -110,14 +110,14 @@
                                 <input class="form-check-input" type="checkbox" value="1" name="is_active"
                                     id="is_active"
                                     {{ old('is_active', $socialMedium->is_active ?? true) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">مفعل</label>
+                                <label class="form-check-label" for="is_active">Enabled</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.social-media.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.social-media.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

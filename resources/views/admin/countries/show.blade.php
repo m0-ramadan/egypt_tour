@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض الدولة'))
+@section('title', admin_t('View Country'))
 
 @section('css')
     <style>
@@ -98,9 +98,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.countries.index') }}">الدول</a></li>
-                <li class="breadcrumb-item active">عرض الدولة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.countries.index') }}">Countries</a></li>
+                <li class="breadcrumb-item active">View Country</li>
             </ol>
         </nav>
 
@@ -112,14 +112,14 @@
                     @endif
 
                     <div>
-                        <h4 class="mb-1">{{ $country->display_name ?? 'بدون اسم' }}</h4>
+                        <h4 class="mb-1">{{ $country->display_name ?? 'No Name' }}</h4>
                         <small class="opacity-75">{{ $country->code ?? '-' }}</small>
                     </div>
                 </div>
 
                 <div class="d-flex gap-2">
-                    <a href="{{ route('admin.countries.edit', $country) }}" class="btn btn-light">تعديل</a>
-                    <a href="{{ route('admin.countries.index') }}" class="btn btn-outline-light">رجوع</a>
+                    <a href="{{ route('admin.countries.edit', $country) }}" class="btn btn-light">Edit</a>
+                    <a href="{{ route('admin.countries.index') }}" class="btn btn-outline-light">Back</a>
                 </div>
             </div>
 
@@ -130,7 +130,7 @@
                             <img src="{{ asset($country->flag) }}" alt="{{ adminTrans($country->name) }}"
                                 class="country-flag">
                         @else
-                            <div class="no-image">لا توجد صورة</div>
+                            <div class="no-image">No Image</div>
                         @endif
                     </div>
                 </div>
@@ -138,43 +138,43 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الكود</div>
+                            <div class="info-label">Code</div>
                             <div class="info-value">{{ $country->code ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
-                            <div class="info-value">{{ $country->is_active ?? true ? 'مفعلة' : 'غير مفعلة' }}</div>
+                            <div class="info-label">Status</div>
+                            <div class="info-value">{{ $country->is_active ?? true ? 'Enabled' : 'Inactive' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">مميزة</div>
-                            <div class="info-value">{{ $country->is_featured ?? false ? 'نعم' : 'لا' }}</div>
+                            <div class="info-label">Featured</div>
+                            <div class="info-value">{{ $country->is_featured ?? false ? 'Yes' : 'No' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">الترتيب</div>
+                            <div class="info-label">Sort Order</div>
                             <div class="info-value">{{ $country->sort_order ?? 0 }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">عدد المدن</div>
+                            <div class="info-label">Number of Cities</div>
                             <div class="info-value">{{ $country->cities_count ?? ($country->cities->count() ?? 0) }}</div>
                         </div>
                     </div>
 
                     <div class="col-12">
                         <div class="info-box">
-                            <div class="info-label">الوصف</div>
-                            <div class="info-value">{{ adminTrans($country->description) ?: 'لا يوجد وصف' }}</div>
+                            <div class="info-label">Description</div>
+                            <div class="info-value">{{ adminTrans($country->description) ?: 'No description' }}</div>
                         </div>
                     </div>
                 </div>

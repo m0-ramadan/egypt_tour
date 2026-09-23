@@ -306,20 +306,28 @@ if (!function_exists('greeting')) {
         }
     }
     if (!function_exists('adminTrans')) {
-        function adminTrans($value, array $preferred = ['Ar', 'ar', 'en'])
+        function adminTrans($value, array $preferred = ['en', 'ar', 'Ar'])
         {
+            if (is_string($value)) {
+                $decoded = json_decode($value, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                    $value = $decoded;
+                }
+            }
+
             if (!is_array($value)) {
-                return (string) ($value ?? '');
+                $str = (string) ($value ?? '');
+                return $str === 'Array' ? '' : $str;
             }
 
             foreach ($preferred as $lang) {
-                if (!empty($value[$lang])) {
+                if (!empty($value[$lang]) && $value[$lang] !== 'Array') {
                     return (string) $value[$lang];
                 }
             }
 
             foreach ($value as $translation) {
-                if (is_string($translation) && trim($translation) !== '') {
+                if (is_string($translation) && trim($translation) !== '' && trim($translation) !== 'Array') {
                     return trim($translation);
                 }
             }

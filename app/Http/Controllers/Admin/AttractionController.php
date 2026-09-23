@@ -50,8 +50,12 @@ class AttractionController extends Controller
     public function create(): View
     {
         $cities = City::where('is_active', true)->get();
+        $packages = \App\Models\Package::where('is_active', true)
+            ->select('id', 'title', 'slug', 'package_type')
+            ->latest('id')
+            ->get();
 
-        return $this->view('admin.attractions.create', compact('cities'));
+        return $this->view('admin.attractions.create', compact('cities', 'packages'));
     }
 
     public function show(Attraction $attraction): View
@@ -64,8 +68,12 @@ class AttractionController extends Controller
     public function edit(Attraction $attraction): View
     {
         $cities = City::where('is_active', true)->get();
+        $packages = \App\Models\Package::where('is_active', true)
+            ->select('id', 'title', 'slug', 'package_type')
+            ->latest('id')
+            ->get();
 
-        return $this->view('admin.attractions.edit', compact('attraction', 'cities'));
+        return $this->view('admin.attractions.edit', compact('attraction', 'cities', 'packages'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -73,9 +81,9 @@ class AttractionController extends Controller
         $data = $request->validate([
             'city_id' => ['nullable', 'exists:cities,id'],
             'slug' => ['nullable', 'string', 'max:255'],
-            'name' => ['required', 'string'],
-            'short_description' => ['nullable', 'string'],
-            'description' => ['nullable', 'string'],
+            'name' => ['required'],
+            'short_description' => ['nullable'],
+            'description' => ['nullable'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'opening_hours' => ['nullable', 'string'],
             'map_url' => ['nullable', 'string', 'max:255'],
@@ -84,8 +92,8 @@ class AttractionController extends Controller
             'is_featured' => ['nullable', 'boolean'],
             'is_active' => ['nullable', 'boolean'],
             'sort_order' => ['nullable', 'integer'],
-            'seo_title' => ['nullable', 'string'],
-            'seo_description' => ['nullable', 'string'],
+            'seo_title' => ['nullable'],
+            'seo_description' => ['nullable'],
         ]);
 
         $data = $this->translateModelFields($data, [
@@ -114,6 +122,8 @@ class AttractionController extends Controller
 
         Attraction::create($data);
 
+        \Illuminate\Support\Facades\Cache::flush();
+
         return $this->success('admin.attractions.index', 'Attraction created.');
     }
 
@@ -122,9 +132,9 @@ class AttractionController extends Controller
         $data = $request->validate([
             'city_id' => ['nullable', 'exists:cities,id'],
             'slug' => ['nullable', 'string', 'max:255'],
-            'name' => ['required', 'string'],
-            'short_description' => ['nullable', 'string'],
-            'description' => ['nullable', 'string'],
+            'name' => ['required'],
+            'short_description' => ['nullable'],
+            'description' => ['nullable'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'opening_hours' => ['nullable', 'string'],
             'map_url' => ['nullable', 'string', 'max:255'],
@@ -133,8 +143,8 @@ class AttractionController extends Controller
             'is_featured' => ['nullable', 'boolean'],
             'is_active' => ['nullable', 'boolean'],
             'sort_order' => ['nullable', 'integer'],
-            'seo_title' => ['nullable', 'string'],
-            'seo_description' => ['nullable', 'string'],
+            'seo_title' => ['nullable'],
+            'seo_description' => ['nullable'],
         ]);
 
         $data = $this->translateModelFields($data, [
@@ -163,6 +173,8 @@ class AttractionController extends Controller
         $data['sort_order'] = $data['sort_order'] ?? 0;
 
         $attraction->update($data);
+
+        \Illuminate\Support\Facades\Cache::flush();
 
         return $this->success('admin.attractions.index', 'Attraction updated.');
     }

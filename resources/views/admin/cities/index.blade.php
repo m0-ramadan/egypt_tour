@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إدارة المدن'))
+@section('title', 'Cities Management')
 
 @section('css')
 
@@ -18,7 +18,7 @@
         }
 
         body {
-            font-family: "Cairo", sans-serif !important;
+            font-family: "Public Sans", sans-serif !important;
             background: var(--dark-bg);
             color: #fff;
         }
@@ -117,7 +117,6 @@
             padding: 20px;
             margin-bottom: 15px;
             transition: all .3s ease;
-            border-right: 4px solid transparent;
             border: 1px solid rgba(255, 255, 255, .1);
         }
 
@@ -193,8 +192,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">المدن</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
+                <li class="breadcrumb-item active">Cities</li>
             </ol>
         </nav>
 
@@ -205,7 +204,7 @@
                         <i class="fas fa-city"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalCities) }}</div>
-                    <div class="stats-label">إجمالي المدن</div>
+                    <div class="stats-label">Total Cities</div>
                 </div>
             </div>
 
@@ -216,7 +215,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stats-number">{{ number_format($activeCities) }}</div>
-                    <div class="stats-label">مدن مفعلة</div>
+                    <div class="stats-label">Active Cities</div>
                 </div>
             </div>
 
@@ -227,7 +226,7 @@
                         <i class="fas fa-ban"></i>
                     </div>
                     <div class="stats-number">{{ number_format($inactiveCities) }}</div>
-                    <div class="stats-label">مدن غير مفعلة</div>
+                    <div class="stats-label">Inactive Cities</div>
                 </div>
             </div>
 
@@ -238,7 +237,7 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <div class="stats-number">{{ number_format($featuredCities) }}</div>
-                    <div class="stats-label">مدن مميزة</div>
+                    <div class="stats-label">Featured Cities</div>
                 </div>
             </div>
         </div>
@@ -247,18 +246,18 @@
             <form method="GET" action="{{ route('admin.cities.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-5">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <div class="search-box">
                             <i class="fas fa-search search-icon"></i>
                             <input type="text" class="form-control" name="search" value="{{ request('search') }}"
-                                placeholder="ابحث باسم المدينة أو الدولة">
+                                placeholder="Search by city name or country">
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">الدولة</label>
+                        <label class="form-label">Country</label>
                         <select name="country_id" class="form-select">
-                            <option value="">كل الدول</option>
+                            <option value="">All Countries</option>
                             @foreach ($countries ?? collect() as $country)
                                 <option value="{{ $country->id }}"
                                     {{ request('country_id') == $country->id ? 'selected' : '' }}>
@@ -269,18 +268,18 @@
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>مفعل</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>غير مفعل
+                            <option value="">All</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive
                             </option>
                         </select>
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.cities.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.cities.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -289,11 +288,11 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة المدن</h5>
-                    <small class="opacity-75">إدارة جميع المدن داخل النظام</small>
+                    <h5 class="mb-0">Cities List</h5>
+                    <small class="opacity-75">Manage all destinations and cities</small>
                 </div>
                 <a href="{{ route('admin.cities.create') }}" class="btn btn-light">
-                    <i class="fas fa-plus me-2"></i>إضافة مدينة
+                    <i class="fas fa-plus me-2"></i>Add City
                 </a>
             </div>
 
@@ -302,52 +301,52 @@
                     <div class="item-card">
                         <div class="item-header">
                             <div>
-                                <h6 class="mb-1">{{ adminTrans($city->name) ?: 'بدون اسم' }}</h6>
+                                <h6 class="mb-1">{{ adminTrans($city->name) ?: 'Untitled' }}</h6>
                                 <small class="text-light opacity-75">{{ $city->slug ?? '-' }}</small>
                             </div>
 
                             <div class="d-flex gap-2 flex-wrap">
                                 <span
                                     class="badge-status {{ $city->is_active ?? true ? 'status-active' : 'status-inactive' }}">
-                                    {{ $city->is_active ?? true ? 'مفعلة' : 'غير مفعلة' }}
+                                    {{ $city->is_active ?? true ? 'Active' : 'Inactive' }}
                                 </span>
                             </div>
                         </div>
 
                         <div class="detail-row">
                             <div>
-                                <span class="detail-label">الدولة:</span>
+                                <span class="detail-label">Country:</span>
                                 <span>{{ adminTrans(optional($city->country)->name) ?: '-' }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">الترتيب:</span>
+                                <span class="detail-label">Sort Order:</span>
                                 <span>{{ $city->sort_order ?? 0 }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">مميزة:</span>
-                                <span>{{ $city->is_featured ?? false ? 'نعم' : 'لا' }}</span>
+                                <span class="detail-label">Featured:</span>
+                                <span>{{ $city->is_featured ?? false ? 'Yes' : 'No' }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">تاريخ الإنشاء:</span>
-                                <span>{{ optional($city->created_at)->translatedFormat('d M Y') ?? '-' }}</span>
+                                <span class="detail-label">Created:</span>
+                                <span>{{ optional($city->created_at)->format('d M Y') ?? '-' }}</span>
                             </div>
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
                             <a href="{{ route('admin.cities.show', $city) }}" class="btn btn-info btn-sm">
-                                <i class="fas fa-eye me-1"></i>عرض
+                                <i class="fas fa-eye me-1"></i>View
                             </a>
                             <a href="{{ route('admin.cities.edit', $city) }}" class="btn btn-warning btn-sm">
-                                <i class="fas fa-edit me-1"></i>تعديل
+                                <i class="fas fa-edit me-1"></i>Edit
                             </a>
                             @if (Route::has('admin.cities.toggle-status'))
                                 <form action="{{ route('admin.cities.toggle-status', $city) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-secondary btn-sm">
-                                        <i class="fas fa-power-off me-1"></i>تبديل الحالة
+                                    <button type="submit" class="btn btn-dark btn-sm">
+                                        <i class="fas fa-power-off me-1"></i>Toggle Status
                                     </button>
                                 </form>
                             @endif
@@ -358,9 +357,9 @@
                         <div class="empty-state-icon">
                             <i class="fas fa-city"></i>
                         </div>
-                        <h5 class="empty-state-text">لا توجد مدن حالياً</h5>
+                        <h5 class="empty-state-text">No cities found</h5>
                         <a href="{{ route('admin.cities.create') }}" class="btn btn-primary">
-                            إضافة مدينة جديدة
+                            Add New City
                         </a>
                     </div>
                 @endforelse

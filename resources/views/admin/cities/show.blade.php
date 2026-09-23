@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض المدينة'))
+@section('title', admin_t('View City'))
 
 @section('css')
     <style>
@@ -60,22 +60,22 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.cities.index') }}">المدن</a></li>
-                <li class="breadcrumb-item active">عرض المدينة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.cities.index') }}">Cities</a></li>
+                <li class="breadcrumb-item active">View City</li>
             </ol>
         </nav>
 
         <div class="profile-card">
             <div class="profile-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="mb-1">{{ adminTrans($city->name) ?: 'بدون اسم' }}</h4>
+                    <h4 class="mb-1">{{ adminTrans($city->name) ?: 'No Name' }}</h4>
                     <small class="opacity-75">{{ $city->slug ?? '-' }}</small>
                 </div>
 
                 <div class="d-flex gap-2">
-                    <a href="{{ route('admin.cities.edit', $city) }}" class="btn btn-light">تعديل</a>
-                    <a href="{{ route('admin.cities.index') }}" class="btn btn-outline-light">رجوع</a>
+                    <a href="{{ route('admin.cities.edit', $city) }}" class="btn btn-light">Edit</a>
+                    <a href="{{ route('admin.cities.index') }}" class="btn btn-outline-light">Back</a>
                 </div>
             </div>
 
@@ -83,35 +83,35 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الدولة</div>
+                            <div class="info-label">Country</div>
                             <div class="info-value">{{ adminTrans(optional($city->country)->name) ?: '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الترتيب</div>
+                            <div class="info-label">Sort Order</div>
                             <div class="info-value">{{ $city->sort_order ?? 0 }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
-                            <div class="info-value">{{ $city->is_active ?? true ? 'مفعلة' : 'غير مفعلة' }}</div>
+                            <div class="info-label">Status</div>
+                            <div class="info-value">{{ $city->is_active ?? true ? 'Enabled' : 'Inactive' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">مميزة</div>
-                            <div class="info-value">{{ $city->is_featured ?? false ? 'نعم' : 'لا' }}</div>
+                            <div class="info-label">Featured</div>
+                            <div class="info-value">{{ $city->is_featured ?? false ? 'Yes' : 'No' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">تاريخ الإنشاء</div>
+                            <div class="info-label">Created At</div>
                             <div class="info-value">
                                 {{ optional($city->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
                         </div>
@@ -119,8 +119,8 @@
 
                     <div class="col-12">
                         <div class="info-box">
-                            <div class="info-label">الوصف</div>
-                            <div class="info-value">{{ adminTrans($city->description) ?: 'لا يوجد وصف' }}</div>
+                            <div class="info-label">Description</div>
+                            <div class="info-value">{{ adminTrans($city->description) ?: 'No description' }}</div>
                         </div>
                     </div>
                 </div>

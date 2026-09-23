@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إعدادات SMTP'))
+@section('title', admin_t('SMTP Settings'))
 
 @section('css')
 
@@ -188,16 +188,16 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.settings.index') }}">الإعدادات</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.settings.index') }}">Settings</a></li>
                 <li class="breadcrumb-item active">SMTP</li>
             </ol>
         </nav>
 
         <div class="panel-card">
             <div class="panel-header">
-                <h5 class="mb-0">إعدادات SMTP</h5>
-                <small class="opacity-75">تهيئة خادم البريد والإرسال</small>
+                <h5 class="mb-0">SMTP Settings</h5>
+                <small class="opacity-75">Configure the mail server and sending</small>
             </div>
             <div class="panel-body">
                 <form action="{{ route('admin.settings.smtp.update') }}" method="POST">
@@ -237,11 +237,11 @@
                     </div>
 
                     <div class="d-flex gap-2">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
+                        <button class="btn btn-primary" type="submit">Save</button>
                 </form>
                 <form action="{{ route('admin.settings.smtp.test') }}" method="POST">
                     @csrf
-                    <button class="btn btn-secondary" type="submit">اختبار SMTP</button>
+                    <button class="btn btn-secondary" type="submit">Test SMTP</button>
                 </form>
             </div>
         </div>

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إنشاء مقال بالذكاء الاصطناعي'))
+@section('title', admin_t('Create Article with AI'))
 
 @section('css')
     <style>
@@ -230,15 +230,15 @@
     <div class="loading-overlay" id="ai-loading">
         <div class="loading-box">
             <div class="spinner"></div>
-            <div>جاري تنفيذ طلب الذكاء الاصطناعي...</div>
+            <div>Processing the AI request...</div>
         </div>
     </div>
 
     <div class="page-loader" id="pageLoader">
         <div class="loader-box">
             <div class="loader-spinner"></div>
-            <div class="loader-title">جاري حفظ المقال...</div>
-            <div class="loader-text">برجاء الانتظار أثناء حفظ البيانات</div>
+            <div class="loader-title">Saving the article...</div>
+            <div class="loader-text">Please wait while the data is being saved</div>
 
             <div class="progress-wrapper">
                 <div class="progress-bar-custom" id="progressBar"></div>
@@ -251,83 +251,83 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.articles.index') }}">المقالات</a></li>
-                <li class="breadcrumb-item active">إنشاء مقال بالذكاء الاصطناعي</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.articles.index') }}">Articles</a></li>
+                <li class="breadcrumb-item active">Create Article with AI</li>
             </ol>
         </nav>
 
         <div class="panel-card">
             <div class="panel-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">إنشاء مقال بالذكاء الاصطناعي</h5>
-                    <small class="opacity-75">اكتب الفكرة ودع الذكاء الاصطناعي ينشئ المقال</small>
+                    <h5 class="mb-0">Create Article with AI</h5>
+                    <small class="opacity-75">Describe your idea and let AI create the article</small>
                 </div>
-                <a href="{{ route('admin.articles.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.articles.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="panel-body">
                 <div class="ai-box">
-                    <div class="section-title">أدوات الذكاء الاصطناعي</div>
+                    <div class="section-title">AI Tools</div>
 
                     <div class="row">
                         <div class="col-md-8 mb-3">
-                            <label class="form-label">الفكرة / البرومبت</label>
+                            <label class="form-label">Idea / Prompt</label>
                             <textarea id="prompt" class="form-control" rows="5"
-                                placeholder="مثال: اكتب مقالًا احترافيًا عن أفضل أماكن السياحة في الأقصر للمسافرين العرب مع نصائح عملية وخاتمة تسويقية">{{ old('prompt') }}</textarea>
+                                placeholder="Example: Write a professional article about top travel destinations in Luxor with practical tips...">{{ old('prompt') }}</textarea>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">النبرة</label>
+                            <label class="form-label">Tone</label>
                             <input type="text" id="tone" class="form-control"
                                 value="{{ old('tone', 'professional') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">نوع المقال</label>
+                            <label class="form-label">Article Type</label>
                             <input type="text" id="post_type_preview" class="form-control"
                                 value="{{ old('post_type', 'blog') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">التصنيف</label>
-                            <input type="text" id="category_preview" class="form-control" placeholder="اختياري">
+                            <label class="form-label">Category</label>
+                            <input type="text" id="category_preview" class="form-control" placeholder="Optional">
                         </div>
                     </div>
 
                     <div class="ai-actions">
-                        <button type="button" class="btn btn-ai" id="btn-generate-full">توليد المقال كاملًا</button>
-                        <button type="button" class="btn btn-ai" id="btn-generate-title">توليد العنوان</button>
-                        <button type="button" class="btn btn-ai" id="btn-generate-content">توليد المحتوى</button>
-                        <button type="button" class="btn btn-ai" id="btn-generate-excerpt">توليد الملخص</button>
-                        <button type="button" class="btn btn-ai" id="btn-generate-seo">توليد SEO</button>
+                        <button type="button" class="btn btn-ai" id="btn-generate-full">Generate Full Article</button>
+                        <button type="button" class="btn btn-ai" id="btn-generate-title">Generate Title</button>
+                        <button type="button" class="btn btn-ai" id="btn-generate-content">Generate Content</button>
+                        <button type="button" class="btn btn-ai" id="btn-generate-excerpt">Generate Summary</button>
+                        <button type="button" class="btn btn-ai" id="btn-generate-seo">Generate SEO</button>
                     </div>
                 </div>
 
                 <form action="{{ route('admin.articles.store-with-ai') }}" method="POST" id="articleAiForm">
                     @csrf
 
-                    <div class="section-title">بيانات المقال</div>
+                    <div class="section-title">Article Details</div>
 
                     <div class="row">
                         <div class="col-md-8 mb-3">
-                            <label class="form-label">البرومبت</label>
+                            <label class="form-label">Prompt</label>
                             <textarea name="prompt" id="prompt_submit" class="form-control" rows="5">{{ old('prompt') }}</textarea>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">نوع المقال</label>
+                            <label class="form-label">Article Type</label>
                             <input type="text" name="post_type" class="form-control"
                                 value="{{ old('post_type', 'blog') }}">
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">المعرف الخاص بالكاتب</label>
+                            <label class="form-label">Author ID</label>
                             <input type="number" name="author_id" class="form-control" value="{{ old('author_id') }}">
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">تاريخ النشر</label>
+                            <label class="form-label">Publish Date</label>
                             <input type="datetime-local" name="published_at" class="form-control"
                                 value="{{ old('published_at') }}">
                         </div>
@@ -337,7 +337,7 @@
                                 <div class="form-control d-flex align-items-center">
                                     <input class="form-check-input me-2" type="checkbox" name="is_active" value="1"
                                         {{ old('is_active', true) ? 'checked' : '' }}>
-                                    <span>منشور</span>
+                                    <span>Published</span>
                                 </div>
                             </div>
                         </div>
@@ -347,18 +347,18 @@
                                 <div class="form-control d-flex align-items-center">
                                     <input class="form-check-input me-2" type="checkbox" name="is_featured"
                                         value="1" {{ old('is_featured') ? 'checked' : '' }}>
-                                    <span>مميز</span>
+                                    <span>Featured</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="section-title mt-4">معاينة أولية</div>
-                    <div class="preview-box" id="preview-box">سيتم عرض النتيجة الأولية هنا بعد التوليد.</div>
+                    <div class="section-title mt-4">Preview</div>
+                    <div class="preview-box" id="preview-box">The initial result will appear here after generation.</div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button type="submit" class="btn btn-primary" id="submitBtn">حفظ المقال المولد</button>
-                        <a href="{{ route('admin.articles.create') }}" class="btn btn-secondary">إنشاء يدوي</a>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">Save Generated Article</button>
+                        <a href="{{ route('admin.articles.create') }}" class="btn btn-secondary">Create Manually</a>
                     </div>
                 </form>
             </div>
@@ -395,7 +395,7 @@
                 return await response.json();
             } catch (error) {
                 console.error(error);
-                alert('حدث خطأ أثناء الاتصال بخدمة الذكاء الاصطناعي');
+                alert('An error occurred while connecting to AI service.');
                 return null;
             } finally {
                 hideAiLoading();
@@ -405,14 +405,14 @@
         function previewText(data) {
             let text = '';
 
-            if (data.title) text += 'العنوان: ' + (data.title.ar || data.title.en || data.title) + '\n\n';
-            if (data.excerpt) text += 'الملخص: ' + (data.excerpt.ar || data.excerpt.en || data.excerpt) + '\n\n';
-            if (data.content) text += 'المحتوى: ' + (data.content.ar || data.content.en || data.content) + '\n\n';
+            if (data.title) text += 'Title: ' + (data.title.ar || data.title.en || data.title) + '\n\n';
+            if (data.excerpt) text += 'Summary: ' + (data.excerpt.ar || data.excerpt.en || data.excerpt) + '\n\n';
+            if (data.content) text += 'Content: ' + (data.content.ar || data.content.en || data.content) + '\n\n';
             if (data.seo_title) text += 'SEO Title: ' + (data.seo_title.ar || data.seo_title.en || data.seo_title) + '\n\n';
             if (data.seo_description) text += 'SEO Description: ' + (data.seo_description.ar || data.seo_description.en ||
                 data.seo_description);
 
-            document.getElementById('preview-box').textContent = text || 'لم يتم إرجاع نتيجة.';
+            document.getElementById('preview-box').textContent = text || 'preview-box\';
         }
 
         document.getElementById('btn-generate-full').addEventListener('click', async function() {
@@ -435,7 +435,7 @@
             });
 
             if (data && data.title) {
-                document.getElementById('preview-box').textContent = 'العنوان المقترح:\n' + data.title;
+                document.getElementById('preview-box').textContent = 'preview-box:\n' + data.title;
             }
         });
 
@@ -456,7 +456,7 @@
             });
 
             if (data && data.excerpt) {
-                document.getElementById('preview-box').textContent = 'الملخص:\n' + data.excerpt;
+                document.getElementById('preview-box').textContent = 'Summary:\n' + data.excerpt;
             }
         });
 
@@ -475,7 +475,7 @@
             if (metaDescription?.meta_description) text += 'SEO Description:\n' + metaDescription
                 .meta_description;
 
-            document.getElementById('preview-box').textContent = text || 'لم يتم إرجاع نتائج SEO.';
+            document.getElementById('preview-box').textContent = text || 'preview-box\';
         });
 
         document.addEventListener('DOMContentLoaded', function() {

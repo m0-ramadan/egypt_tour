@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('البحث في الأخطاء'))
+@section('title', admin_t('Search Errors'))
 
 @section('css')
     <style>
@@ -78,31 +78,31 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.errors.index') }}">سجل الأخطاء</a></li>
-                <li class="breadcrumb-item active">بحث</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.errors.index') }}">Error Logs</a></li>
+                <li class="breadcrumb-item active">Search</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header">
-                <h5 class="mb-0">البحث داخل ملفات الأخطاء</h5>
-                <small class="opacity-75">ابحث باسم الملف أو نص الخطأ أو محتوى السجل</small>
+                <h5 class="mb-0">Search Inside Files Errors</h5>
+                <small class="opacity-75">Search Named File Or Text Error Or Content Log</small>
             </div>
 
             <div class="form-body">
                 <form method="GET" action="{{ route('admin.errors.search') }}" class="mb-4">
                     <div class="row g-3 align-items-end">
                         <div class="col-md-8">
-                            <label class="form-label">كلمة البحث</label>
+                            <label class="form-label">Word Search</label>
                             <input type="text" name="q" class="form-control" value="{{ request('q') }}"
-                                placeholder="مثال: Class not found أو SQLSTATE">
+                                placeholder="Example: Class not found Or SQLSTATE">
                         </div>
 
                         <div class="col-md-2">
-                            <label class="form-label">النوع</label>
+                            <label class="form-label">Type</label>
                             <select name="type" class="form-select">
-                                <option value="">الكل</option>
+                                <option value="">All</option>
                                 <option value="php" {{ request('type') == 'php' ? 'selected' : '' }}>PHP</option>
                                 <option value="laravel" {{ request('type') == 'laravel' ? 'selected' : '' }}>Laravel
                                 </option>
@@ -110,38 +110,38 @@
                         </div>
 
                         <div class="col-md-2 d-flex gap-2">
-                            <button class="btn btn-primary w-100" type="submit">بحث</button>
+                            <button class="btn btn-primary w-100" type="submit">Search</button>
                         </div>
                     </div>
                 </form>
 
                 @if (request()->filled('q'))
                     <div class="mb-4">
-                        <h6>نتائج البحث عن: <span class="text-info">{{ request('q') }}</span></h6>
+                        <h6>Results Search About: <span class="text-info">{{ request('q') }}</span></h6>
                     </div>
 
                     @forelse($results ?? [] as $result)
                         <div class="result-card">
                             <div class="mb-2">
-                                <strong>الملف:</strong> {{ $result['file'] ?? '-' }}
+                                <strong>File:</strong> {{ $result['file'] ?? '-' }}
                             </div>
 
                             @if (!empty($result['line']))
                                 <div class="mb-2">
-                                    <strong>السطر:</strong> {{ $result['line'] }}
+                                    <strong>Line:</strong> {{ $result['line'] }}
                                 </div>
                             @endif
 
                             @if (!empty($result['date']))
                                 <div class="mb-2">
-                                    <strong>التاريخ:</strong> {{ $result['date'] }}
+                                    <strong>Date:</strong> {{ $result['date'] }}
                                 </div>
                             @endif
 
                             <div class="result-content">{{ $result['content'] ?? ($result['message'] ?? '-') }}</div>
                         </div>
                     @empty
-                        <div class="text-center py-4">لا توجد نتائج مطابقة</div>
+                        <div class="text-center py-4">No There are Results Matching</div>
                     @endforelse
                 @endif
             </div>

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض الصفحة'))
+@section('title', admin_t('View Page'))
 
 @section('css')
     <style>
@@ -202,58 +202,58 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.static-pages.index') }}">الصفحات الثابتة</a></li>
-                <li class="breadcrumb-item active">عرض الصفحة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.static-pages.index') }}">Static Pages</a></li>
+                <li class="breadcrumb-item active">View Page</li>
             </ol>
         </nav>
 
         <div class="panel-card mb-4">
             <div class="panel-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <div>
-                    <h5 class="mb-1">{{ $pageTitle ?: 'بدون عنوان' }}</h5>
+                    <h5 class="mb-1">{{ $pageTitle ?: 'Without Title' }}</h5>
                     <small class="opacity-75">Slug: {{ $page->slug ?? '-' }}</small>
                 </div>
 
                 <div class="d-flex gap-2 flex-wrap">
-                    <a href="{{ route('admin.static-pages.edit', $page) }}" class="btn btn-light">تعديل</a>
-                    <a href="{{ route('admin.static-pages.index') }}" class="btn btn-outline-light">رجوع</a>
+                    <a href="{{ route('admin.static-pages.edit', $page) }}" class="btn btn-light">Edit</a>
+                    <a href="{{ route('admin.static-pages.index') }}" class="btn btn-outline-light">Back</a>
                 </div>
             </div>
 
             <div class="panel-body">
-                <div class="section-title">معلومات الصفحة</div>
+                <div class="section-title">Information Page</div>
 
                 <div class="row mb-3">
                     <div class="col-md-4 mb-3">
                         <div class="info-box">
-                            <div class="info-label">العنوان</div>
+                            <div class="info-label">Title</div>
                             <div class="info-value">{{ $pageTitle ?: '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <div class="info-box">
-                            <div class="info-label">الرابط المختصر</div>
+                            <div class="info-label">Link Short</div>
                             <div class="info-value">{{ $page->slug ?: '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <div class="info-box">
-                            <div class="info-label">القالب</div>
+                            <div class="info-label">Template</div>
                             <div class="info-value">{{ $pageTemplate ?: '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
+                            <div class="info-label">Status</div>
                             <div class="info-value">
                                 @if ($page->is_active ?? false)
-                                    <span class="badge-status status-active">مفعلة</span>
+                                    <span class="badge-status status-active">Enabled</span>
                                 @else
-                                    <span class="badge-status status-inactive">غير مفعلة</span>
+                                    <span class="badge-status status-inactive">Inactive</span>
                                 @endif
                             </div>
                         </div>
@@ -261,12 +261,12 @@
 
                     <div class="col-md-4 mb-3">
                         <div class="info-box">
-                            <div class="info-label">الصفحة الرئيسية</div>
+                            <div class="info-label">Home Page</div>
                             <div class="info-value">
                                 @if ($page->is_home ?? false)
-                                    <span class="badge-status status-home">نعم</span>
+                                    <span class="badge-status status-home">Yes</span>
                                 @else
-                                    <span class="badge-status status-inactive">لا</span>
+                                    <span class="badge-status status-inactive">No</span>
                                 @endif
                             </div>
                         </div>
@@ -274,7 +274,7 @@
 
                     <div class="col-md-4 mb-3">
                         <div class="info-box">
-                            <div class="info-label">تاريخ النشر</div>
+                            <div class="info-label">Publish Date</div>
                             <div class="info-value">
                                 {{ !empty($page->published_at) ? \Carbon\Carbon::parse($page->published_at)->format('Y-m-d h:i A') : '-' }}
                             </div>
@@ -282,19 +282,19 @@
                     </div>
                 </div>
 
-                <div class="section-title">الصورة البارزة</div>
+                <div class="section-title">Featured Image</div>
 
                 <div class="featured-image-box mb-4">
                     @if (!empty($pageFeaturedImage))
                         <img src="{{ $pageFeaturedImage }}" alt="{{ $pageTitle ?: 'Page image' }}">
                     @else
                         <div class="featured-image-empty">
-                            لا توجد صورة بارزة
+                            No There are Image Featured
                         </div>
                     @endif
                 </div>
 
-                <div class="section-title">المحتوى</div>
+                <div class="section-title">Content</div>
 
                 <div class="page-content-box mb-4">
                     <div class="page-rendered-content">
@@ -307,25 +307,25 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="info-box">
-                            <div class="info-label">عنوان الميتا</div>
+                            <div class="info-label">Meta Title</div>
                             <div class="info-value">{{ $pageSeoTitle ?: '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <div class="info-box">
-                            <div class="info-label">وصف الميتا</div>
+                            <div class="info-label">Meta Description</div>
                             <div class="info-value">{{ $pageSeoDescription ?: '-' }}</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="section-title">معلومات إضافية</div>
+                <div class="section-title">Information Additional</div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="info-box">
-                            <div class="info-label">تاريخ الإنشاء</div>
+                            <div class="info-label">Created At</div>
                             <div class="info-value">
                                 {{ !empty($page->created_at) ? $page->created_at->format('Y-m-d h:i A') : '-' }}
                             </div>
@@ -334,7 +334,7 @@
 
                     <div class="col-md-6 mb-3">
                         <div class="info-box">
-                            <div class="info-label">آخر تحديث</div>
+                            <div class="info-label">Last Updated</div>
                             <div class="info-value">
                                 {{ !empty($page->updated_at) ? $page->updated_at->format('Y-m-d h:i A') : '-' }}
                             </div>

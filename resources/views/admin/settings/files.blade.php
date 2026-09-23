@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('الملفات'))
+@section('title', admin_t('Files'))
 
 @section('css')
 
@@ -188,16 +188,16 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.settings.index') }}">الإعدادات</a></li>
-                <li class="breadcrumb-item active">الملفات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.settings.index') }}">Settings</a></li>
+                <li class="breadcrumb-item active">Files</li>
             </ol>
         </nav>
 
         <div class="panel-card">
             <div class="panel-header">
-                <h5 class="mb-0">إعدادات الملفات</h5>
-                <small class="opacity-75">أنواع الملفات، الأحجام، الملفات المؤقتة</small>
+                <h5 class="mb-0">Files Settings</h5>
+                <small class="opacity-75">File types, sizes, temporary files</small>
             </div>
             <div class="panel-body">
                 <form action="{{ route('admin.settings.files.update') }}" method="POST">
@@ -205,22 +205,22 @@
                     @method('PUT')
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الحد الأقصى للحجم</label>
+                            <label class="form-label">Limit Maximum For Size</label>
                             <input type="text" name="max_upload_size" class="form-control"
                                 value="{{ $settings['max_upload_size'] ?? '' }}">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الامتدادات المسموحة</label>
+                            <label class="form-label">Extensions Allowed</label>
                             <input type="text" name="allowed_extensions" class="form-control"
                                 value="{{ $settings['allowed_extensions'] ?? '' }}">
                         </div>
                     </div>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
+                        <button class="btn btn-primary" type="submit">Save</button>
                 </form>
                 <form action="{{ route('admin.settings.files.clear-temp') }}" method="POST">
                     @csrf
-                    <button class="btn btn-secondary" type="submit">تنظيف الملفات المؤقتة</button>
+                    <button class="btn btn-secondary" type="submit">Clear Files Temporary</button>
                 </form>
             </div>
         </div>

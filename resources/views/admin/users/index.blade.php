@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إدارة المستخدمين'))
+@section('title', admin_t('Manage Users'))
 
 @section('css')
 
@@ -362,8 +362,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">المستخدمين</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Users</li>
             </ol>
         </nav>
 
@@ -372,7 +372,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-total"><i class="fas fa-users"></i></div>
                     <div class="stats-number">{{ number_format($stats['total']) }}</div>
-                    <div class="stats-label">إجمالي المستخدمين</div>
+                    <div class="stats-label">Total Users</div>
                 </div>
             </div>
 
@@ -380,7 +380,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-active"><i class="fas fa-user-check"></i></div>
                     <div class="stats-number">{{ number_format($stats['active']) }}</div>
-                    <div class="stats-label">مستخدمون نشطون</div>
+                    <div class="stats-label">Users Active</div>
                 </div>
             </div>
 
@@ -388,7 +388,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-verified"><i class="fas fa-envelope-circle-check"></i></div>
                     <div class="stats-number">{{ number_format($stats['verified']) }}</div>
-                    <div class="stats-label">بريد موثق</div>
+                    <div class="stats-label">Email Verified</div>
                 </div>
             </div>
 
@@ -396,69 +396,69 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-new"><i class="fas fa-user-plus"></i></div>
                     <div class="stats-number">{{ number_format($stats['new_this_month']) }}</div>
-                    <div class="stats-label">الجدد هذا الشهر</div>
+                    <div class="stats-label">New This Month</div>
                 </div>
             </div>
         </div>
 
         <div class="status-filter">
             <button class="status-filter-btn {{ !request('status') ? 'active' : '' }}" onclick="filterByStatus('all')">
-                جميع المستخدمين
+                All Users
             </button>
             <button class="status-filter-btn {{ request('status') == 'active' ? 'active' : '' }}"
                 onclick="filterByStatus('active')">
-                <i class="fas fa-user-check me-2"></i>نشط
+                <i class="fas fa-user-check me-2"></i>Active
             </button>
             <button class="status-filter-btn {{ request('status') == 'inactive' ? 'active' : '' }}"
                 onclick="filterByStatus('inactive')">
-                <i class="fas fa-user-times me-2"></i>غير نشط
+                <i class="fas fa-user-times me-2"></i>Inactive
             </button>
             <button class="status-filter-btn {{ request('verified') == '1' ? 'active' : '' }}"
                 onclick="filterByVerified('1')">
-                <i class="fas fa-envelope-circle-check me-2"></i>موثق
+                <i class="fas fa-envelope-circle-check me-2"></i>Verified
             </button>
         </div>
 
         <div class="filter-card">
-            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>فلترة متقدمة</h6>
+            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>Advanced Filters</h6>
 
             <div class="filter-row">
                 <div class="search-box">
                     <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="form-control" placeholder="بحث بالاسم، البريد، الهاتف..." id="searchInput"
+                    <input type="text" class="form-control" placeholder="text" id="searchInput"
                         value="{{ request('search') }}">
                 </div>
 
                 <div class="sort-dropdown">
                     <button class="sort-btn">
                         <i class="fas fa-sort-amount-down"></i>
-                        الترتيب حسب
+                        Sort By
                     </button>
                     <div class="sort-dropdown-content">
                         <div class="sort-item {{ request('sort_by') == 'created_at' && request('sort_direction') == 'desc' ? 'active' : '' }}"
-                            onclick="sortBy('created_at', 'desc')">الأحدث أولاً</div>
+                            onclick="sortBy('created_at', 'desc')">Newest First</div>
                         <div class="sort-item {{ request('sort_by') == 'created_at' && request('sort_direction') == 'asc' ? 'active' : '' }}"
-                            onclick="sortBy('created_at', 'asc')">الأقدم أولاً</div>
+                            onclick="sortBy('created_at', 'asc')">Oldest First</div>
                         <div class="sort-item {{ request('sort_by') == 'name' && request('sort_direction') == 'asc' ? 'active' : '' }}"
-                            onclick="sortBy('name', 'asc')">الاسم أ - ي</div>
+                            onclick="sortBy('name', 'asc')">Name A - Z</div>
                         <div class="sort-item {{ request('sort_by') == 'name' && request('sort_direction') == 'desc' ? 'active' : '' }}"
-                            onclick="sortBy('name', 'desc')">الاسم ي - أ</div>
+                            onclick="sortBy('name', 'desc')">Name Z - A</div>
                     </div>
                 </div>
 
                 <div class="input-group">
                     <input type="date" class="form-control" id="dateFrom" value="{{ request('date_from') }}">
-                    <span class="input-group-text">إلى</span>
+                    <span class="input-group-text">To</span>
                     <input type="date" class="form-control" id="dateTo" value="{{ request('date_to') }}">
                 </div>
             </div>
 
             <div class="filter-row">
                 <button class="btn btn-primary" onclick="applyFilters()">
-                    <i class="fas fa-filter me-2"></i>تطبيق الفلاتر
+                    <i class="fas fa-filter me-2"></i>Apply Filters
                 </button>
                 <button class="btn btn-outline-secondary" onclick="resetFilters()">
-                    <i class="fas fa-redo me-2"></i>إعادة تعيين
+                    <i class="fas fa-redo me-2"></i>Reset
                 </button>
             </div>
         </div>
@@ -469,15 +469,15 @@
                     <div class="order-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="mb-0">قائمة المستخدمين</h5>
-                                <small class="opacity-75">إدارة جميع المستخدمين داخل المنصة</small>
+                                <h5 class="mb-0">Users List</h5>
+                                <small class="opacity-75">Manage All Users Inside Platform</small>
                             </div>
                             <div class="d-flex gap-3">
                                 <a href="{{ route('admin.users.export') }}" class="btn btn-light">
-                                    <i class="fas fa-file-export me-2"></i>تصدير
+                                    <i class="fas fa-file-export me-2"></i>Export
                                 </a>
                                 <a href="{{ route('admin.users.create') }}" class="btn btn-light">
-                                    <i class="fas fa-plus me-2"></i>إضافة مستخدم
+                                    <i class="fas fa-plus me-2"></i>Add User
                                 </a>
                             </div>
                         </div>
@@ -487,10 +487,10 @@
                         @if ($users->isEmpty())
                             <div class="empty-state">
                                 <div class="empty-state-icon"><i class="fas fa-users"></i></div>
-                                <h5 class="empty-state-text">لا يوجد مستخدمون</h5>
-                                <p class="text-muted">لم يتم إنشاء أي مستخدم حتى الآن</p>
+                                <h5 class="empty-state-text">No There is Users</h5>
+                                <p class="text-muted">No User have been created yet</p>
                                 <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
-                                    <i class="fas fa-plus me-2"></i>إضافة مستخدم جديد
+                                    <i class="fas fa-plus me-2"></i>Add New User
                                 </a>
                             </div>
                         @else
@@ -503,12 +503,12 @@
                                     <div class="order-header-info">
                                         <div class="order-title">
                                             <div class="d-flex align-items-center gap-3 flex-wrap">
-                                                <span>{{ $user->name ?? 'بدون اسم' }}</span>
+                                                <span>{{ $user->name ?? 'No Name' }}</span>
                                                 <span class="badge-status status-{{ $isActive }}">
-                                                    {{ $isActive == 'active' ? 'نشط' : 'غير نشط' }}
+                                                    {{ $isActive == 'active' ? 'Active' : 'Inactive' }}
                                                 </span>
                                                 @if ($isVerified)
-                                                    <span class="badge-status status-verified">موثق</span>
+                                                    <span class="badge-status status-verified">Verified</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -520,22 +520,22 @@
 
                                     <div class="order-details">
                                         <div class="detail-item">
-                                            <span class="detail-label">البريد:</span>
+                                            <span class="detail-label">Email:</span>
                                             <span class="detail-value">{{ $user->email ?? '-' }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">الهاتف:</span>
+                                            <span class="detail-label">Phone:</span>
                                             <span class="detail-value">{{ $user->phone ?? '-' }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">التوثيق:</span>
-                                            <span class="detail-value">{{ $isVerified ? 'موثق' : 'غير موثق' }}</span>
+                                            <span class="detail-label">Verification:</span>
+                                            <span class="detail-value">{{ $isVerified ? 'Verified' : 'Not Verified' }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">آخر تحديث:</span>
+                                            <span class="detail-label">Last Updated:</span>
                                             <span
                                                 class="detail-value">{{ optional($user->updated_at)->translatedFormat('d M Y') ?? '-' }}</span>
                                         </div>
@@ -543,18 +543,18 @@
 
                                     <div class="order-actions">
                                         <a href="{{ route('admin.users.show', $user) }}" class="btn btn-sm btn-info">
-                                            <i class="fas fa-eye me-1"></i>عرض التفاصيل
+                                            <i class="fas fa-eye me-1"></i>View Details
                                         </a>
                                         <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit me-1"></i>تعديل
+                                            <i class="fas fa-edit me-1"></i>Edit
                                         </a>
                                         <a href="{{ route('admin.users.activities', $user) }}"
                                             class="btn btn-sm btn-secondary">
-                                            <i class="fas fa-chart-line me-1"></i>النشاطات
+                                            <i class="fas fa-chart-line me-1"></i>Activities
                                         </a>
                                         <button type="button" class="btn btn-sm btn-danger delete-btn"
-                                            data-id="{{ $user->id }}" data-name="{{ $user->name ?? 'المستخدم' }}">
-                                            <i class="fas fa-trash me-1"></i>حذف
+                                            data-id="{{ $user->id }}" data-name="{{ $user->name ?? 'User' }}">
+                                            <i class="fas fa-trash me-1"></i>Delete
                                         </button>
                                     </div>
                                 </div>
@@ -591,14 +591,14 @@
                 const userName = $(this).data('name');
 
                 Swal.fire({
-                    title: 'هل أنت متأكد؟',
-                    text: `سيتم حذف المستخدم "${userName}" نهائياً`,
+                    title: 'Are you sure?',
+                    text: `Will be Delete User "${userName}" Will be Delete Article`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'نعم، احذف',
-                    cancelButtonText: 'إلغاء',
+                    confirmButtonText: 'Yes, Delete',
+                    cancelButtonText: 'Cancel',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -612,8 +612,8 @@
                             success: function() {
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'تم الحذف',
-                                    text: 'تم حذف المستخدم بنجاح',
+                                    title: 'Was Deletion',
+                                    text: 'Was Delete User Successfully',
                                     timer: 1500,
                                     showConfirmButton: false
                                 }).then(() => location.reload());
@@ -621,8 +621,8 @@
                             error: function() {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'خطأ',
-                                    text: 'حدث خطأ أثناء الحذف',
+                                    title: 'Error',
+                                    text: 'Event Error While Deletion',
                                     timer: 1500,
                                     showConfirmButton: false
                                 });

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('أخطاء PHP'))
+@section('title', admin_t('PHP Errors'))
 
 @section('css')
     <style>
@@ -70,19 +70,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.errors.index') }}">سجل الأخطاء</a></li>
-                <li class="breadcrumb-item active">أخطاء PHP</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.errors.index') }}">Error Logs</a></li>
+                <li class="breadcrumb-item active">PHP Errors</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">أخطاء PHP</h5>
-                    <small class="opacity-75">عرض وتحليل سجلات PHP Errors</small>
+                    <h5 class="mb-0">PHP Errors</h5>
+                    <small class="opacity-75">View And Analyze Logs PHP Errors</small>
                 </div>
-                <a href="{{ route('admin.errors.index') }}" class="btn btn-light btn-sm">رجوع</a>
+                <a href="{{ route('admin.errors.index') }}" class="btn btn-light btn-sm">Back</a>
             </div>
 
             <div class="p-4">
@@ -93,19 +93,19 @@
                         </div>
 
                         <div class="error-meta">
-                            <strong>الملف:</strong> {{ $error['file'] ?? '-' }}
+                            <strong>File:</strong> {{ $error['file'] ?? '-' }}
                             @if (!empty($error['line']))
-                                | <strong>السطر:</strong> {{ $error['line'] }}
+                                | <strong>Line:</strong> {{ $error['line'] }}
                             @endif
                             @if (!empty($error['date']))
-                                | <strong>التاريخ:</strong> {{ $error['date'] }}
+                                | <strong>Date:</strong> {{ $error['date'] }}
                             @endif
                         </div>
 
                         <div class="error-content">{{ $error['message'] ?? ($error['content'] ?? '-') }}</div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد أخطاء PHP حالياً</div>
+                    <div class="text-center py-5">No Errors PHP available</div>
                 @endforelse
             </div>
         </div>

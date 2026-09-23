@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('المتاجر'))
+@section('title', admin_t('Stores'))
 
 @section('css')
     <!-- Plugins css start-->
@@ -15,17 +15,17 @@
             <div class="card-header d-flex justify-content-between align-items-center">
 
                 {{-- <x-breadcrumb :items="[
-                    'لوحة التحكم' => '/admin',
-                    'حسابات التجار' => '',
+                    'Dashboard' => '/admin',
+                    'Merchant Accounts' => '',
                 ]" /> --}}
 
             </div>
 
             <div class="card-header">
-                <h5>التجار</h5>
+                <h5>Merchants</h5>
                 {{-- <a class="btn btn-success" href="{{ route('admin.employees.create') }}">Add Employees</a> --}}
-                <a class="btn btn-success" href="{{ route('admin.client.sendnotifications', ['t' => 2]) }}">ارسل اشعارات
-                    لكل</a>
+                <a class="btn btn-success" href="{{ route('admin.client.sendnotifications', ['t' => 2]) }}">Send Notifications
+                    to all</a>
             </div>
 
             <div class="card-body">
@@ -34,13 +34,13 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>الأسم</th>
-                                <th>الأيميل</th>
-                                <th>التليفون</th>
-                                <th>المخزن</th>
-                                <th>عدد المنتجات</th>
-                                <th>لحالة</th>
-                                <th>العمليات</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Store</th>
+                                <th>Product Count</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>

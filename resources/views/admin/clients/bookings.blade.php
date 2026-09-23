@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('حجوزات العميل'))
+@section('title', admin_t('Client Bookings'))
 
 @section('css')
     <style>
@@ -48,19 +48,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.clients.index') }}">العملاء</a></li>
-                <li class="breadcrumb-item active">حجوزات العميل</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.clients.index') }}">Clients</a></li>
+                <li class="breadcrumb-item active">Client Bookings</li>
             </ol>
         </nav>
 
         <div class="wrapper-card">
             <div class="wrapper-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">حجوزات {{ $fullName ?: 'العميل' }}</h5>
-                    <small class="opacity-75">عرض جميع الحجوزات المرتبطة بهذا العميل</small>
+                    <h5 class="mb-0">Bookings {{ $fullName ?: 'Client' }}</h5>
+                    <small class="opacity-75">View All Bookings Related With This Client</small>
                 </div>
-                <a href="{{ route('admin.clients.show', $client) }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.clients.show', $client) }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="p-4">
@@ -68,25 +68,25 @@
                     <div class="booking-row">
                         <div class="row">
                             <div class="col-md-3 mb-2">
-                                <strong>رقم الحجز:</strong>
+                                <strong>Number Booking:</strong>
                                 <div>{{ $booking->booking_number ?? '#' . $booking->id }}</div>
                             </div>
                             <div class="col-md-3 mb-2">
-                                <strong>الحالة:</strong>
+                                <strong>Status:</strong>
                                 <div>{{ $booking->status ?? '-' }}</div>
                             </div>
                             <div class="col-md-3 mb-2">
-                                <strong>التاريخ:</strong>
+                                <strong>Date:</strong>
                                 <div>{{ optional($booking->booking_date)->translatedFormat('d M Y') ?? '-' }}</div>
                             </div>
                             <div class="col-md-3 mb-2">
-                                <strong>الإجمالي:</strong>
+                                <strong>Total:</strong>
                                 <div>{{ number_format($booking->total_amount ?? 0, 2) }}</div>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد حجوزات لهذا العميل</div>
+                    <div class="text-center py-5">No There are Bookings For this Client</div>
                 @endforelse
 
                 <div class="mt-3">

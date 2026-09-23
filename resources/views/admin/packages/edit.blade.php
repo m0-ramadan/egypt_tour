@@ -4,7 +4,7 @@
 @php
     $packageTitle = adminTrans($package->title ?? ($package->name ?? ''));
 @endphp
-@section('title', admin_t('تعديل رحلة: ') . $packageTitle)
+@section('title', admin_t('Edit Package: ') . $packageTitle)
 
 @php
     $locale = app()->getLocale();
@@ -63,7 +63,11 @@
                 ->map(
                     fn($item) => [
                         'id' => $item->id,
-                        'title' => adminTrans($item->title) ?: $item->title,
+                        'title' =>
+                            adminTrans($item->title) ?:
+                            (is_string($item->title) && $item->title !== 'Array'
+                                ? $item->title
+                                : ''),
                         'sort_order' => $item->sort_order ?? 0,
                     ],
                 )
@@ -80,7 +84,11 @@
                 ->map(
                     fn($item) => [
                         'id' => $item->id,
-                        'title' => adminTrans($item->title) ?: $item->title,
+                        'title' =>
+                            adminTrans($item->title) ?:
+                            (is_string($item->title) && $item->title !== 'Array'
+                                ? $item->title
+                                : ''),
                         'sort_order' => $item->sort_order ?? 0,
                     ],
                 )
@@ -124,24 +132,24 @@
 
     $steps = [
         1 => [
-            'title' => admin_t('البيانات الأساسية'),
-            'description' => admin_t('أدخل المعلومات الرئيسية والتصنيف الخاص بالرحلة.'),
+            'title' => admin_t('Basic Information'),
+            'description' => admin_t('Enter the trip basics and its category.'),
         ],
         2 => [
-            'title' => admin_t('الوصف والصور'),
-            'description' => admin_t('أضف وصف الرحلة والصور التي ستظهر للعملاء.'),
+            'title' => admin_t('Description and Images'),
+            'description' => admin_t('Add the trip description and the images shown to customers.'),
         ],
         3 => [
-            'title' => admin_t('المسار والمدة'),
-            'description' => admin_t('حدد مدة الرحلة والبرنامج اليومي ومسار الرحلة.'),
+            'title' => admin_t('Route and Duration'),
+            'description' => admin_t('Define the trip duration, daily itinerary, and route.'),
         ],
         4 => [
-            'title' => admin_t('الأسعار والسياسات'),
-            'description' => admin_t('حدد أسعار الرحلة وما هو مشمول وسياسات الحجز.'),
+            'title' => admin_t('Pricing & Policies'),
+            'description' => admin_t('Set trip prices, inclusions, and booking policies.'),
         ],
         5 => [
-            'title' => admin_t('النشر وSEO'),
-            'description' => admin_t('راجع بيانات الرحلة وحدد إعدادات النشر ومحركات البحث.'),
+            'title' => admin_t('Publishing and SEO'),
+            'description' => admin_t('Review the trip data and configure publishing and SEO.'),
         ],
     ];
 
@@ -614,12 +622,34 @@
             background: rgba(255, 255, 255, 0.03);
         }
 
-        .repeat-box {
-            background: rgba(255, 255, 255, 0.035);
-            border: 1px solid var(--wizard-border);
-            border-radius: 16px;
+        .repeat-box,
+        .pricing-card-wrapper,
+        .pricing-type-block {
+            background: rgba(255, 255, 255, 0.035) !important;
+            border: 1px solid var(--wizard-border) !important;
+            border-radius: 16px !important;
             padding: 16px;
             margin-bottom: 14px;
+            color: #ffffff !important;
+        }
+
+        .pricing-type-block .card,
+        .pricing-type-block .bg-dark,
+        .repeat-box .card {
+            background: rgba(255, 255, 255, 0.035) !important;
+            border: 1px solid var(--wizard-border) !important;
+            color: #ffffff !important;
+        }
+
+        .pricing-type-block .form-control,
+        .pricing-type-block .form-select,
+        .pricing-type-block .input-group-text,
+        .repeat-box .form-control,
+        .repeat-box .form-select,
+        .repeat-box .input-group-text {
+            background: var(--wizard-input, rgba(255, 255, 255, 0.06)) !important;
+            color: #ffffff !important;
+            border: 1px solid var(--wizard-border, rgba(255, 255, 255, 0.15)) !important;
         }
 
         .stack-list {
@@ -1673,12 +1703,12 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.index') }}">{{ admin_t('الرئيسية') }}</a>
+                    <a href="{{ route('admin.index') }}">{{ admin_t('Dashboard') }}</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.packages.index') }}">{{ admin_t('الرحلات') }}</a>
+                    <a href="{{ route('admin.packages.index') }}">{{ admin_t('Trips') }}</a>
                 </li>
-                <li class="breadcrumb-item active">{{ admin_t('تعديل رحلة') }}</li>
+                <li class="breadcrumb-item active">{{ admin_t('Edit Package') }}</li>
             </ol>
         </nav>
 
@@ -1688,21 +1718,21 @@
                     <div>
                         <span class="wizard-eyebrow">
                             <i class="ti ti-route"></i>
-                            {{ admin_t('مراجعة ورفع') }}
+                            {{ admin_t('Review and Upload') }}
                         </span>
-                        <h1 class="wizard-title">{{ admin_t('تعديل رحلة: ') . $packageTitle }}</h1>
-                        <p class="wizard-subtitle">{{ admin_t('قم بتعديل وتحديث بيانات الرحلة الخطوة تلو الأخرى.') }}</p>
+                        <h1 class="wizard-title">{{ admin_t('Edit Package: ') . $packageTitle }}</h1>
+                        <p class="wizard-subtitle">{{ admin_t('Edit and update package details step by step.') }}</p>
                     </div>
 
                     <div class="wizard-top-actions">
                         <a href="{{ route('admin.packages.show', $package) }}" class="btn btn-outline-light">
-                            <i class="ti ti-eye me-1"></i> {{ admin_t('عرض الرحلة') }}
+                            <i class="ti ti-eye me-1"></i> {{ admin_t('View Trip') }}
                         </a>
                         <button type="button" class="btn btn-warning text-dark fw-bold js-ai-translate-missing-btn"
                             data-package-id="{{ $package->id }}">
                             <span class="btn-icon-text">
                                 <i class="ti ti-language"></i>
-                                {{ admin_t('ترجمة المحتوى المفقود (AI)') }}
+                                {{ admin_t('Translate missing content (AI)') }}
                             </span>
                         </button>
 
@@ -1710,7 +1740,7 @@
                             <a href="{{ route('admin.packages.edit-with-ai') }}" class="btn btn-light">
                                 <span class="btn-icon-text">
                                     <i class="ti ti-sparkles"></i>
-                                    {{ admin_t('إنشاء بالذكاء الاصطناعي') }}
+                                    {{ admin_t('Create with AI') }}
                                 </span>
                             </a>
                         @endif
@@ -1718,7 +1748,7 @@
                         <a href="{{ route('admin.packages.index') }}" class="btn btn-outline-light" id="cancelWizardBtn">
                             <span class="btn-icon-text">
                                 <i class="ti ti-arrow-back-up"></i>
-                                {{ admin_t('الرجوع لقائمة الرحلات') }}
+                                {{ admin_t('Back to Packages List') }}
                             </span>
                         </a>
                     </div>
@@ -1743,7 +1773,7 @@
                                     {{ $step['title'] }}
                                     @if ($hasStepError)
                                         <span class="badge bg-danger-subtle text-danger ms-1"
-                                            style="font-size:10px;">{{ admin_t('خطأ') }}</span>
+                                            style="font-size:10px;">{{ admin_t('Error') }}</span>
                                     @endif
                                 </span>
                                 <span class="wizard-step-description">{{ $step['description'] }}</span>
@@ -1768,7 +1798,7 @@
                         <div class="d-flex align-items-center gap-2 mb-2">
                             <i class="ti ti-alert-triangle-filled text-danger fs-3"></i>
                             <h5 class="mb-0 text-white fw-bold">
-                                {{ admin_t('تعذر حفظ الرحلة! يرجى مراجعة الأخطاء الموضحة أدناه واستكمال الحقول المطلوب:') }}
+                                {{ admin_t('Could not save package! Please review the form and fill required fields:') }}
                             </h5>
                         </div>
                         <ul class="mb-0 ps-4" style="line-height: 1.8;">
@@ -1787,12 +1817,12 @@
                     <div class="wizard-panel" data-step-panel="1">
                         <div class="wizard-panel-header">
                             <div>
-                                <h2 class="wizard-panel-title">{{ admin_t('البيانات الأساسية') }}</h2>
+                                <h2 class="wizard-panel-title">{{ admin_t('Basic Information') }}</h2>
                                 <p class="wizard-panel-copy">
-                                    {{ admin_t('أدخل المعلومات الرئيسية والتصنيف الخاص بالرحلة.') }}</p>
+                                    {{ admin_t('Enter the trip basics and its category.') }}</p>
                             </div>
                             <div class="wizard-panel-pill">
-                                {{ admin_t('الخطوة :current من :total', ['current' => 1, 'total' => count($steps)]) }}
+                                {{ admin_t('Step :current of :total', ['current' => 1, 'total' => count($steps)]) }}
                             </div>
                         </div>
 
@@ -1801,8 +1831,8 @@
                                 <div class="section-header">
                                     <div class="section-icon"><i class="ti ti-briefcase"></i></div>
                                     <div>
-                                        <h3>{{ admin_t('معلومات الرحلة الأساسية') }}</h3>
-                                        <p>{{ admin_t('عرّف هوية الرحلة والجهة المرتبطة بها وإعدادات الحجز الأساسية.') }}
+                                        <h3>{{ admin_t('Basic Trip Information') }}</h3>
+                                        <p>{{ admin_t('Define the trip identity, destination, and core booking settings.') }}
                                         </p>
                                     </div>
                                 </div>
@@ -1841,7 +1871,7 @@
                                                             <img src="{{ $nType->image_url }}"
                                                                 alt="{{ $nType->display_name }}">
                                                             <strong>{{ $nType->display_name }}</strong>
-                                                            <small>{{ $nType->display_short_description ?: admin_t('اختر هذا النوع للرحلة النيلية') }}</small>
+                                                            <small>{{ $nType->display_short_description ?: admin_t('Select this type for Nile cruise') }}</small>
                                                         </button>
                                                     @endforeach
                                                 </div>
@@ -1881,7 +1911,7 @@
                                                                 <img src="{{ $nCat->image_url }}"
                                                                     alt="{{ $nCat->display_name }}">
                                                                 <strong>{{ $nCat->display_name }}</strong>
-                                                                <small>{{ $nCat->display_short_description ?: admin_t('تصنيف الرحلة النيلية') }}</small>
+                                                                <small>{{ $nCat->display_short_description ?: admin_t('Nile Cruise Category') }}</small>
                                                             </button>
                                                         @endforeach
                                                     @endforeach
@@ -1894,13 +1924,13 @@
 
                                         <div>
                                             <label class="form-label" for="title">
-                                                {{ admin_t('عنوان الرحلة') }}
+                                                {{ admin_t('Trip Title') }}
                                                 <span class="required-mark">*</span>
                                             </label>
                                             <input id="title" type="text" name="title"
                                                 class="form-control @error('title') is-invalid @enderror"
                                                 value="{{ old('title', adminTrans($package->title)) }}"
-                                                placeholder="{{ admin_t('اكتب عنوانًا واضحًا للرحلة') }}"
+                                                placeholder="{{ admin_t('Write a clear title for the trip') }}"
                                                 data-required-step="1">
                                             @error('title')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -1908,12 +1938,11 @@
                                         </div>
 
                                         <div>
-                                            <label class="form-label"
-                                                for="subtitle">{{ admin_t('العنوان الفرعي') }}</label>
+                                            <label class="form-label" for="subtitle">{{ admin_t('Subtitle') }}</label>
                                             <input id="subtitle" type="text" name="subtitle"
                                                 class="form-control @error('subtitle') is-invalid @enderror"
                                                 value="{{ old('subtitle', adminTrans($package->subtitle)) }}"
-                                                placeholder="{{ admin_t('أضف سطرًا تعريفيا قصيرًا') }}">
+                                                placeholder="{{ admin_t('Add a short supporting subtitle') }}">
                                             @error('subtitle')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -1924,44 +1953,24 @@
                                             <input id="slug" type="text" name="slug"
                                                 class="form-control @error('slug') is-invalid @enderror"
                                                 value="{{ old('slug', $package->slug) }}"
-                                                placeholder="{{ admin_t('يتم توليده تلقائيًا إذا تركته فارغًا') }}">
+                                                placeholder="{{ admin_t('It will be generated automatically if left blank') }}">
                                             @error('slug')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
 
-                                        <div>
-                                            <label class="form-label" for="category_id">
-                                                {{ admin_t('Content Category / Theme') }} <small
-                                                    class="text-muted">({{ admin_t('optional') }})</small>
-                                            </label>
-                                            <select id="category_id" name="category_id"
-                                                class="form-select @error('category_id') is-invalid @enderror">
-                                                <option value="">{{ admin_t('Select optional content category') }}
-                                                </option>
-                                                @foreach ($categories ?? collect() as $category)
-                                                    <option value="{{ $category->id }}"
-                                                        {{ old('category_id', $package->category_id) == $category->id ? 'selected' : '' }}>
-                                                        {{ adminTrans($category->name) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('category_id')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
 
                                         <div class="tour-type-conditional"
                                             data-tour-type-section="day_tour,shore_excursion,custom"
                                             style="display: {{ in_array(old('package_type', $package->package_type), ['nile_cruise', 'travel_package']) ? 'none' : 'block' }};">
                                             <label class="form-label" for="destination_selector">
-                                                {{ admin_t('المدينة') }}
+                                                {{ admin_t('City') }}
                                                 <span class="required-mark">*</span>
                                             </label>
                                             <select id="destination_selector" name="destination_id"
                                                 class="form-select @error('destination_id') is-invalid @enderror"
                                                 data-required-step="1">
-                                                <option value="">{{ admin_t('اختر المدينة') }}</option>
+                                                <option value="">{{ admin_t('Select City') }}</option>
                                                 @foreach ($destinations ?? collect() as $destination)
                                                     <option value="{{ $destination->id }}"
                                                         data-country-id="{{ $destination->country_id }}"
@@ -1987,22 +1996,22 @@
                                                 for="tour_type">{{ admin_t('Tour Style / Group Style') }}</label>
                                             <select id="tour_type" name="tour_type"
                                                 class="form-select @error('tour_type') is-invalid @enderror">
-                                                <option value="">{{ admin_t('اختر نوع الجولة') }}</option>
+                                                <option value="">{{ admin_t('Select Type Tour') }}</option>
                                                 <option value="private"
                                                     {{ old('tour_type', $package->tour_type ?? 'private') == 'private' ? 'selected' : '' }}>
-                                                    {{ admin_t('خاصة') }}
+                                                    {{ admin_t('Private') }}
                                                 </option>
                                                 <option value="group"
                                                     {{ old('tour_type', $package->tour_type) == 'group' ? 'selected' : '' }}>
-                                                    {{ admin_t('مجموعة صغيرة') }}
+                                                    {{ admin_t('Small Group') }}
                                                 </option>
                                                 <option value="shared"
                                                     {{ old('tour_type', $package->tour_type) == 'shared' ? 'selected' : '' }}>
-                                                    {{ admin_t('مشتركة') }}
+                                                    {{ admin_t('Shared') }}
                                                 </option>
                                                 <option value="custom"
                                                     {{ old('tour_type', $package->tour_type) == 'custom' ? 'selected' : '' }}>
-                                                    {{ admin_t('مخصصة') }}
+                                                    {{ admin_t('Custom') }}
                                                 </option>
                                             </select>
                                             @error('tour_type')
@@ -2011,10 +2020,11 @@
                                         </div>
 
                                         <div>
-                                            <label class="form-label" for="currency_id">{{ admin_t('العملة') }}</label>
+                                            <label class="form-label"
+                                                for="currency_id">{{ admin_t('Currency') }}</label>
                                             <select id="currency_id" name="currency_id"
                                                 class="form-select @error('currency_id') is-invalid @enderror">
-                                                <option value="">{{ admin_t('اختر العملة') }}</option>
+                                                <option value="">{{ admin_t('Select Currency') }}</option>
                                                 @foreach ($currencies ?? collect() as $currency)
                                                     <option value="{{ $currency->id }}"
                                                         {{ old('currency_id', $package->currency_id) == $currency->id ? 'selected' : '' }}>
@@ -2029,17 +2039,17 @@
 
                                         <div>
                                             <label class="form-label"
-                                                for="booking_mode">{{ admin_t('نظام الحجز') }}</label>
+                                                for="booking_mode">{{ admin_t('Booking System') }}</label>
                                             <select id="booking_mode" name="booking_mode"
                                                 class="form-select @error('booking_mode') is-invalid @enderror">
-                                                <option value="">{{ admin_t('اختر نظام الحجز') }}</option>
+                                                <option value="">{{ admin_t('Select System Booking') }}</option>
                                                 <option value="request"
                                                     {{ old('booking_mode', $package->booking_mode ?? 'request') == 'request' ? 'selected' : '' }}>
-                                                    {{ admin_t('طلب') }}
+                                                    {{ admin_t('Request') }}
                                                 </option>
                                                 <option value="instant"
                                                     {{ old('booking_mode', $package->booking_mode) == 'instant' ? 'selected' : '' }}>
-                                                    {{ admin_t('فوري') }}
+                                                    {{ admin_t('Instant') }}
                                                 </option>
                                             </select>
                                             @error('booking_mode')
@@ -2049,21 +2059,21 @@
 
                                         <div>
                                             <label class="form-label"
-                                                for="difficulty_level">{{ admin_t('مستوى الصعوبة') }}</label>
+                                                for="difficulty_level">{{ admin_t('Difficulty Level') }}</label>
                                             <select id="difficulty_level" name="difficulty_level"
                                                 class="form-select @error('difficulty_level') is-invalid @enderror">
-                                                <option value="">{{ admin_t('اختر المستوى') }}</option>
+                                                <option value="">{{ admin_t('Select Level') }}</option>
                                                 <option value="easy"
                                                     {{ old('difficulty_level', $package->difficulty_level) == 'easy' ? 'selected' : '' }}>
-                                                    {{ admin_t('سهل') }}
+                                                    {{ admin_t('Easy') }}
                                                 </option>
                                                 <option value="moderate"
                                                     {{ old('difficulty_level', $package->difficulty_level) == 'moderate' ? 'selected' : '' }}>
-                                                    {{ admin_t('متوسط') }}
+                                                    {{ admin_t('Moderate') }}
                                                 </option>
                                                 <option value="hard"
                                                     {{ old('difficulty_level', $package->difficulty_level) == 'hard' ? 'selected' : '' }}>
-                                                    {{ admin_t('صعب') }}
+                                                    {{ admin_t('Hard') }}
                                                 </option>
                                             </select>
                                             @error('difficulty_level')
@@ -2079,12 +2089,13 @@
                     <div class="wizard-panel" data-step-panel="2">
                         <div class="wizard-panel-header">
                             <div>
-                                <h2 class="wizard-panel-title">{{ admin_t('الوصف والصور') }}</h2>
-                                <p class="wizard-panel-copy">{{ admin_t('أضف وصف الرحلة والصور التي ستظهر للعملاء.') }}
+                                <h2 class="wizard-panel-title">{{ admin_t('Description and Images') }}</h2>
+                                <p class="wizard-panel-copy">
+                                    {{ admin_t('Add the trip description and the images shown to customers.') }}
                                 </p>
                             </div>
                             <div class="wizard-panel-pill">
-                                {{ admin_t('الخطوة :current من :total', ['current' => 2, 'total' => count($steps)]) }}
+                                {{ admin_t('Step :current of :total', ['current' => 2, 'total' => count($steps)]) }}
                             </div>
                         </div>
 
@@ -2093,8 +2104,9 @@
                                 <div class="section-header">
                                     <div class="section-icon"><i class="ti ti-writing"></i></div>
                                     <div>
-                                        <h3>{{ admin_t('الوصف والنصوص') }}</h3>
-                                        <p>{{ admin_t('اكتب المحتوى الذي سيظهر للعميل في صفحة الرحلة.') }}</p>
+                                        <h3>{{ admin_t('Description and Copy') }}</h3>
+                                        <p>{{ admin_t('Write the content that customers will see on the trip page.') }}
+                                        </p>
                                     </div>
                                 </div>
 
@@ -2102,10 +2114,11 @@
                                     <div class="fields-grid two-up">
                                         <div class="field-span-2">
                                             <label class="form-label"
-                                                for="short_description">{{ admin_t('وصف مختصر') }}</label>
+                                                for="short_description">{{ admin_t('Short Description') }}</label>
                                             <textarea id="short_description" name="short_description" rows="4"
                                                 class="form-control @error('short_description') is-invalid @enderror"
-                                                placeholder="{{ admin_t('الوصف المختصر يظهر في القوائم ونتائج البحث.') }}" data-counter-max="150">{{ old('short_description', adminTrans($package->short_description)) }}</textarea>
+                                                placeholder="{{ admin_t('The short description appears in listings and search results.') }}"
+                                                data-counter-max="150">{{ old('short_description', adminTrans($package->short_description)) }}</textarea>
                                             <div class="counter-line"><span data-counter-for="short_description">0 /
                                                     150</span></div>
                                             @error('short_description')
@@ -2115,10 +2128,10 @@
 
                                         <div class="field-span-2">
                                             <label class="form-label"
-                                                for="description">{{ admin_t('الوصف الكامل') }}</label>
+                                                for="description">{{ admin_t('Full Description') }}</label>
                                             <textarea id="description" name="description" rows="8"
                                                 class="form-control @error('description') is-invalid @enderror"
-                                                placeholder="{{ admin_t('أضف وصفًا تفصيليًا غنيًا يساعد العميل على اتخاذ القرار.') }}">{{ old('description', adminTrans($package->description)) }}</textarea>
+                                                placeholder="{{ admin_t('Add rich, detailed copy that helps the customer decide.') }}">{{ old('description', adminTrans($package->description)) }}</textarea>
                                             @error('description')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -2131,8 +2144,8 @@
                                 <div class="section-header">
                                     <div class="section-icon"><i class="ti ti-photo"></i></div>
                                     <div>
-                                        <h3>{{ admin_t('الصور والمعرض') }}</h3>
-                                        <p>{{ admin_t('ارفع الصورة الرئيسية وصور المعرض مع معاينة مباشرة قبل الحفظ.') }}
+                                        <h3>{{ admin_t('Description and Images') }}</h3>
+                                        <p>{{ admin_t('Upload the featured image and gallery with instant preview before saving.') }}
                                         </p>
                                     </div>
                                 </div>
@@ -2140,14 +2153,14 @@
                                 <div class="section-body">
                                     <div class="split-card">
                                         <div>
-                                            <label class="form-label">{{ admin_t('الصورة الرئيسية') }}</label>
+                                            <label class="form-label">{{ admin_t('Main Image') }}</label>
                                             <label class="upload-zone" for="featured_image">
                                                 <input id="featured_image" type="file" name="featured_image"
                                                     accept="image/*">
                                                 <div>
                                                     <i class="ti ti-cloud-upload" style="font-size: 42px;"></i>
-                                                    <h4>{{ admin_t('اسحب الصور هنا أو اضغط للاختيار') }}</h4>
-                                                    <p>{{ admin_t('الامتدادات المسموحة: JPG, PNG, WEBP - الحد الأقصى 5MB لكل صورة.') }}
+                                                    <h4>{{ admin_t('Drag images here or click to browse') }}</h4>
+                                                    <p>{{ admin_t('Allowed formats: JPG, PNG, WEBP - max 5MB per image.') }}
                                                     </p>
                                                 </div>
                                             </label>
@@ -2163,14 +2176,14 @@
                                         </div>
 
                                         <div>
-                                            <label class="form-label">{{ admin_t('صور المعرض') }}</label>
+                                            <label class="form-label">{{ admin_t('Gallery Images') }}</label>
                                             <label class="upload-zone" for="gallery_images">
                                                 <input id="gallery_images" type="file" name="gallery_images[]"
                                                     accept="image/*" multiple>
                                                 <div>
                                                     <i class="ti ti-photos" style="font-size: 42px;"></i>
-                                                    <h4>{{ admin_t('اسحب الصور هنا أو اضغط للاختيار') }}</h4>
-                                                    <p>{{ admin_t('الامتدادات المسموحة: JPG, PNG, WEBP - الحد الأقصى 5MB لكل صورة.') }}
+                                                    <h4>{{ admin_t('Drag images here or click to browse') }}</h4>
+                                                    <p>{{ admin_t('Allowed formats: JPG, PNG, WEBP - max 5MB per image.') }}
                                                     </p>
                                                 </div>
                                             </label>
@@ -2187,11 +2200,11 @@
                                                 @endforeach
                                                 @if (!$savedGalleryUrls)
                                                     <div class="empty-state" id="galleryEmptyState">
-                                                        {{ admin_t('لا توجد صور في المعرض حتى الآن.') }}</div>
+                                                        {{ admin_t('No gallery images have been added yet.') }}</div>
                                                 @endif
                                             </div>
                                             <p class="field-hint mt-2">
-                                                {{ admin_t('اختيار صور جديدة يستبدل المعرض الحالي عند الحفظ. اترك الحقل فارغًا للاحتفاظ بالصور الحالية.') }}
+                                                {{ admin_t('Selecting new images replaces current gallery upon saving. Leave empty to keep current images.') }}
                                             </p>
                                         </div>
                                     </div>
@@ -2206,12 +2219,12 @@
                     <div class="wizard-panel" data-step-panel="3">
                         <div class="wizard-panel-header">
                             <div>
-                                <h2 class="wizard-panel-title">{{ admin_t('المسار والمدة') }}</h2>
+                                <h2 class="wizard-panel-title">{{ admin_t('Route and Duration') }}</h2>
                                 <p class="wizard-panel-copy">
-                                    {{ admin_t('حدد مدة الرحلة والبرنامج اليومي ومسار الرحلة.') }}</p>
+                                    {{ admin_t('Define the trip duration, daily itinerary, and route.') }}</p>
                             </div>
                             <div class="wizard-panel-pill">
-                                {{ admin_t('الخطوة :current من :total', ['current' => 3, 'total' => count($steps)]) }}
+                                {{ admin_t('Step :current of :total', ['current' => 3, 'total' => count($steps)]) }}
                             </div>
                         </div>
 
@@ -2220,24 +2233,24 @@
                                 <div class="section-header">
                                     <div class="section-icon"><i class="ti ti-clock-hour-4"></i></div>
                                     <div>
-                                        <h3>{{ admin_t('المدة والمعلومات الزمنية') }}</h3>
-                                        <p>{{ admin_t('حدد شكل المدة وطريقة عرضها داخل الموقع.') }}</p>
+                                        <h3>{{ admin_t('Duration and Time Information') }}</h3>
+                                        <p>{{ admin_t('Choose the duration format and how it appears on the site.') }}</p>
                                     </div>
                                 </div>
 
                                 <div class="section-body">
                                     <div class="mb-4">
-                                        <label class="form-label">{{ admin_t('نوع المدة') }}</label>
+                                        <label class="form-label">{{ admin_t('Type Duration') }}</label>
                                         <div class="choice-row">
                                             <label class="choice-pill">
                                                 <input type="radio" name="duration_type" value="days"
                                                     {{ $durationType === 'days' ? 'checked' : '' }}>
-                                                <span>{{ admin_t('أيام / ليالي') }}</span>
+                                                <span>{{ admin_t('Days / Nights') }}</span>
                                             </label>
                                             <label class="choice-pill">
                                                 <input type="radio" name="duration_type" value="hours"
                                                     {{ $durationType === 'hours' ? 'checked' : '' }}>
-                                                <span>{{ admin_t('ساعات') }}</span>
+                                                <span>{{ admin_t('Hours') }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -2245,7 +2258,7 @@
                                     <div class="fields-grid">
                                         <div id="daysFieldWrapper">
                                             <label class="form-label"
-                                                for="duration_days">{{ admin_t('عدد الأيام') }}</label>
+                                                for="duration_days">{{ admin_t('Number of Days') }}</label>
                                             <input id="duration_days" type="number" name="duration_days"
                                                 class="form-control"
                                                 value="{{ old('duration_days', $package->duration_days) }}">
@@ -2253,7 +2266,7 @@
 
                                         <div id="nightsFieldWrapper">
                                             <label class="form-label"
-                                                for="duration_nights">{{ admin_t('عدد الليالي') }}</label>
+                                                for="duration_nights">{{ admin_t('Number of Nights') }}</label>
                                             <input id="duration_nights" type="number" name="duration_nights"
                                                 class="form-control"
                                                 value="{{ old('duration_nights', $package->duration_nights) }}">
@@ -2261,7 +2274,7 @@
 
                                         <div id="hoursFieldWrapper">
                                             <label class="form-label"
-                                                for="duration_hours">{{ admin_t('عدد الساعات') }}</label>
+                                                for="duration_hours">{{ admin_t('Number of Hours') }}</label>
                                             <input id="duration_hours" type="number" name="duration_hours"
                                                 class="form-control"
                                                 value="{{ old('duration_hours', $package->duration_hours) }}">
@@ -2269,20 +2282,20 @@
 
                                         <div>
                                             <label class="form-label"
-                                                for="duration_text">{{ admin_t('نص المدة المعروض') }}</label>
+                                                for="duration_text">{{ admin_t('Displayed Duration Text') }}</label>
                                             <input id="duration_text" type="text" name="duration_text"
                                                 class="form-control"
                                                 value="{{ old('duration_text', adminTrans($package->duration_text)) }}"
-                                                placeholder="{{ admin_t('مثال: 5 أيام / 4 ليالٍ') }}">
+                                                placeholder="{{ admin_t('Example: 5 Days / 4 Nights') }}">
                                         </div>
 
                                         <div>
                                             <label class="form-label"
-                                                for="schedule_text">{{ admin_t('الجدول') }}</label>
+                                                for="schedule_text">{{ admin_t('Schedule') }}</label>
                                             <input id="schedule_text" type="text" name="schedule_text"
                                                 class="form-control"
                                                 value="{{ old('schedule_text', adminTrans($package->schedule_text)) }}"
-                                                placeholder="{{ admin_t('مثال: يوميًا / كل سبت / حسب الطلب') }}">
+                                                placeholder="{{ admin_t('Example: Daily / Every Saturday / On Request') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -2292,22 +2305,23 @@
                                 <div class="section-header">
                                     <div class="section-icon"><i class="ti ti-map-route"></i></div>
                                     <div>
-                                        <h3>{{ admin_t('المسار والتنقل') }}</h3>
-                                        <p>{{ admin_t('أضف نقاط البداية والوصول ومسار الرحلة بشكل واضح.') }}</p>
+                                        <h3>{{ admin_t('Route and Movement') }}</h3>
+                                        <p>{{ admin_t('Add the starting point, ending point, and route clearly.') }}</p>
                                     </div>
                                 </div>
 
                                 <div class="section-body">
                                     <div class="fields-grid">
                                         <div>
-                                            <label class="form-label" for="route_text">{{ admin_t('المسار') }}</label>
+                                            <label class="form-label"
+                                                for="route_text">{{ admin_t('Itinerary') }}</label>
                                             <input id="route_text" type="text" name="route_text" class="form-control"
                                                 value="{{ old('route_text', adminTrans($package->route_text)) }}">
                                         </div>
 
                                         <div>
                                             <label class="form-label"
-                                                for="pickup_location">{{ admin_t('مكان الاستلام') }}</label>
+                                                for="pickup_location">{{ admin_t('Pickup Location') }}</label>
                                             <input id="pickup_location" type="text" name="pickup_location"
                                                 class="form-control"
                                                 value="{{ old('pickup_location', adminTrans($package->pickup_location)) }}">
@@ -2315,7 +2329,7 @@
 
                                         <div>
                                             <label class="form-label"
-                                                for="dropoff_location">{{ admin_t('مكان الانتهاء') }}</label>
+                                                for="dropoff_location">{{ admin_t('Drop-off Location') }}</label>
                                             <input id="dropoff_location" type="text" name="dropoff_location"
                                                 class="form-control"
                                                 value="{{ old('dropoff_location', adminTrans($package->dropoff_location)) }}">
@@ -2323,16 +2337,16 @@
 
                                         <div class="field-span-2">
                                             <label class="form-label"
-                                                for="destinations_text">{{ admin_t('الوجهات') }}</label>
+                                                for="destinations_text">{{ admin_t('Destinations') }}</label>
                                             <input id="destinations_text" type="text" name="destinations_text"
                                                 class="form-control"
                                                 value="{{ old('destinations_text', adminTrans($package->destinations_text)) }}"
-                                                placeholder="{{ admin_t('افصل بين الوجهات بفاصلة') }}">
+                                                placeholder="{{ admin_t('Separate destinations with commas') }}">
                                         </div>
 
                                         <div>
                                             <label class="form-label"
-                                                for="location_summary">{{ admin_t('ملخص الموقع') }}</label>
+                                                for="location_summary">{{ admin_t('Location Summary') }}</label>
                                             <input id="location_summary" type="text" name="location_summary"
                                                 class="form-control"
                                                 value="{{ old('location_summary', adminTrans($package->location_summary)) }}">
@@ -2345,8 +2359,9 @@
                                 <div class="section-header">
                                     <div class="section-icon"><i class="ti ti-calendar-event"></i></div>
                                     <div>
-                                        <h3>{{ admin_t('البرنامج اليومي') }}</h3>
-                                        <p>{{ admin_t('قسّم الرحلة إلى أيام أو محطات مع تفاصيل الوجبات والنشاطات.') }}</p>
+                                        <h3>{{ admin_t('Daily Itinerary') }}</h3>
+                                        <p>{{ admin_t('Split the trip into days or stops with meal and activity details.') }}
+                                        </p>
                                     </div>
                                 </div>
 
@@ -2391,7 +2406,7 @@
                                                         </div>
 
                                                         <div class="field-block itinerary-hour-fields"
-                                                            data-itinerary-hour-fields>
+                                                            data-itinerary-hour-fields style="display: none;">
                                                             <label class="field-block-label">Activity time</label>
                                                             <div class="fields-grid fields-grid-2">
                                                                 <div class="field-shell">
@@ -2414,14 +2429,15 @@
                                                         </div>
 
                                                         <div class="field-block itinerary-place-field">
-                                                            <label class="field-block-label">Place / Stop</label>
+                                                            <label class="field-block-label"
+                                                                data-itinerary-place-label>Place / Title</label>
                                                             <div class="field-shell">
                                                                 <span class="field-shell-icon"><i
                                                                         class="ti ti-map-pin"></i></span>
                                                                 <input type="text"
                                                                     name="itinerary[{{ $i }}][title]"
                                                                     value="{{ $day['title'] ?? '' }}"
-                                                                    placeholder="Enter place or stop">
+                                                                    placeholder="Enter title">
                                                             </div>
                                                         </div>
 
@@ -2578,7 +2594,7 @@
 
                                                         <button type="button"
                                                             class="btn js-remove hover-delete-btn icon-remove-btn dynamic-remove-control"
-                                                            aria-label="{{ admin_t('حذف') }}">
+                                                            aria-label="{{ admin_t('Delete') }}">
                                                             <i class="ti ti-trash"></i>
                                                         </button>
                                                     </div>
@@ -3020,15 +3036,16 @@
                                 <div class="section-header">
                                     <div class="section-icon"><i class="ti ti-list-check"></i></div>
                                     <div>
-                                        <h3>{{ admin_t('المشمول وغير المشمول') }}</h3>
-                                        <p>{{ admin_t('قسّم ما يحصل عليه العميل وما لا يشمله السعر.') }}</p>
+                                        <h3>{{ admin_t('Included and Excluded') }}</h3>
+                                        <p>{{ admin_t('Split what the customer gets and what is not included in the price.') }}
+                                        </p>
                                     </div>
                                 </div>
 
                                 <div class="section-body">
                                     <div class="split-card">
                                         <div>
-                                            <h5 class="mb-3">{{ admin_t('المشمول في الرحلة') }}</h5>
+                                            <h5 class="mb-3">{{ admin_t('Included in the Trip') }}</h5>
                                             <div id="included-wrapper">
                                                 @forelse ($included as $i => $item)
                                                     <div class="repeat-box included-item">
@@ -3037,24 +3054,24 @@
                                                                 name="included[{{ $i }}][title]"
                                                                 class="form-control" value="{{ $item['title'] ?? '' }}">
                                                             <button type="button"
-                                                                class="btn btn-outline-danger js-remove">{{ admin_t('حذف') }}</button>
+                                                                class="btn btn-outline-danger js-remove">{{ admin_t('Delete') }}</button>
                                                         </div>
                                                     </div>
                                                 @empty
                                                     <div class="empty-state" id="includedEmptyState">
-                                                        {{ admin_t('لا يوجد عناصر مشمولة حتى الآن.') }}</div>
+                                                        {{ admin_t('No included items added yet.') }}</div>
                                                 @endforelse
                                             </div>
                                             <button type="button" class="btn btn-wizard-outline" id="addIncludedBtn">
                                                 <span class="btn-icon-text">
                                                     <i class="ti ti-plus"></i>
-                                                    {{ admin_t('+ إضافة بند') }}
+                                                    {{ admin_t('+ Add Item') }}
                                                 </span>
                                             </button>
                                         </div>
 
                                         <div>
-                                            <h5 class="mb-3">{{ admin_t('غير المشمول') }}</h5>
+                                            <h5 class="mb-3">{{ admin_t('Excluded') }}</h5>
                                             <div id="excluded-wrapper">
                                                 @forelse ($excluded as $i => $item)
                                                     <div class="repeat-box excluded-item">
@@ -3063,18 +3080,18 @@
                                                                 name="excluded[{{ $i }}][title]"
                                                                 class="form-control" value="{{ $item['title'] ?? '' }}">
                                                             <button type="button"
-                                                                class="btn btn-outline-danger js-remove">{{ admin_t('حذف') }}</button>
+                                                                class="btn btn-outline-danger js-remove">{{ admin_t('Delete') }}</button>
                                                         </div>
                                                     </div>
                                                 @empty
                                                     <div class="empty-state" id="excludedEmptyState">
-                                                        {{ admin_t('لا يوجد عناصر غير مشمولة حتى الآن.') }}</div>
+                                                        {{ admin_t('No excluded items added yet.') }}</div>
                                                 @endforelse
                                             </div>
                                             <button type="button" class="btn btn-wizard-outline" id="addExcludedBtn">
                                                 <span class="btn-icon-text">
                                                     <i class="ti ti-plus"></i>
-                                                    {{ admin_t('+ إضافة بند') }}
+                                                    {{ admin_t('+ Add Item') }}
                                                 </span>
                                             </button>
                                         </div>
@@ -3086,8 +3103,8 @@
                                 <div class="section-header">
                                     <div class="section-icon"><i class="ti ti-shield-check"></i></div>
                                     <div>
-                                        <h3>{{ admin_t('الشروط والسياسات') }}</h3>
-                                        <p>{{ admin_t('وضح السياسات المهمة قبل الحجز لتقليل الاستفسارات.') }}</p>
+                                        <h3>{{ admin_t('Terms & Policies') }}</h3>
+                                        <p>{{ admin_t('Clarify key policies before booking to reduce inquiries.') }}</p>
                                     </div>
                                 </div>
 
@@ -3095,25 +3112,25 @@
                                     <div class="fields-grid two-up">
                                         <div>
                                             <label class="form-label"
-                                                for="children_policy">{{ admin_t('سياسة الأطفال') }}</label>
+                                                for="children_policy">{{ admin_t('Children Policy') }}</label>
                                             <textarea id="children_policy" name="children_policy" rows="5" class="form-control">{{ old('children_policy', adminTrans($package->children_policy)) }}</textarea>
                                         </div>
 
                                         <div>
                                             <label class="form-label"
-                                                for="pickup_policy">{{ admin_t('سياسة الاستلام والتوصيل') }}</label>
+                                                for="pickup_policy">{{ admin_t('Pickup Policy') }}</label>
                                             <textarea id="pickup_policy" name="pickup_policy" rows="5" class="form-control">{{ old('pickup_policy', adminTrans($package->pickup_policy)) }}</textarea>
                                         </div>
 
                                         <div>
                                             <label class="form-label"
-                                                for="cancellation_policy">{{ admin_t('سياسة الإلغاء') }}</label>
+                                                for="cancellation_policy">{{ admin_t('Cancellation Policy') }}</label>
                                             <textarea id="cancellation_policy" name="cancellation_policy" rows="5" class="form-control">{{ old('cancellation_policy', adminTrans($package->cancellation_policy)) }}</textarea>
                                         </div>
 
                                         <div>
                                             <label class="form-label"
-                                                for="terms_conditions">{{ admin_t('الشروط والأحكام') }}</label>
+                                                for="terms_conditions">{{ admin_t('Terms & Conditions') }}</label>
                                             <textarea id="terms_conditions" name="terms_conditions" rows="5" class="form-control">{{ old('terms_conditions', adminTrans($package->terms_conditions)) }}</textarea>
                                         </div>
                                     </div>
@@ -3124,8 +3141,9 @@
                                 <div class="section-header">
                                     <div class="section-icon"><i class="ti ti-help-hexagon"></i></div>
                                     <div>
-                                        <h3>{{ admin_t('الأسئلة الشائعة') }}</h3>
-                                        <p>{{ admin_t('أضف أسئلة وإجابات خاصة بهذه الرحلة لتظهر في الموقع.') }}</p>
+                                        <h3>{{ admin_t('FAQs') }}</h3>
+                                        <p>{{ admin_t('Add trip-specific questions and answers to display on the website.') }}
+                                        </p>
                                     </div>
                                 </div>
 
@@ -3171,7 +3189,7 @@
 
                                                         <button type="button"
                                                             class="btn js-remove hover-delete-btn icon-remove-btn dynamic-remove-control"
-                                                            aria-label="{{ admin_t('حذف') }}">
+                                                            aria-label="{{ admin_t('Delete') }}">
                                                             <i class="ti ti-trash"></i>
                                                         </button>
                                                     </div>
@@ -3199,12 +3217,12 @@
                     <div class="wizard-panel" data-step-panel="5">
                         <div class="wizard-panel-header">
                             <div>
-                                <h2 class="wizard-panel-title">{{ admin_t('النشر وSEO') }}</h2>
+                                <h2 class="wizard-panel-title">{{ admin_t('Publishing and SEO') }}</h2>
                                 <p class="wizard-panel-copy">
-                                    {{ admin_t('راجع بيانات الرحلة وحدد إعدادات النشر ومحركات البحث.') }}</p>
+                                    {{ admin_t('Review the trip data and configure publishing and SEO.') }}</p>
                             </div>
                             <div class="wizard-panel-pill">
-                                {{ admin_t('الخطوة :current من :total', ['current' => 5, 'total' => count($steps)]) }}
+                                {{ admin_t('Step :current of :total', ['current' => 5, 'total' => count($steps)]) }}
                             </div>
                         </div>
 
@@ -3214,8 +3232,8 @@
                                     <div class="section-header">
                                         <div class="section-icon"><i class="ti ti-users"></i></div>
                                         <div>
-                                            <h3>{{ admin_t('المشاركون والتقييم') }}</h3>
-                                            <p>{{ admin_t('راجع أرقام السعة والتقييم قبل النشر.') }}</p>
+                                            <h3>{{ admin_t('Participants and Rating') }}</h3>
+                                            <p>{{ admin_t('Review capacity and rating before publishing.') }}</p>
                                         </div>
                                     </div>
 
@@ -3223,7 +3241,7 @@
                                         <div class="fields-grid">
                                             <div>
                                                 <label class="form-label"
-                                                    for="min_participants">{{ admin_t('الحد الأدنى للمشاركين') }}</label>
+                                                    for="min_participants">{{ admin_t('Minimum Participants') }}</label>
                                                 <input id="min_participants" type="number" name="min_participants"
                                                     class="form-control"
                                                     value="{{ old('min_participants', $package->min_participants) }}">
@@ -3231,7 +3249,7 @@
 
                                             <div>
                                                 <label class="form-label"
-                                                    for="max_participants">{{ admin_t('الحد الأقصى للمشاركين') }}</label>
+                                                    for="max_participants">{{ admin_t('Maximum Participants') }}</label>
                                                 <input id="max_participants" type="number" name="max_participants"
                                                     class="form-control"
                                                     value="{{ old('max_participants', $package->max_participants) }}">
@@ -3239,7 +3257,7 @@
 
                                             <div>
                                                 <label class="form-label"
-                                                    for="booking_lead_days">{{ admin_t('أيام الحجز المسبق') }}</label>
+                                                    for="booking_lead_days">{{ admin_t('Advance Booking Days') }}</label>
                                                 <input id="booking_lead_days" type="number" name="booking_lead_days"
                                                     class="form-control"
                                                     value="{{ old('booking_lead_days', $package->booking_lead_days) }}">
@@ -3247,7 +3265,7 @@
 
                                             <div>
                                                 <label class="form-label"
-                                                    for="rating_avg">{{ admin_t('التقييم') }}</label>
+                                                    for="rating_avg">{{ admin_t('Rating') }}</label>
                                                 <input id="rating_avg" type="number" step="0.01" name="rating_avg"
                                                     class="form-control"
                                                     value="{{ old('rating_avg', $package->rating_avg) }}">
@@ -3255,7 +3273,7 @@
 
                                             <div>
                                                 <label class="form-label"
-                                                    for="reviews_count">{{ admin_t('عدد المراجعات') }}</label>
+                                                    for="reviews_count">{{ admin_t('Review Count') }}</label>
                                                 <input id="reviews_count" type="number" name="reviews_count"
                                                     class="form-control"
                                                     value="{{ old('reviews_count', $package->reviews_count) }}">
@@ -3263,7 +3281,7 @@
 
                                             <div class="field-span-2">
                                                 <label class="form-label"
-                                                    for="video_url">{{ admin_t('رابط الفيديو') }}</label>
+                                                    for="video_url">{{ admin_t('Video URL') }}</label>
                                                 <input id="video_url" type="text" name="video_url"
                                                     class="form-control"
                                                     value="{{ old('video_url', $package->video_url) }}">
@@ -3276,8 +3294,8 @@
                                     <div class="section-header">
                                         <div class="section-icon"><i class="ti ti-settings"></i></div>
                                         <div>
-                                            <h3>{{ admin_t('إعدادات النشر') }}</h3>
-                                            <p>{{ admin_t('تحكم في حالة الظهور والتمييز وتاريخ النشر.') }}</p>
+                                            <h3>{{ admin_t('Publishing Settings') }}</h3>
+                                            <p>{{ admin_t('Control visibility, featured status, and publish date.') }}</p>
                                         </div>
                                     </div>
 
@@ -3285,7 +3303,7 @@
                                         <div class="fields-grid two-up">
                                             <div>
                                                 <label class="form-label"
-                                                    for="published_at">{{ admin_t('تاريخ النشر') }}</label>
+                                                    for="published_at">{{ admin_t('Publish Date') }}</label>
                                                 <input id="published_at" type="date" name="published_at"
                                                     class="form-control"
                                                     value="{{ old('published_at', $package->published_at?->format('Y-m-d')) }}">
@@ -3293,7 +3311,7 @@
 
                                             <div>
                                                 <label class="form-label"
-                                                    for="sort_order">{{ admin_t('الترتيب') }}</label>
+                                                    for="sort_order">{{ admin_t('Sort Order') }}</label>
                                                 <input id="sort_order" type="number" name="sort_order"
                                                     class="form-control"
                                                     value="{{ old('sort_order', $package->sort_order ?? 0) }}">
@@ -3304,22 +3322,22 @@
                                             <label class="choice-pill">
                                                 <input type="checkbox" name="is_active" value="1"
                                                     {{ old('is_active', $package->is_active) ? 'checked' : '' }}>
-                                                <span>{{ admin_t('مفعلة') }}</span>
+                                                <span>{{ admin_t('Enabled') }}</span>
                                             </label>
                                             <label class="choice-pill">
                                                 <input type="checkbox" name="is_featured" value="1"
                                                     {{ old('is_featured', $package->is_featured) ? 'checked' : '' }}>
-                                                <span>{{ admin_t('مميزة') }}</span>
+                                                <span>{{ admin_t('Featured') }}</span>
                                             </label>
                                             <label class="choice-pill">
                                                 <input type="checkbox" name="is_best_seller" value="1"
                                                     {{ old('is_best_seller', $package->is_best_seller) ? 'checked' : '' }}>
-                                                <span>{{ admin_t('الأكثر مبيعًا') }}</span>
+                                                <span>{{ admin_t('Best Seller') }}</span>
                                             </label>
                                             <label class="choice-pill">
                                                 <input type="checkbox" name="is_ultra_luxury" value="1"
                                                     {{ old('is_ultra_luxury', $package->is_ultra_luxury) ? 'checked' : '' }}>
-                                                <span>{{ admin_t('فاخرة جدًا') }}</span>
+                                                <span>{{ admin_t('Ultra Luxury') }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -3330,8 +3348,9 @@
                                 <div class="section-header">
                                     <div class="section-icon"><i class="ti ti-world-search"></i></div>
                                     <div>
-                                        <h3>{{ admin_t('إعدادات SEO') }}</h3>
-                                        <p>{{ admin_t('حسّن ظهور الرحلة في محركات البحث ومنصات المشاركة.') }}</p>
+                                        <h3>{{ admin_t('SEO Settings') }}</h3>
+                                        <p>{{ admin_t('Improve trip visibility in search engines and sharing platforms.') }}
+                                        </p>
                                     </div>
                                 </div>
 
@@ -3339,7 +3358,7 @@
                                     <div class="fields-grid">
                                         <div class="field-span-2">
                                             <label class="form-label"
-                                                for="seo_title">{{ admin_t('عنوان SEO') }}</label>
+                                                for="seo_title">{{ admin_t('SEO Title') }}</label>
                                             <input id="seo_title" type="text" name="seo_title"
                                                 class="form-control"
                                                 value="{{ old('seo_title', adminTrans($package->seo_title)) }}"
@@ -3350,7 +3369,7 @@
 
                                         <div>
                                             <label class="form-label"
-                                                for="breadcrumb_title">{{ admin_t('عنوان مسار التنقل') }}</label>
+                                                for="breadcrumb_title">{{ admin_t('Breadcrumb Title') }}</label>
                                             <input id="breadcrumb_title" type="text" name="breadcrumb_title"
                                                 class="form-control"
                                                 value="{{ old('breadcrumb_title', adminTrans($package->breadcrumb_title)) }}">
@@ -3358,7 +3377,7 @@
 
                                         <div class="field-span-2">
                                             <label class="form-label"
-                                                for="seo_description">{{ admin_t('وصف SEO') }}</label>
+                                                for="seo_description">{{ admin_t('SEO Description') }}</label>
                                             <textarea id="seo_description" name="seo_description" rows="4" class="form-control"
                                                 data-counter-max="160">{{ old('seo_description', adminTrans($package->seo_description)) }}</textarea>
                                             <div class="counter-line"><span data-counter-for="seo_description">0 /
@@ -3382,43 +3401,43 @@
                                 <div class="section-header">
                                     <div class="section-icon"><i class="ti ti-checklist"></i></div>
                                     <div>
-                                        <h3>{{ admin_t('مراجعة سريعة') }}</h3>
-                                        <p>{{ admin_t('ملخص نهائي قبل حفظ الرحلة ونشرها.') }}</p>
+                                        <h3>{{ admin_t('Quick Review') }}</h3>
+                                        <p>{{ admin_t('Final summary before saving and publishing the trip.') }}</p>
                                     </div>
                                 </div>
 
                                 <div class="section-body">
                                     <div class="summary-grid mb-4">
                                         <div class="summary-item">
-                                            <span class="summary-label">{{ admin_t('العنوان') }}</span>
+                                            <span class="summary-label">{{ admin_t('Title') }}</span>
                                             <span class="summary-value" data-summary="title">-</span>
                                         </div>
                                         <div class="summary-item">
-                                            <span class="summary-label">{{ admin_t('المدينة') }}</span>
+                                            <span class="summary-label">{{ admin_t('City') }}</span>
                                             <span class="summary-value" data-summary="destination">-</span>
                                         </div>
                                         <div class="summary-item">
-                                            <span class="summary-label">{{ admin_t('المدة') }}</span>
+                                            <span class="summary-label">{{ admin_t('Duration') }}</span>
                                             <span class="summary-value" data-summary="duration">-</span>
                                         </div>
                                         <div class="summary-item">
-                                            <span class="summary-label">{{ admin_t('السعر') }}</span>
+                                            <span class="summary-label">{{ admin_t('Price') }}</span>
                                             <span class="summary-value" data-summary="price">-</span>
                                         </div>
                                         <div class="summary-item">
-                                            <span class="summary-label">{{ admin_t('التصنيف') }}</span>
+                                            <span class="summary-label">{{ admin_t('Category') }}</span>
                                             <span class="summary-value" data-summary="category">-</span>
                                         </div>
                                         <div class="summary-item">
-                                            <span class="summary-label">{{ admin_t('الحالة') }}</span>
+                                            <span class="summary-label">{{ admin_t('Status') }}</span>
                                             <span class="summary-value" data-summary="status">-</span>
                                         </div>
                                         <div class="summary-item">
-                                            <span class="summary-label">{{ admin_t('عدد الصور') }}</span>
+                                            <span class="summary-label">{{ admin_t('Images Count') }}</span>
                                             <span class="summary-value" data-summary="images">0</span>
                                         </div>
                                         <div class="summary-item">
-                                            <span class="summary-label">{{ admin_t('عدد الأيام') }}</span>
+                                            <span class="summary-label">{{ admin_t('Number of Days') }}</span>
                                             <span class="summary-value" data-summary="daysCount">0</span>
                                         </div>
                                     </div>
@@ -3487,35 +3506,35 @@
                                     <div class="review-list">
                                         <div class="review-row">
                                             <div class="review-meta">
-                                                <strong>{{ admin_t('البيانات الأساسية') }}</strong>
-                                                <small>{{ admin_t('تأكد من العنوان والمدينة ونوع الرحلة قبل النشر.') }}</small>
+                                                <strong>{{ admin_t('Basic Information') }}</strong>
+                                                <small>{{ admin_t('Review title, city, and trip type before publishing.') }}</small>
                                             </div>
                                             <button type="button" class="btn btn-wizard-outline"
-                                                data-jump-step="1">{{ admin_t('تعديل') }}</button>
+                                                data-jump-step="1">{{ admin_t('Edit') }}</button>
                                         </div>
                                         <div class="review-row">
                                             <div class="review-meta">
-                                                <strong>{{ admin_t('الوصف والصور') }}</strong>
-                                                <small>{{ admin_t('تحقق من الوصف المختصر والصورة الرئيسية.') }}</small>
+                                                <strong>{{ admin_t('Description and Images') }}</strong>
+                                                <small>{{ admin_t('Review short description and main image.') }}</small>
                                             </div>
                                             <button type="button" class="btn btn-wizard-outline"
-                                                data-jump-step="2">{{ admin_t('تعديل') }}</button>
+                                                data-jump-step="2">{{ admin_t('Edit') }}</button>
                                         </div>
                                         <div class="review-row">
                                             <div class="review-meta">
-                                                <strong>{{ admin_t('المسار والمدة') }}</strong>
-                                                <small>{{ admin_t('راجع مدة الرحلة وبرنامجها اليومي.') }}</small>
+                                                <strong>{{ admin_t('Route and Duration') }}</strong>
+                                                <small>{{ admin_t('Review trip duration and daily itinerary.') }}</small>
                                             </div>
                                             <button type="button" class="btn btn-wizard-outline"
-                                                data-jump-step="3">{{ admin_t('تعديل') }}</button>
+                                                data-jump-step="3">{{ admin_t('Edit') }}</button>
                                         </div>
                                         <div class="review-row">
                                             <div class="review-meta">
-                                                <strong>{{ admin_t('الأسعار والسياسات') }}</strong>
-                                                <small>{{ admin_t('تأكد من الأسعار والعناصر المشمولة والسياسات.') }}</small>
+                                                <strong>{{ admin_t('Pricing & Policies') }}</strong>
+                                                <small>{{ admin_t('Review prices, inclusions, and policies.') }}</small>
                                             </div>
                                             <button type="button" class="btn btn-wizard-outline"
-                                                data-jump-step="4">{{ admin_t('تعديل') }}</button>
+                                                data-jump-step="4">{{ admin_t('Edit') }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -3527,26 +3546,25 @@
                         <div>
                             <div class="wizard-actions-meta" id="wizardStepLabel"></div>
                             <div class="wizard-actions-meta mt-1">
-                                {{ admin_t('استخدم هذا الزر لحفظ نسخة محلية مؤقتة داخل المتصفح.') }}</div>
+                                {{ admin_t('Use this button to save a temporary local copy in the browser.') }}</div>
                         </div>
 
                         <div class="wizard-actions-group">
                             <a href="{{ route('admin.packages.index') }}" class="btn btn-wizard-outline"
-                                id="cancelActionBtn">{{ admin_t('إلغاء') }}</a>
-                            <button type="button" class="btn btn-wizard-outline"
-                                id="saveDraftBtn">{{ admin_t('حفظ كمسودة') }}</button>
-                            <button type="button" class="btn btn-wizard-outline"
-                                id="prevStepBtn">{{ admin_t('السابق') }}</button>
+                                id="cancelActionBtn">Cancel</a>
+                            <button type="button" class="btn btn-wizard-outline" id="saveDraftBtn">Save
+                                Draft</button>
+                            <button type="button" class="btn btn-wizard-outline" id="prevStepBtn">Previous</button>
                             <button type="button" class="btn btn-wizard-primary" id="nextStepBtn">
                                 <span class="btn-icon-text">
-                                    <span>{{ admin_t('التالي') }}</span>
+                                    <span>Next</span>
                                     <i class="ti ti-arrow-{{ $isRtl ? 'left' : 'right' }}"></i>
                                 </span>
                             </button>
                             <button type="submit" class="btn btn-wizard-primary" id="submitWizardBtn">
                                 <span class="btn-icon-text">
                                     <i class="ti ti-device-floppy"></i>
-                                    <span>{{ admin_t('حفظ وتحديث الرحلة') }}</span>
+                                    <span>Save & Update Package</span>
                                 </span>
                             </button>
                         </div>
@@ -3677,16 +3695,16 @@
                 });
             }
             document.querySelectorAll('[data-nile-type-card]').forEach(card => card.addEventListener('click',
-        () => {
-                if (!nileTypeSelect) return;
-                nileTypeSelect.value = card.dataset.nileTypeCard;
-                nileTypeSelect.dispatchEvent(new Event('change', {
-                    bubbles: true
+                () => {
+                    if (!nileTypeSelect) return;
+                    nileTypeSelect.value = card.dataset.nileTypeCard;
+                    nileTypeSelect.dispatchEvent(new Event('change', {
+                        bubbles: true
+                    }));
+                    syncNileChoiceCards();
                 }));
-                syncNileChoiceCards();
-            }));
             document.querySelectorAll('[data-nile-category-card]').forEach(card => card.addEventListener('click',
-            () => {
+                () => {
                     if (!nileCatSelect) return;
                     nileCatSelect.value = card.dataset.nileCategoryCard;
                     nileCatSelect.dispatchEvent(new Event('change', {
@@ -3733,27 +3751,27 @@
             let galleryFiles = [];
 
             const texts = {
-                complete: @json(admin_t('مكتملة')),
-                incomplete: @json(admin_t('غير مكتملة')),
-                requiredMessage: @json(admin_t('يرجى استكمال الحقول المطلوبة.')),
-                saveDraftSuccess: @json(admin_t('تم حفظ المسودة محليًا.')),
-                saveDraftError: @json(admin_t('تعذر حفظ المسودة.')),
-                restoreDraft: @json(admin_t('يوجد نموذج غير مكتمل محفوظ مسبقًا. هل تريد استكماله؟')),
-                leavePage: @json(admin_t('لديك تغييرات غير محفوظة. هل تريد مغادرة الصفحة؟')),
-                saving: @json(admin_t('جارٍ حفظ الرحلة...')),
+                complete: 'Complete',
+                incomplete: 'Incomplete',
+                requiredMessage: 'Please complete required fields.',
+                saveDraftSuccess: 'Draft saved locally.',
+                saveDraftError: 'Unable to save draft.',
+                restoreDraft: 'An unfinished saved draft was found. Do you want to restore it?',
+                leavePage: 'You have unsaved changes. Do you want to leave this page?',
+                saving: 'Saving package...',
                 noData: '-',
-                active: @json(admin_t('مفعلة')),
-                inactive: @json(admin_t('غير مفعلة')),
-                dayFormat: @json(admin_t('الخطوة :current من :total')),
-                imagePreview: @json(admin_t('معاينة الصورة الرئيسية')),
-                galleryPreview: @json(admin_t('معاينة المعرض')),
-                noGallery: @json(admin_t('لا توجد صور في المعرض حتى الآن.')),
-                noItinerary: @json(admin_t('لا يوجد برنامج يومي حتى الآن.')),
-                noIncluded: @json(admin_t('لا يوجد عناصر مشمولة حتى الآن.')),
-                noExcluded: @json(admin_t('لا يوجد عناصر غير مشمولة حتى الآن.')),
-                noPrices: @json(admin_t('لا توجد أسعار مضافة حتى الآن.')),
-                remove: @json(admin_t('إزالة')),
-                dayTitle: @json(admin_t('يوم رقم :number')),
+                active: 'Enabled',
+                inactive: 'Disabled',
+                dayFormat: 'Step :current of :total',
+                imagePreview: 'Featured Image Preview',
+                galleryPreview: 'Gallery Preview',
+                noGallery: 'No gallery images added yet.',
+                noItinerary: 'No itinerary items added yet.',
+                noIncluded: 'No included items added yet.',
+                noExcluded: 'No excluded items added yet.',
+                noPrices: 'No prices added yet.',
+                remove: 'Remove',
+                dayTitle: 'Day :number',
             };
 
             const stepTitles = @json(array_column($steps, 'title'));
@@ -4056,33 +4074,35 @@
                 const copyEl = document.getElementById('itinerarySectionCopy');
                 if (copyEl) {
                     copyEl.textContent = isHourly ?
-                        'Build the Day Trip hour-by-hour / stop-by-stop with real start and end times.' :
+                        'Build the Day Trip activity-by-activity.' :
                         (isTourPackage ?
                             'Build the Tour Package day-by-day. Advanced mode supports multiple ordered activities inside each day.' :
                             'Split the trip into days with meal and activity details.');
                 }
 
                 const addBtnTextEl = document.getElementById('addItineraryText');
-                if (addBtnTextEl) addBtnTextEl.textContent = isHourly ? 'Add Stop' : 'Add New Day';
+                if (addBtnTextEl) addBtnTextEl.textContent = isHourly ? 'Add Activity' : 'Add New Day';
 
                 document.querySelectorAll('.itinerary-item').forEach(item => {
                     const label = item.querySelector('.item-order-label');
                     const durationLabel = item.querySelector('[data-itinerary-duration-label]');
                     const durationInput = item.querySelector('[data-itinerary-duration-input]');
+                    const placeLabel = item.querySelector('[data-itinerary-place-label]');
 
-                    if (label) label.textContent = isHourly ? 'Step' : 'Day';
-                    if (durationLabel) durationLabel.textContent = isHourly ? 'Time / Duration label' :
+                    if (label) label.textContent = isHourly ? 'Activity' : 'Day';
+                    if (placeLabel) placeLabel.textContent = isHourly ? 'Activity Title' : 'Place / Stop';
+                    if (durationLabel) durationLabel.textContent = isHourly ? 'Duration / Label' :
                         'Date / Day label';
                     if (durationInput) {
                         durationInput.placeholder = isHourly ?
-                            'Example: Morning / 2 hours (optional label)' :
+                            'Example: 2 hours (optional)' :
                             'Optional date or day label';
                     }
 
                     item.querySelectorAll('[data-itinerary-hour-fields]').forEach(section => {
-                        section.style.display = isHourly ? '' : 'none';
+                        section.style.display = 'none';
                         section.querySelectorAll('input,select,textarea').forEach(el => el
-                            .disabled = !isHourly);
+                            .disabled = true);
                     });
 
                     item.querySelectorAll('[data-itinerary-day-fields]').forEach(section => {
@@ -4257,7 +4277,7 @@
             }
 
             function createRemoveButton() {
-                return `<button type="button" class="btn js-remove hover-delete-btn icon-remove-btn dynamic-remove-control" aria-label="${@json(admin_t('حذف'))}"><i class="ti ti-trash"></i></button>`;
+                return `<button type="button" class="btn js-remove hover-delete-btn icon-remove-btn dynamic-remove-control" aria-label="${@json(admin_t('Delete'))}"><i class="ti ti-trash"></i></button>`;
             }
 
             function appendAnimatedItem(wrapperId, markup) {
@@ -4505,24 +4525,24 @@
                                 <span class="editor-card-badge">
                                     <i class="ti ti-cash-banknote"></i>
                                 </span>
-                                <input type="text" name="prices[${priceIndex}][label]" class="form-control" placeholder="${@json(admin_t('عنوان السعر أو الباقة'))}">
+                                <input type="text" name="prices[${priceIndex}][label]" class="form-control" placeholder="${@json(admin_t('Price or Package Title'))}">
                             </div>
                             ${createRemoveButton()}
                         </div>
                         <div class="editor-card-body">
                             <div class="fields-grid">
                                 <div>
-                                    <label class="form-label">${@json(admin_t('الموسم'))}</label>
-                                    <input type="text" name="prices[${priceIndex}][season_name]" class="form-control" placeholder="${@json(admin_t('مثال: موسم الصيف'))}">
+                                    <label class="form-label">${@json(admin_t('Season'))}</label>
+                                    <input type="text" name="prices[${priceIndex}][season_name]" class="form-control" placeholder="${@json(admin_t('Example: Summer Season'))}">
                                 </div>
                                 <div>
-                                    <label class="form-label">${@json(admin_t('المبلغ'))}</label>
-                                    <input type="number" step="0.01" name="prices[${priceIndex}][amount]" class="form-control" placeholder="${@json(admin_t('المبلغ'))}">
+                                    <label class="form-label">${@json(admin_t('Amount'))}</label>
+                                    <input type="number" step="0.01" name="prices[${priceIndex}][amount]" class="form-control" placeholder="${@json(admin_t('Amount'))}">
                                 </div>
                                 <div>
-                                    <label class="form-label">${@json(admin_t('العملة'))}</label>
+                                    <label class="form-label">${@json(admin_t('Currency'))}</label>
                                     <select name="prices[${priceIndex}][currency_id]" class="form-select">
-                                        <option value="">${@json(admin_t('العملة'))}</option>
+                                        <option value="">${@json(admin_t('Currency'))}</option>
                                         @foreach ($currencies ?? collect() as $currency)
                                             <option value="{{ $currency->id }}">{{ $currency->code }}</option>
                                         @endforeach
@@ -4531,38 +4551,38 @@
                             </div>
                             <div class="fields-grid">
                                 <div>
-                                    <label class="form-label">${@json(admin_t('نوع السعر'))}</label>
+                                    <label class="form-label">${@json(admin_t('Price Type'))}</label>
                                     <select name="prices[${priceIndex}][price_type]" class="form-select">
-                                        <option value="from">${@json(admin_t('يبدأ من'))}</option>
-                                        <option value="fixed">${@json(admin_t('ثابت'))}</option>
-                                        <option value="seasonal">${@json(admin_t('موسمي'))}</option>
+                                        <option value="from">${@json(admin_t('Starts From'))}</option>
+                                        <option value="fixed">${@json(admin_t('Fixed'))}</option>
+                                        <option value="seasonal">${@json(admin_t('Seasonal'))}</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="form-label">${@json(admin_t('نوع الغرفة'))}</label>
-                                    <input type="text" name="prices[${priceIndex}][room_type]" class="form-control" placeholder="${@json(admin_t('مثال: غرفة مزدوجة'))}">
+                                    <label class="form-label">${@json(admin_t('Type Room'))}</label>
+                                    <input type="text" name="prices[${priceIndex}][room_type]" class="form-control" placeholder="${@json(admin_t('Example: Double Room'))}">
                                 </div>
                                 <div>
-                                    <label class="form-label">${@json(admin_t('عدد الأفراد من'))}</label>
-                                    <input type="number" min="1" name="prices[${priceIndex}][pax_min]" class="form-control" placeholder="${@json(admin_t('مثال: 1'))}">
+                                    <label class="form-label">${@json(admin_t('Number of guests from'))}</label>
+                                    <input type="number" min="1" name="prices[${priceIndex}][pax_min]" class="form-control" placeholder="${@json(admin_t('Example: 1'))}">
                                 </div>
                                 <div>
-                                    <label class="form-label">${@json(admin_t('عدد الأفراد إلى'))}</label>
-                                    <input type="number" min="1" name="prices[${priceIndex}][pax_max]" class="form-control" placeholder="${@json(admin_t('مثال: 4'))}">
+                                    <label class="form-label">${@json(admin_t('Number of Guests To'))}</label>
+                                    <input type="number" min="1" name="prices[${priceIndex}][pax_max]" class="form-control" placeholder="${@json(admin_t('Example: 4'))}">
                                 </div>
                                 <div>
-                                    <label class="form-label">${@json(admin_t('من تاريخ'))}</label>
+                                    <label class="form-label">${@json(admin_t('From Date'))}</label>
                                     <input type="date" name="prices[${priceIndex}][valid_from]" class="form-control">
                                 </div>
                             </div>
                             <div class="fields-grid two-up">
                                 <div>
-                                    <label class="form-label">${@json(admin_t('إلى تاريخ'))}</label>
+                                    <label class="form-label">${@json(admin_t('To Date'))}</label>
                                     <input type="date" name="prices[${priceIndex}][valid_to]" class="form-control">
                                 </div>
                                 <div>
-                                    <label class="form-label">${@json(admin_t('ملاحظات'))}</label>
-                                    <textarea name="prices[${priceIndex}][notes]" rows="3" class="form-control" placeholder="${@json(admin_t('أضف أي توضيح متعلق بهذا السعر'))}"></textarea>
+                                    <label class="form-label">${@json(admin_t('Notes'))}</label>
+                                    <textarea name="prices[${priceIndex}][notes]" rows="3" class="form-control" placeholder="${@json(admin_t('Add any notes related to this price'))}"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -4599,7 +4619,7 @@
                 `);
                 faqIndex++;
                 renumberDynamicItems('faq-wrapper', '.faq-item');
-                ensureEmptyState('#faq-wrapper', '.faq-item', 'faqEmptyState', @json(admin_t('لا توجد أسئلة شائعة مضافة حتى الآن.')));
+                ensureEmptyState('#faq-wrapper', '.faq-item', 'faqEmptyState', @json(admin_t('No FAQs have been added yet.')));
             }
 
             function updateSummary() {
@@ -4615,9 +4635,9 @@
                 const durationHoursEl = document.getElementById('duration_hours');
 
                 const durationText = (durationTextEl?.value || '').trim() || [
-                    durationDaysEl?.value ? durationDaysEl.value + ' {{ admin_t('يوم') }}' : '',
-                    durationNightsEl?.value ? durationNightsEl.value + ' {{ admin_t('ليلة') }}' : '',
-                    durationHoursEl?.value ? durationHoursEl.value + ' {{ admin_t('ساعة') }}' : ''
+                    durationDaysEl?.value ? durationDaysEl.value + ' {{ admin_t('Day') }}' : '',
+                    durationNightsEl?.value ? durationNightsEl.value + ' {{ admin_t('Night') }}' : '',
+                    durationHoursEl?.value ? durationHoursEl.value + ' {{ admin_t('Hour') }}' : ''
                 ].filter(Boolean).join(' / ');
                 const imagesCount = (featuredFile || savedFeaturedUrl ? 1 : 0) + (galleryFiles.length ||
                     savedGalleryUrls.length);
@@ -4642,8 +4662,8 @@
                     title: document.getElementById('title')?.value || texts.noData,
                     destination: (isTourPackageReview || isNileReview || !destinationSelector ||
                             destinationSelector.disabled) ?
-                        texts.noData :
-                        (destinationOption && destinationOption.value ? destinationOption.textContent.trim() :
+                        texts.noData : (destinationOption && destinationOption.value ? destinationOption
+                            .textContent.trim() :
                             texts.noData),
                     duration: durationText || texts.noData,
                     price: document.getElementById('adult_price')?.value || texts.noData,
@@ -4668,8 +4688,8 @@
                     dayTripStops: isDayTripReview ? itineraryCount : 0,
                     dayTripDepartureTimes: isDayTripReview ?
                         ((form?.querySelector('[name="experience[departure_times]"]')?.value || '').split(
-                            /[\n,]+/).map(v => v.trim()).filter(Boolean).join(' · ') || texts.noData) :
-                        texts.noData,
+                            /[\n,]+/).map(v => v.trim()).filter(Boolean).join(' · ') || texts.noData) : texts
+                        .noData,
                     operatingDays: Array.from(form?.querySelectorAll(
                             'input[name="experience[operating_days][]"]:checked') || []).map(el => el.value)
                         .join(' · ') || texts.noData,
@@ -4683,8 +4703,7 @@
                     tourPackageMeals: isTourPackageReview ?
                         (Array.from(form?.querySelectorAll(
                             'input[name="tour_package[meals_included][]"]:checked') || []).map(el => el
-                            .value).join(' · ') || texts.noData) :
-                        texts.noData,
+                            .value).join(' · ') || texts.noData) : texts.noData,
                     tourPackageFlexible: isTourPackageReview ? (form?.querySelector(
                             '[name="tour_package[flexible_itinerary]"]')?.checked ? 'Yes' : 'No') : texts
                         .noData,
@@ -4713,7 +4732,7 @@
             ensureEmptyState('#included-wrapper', '.included-item', 'includedEmptyState', texts.noIncluded);
             ensureEmptyState('#excluded-wrapper', '.excluded-item', 'excludedEmptyState', texts.noExcluded);
             ensureEmptyState('#prices-wrapper', '.price-item', 'pricesEmptyState', texts.noPrices);
-            ensureEmptyState('#faq-wrapper', '.faq-item', 'faqEmptyState', @json(admin_t('لا توجد أسئلة شائعة مضافة حتى الآن.')));
+            ensureEmptyState('#faq-wrapper', '.faq-item', 'faqEmptyState', @json(admin_t('No FAQs have been added yet.')));
             renumberDynamicItems('itinerary-wrapper', '.itinerary-item', true);
             renumberDynamicItems('faq-wrapper', '.faq-item');
 
@@ -4870,7 +4889,7 @@
                         ensureEmptyState('#prices-wrapper', '.price-item', 'pricesEmptyState', texts
                             .noPrices);
                         ensureEmptyState('#faq-wrapper', '.faq-item', 'faqEmptyState',
-                            @json(admin_t('لا توجد أسئلة شائعة مضافة حتى الآن.')));
+                            @json(admin_t('No FAQs have been added yet.')));
                         updateItineraryMode();
                         updateSummary();
                     }, 260);
@@ -4917,7 +4936,8 @@
                 try {
                     localStorage.removeItem(draftKey);
                 } catch (error) {
-                    /* Storage may be unavailable. */ }
+                    /* Storage may be unavailable. */
+                }
             });
 
             window.addEventListener('beforeunload', function(event) {
@@ -5026,7 +5046,7 @@
                             if (modalEl) {
                                 const modal = (typeof bootstrap !== 'undefined' && bootstrap.Modal) ? (
                                     bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl)
-                                    ) : null;
+                                ) : null;
                                 if (modal) {
                                     modal.hide();
                                 } else if (window.jQuery) {
@@ -5078,8 +5098,8 @@
                     if (!packageId) return;
 
                     const swalConfig = {
-                        title: '{{ admin_t('جاري الترجمة بالذكاء الاصطناعي...') }}',
-                        text: '{{ admin_t('يتم الآن توليد الترجمة المفقودة باستخدام Gemini 2.5 Flash / DeepSeek...') }}',
+                        title: '{{ admin_t('Translating with AI...') }}',
+                        text: '{{ admin_t('Generating missing translations using AI...') }}',
                         allowOutsideClick: false,
                         showConfirmButton: false,
                         didOpen: () => {
@@ -5110,48 +5130,48 @@
                             if (data.success) {
                                 const s = data.summary;
                                 const msg =
-                                    `{{ admin_t('تم ترجمة') }} <b>${s.success_count}</b> {{ admin_t('عنصر بنجاح.') }}<br>` +
+                                    `Translated <b>${s.success_count}</b> items successfully.<br>` +
                                     (s.fallback_count > 0 ?
-                                        `<small class="text-warning">{{ admin_t('تم استخدام DeepSeek لـ') }} ${s.fallback_count} {{ admin_t('عنصر.') }}</small><br>` :
+                                        `<small class="text-warning">DeepSeek used for ${s.fallback_count} items.</small><br>` :
                                         '') +
                                     (s.cached_count > 0 ?
-                                        `<small class="text-info">${s.cached_count} {{ admin_t('عنصر مأخوذ من الكاش.') }}</small><br>` :
+                                        `<small class="text-info">${s.cached_count} items from cache.</small><br>` :
                                         '') +
                                     (s.failed_count > 0 ?
-                                        `<small class="text-danger">{{ admin_t('فشل') }} ${s.failed_count} {{ admin_t('عنصر.') }}</small>` :
+                                        `<small class="text-danger">{{ admin_t('Failed') }} ${s.failed_count} items.</small>` :
                                         '');
 
                                 if (window.Swal) {
                                     window.Swal.fire({
                                         icon: 'success',
-                                        title: '{{ admin_t('تمت الترجمة بنجاح!') }}',
+                                        title: 'Translated successfully!',
                                         html: msg,
-                                        confirmButtonText: '{{ admin_t('إعادة تحميل الصفحة') }}',
+                                        confirmButtonText: 'Reload Page',
                                     }).then(() => {
                                         window.location.reload();
                                     });
                                 } else {
-                                    alert('{{ admin_t('تمت الترجمة بنجاح!') }}');
+                                    alert('Translated successfully!');
                                     window.location.reload();
                                 }
                             } else {
                                 if (window.Swal) {
-                                    window.Swal.fire('{{ admin_t('خطأ') }}', data.message ||
-                                        '{{ admin_t('حدث خطأ أثناء الترجمة') }}', 'error');
+                                    window.Swal.fire('{{ admin_t('Error') }}', data.message ||
+                                        'An error occurred during translation', 'error');
                                 } else {
                                     alert(data.message ||
-                                        '{{ admin_t('حدث خطأ أثناء الترجمة') }}');
+                                        'An error occurred during translation');
                                 }
                             }
                         })
                         .catch(err => {
                             console.error('Translation error:', err);
                             if (window.Swal) {
-                                window.Swal.fire('{{ admin_t('خطأ') }}',
-                                    '{{ admin_t('تعذر الاتصال بخادم الترجمة') }}', 'error'
-                                    );
+                                window.Swal.fire('{{ admin_t('Error') }}',
+                                    'Could not connect to translation server', 'error'
+                                );
                             } else {
-                                alert('{{ admin_t('تعذر الاتصال بخادم الترجمة') }}');
+                                alert('Could not connect to translation server');
                             }
                         });
                 });

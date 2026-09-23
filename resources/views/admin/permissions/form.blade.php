@@ -166,10 +166,10 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.index') }}">الرئيسية</a>
+                    <a href="{{ route('admin.index') }}">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.permissions.index') }}">الصلاحيات</a>
+                    <a href="{{ route('admin.permissions.index') }}">Permissions</a>
                 </li>
                 <li class="breadcrumb-item active">{{ $title }}</li>
             </ol>
@@ -185,7 +185,7 @@
                                 <small class="opacity-75">{{ $description }}</small>
                             </div>
                             <a href="{{ route('admin.permissions.index') }}" class="btn btn-light">
-                                <i class="fas fa-arrow-right me-2"></i>العودة للقائمة
+                                <i class="fas fa-arrow-right me-2"></i>Return For List
                             </a>
                         </div>
                     </div>
@@ -198,15 +198,15 @@
 
                         <div class="row" bis_skin_checked="1">
                             <div class="col-lg-8" bis_skin_checked="1">
-                                <!-- معلومات الصلاحية -->
+                                <!-- Information Permission -->
                                 <div class="mb-4" bis_skin_checked="1">
-                                    <h6 class="mb-3"><i class="fas fa-info-circle me-2"></i>معلومات الصلاحية</h6>
+                                    <h6 class="mb-3"><i class="fas fa-info-circle me-2"></i>Information Permission</h6>
 
                                     <div class="form-group" bis_skin_checked="1">
-                                        <label class="form-label">الوحدة *</label>
+                                        <label class="form-label">Module *</label>
                                         <select name="module" id="module"
                                             class="form-control @error('module') is-invalid @enderror" required>
-                                            <option value="">اختر الوحدة</option>
+                                            <option value="">Select Module</option>
                                             @foreach ($modules as $key => $value)
                                                 <option value="{{ $key }}"
                                                     @if (old('module', $module ?? '') == $key) selected @endif>
@@ -215,7 +215,7 @@
                                             @endforeach
                                         </select>
                                         <div class="form-text" bis_skin_checked="1">
-                                            الوحدة التي تنتمي إليها الصلاحية (مثال: users, products)
+                                            Module That Belongs To It Permission (Example: users, products)
                                         </div>
                                         @error('module')
                                             <div class="error-message">{{ $message }}</div>
@@ -223,10 +223,10 @@
                                     </div>
 
                                     <div class="form-group" bis_skin_checked="1">
-                                        <label class="form-label">الإجراء *</label>
+                                        <label class="form-label">Action *</label>
                                         <select name="action" id="action"
                                             class="form-control @error('action') is-invalid @enderror" required>
-                                            <option value="">اختر الإجراء</option>
+                                            <option value="">Select Action</option>
                                             @foreach ($permissionTypes as $key => $value)
                                                 <option value="{{ $key }}"
                                                     @if (old('action', $actionVal ?? '') == $key) selected @endif>
@@ -235,7 +235,7 @@
                                             @endforeach
                                         </select>
                                         <div class="form-text" bis_skin_checked="1">
-                                            نوع الإجراء الذي تسمح به الصلاحية (مثال: view, create, edit)
+                                            Type Action That Allows With It Permission (Example: view, create, edit)
                                         </div>
                                         @error('action')
                                             <div class="error-message">{{ $message }}</div>
@@ -243,13 +243,13 @@
                                     </div>
 
                                     <div class="form-group" bis_skin_checked="1">
-                                        <label class="form-label">الاسم المعروض (عربي) *</label>
+                                        <label class="form-label">Name Displayed (Arabic) *</label>
                                         <input type="text" name="display_name"
                                             class="form-control @error('display_name') is-invalid @enderror"
                                             value="{{ old('display_name', $permission->display_name ?? '') }}"
-                                            placeholder="مثال: عرض المستخدمين" required>
+                                            placeholder="Example: View Users" required>
                                         <div class="form-text" bis_skin_checked="1">
-                                            الاسم الذي سيعرض للمستخدمين باللغة العربية
+                                            Name That syard For Users With Language Arabic
                                         </div>
                                         @error('display_name')
                                             <div class="error-message">{{ $message }}</div>
@@ -257,86 +257,86 @@
                                     </div>
 
                                     <div class="form-group" bis_skin_checked="1">
-                                        <label class="form-label">الوصف</label>
+                                        <label class="form-label">Description</label>
                                         <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="3"
-                                            placeholder="وصف مختصر للصلاحية">{{ old('description', $permission->description ?? '') }}</textarea>
+                                            placeholder="Description Short For Permission">{{ old('description', $permission->description ?? '') }}</textarea>
                                         <div class="form-text" bis_skin_checked="1">
-                                            وصف مختصر يوضح وظيفة الصلاحية
+                                            Description Short Shows Function Permission
                                         </div>
                                         @error('description')
                                             <div class="error-message">{{ $message }}</div>
                                         @enderror
                                     </div>
 
-                                    <!-- معاينة الاسم -->
+                                    <!-- Preview Name -->
                                     <div class="module-info" bis_skin_checked="1">
-                                        <h6 class="mb-3"><i class="fas fa-eye me-2"></i>معاينة اسم الصلاحية</h6>
+                                        <h6 class="mb-3"><i class="fas fa-eye me-2"></i>Preview Name Permission</h6>
                                         <div id="permissionNamePreview" class="permission-name-preview">
                                             @if (isset($permission) && $permission->id)
                                                 {{ $permission->name }}
                                             @else
-                                                سيظهر هنا اسم الصلاحية بعد اختيار الوحدة والإجراء
+                                                permissionNamePreview
                                             @endif
                                         </div>
                                         <div class="form-text mt-2" bis_skin_checked="1">
-                                            سيتم توليد اسم الصلاحية تلقائياً بناءً على الوحدة والإجراء المختارين
+                                            Permission name will be generated automatically based on selected module and action
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-lg-4" bis_skin_checked="1">
-                                <!-- معلومات إضافية -->
+                                <!-- Information Additional -->
                                 <div class="module-info" bis_skin_checked="1">
                                     <div class="info-icon" bis_skin_checked="1">
                                         <i class="fas fa-lightbulb"></i>
                                     </div>
-                                    <h6 class="mb-2">نصائح هامة</h6>
+                                    <h6 class="mb-2">Tips Important</h6>
                                     <div class="info-text" bis_skin_checked="1">
                                         <ul class="mb-0 ps-3">
-                                            <li class="mb-2">اختر اسمًا وصفيًا وواضحًا للصلاحية</li>
-                                            <li class="mb-2">استخدم وصفًا مختصرًا يوضح الغرض من الصلاحية</li>
-                                            <li class="mb-2">تأكد من أن الصلاحية لا تتعارض مع صلاحيات أخرى</li>
-                                            <li>يمكنك تعديل الصلاحية لاحقًا إذا لزم الأمر</li>
+                                            <li class="mb-2">Choose a clear description for the permission</li>
+                                            <li class="mb-2">Use a concise description explaining permission scope</li>
+                                            <li class="mb-2">Ensure From That Permission No Conflict With Permissions Other</li>
+                                            <li>You can edit permission later if needed</li>
                                         </ul>
                                     </div>
                                 </div>
 
-                                <!-- أمثلة -->
+                                <!-- Examples -->
                                 <div class="module-info" bis_skin_checked="1">
-                                    <h6 class="mb-3"><i class="fas fa-code me-2"></i>أمثلة على الصلاحيات</h6>
+                                    <h6 class="mb-3"><i class="fas fa-code me-2"></i>Examples On Permissions</h6>
 
                                     <div class="example-box" bis_skin_checked="1">
-                                        <div class="example-title" bis_skin_checked="1">عرض المستخدمين:</div>
+                                        <div class="example-title" bis_skin_checked="1">View Users:</div>
                                         <div class="example-text" bis_skin_checked="1">
-                                            الوحدة: users<br>
-                                            الإجراء: view<br>
-                                            الاسم: users.view
+                                            Module: users<br>
+                                            Action: view<br>
+                                            Name: users.view
                                         </div>
                                     </div>
 
                                     <div class="example-box" bis_skin_checked="1">
-                                        <div class="example-title" bis_skin_checked="1">إنشاء منتجات:</div>
+                                        <div class="example-title" bis_skin_checked="1">Create Products:</div>
                                         <div class="example-text" bis_skin_checked="1">
-                                            الوحدة: products<br>
-                                            الإجراء: create<br>
-                                            الاسم: products.create
+                                            Module: products<br>
+                                            Action: create<br>
+                                            Name: products.create
                                         </div>
                                     </div>
 
                                     <div class="example-box" bis_skin_checked="1">
-                                        <div class="example-title" bis_skin_checked="1">إدارة الطلبات:</div>
+                                        <div class="example-title" bis_skin_checked="1">Manage Orders:</div>
                                         <div class="example-text" bis_skin_checked="1">
-                                            الوحدة: orders<br>
-                                            الإجراء: manage<br>
-                                            الاسم: orders.manage
+                                            Module: orders<br>
+                                            Action: manage<br>
+                                            Name: orders.manage
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- معلومات سريعة -->
+                                <!-- Information Quick -->
                                 <div class="module-info" bis_skin_checked="1">
-                                    <h6 class="mb-3"><i class="fas fa-chart-bar me-2"></i>معلومات سريعة</h6>
+                                    <h6 class="mb-3"><i class="fas fa-chart-bar me-2"></i>Information Quick</h6>
 
                                     <div class="row text-center" bis_skin_checked="1">
                                         <div class="col-6 mb-3" bis_skin_checked="1">
@@ -346,7 +346,7 @@
                                             </div>
                                             <div class="stats-label"
                                                 style="font-size: 13px; color: rgba(255, 255, 255, 0.7);">
-                                                وحدة متاحة
+                                                Module Available
                                             </div>
                                         </div>
                                         <div class="col-6 mb-3" bis_skin_checked="1">
@@ -356,7 +356,7 @@
                                             </div>
                                             <div class="stats-label"
                                                 style="font-size: 13px; color: rgba(255, 255, 255, 0.7);">
-                                                نوع إجراء
+                                                Type Action
                                             </div>
                                         </div>
                                     </div>
@@ -364,16 +364,16 @@
                             </div>
                         </div>
 
-                        <!-- أزرار -->
+                        <!-- Buttons -->
                         <div class="d-flex justify-content-end gap-3 mt-4 pt-4 border-top border-secondary"
                             bis_skin_checked="1">
                             <a href="{{ route('admin.permissions.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-times me-2"></i>إلغاء
+                                <i class="fas fa-times me-2"></i>Cancel
                             </a>
                             <button type="submit" class="btn btn-primary">
                                 <i
-                                    class="fas fa-save me-2"></i>{{ isset($permission) && $permission->id ? 'تحديث' : 'حفظ' }}
-                                الصلاحية
+                                    class="fas fa-save me-2"></i>{{ isset($permission) && $permission->id ? 'Update' : 'Save' }}
+                                Permission
                             </button>
                         </div>
                     </form>
@@ -387,29 +387,29 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            // توليد معاينة اسم الصلاحية
+            // Generate SEO Preview Name Permission
             function updatePermissionNamePreview() {
                 const module = $('#module').val();
                 const action = $('#action').val();
 
                 if (module && action) {
-                    // تنظيف النص للاسم
+                    // Clean up text for name
                     const cleanModule = module.toLowerCase().replace(/[^a-z0-9]/g, '_');
                     const cleanAction = action.toLowerCase().replace(/[^a-z0-9]/g, '_');
                     const permissionName = cleanModule + '.' + cleanAction;
 
                     $('#permissionNamePreview').text(permissionName);
                 } else {
-                    $('#permissionNamePreview').text('سيظهر هنا اسم الصلاحية بعد اختيار الوحدة والإجراء');
+                    $('#permissionNamePreview').text('permissionNamePreview');
                 }
             }
 
-            // تحديث المعاينة عند تغيير القيم
+            // Update preview when values change
             $('#module, #action').on('change', function() {
                 updatePermissionNamePreview();
             });
 
-            // التحقق من صحة الحقول قبل الإرسال
+            // Validate fields before submitting
             $('form').on('submit', function(e) {
                 const module = $('#module').val();
                 const action = $('#action').val();
@@ -419,21 +419,21 @@
                     e.preventDefault();
                     Swal.fire({
                         icon: 'warning',
-                        title: 'حقول مطلوبة',
-                        text: 'يرجى ملء جميع الحقول المطلوبة',
+                        title: 'Fields Required',
+                        text: 'Please Fill All Fields Required',
                         timer: 2000,
                         showConfirmButton: false
                     });
                     return false;
                 }
 
-                // إذا كان تعديلاً، تأكيد التحديث
+                // If edit, confirm update
                 @if (isset($permission) && $permission->id)
                     const originalModule = "{{ $module ?? '' }}";
                     const originalAction = "{{ $actionVal ?? '' }}";
 
                     if (module !== originalModule || action !== originalAction) {
-                        if (!confirm('تغيير الوحدة أو الإجراء سيغير اسم الصلاحية. هل تريد المتابعة؟')) {
+                        if (!confirm('Changing module or action will change permission name. Do you want to proceed?')) {
                             e.preventDefault();
                             return false;
                         }
@@ -441,14 +441,14 @@
                 @endif
             });
 
-            // تهيئة المعاينة عند تحميل الصفحة
+            // Initialize preview on page load
             updatePermissionNamePreview();
 
-            // رسائل التأكيد من الجلسة
+            // Session flash messages
             @if (session('success'))
                 Swal.fire({
                     icon: 'success',
-                    title: 'نجاح',
+                    title: 'Success',
                     text: "{{ session('success') }}",
                     timer: 2000,
                     showConfirmButton: false
@@ -458,7 +458,7 @@
             @if (session('error'))
                 Swal.fire({
                     icon: 'error',
-                    title: 'خطأ',
+                    title: 'Error',
                     text: "{{ session('error') }}",
                     timer: 2000,
                     showConfirmButton: false

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>طباعة الحجز</title>
+    <title>Print Booking</title>
     <style>
         body {
             font-family: DejaVu Sans, sans-serif;
@@ -54,54 +54,54 @@
 
 <body>
 
-    <button onclick="window.print()" class="print-btn">طباعة</button>
+    <button onclick="window.print()" class="print-btn">Print</button>
 
     <div class="header">
-        <div class="title">تفاصيل الحجز</div>
-        <div>مرجع الحجز: {{ $booking->booking_reference ?? '-' }}</div>
+        <div class="title">Details Booking</div>
+        <div>Booking Reference: {{ $booking->booking_reference ?? '-' }}</div>
     </div>
 
     <div class="box">
-        <div class="row"><span class="label">اسم العميل:</span>
+        <div class="row"><span class="label">Client: Name</span>
             {{ $booking->client->name ?? ($booking->client_name ?? '-') }}</div>
-        <div class="row"><span class="label">البريد الإلكتروني:</span> {{ $booking->email ?? '-' }}</div>
-        <div class="row"><span class="label">الهاتف:</span> {{ $booking->phone ?? '-' }}</div>
+        <div class="row"><span class="label">Email Electronic:</span> {{ $booking->email ?? '-' }}</div>
+        <div class="row"><span class="label">Phone:</span> {{ $booking->phone ?? '-' }}</div>
     </div>
 
     <div class="box">
-        <div class="row"><span class="label">الباقة:</span> {{ $booking->package->name ?? '-' }}</div>
-        <div class="row"><span class="label">الحالة:</span> {{ $booking->status ?? '-' }}</div>
-        <div class="row"><span class="label">عدد الأفراد:</span> {{ $booking->travellers_count ?? '-' }} ({{ $booking->adults ?? 0 }} بالغين · {{ $booking->children ?? 0 }} أطفال · {{ $booking->infants ?? 0 }} رضع)</div>
-        <div class="row"><span class="label">تاريخ السفر:</span>
+        <div class="row"><span class="label">Package:</span> {{ $booking->package->name ?? '-' }}</div>
+        <div class="row"><span class="label">Status:</span> {{ $booking->status ?? '-' }}</div>
+        <div class="row"><span class="label">Number of Guests:</span> {{ $booking->travellers_count ?? '-' }} ({{ $booking->adults ?? 0 }} Adults · {{ $booking->children ?? 0 }} Children · {{ $booking->infants ?? 0 }} Infants)</div>
+        <div class="row"><span class="label">Travel Date:</span>
             {{ optional($booking->travel_date)->translatedFormat('d M Y') ?? '-' }}</div>
     </div>
 
     <div class="box">
-        <div class="row"><span class="label">إجمالي السعر:</span>
+        <div class="row"><span class="label">Total Price:</span>
             {{ number_format($booking->total_amount ?? 0, 2) }} {{ $booking->currency_code ?? '' }}</div>
-        <div class="row"><span class="label">تاريخ الإنشاء:</span>
+        <div class="row"><span class="label">Created At:</span>
             {{ optional($booking->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
     </div>
 
     @if($booking->items->isNotEmpty())
         <div class="box">
             @foreach($booking->items as $item)
-                <div class="row"><span class="label">الإقامة / الكابينة:</span> {{ $item->option_label }}</div>
-                <div class="row"><span class="label">نوع الإشغال:</span> {{ $item->occupancy_type ?: '-' }}</div>
-                <div class="row"><span class="label">عدد الغرف / الكابينات:</span> {{ $item->room_count }}</div>
+                <div class="row"><span class="label">Accommodation / Cabin:</span> {{ $item->option_label }}</div>
+                <div class="row"><span class="label">Occupancy Type:</span> {{ $item->occupancy_type ?: '-' }}</div>
+                <div class="row"><span class="label">Number of Rooms / Cabins:</span> {{ $item->room_count }}</div>
             @endforeach
         </div>
     @endif
 
     @if($booking->travelers->isNotEmpty())
         <div class="box">
-            <div class="row"><span class="label">المسافرون:</span></div>
+            <div class="row"><span class="label">Passengers:</span></div>
             @foreach($booking->travelers as $traveler)
                 @php
                     $typeLabel = match($traveler->traveler_type) {
-                        'infant' => 'رضيع',
-                        'child' => 'طفل',
-                        default => 'بالغ',
+                        'infant' => 'Infant',
+                        'child' => 'Child',
+                        default => 'Adult',
                     };
                 @endphp
                 <div class="row">{{ $loop->iteration }}. {{ $traveler->title }} {{ $traveler->first_name }} {{ $traveler->last_name }} ({{ $typeLabel }})</div>
@@ -110,8 +110,8 @@
     @endif
 
     <div class="box">
-        <div class="row"><span class="label">ملاحظات:</span></div>
-        <div>{{ $booking->notes ?: 'لا توجد ملاحظات' }}</div>
+        <div class="row"><span class="label">Notes:</span></div>
+        <div>{{ $booking->notes ?: 'No Notes' }}</div>
     </div>
 
 </body>

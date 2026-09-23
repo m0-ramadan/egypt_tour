@@ -21,7 +21,7 @@ class TranslationService
 
         $value = trim((string) $value);
 
-        if ($value === '') {
+        if ($value === '' || $value === 'Array') {
             return [];
         }
 
@@ -44,6 +44,11 @@ class TranslationService
         return $this->normalizeTranslations($translated, $value, $languages);
     }
 
+    public function isAiTranslationEnabled(): bool
+    {
+        return (bool) config('services.ai_translation.enabled', false);
+    }
+
     public function translateFields(array $data, array $fields): array
     {
         $pendingBySource = [];
@@ -64,7 +69,16 @@ class TranslationService
             }
 
             $source = $this->detectSourceLanguage($text);
-            $pendingBySource[$source][$field] = $text;
+
+            if (!$this->isAiTranslationEnabled()) {
+                $data[$field] = [$source => $text];
+            } else {
+                $pendingBySource[$source][$field] = $text;
+            }
+        }
+
+        if (!$this->isAiTranslationEnabled() || empty($pendingBySource)) {
+            return $data;
         }
 
         $languages = $this->activeLanguages();
@@ -106,6 +120,11 @@ class TranslationService
             return [];
         }
 
+        if (!$this->isAiTranslationEnabled()) {
+            $source = $this->detectSourceLanguage($text);
+            return [$source => $text];
+        }
+
         $translated = $this->translateUsingAi($text, $languageCodes);
 
         if (!$translated) {
@@ -120,6 +139,11 @@ class TranslationService
     {
         $targetLanguage = $this->localeNormalizer->normalize($targetLanguage);
         $result = $texts;
+
+        if (!$this->isAiTranslationEnabled()) {
+            return $result;
+        }
+
         $groups = [];
 
         foreach ($texts as $key => $text) {
@@ -145,6 +169,10 @@ class TranslationService
 
     protected function translateUsingAi(string $text, array $languages): ?array
     {
+        if (!$this->isAiTranslationEnabled()) {
+            return null;
+        }
+
         $sourceLang = $this->detectSourceLanguage($text);
         $result = [];
 
@@ -183,12 +211,20 @@ class TranslationService
             }
 
             $normalizedLocale = $this->localeNormalizer->normalize($lang);
-            $clean[$normalizedLocale] = is_string($value) ? trim($value) : '';
+            $val = is_string($value) ? trim($value) : (is_array($value) ? $value : '');
+            if (is_string($val) && ($val === '' || $val === 'Array')) {
+                continue;
+            }
+            if ($val !== '' && $val !== []) {
+                $clean[$normalizedLocale] = $val;
+            }
         }
 
-        foreach ($languages as $lang) {
-            if (!array_key_exists($lang, $clean) || $clean[$lang] === '') {
-                $clean[$lang] = $original ?? '';
+        if ($this->isAiTranslationEnabled() && !empty($languages)) {
+            foreach ($languages as $lang) {
+                if (!array_key_exists($lang, $clean) || $clean[$lang] === '') {
+                    $clean[$lang] = $original ?? '';
+                }
             }
         }
 

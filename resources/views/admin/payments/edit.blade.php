@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تعديل دفعة'))
+@section('title', admin_t('Edit Payment'))
 
 @section('css')
     <style>
@@ -68,19 +68,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.payments.index') }}">المدفوعات</a></li>
-                <li class="breadcrumb-item active">تعديل دفعة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.payments.index') }}">Payments</a></li>
+                <li class="breadcrumb-item active">Edit Payment</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">تعديل بيانات الدفع</h5>
-                    <small class="opacity-75">{{ $payment->transaction_reference ?: 'بدون مرجع' }}</small>
+                    <h5 class="mb-0">Edit Payment Details</h5>
+                    <small class="opacity-75">{{ $payment->transaction_reference ?: 'Without Reference' }}</small>
                 </div>
-                <a href="{{ route('admin.payments.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.payments.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="form-body">
@@ -88,7 +88,7 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="section-title">بيانات الدفع</div>
+                    <div class="section-title">Payment Details</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -165,8 +165,8 @@
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.payments.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.payments.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

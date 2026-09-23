@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('أسعار الباقة'))
+@section('title', admin_t('Package Prices'))
 
 @section('css')
     <style>
@@ -60,22 +60,22 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.packages.index') }}">الباقات</a></li>
-                <li class="breadcrumb-item active">أسعار الباقة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.packages.index') }}">Packages</a></li>
+                <li class="breadcrumb-item active">Package Prices</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">أسعار الباقة</h5>
+                    <h5 class="mb-0">Package Prices</h5>
                     <small class="opacity-75">{{ adminTrans($package->title ?? ($package->name ?? '')) ?: '-' }}</small>
                 </div>
                 <div class="d-flex gap-2">
                     <a href="{{ route('admin.package-prices.create', ['package_id' => $package->id]) }}"
-                        class="btn btn-light">إضافة سعر</a>
-                    <a href="{{ route('admin.packages.show', $package) }}" class="btn btn-light">رجوع</a>
+                        class="btn btn-light">Add Price</a>
+                    <a href="{{ route('admin.packages.show', $package) }}" class="btn btn-light">Back</a>
                 </div>
             </div>
 
@@ -114,18 +114,18 @@
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('admin.package-prices.show', $price) }}" class="btn btn-info btn-sm">عرض</a>
+                            <a href="{{ route('admin.package-prices.show', $price) }}" class="btn btn-info btn-sm">View</a>
                             <a href="{{ route('admin.package-prices.edit', $price) }}"
-                                class="btn btn-warning btn-sm">تعديل</a>
+                                class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('admin.package-prices.destroy', $price) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد أسعار لهذه الباقة</div>
+                    <div class="text-center py-5">No There are Prices For this Package</div>
                 @endforelse
 
                 @if (method_exists($packagePrices, 'links'))

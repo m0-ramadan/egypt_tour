@@ -1,5 +1,5 @@
-.prefix_title{
-    opacity: .3;
+.prefix_title {
+    opacity: 0.3;
 }
 
 html[dir="rtl"] body {
@@ -56,4 +56,291 @@ html[dir="ltr"] .breadcrumb-item + .breadcrumb-item::before {
 
 html[dir="rtl"] .breadcrumb-item + .breadcrumb-item::before {
     float: right;
+}
+
+/* ==========================================================================
+   Global High-Contrast Theme Fixes for Admin Dashboard
+   Solves white-on-white and dark-on-dark text contrast issues across options,
+   inputs, dropdowns, cards, tables, and modals regardless of browser theme.
+   ========================================================================== */
+
+/* 1. Native Select Dropdown Options */
+select option,
+select optgroup,
+.form-select option,
+.form-control option {
+    background-color: #2b3b4c !important;
+    color: #ffffff !important;
+    padding: 8px 12px !important;
+}
+
+select option:hover,
+select option:focus,
+select option:active,
+select option:checked,
+.form-select option:hover,
+.form-select option:checked {
+    background-color: #696cff !important;
+    color: #ffffff !important;
+}
+
+/* 2. Inputs & Form Controls */
+.form-control,
+.form-select,
+textarea {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea:focus {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    border-color: #696cff !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 0.25rem rgba(105, 108, 255, 0.25) !important;
+}
+
+.form-control::placeholder,
+textarea::placeholder,
+input::placeholder {
+    color: rgba(255, 255, 255, 0.55) !important;
+}
+
+/* Disabled Form Controls */
+.form-control:disabled,
+.form-select:disabled,
+textarea:disabled,
+.form-control[readonly] {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    opacity: 0.8;
+}
+
+/* 3. Select2 & Bootstrap-Select Dropdown Component Fixes */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    color: #ffffff !important;
+    min-height: 42px !important;
+}
+
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__rendered {
+    color: #ffffff !important;
+    line-height: 40px !important;
+}
+
+.select2-dropdown {
+    background-color: #2b3b4c !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+.select2-container--default .select2-results__option {
+    color: #ffffff !important;
+    background-color: #2b3b4c !important;
+}
+
+.select2-container--default
+    .select2-results__option--highlighted[aria-selected],
+.select2-container--default .select2-results__option[aria-selected="true"] {
+    background-color: #696cff !important;
+    color: #ffffff !important;
+}
+
+.select2-search__field {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 4. Labels & Text Colors */
+label,
+.form-label {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-weight: 600;
+}
+
+.text-muted,
+.text-secondary,
+small.text-muted {
+    color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.text-dark,
+.text-body {
+    color: #ffffff !important;
+}
+
+/* 5. Dropdown Menus */
+.dropdown-menu {
+    background-color: #2b3b4c !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dropdown-item {
+    color: #ffffff !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus,
+.dropdown-item.active {
+    background-color: rgba(105, 108, 255, 0.2) !important;
+    color: #ffffff !important;
+}
+
+.dropdown-divider {
+    border-top-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* 6. Tables & Cards */
+.card {
+:root,
+html,
+body,
+.light-style {
+    --bs-dark: #2b3b4c !important;
+    --bs-dark-rgb: 43, 59, 76 !important;
+}
+
+.card,
+.card.bg-dark,
+.bg-dark,
+.main-card,
+.stats-card,
+.filters-card {
+    --bs-bg-opacity: 1 !important;
+    background-color: #2b3b4c !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.card-header {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.card-footer {
+    background-color: transparent !important;
+    border-top-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.table-responsive {
+    background-color: transparent !important;
+}
+
+.table {
+.table,
+.table-dark,
+.table.table-dark,
+.table > :not(caption) > * > * {
+    --bs-table-bg: #2b3b4c !important;
+    --bs-table-accent-bg: transparent !important;
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.03) !important;
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.06) !important;
+    --bs-table-color: #ffffff !important;
+    background-color: #2b3b4c !important;
+    color: #ffffff !important;
+    background-color: transparent !important;
+}
+
+.table th,
+.table td,
+.table thead,
+.table tbody,
+.table tr,
+.table-light,
+.table-secondary,
+.table-dark,
+.table-active {
+    background-color: transparent !important;
+    background-color: #2b3b4c !important;
+    color: #ffffff !important;
+}
+
+.table th {
+    color: rgba(255, 255, 255, 0.92) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.15) !important;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.table td {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.table-hover > tbody > tr:hover,
+.table-hover > tbody > tr:hover > * {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    color: #ffffff !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd),
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+    color: #ffffff !important;
+}
+
+.bg-dark {
+    background-color: #2b3b4c !important;
+}
+
+/* 7. CKEditor 5 Rich Text Editor Contrast */
+.ck.ck-editor__main > .ck-editor__editable {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+}
+
+.ck.ck-toolbar {
+    background-color: #f3f4f6 !important;
+    border-color: #e5e7eb !important;
+}
+
+.ck.ck-toolbar .ck-button {
+    color: #111827 !important;
+}
+
+/* 8. Modals & Dialogs */
+.modal-content {
+    background-color: #2b3b4c !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.modal-header,
+.modal-footer {
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.modal-title {
+    color: #ffffff !important;
+}
+
+/* 9. Container Background Overrides (converts bg-white / bg-light into dark theme cards) */
+.layout-wrapper .bg-white,
+.layout-wrapper .bg-light,
+.content-wrapper .bg-white,
+.content-wrapper .bg-light,
+.repeat-box.bg-white,
+.repeat-box.bg-light {
+    background-color: #2b3b4c !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.layout-wrapper .border-light,
+.content-wrapper .border-light {
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.layout-wrapper .text-dark,
+.content-wrapper .text-dark {
+    color: #ffffff !important;
 }

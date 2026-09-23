@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض المنطقة'))
+@section('title', admin_t('View Region'))
 
 @section('css')
     <style>
@@ -61,21 +61,21 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.regions.index') }}">المناطق</a></li>
-                <li class="breadcrumb-item active">عرض المنطقة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.regions.index') }}">Regions</a></li>
+                <li class="breadcrumb-item active">View Region</li>
             </ol>
         </nav>
 
         <div class="profile-card">
             <div class="profile-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="mb-1">{{ $region->name ?? 'بدون اسم' }}</h4>
+                    <h4 class="mb-1">{{ $region->name ?? 'No Name' }}</h4>
                     <small class="opacity-75">{{ $region->slug ?? '-' }}</small>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{{ route('admin.regions.edit', $region) }}" class="btn btn-light">تعديل</a>
-                    <a href="{{ route('admin.regions.index') }}" class="btn btn-outline-light">رجوع</a>
+                    <a href="{{ route('admin.regions.edit', $region) }}" class="btn btn-light">Edit</a>
+                    <a href="{{ route('admin.regions.index') }}" class="btn btn-outline-light">Back</a>
                 </div>
             </div>
 
@@ -83,7 +83,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">اسم المنطقة</div>
+                            <div class="info-label">Region Name</div>
                             <div class="info-value">{{ $region->name ?? '-' }}</div>
                         </div>
                     </div>
@@ -97,28 +97,28 @@
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الدولة</div>
+                            <div class="info-label">Country</div>
                             <div class="info-value">{{ $region->country->name ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
-                            <div class="info-value">{{ $region->is_active ?? true ? 'مفعل' : 'غير مفعل' }}</div>
+                            <div class="info-label">Status</div>
+                            <div class="info-value">{{ $region->is_active ?? true ? 'Enabled' : 'Disabled' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الترتيب</div>
+                            <div class="info-label">Sort Order</div>
                             <div class="info-value">{{ $region->sort_order ?? 0 }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">تاريخ الإنشاء</div>
+                            <div class="info-label">Created At</div>
                             <div class="info-value">
                                 {{ optional($region->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
                         </div>
@@ -126,7 +126,7 @@
 
                     <div class="col-12">
                         <div class="info-box">
-                            <div class="info-label">الوصف</div>
+                            <div class="info-label">Description</div>
                             <div class="info-value">{{ $region->description ?? '-' }}</div>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إدارة المقالات'))
+@section('title', admin_t('Manage Articles'))
 
 @section('css')
 
@@ -362,8 +362,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">المقالات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Articles</li>
             </ol>
         </nav>
 
@@ -372,7 +372,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-total"><i class="fas fa-newspaper"></i></div>
                     <div class="stats-number">{{ number_format($stats['total']) }}</div>
-                    <div class="stats-label">إجمالي المقالات</div>
+                    <div class="stats-label">Total Articles</div>
                 </div>
             </div>
 
@@ -380,7 +380,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-active"><i class="fas fa-check-circle"></i></div>
                     <div class="stats-number">{{ number_format($stats['active']) }}</div>
-                    <div class="stats-label">مقالات منشورة</div>
+                    <div class="stats-label">Published Articles</div>
                 </div>
             </div>
 
@@ -388,7 +388,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-featured"><i class="fas fa-star"></i></div>
                     <div class="stats-number">{{ number_format($stats['featured']) }}</div>
-                    <div class="stats-label">مقالات مميزة</div>
+                    <div class="stats-label">Featured Articles</div>
                 </div>
             </div>
 
@@ -396,69 +396,69 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-new"><i class="fas fa-plus-circle"></i></div>
                     <div class="stats-number">{{ number_format($stats['new_this_month']) }}</div>
-                    <div class="stats-label">الجديد هذا الشهر</div>
+                    <div class="stats-label">New This Month</div>
                 </div>
             </div>
         </div>
 
         <div class="status-filter">
             <button class="status-filter-btn {{ !request('status') ? 'active' : '' }}" onclick="filterByStatus('all')">
-                جميع المقالات
+                All Articles
             </button>
             <button class="status-filter-btn {{ request('status') == 'active' ? 'active' : '' }}"
                 onclick="filterByStatus('active')">
-                <i class="fas fa-check-circle me-2"></i>منشور
+                <i class="fas fa-check-circle me-2"></i>Published
             </button>
             <button class="status-filter-btn {{ request('status') == 'inactive' ? 'active' : '' }}"
                 onclick="filterByStatus('inactive')">
-                <i class="fas fa-times-circle me-2"></i>غير منشور
+                <i class="fas fa-times-circle me-2"></i>Unpublished
             </button>
             <button class="status-filter-btn {{ request('featured') == '1' ? 'active' : '' }}"
                 onclick="filterByFeatured('1')">
-                <i class="fas fa-star me-2"></i>مميز
+                <i class="fas fa-star me-2"></i>Featured
             </button>
         </div>
 
         <div class="filter-card">
-            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>فلترة متقدمة</h6>
+            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>Advanced Filters</h6>
 
             <div class="filter-row">
                 <div class="search-box">
                     <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="form-control" placeholder="بحث بالعنوان، الوصف المختصر..." id="searchInput"
+                    <input type="text" class="form-control" placeholder="text" id="searchInput"
                         value="{{ request('search') }}">
                 </div>
 
                 <div class="sort-dropdown">
                     <button class="sort-btn">
                         <i class="fas fa-sort-amount-down"></i>
-                        الترتيب حسب
+                        Sort By
                     </button>
                     <div class="sort-dropdown-content">
                         <div class="sort-item {{ request('sort_by') == 'created_at' && request('sort_direction') == 'desc' ? 'active' : '' }}"
-                            onclick="sortBy('created_at', 'desc')">الأحدث أولاً</div>
+                            onclick="sortBy('created_at', 'desc')">Newest First</div>
                         <div class="sort-item {{ request('sort_by') == 'created_at' && request('sort_direction') == 'asc' ? 'active' : '' }}"
-                            onclick="sortBy('created_at', 'asc')">الأقدم أولاً</div>
+                            onclick="sortBy('created_at', 'asc')">Oldest First</div>
                         <div class="sort-item {{ request('sort_by') == 'title' && request('sort_direction') == 'asc' ? 'active' : '' }}"
-                            onclick="sortBy('title', 'asc')">العنوان أ - ي</div>
+                            onclick="sortBy('title', 'asc')">Title A - Z</div>
                         <div class="sort-item {{ request('sort_by') == 'title' && request('sort_direction') == 'desc' ? 'active' : '' }}"
-                            onclick="sortBy('title', 'desc')">العنوان ي - أ</div>
+                            onclick="sortBy('title', 'desc')">Title Z - A</div>
                     </div>
                 </div>
 
                 <div class="input-group">
                     <input type="date" class="form-control" id="dateFrom" value="{{ request('date_from') }}">
-                    <span class="input-group-text">إلى</span>
+                    <span class="input-group-text">To</span>
                     <input type="date" class="form-control" id="dateTo" value="{{ request('date_to') }}">
                 </div>
             </div>
 
             <div class="filter-row">
                 <button class="btn btn-primary" onclick="applyFilters()">
-                    <i class="fas fa-filter me-2"></i>تطبيق الفلاتر
+                    <i class="fas fa-filter me-2"></i>Apply Filters
                 </button>
                 <button class="btn btn-outline-secondary" onclick="resetFilters()">
-                    <i class="fas fa-redo me-2"></i>إعادة تعيين
+                    <i class="fas fa-redo me-2"></i>Reset
                 </button>
             </div>
         </div>
@@ -469,15 +469,15 @@
                     <div class="order-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="mb-0">قائمة المقالات</h5>
-                                <small class="opacity-75">إدارة جميع مقالات المنصة</small>
+                                <h5 class="mb-0">Articles List</h5>
+                                <small class="opacity-75">Manage all platform articles</small>
                             </div>
                             <div class="d-flex gap-3">
                                 <a href="{{ route('admin.articles.create-with-ai') }}" class="btn btn-light">
-                                    <i class="fas fa-wand-magic-sparkles me-2"></i>إنشاء بالذكاء الاصطناعي
+                                    <i class="fas fa-wand-magic-sparkles me-2"></i>Create with AI
                                 </a>
                                 <a href="{{ route('admin.articles.create') }}" class="btn btn-light">
-                                    <i class="fas fa-plus me-2"></i>إضافة مقال
+                                    <i class="fas fa-plus me-2"></i>Add Article
                                 </a>
                             </div>
                         </div>
@@ -487,10 +487,10 @@
                         @if ($articles->isEmpty())
                             <div class="empty-state">
                                 <div class="empty-state-icon"><i class="fas fa-newspaper"></i></div>
-                                <h5 class="empty-state-text">لا توجد مقالات</h5>
-                                <p class="text-muted">لم يتم إنشاء أي مقال حتى الآن</p>
+                                <h5 class="empty-state-text">No articles found</h5>
+                                <p class="text-muted">No articles have been created yet</p>
                                 <a href="{{ route('admin.articles.create') }}" class="btn btn-primary">
-                                    <i class="fas fa-plus me-2"></i>إضافة مقال جديد
+                                    <i class="fas fa-plus me-2"></i>Add New Article
                                 </a>
                             </div>
                         @else
@@ -504,12 +504,12 @@
                                     <div class="order-header-info">
                                         <div class="order-title">
                                             <div class="d-flex align-items-center gap-3 flex-wrap">
-                                                <span>{{ adminTrans($article->title) ?: 'بدون عنوان' }}</span>
+                                                <span>{{ adminTrans($article->title) ?: 'Without Title' }}</span>
                                                 <span class="badge-status status-{{ $isActive }}">
-                                                    {{ $isActive == 'active' ? 'منشور' : 'غير منشور' }}
+                                                    {{ $isActive == 'active' ? 'Published' : 'Unpublished' }}
                                                 </span>
                                                 @if ($isFeatured)
-                                                    <span class="badge-status status-featured">مميز</span>
+                                                    <span class="badge-status status-featured">Featured</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -526,18 +526,18 @@
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">النوع:</span>
+                                            <span class="detail-label">Type:</span>
                                             <span class="detail-value">{{ $article->article_type ?? '-' }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">النشر:</span>
+                                            <span class="detail-label">Publishing:</span>
                                             <span
                                                 class="detail-value">{{ optional($article->published_at)->translatedFormat('d M Y') ?? '-' }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">الوصف:</span>
+                                            <span class="detail-label">Description:</span>
                                             <span
                                                 class="detail-value">{{ \Illuminate\Support\Str::limit(adminTrans($article->excerpt) ?? '-', 60) }}</span>
                                         </div>
@@ -546,16 +546,16 @@
                                     <div class="order-actions">
                                         <a href="{{ route('admin.articles.show', $article) }}"
                                             class="btn btn-sm btn-info">
-                                            <i class="fas fa-eye me-1"></i>عرض التفاصيل
+                                            <i class="fas fa-eye me-1"></i>View Details
                                         </a>
                                         <a href="{{ route('admin.articles.edit', $article) }}"
                                             class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit me-1"></i>تعديل
+                                            <i class="fas fa-edit me-1"></i>Edit
                                         </a>
                                         <button type="button" class="btn btn-sm btn-danger delete-btn"
                                             data-id="{{ $article->id }}"
-                                            data-name="{{ adminTrans($article->title) ?: 'المقال' }}">
-                                            <i class="fas fa-trash me-1"></i>حذف
+                                            data-name="{{ adminTrans($article->title) ?: 'Article' }}">
+                                            <i class="fas fa-trash me-1"></i>Delete
                                         </button>
                                     </div>
                                 </div>
@@ -589,14 +589,14 @@
                 const articleName = $(this).data('name');
 
                 Swal.fire({
-                    title: 'هل أنت متأكد؟',
-                    text: `سيتم حذف المقال "${articleName}" نهائياً`,
+                    title: 'Are you sure?',
+                    text: `Will be Delete Article "${articleName}" Will be Delete Article`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'نعم، احذف',
-                    cancelButtonText: 'إلغاء',
+                    confirmButtonText: 'Yes, Delete',
+                    cancelButtonText: 'Cancel',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -610,8 +610,8 @@
                             success: function() {
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'تم الحذف',
-                                    text: 'تم حذف المقال بنجاح',
+                                    title: 'Was Deletion',
+                                    text: 'Was Delete Article Successfully',
                                     timer: 1500,
                                     showConfirmButton: false
                                 }).then(() => location.reload());
@@ -619,8 +619,8 @@
                             error: function() {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'خطأ',
-                                    text: 'حدث خطأ أثناء الحذف',
+                                    title: 'Error',
+                                    text: 'Event Error While Deletion',
                                     timer: 1500,
                                     showConfirmButton: false
                                 });

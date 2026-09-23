@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تعديل صلاحية'))
+@section('title', admin_t('Edit Permission'))
 
 @section('css')
     <style>
@@ -83,9 +83,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.permissions.index') }}">الصلاحيات</a></li>
-                <li class="breadcrumb-item active">تعديل صلاحية</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.permissions.index') }}">Permissions</a></li>
+                <li class="breadcrumb-item active">Edit Permission</li>
             </ol>
         </nav>
 
@@ -93,11 +93,11 @@
             <div class="order-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">تعديل بيانات الصلاحية</h5>
-                        <small class="opacity-75">تحديث اسم الصلاحية</small>
+                        <h5 class="mb-0">Edit Permission Details</h5>
+                        <small class="opacity-75">Update Name Permission</small>
                     </div>
                     <a href="{{ route('admin.permissions.index') }}" class="btn btn-light">
-                        <i class="fas fa-arrow-right me-2"></i>رجوع
+                        <i class="fas fa-arrow-right me-2"></i>Back
                     </a>
                 </div>
             </div>
@@ -107,22 +107,22 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="section-title">بيانات الصلاحية</div>
+                    <div class="section-title">Permission Details</div>
 
                     <div class="row">
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">اسم الصلاحية</label>
+                            <label class="form-label">Permission Name</label>
                             <input type="text" name="name" class="form-control"
-                                value="{{ old('name', $permission->name) }}" placeholder="مثال: view packages">
+                                value="{{ old('name', $permission->name) }}" placeholder="Example: view packages">
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>حفظ
+                            <i class="fas fa-save me-2"></i>Save
                         </button>
                         <a href="{{ route('admin.permissions.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-times me-2"></i>إلغاء
+                            <i class="fas fa-times me-2"></i>Cancel
                         </a>
                     </div>
                 </form>

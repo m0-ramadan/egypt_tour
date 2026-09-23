@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('ترجمات العنصر'))
+@section('title', admin_t('Translations Item'))
 
 @section('css')
 
@@ -204,32 +204,32 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.translations.index') }}">الترجمات</a></li>
-                <li class="breadcrumb-item active">ترجمات العنصر</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.translations.index') }}">Translations</a></li>
+                <li class="breadcrumb-item active">Translations Item</li>
             </ol>
         </nav>
 
         <div class="panel-card">
             <div class="panel-header">
-                <h5 class="mb-0">ترجمات العنصر</h5>
-                <small class="opacity-75">النوع: {{ $type }} - المعرف: {{ $id }}</small>
+                <h5 class="mb-0">Translations Item</h5>
+                <small class="opacity-75">Type: {{ $type }} - ID: {{ $id }}</small>
             </div>
             <div class="panel-body">
                 @forelse($translations as $translation)
                     <div class="item-row">
                         <div class="row">
-                            <div class="col-md-4"><strong>اللغة:</strong> {{ $translation->locale }}</div>
-                            <div class="col-md-4"><strong>الحقل:</strong> {{ $translation->field }}</div>
-                            <div class="col-md-4"><strong>التاريخ:</strong>
+                            <div class="col-md-4"><strong>Language:</strong> {{ $translation->locale }}</div>
+                            <div class="col-md-4"><strong>Field:</strong> {{ $translation->field }}</div>
+                            <div class="col-md-4"><strong>Date:</strong>
                                 {{ optional($translation->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
-                            <div class="col-12 mt-3"><strong>القيمة:</strong> {{ $translation->value ?? '-' }}</div>
+                            <div class="col-12 mt-3"><strong>Value:</strong> {{ $translation->value ?? '-' }}</div>
                         </div>
                     </div>
                 @empty
                     <div class="empty-state">
                         <div class="empty-state-icon"><i class="fas fa-language"></i></div>
-                        <h5 class="empty-state-text">لا توجد ترجمات لهذا العنصر</h5>
+                        <h5 class="empty-state-text">No There are Translations For this Item</h5>
                     </div>
                 @endforelse
                 <div class="mt-3">{{ $translations->links() }}</div>

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إضافة دولة'))
+@section('title', admin_t('Add Country'))
 
 @section('css')
     <style>
@@ -76,30 +76,30 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.countries.index') }}">الدول</a></li>
-                <li class="breadcrumb-item active">إضافة دولة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.countries.index') }}">Countries</a></li>
+                <li class="breadcrumb-item active">Add Country</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">إضافة دولة جديدة</h5>
-                    <small class="opacity-75">إدخال بيانات الدولة</small>
+                    <h5 class="mb-0">Add New Country</h5>
+                    <small class="opacity-75">Enter Details Country</small>
                 </div>
-                <a href="{{ route('admin.countries.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.countries.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="form-body">
                 <form action="{{ route('admin.countries.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <div class="section-title">البيانات الأساسية</div>
+                    <div class="section-title">Basic Information</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">اسم الدولة</label>
+                            <label class="form-label">Country Name</label>
                             <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                         </div>
 
@@ -109,17 +109,17 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الكود</label>
+                            <label class="form-label">Code</label>
                             <input type="text" name="code" class="form-control" value="{{ old('code') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الترتيب</label>
+                            <label class="form-label">Sort Order</label>
                             <input type="number" name="sort_order" class="form-control" value="{{ old('sort_order', 0) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الصورة</label>
+                            <label class="form-label">Image</label>
                             <input type="file" name="flag" class="form-control">
                         </div>
 
@@ -127,20 +127,20 @@
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" name="is_active"
                                     id="is_active" {{ old('is_active', true) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">مفعلة</label>
+                                <label class="form-check-label" for="is_active">Enabled</label>
                             </div>
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" name="is_featured"
                                     id="is_featured" {{ old('is_featured') ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_featured">مميزة</label>
+                                <label class="form-check-label" for="is_featured">Featured</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.countries.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.countries.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

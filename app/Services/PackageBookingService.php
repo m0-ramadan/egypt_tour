@@ -94,76 +94,76 @@ class PackageBookingService
             }
         }
 
-        foreach ($package->tourPackageAccommodations->where('is_active', true) as $accommodation) {
-            foreach ($accommodation->seasons->where('is_active', true) as $season) {
-                if (! $this->dateMatches($date, $season->date_from, $season->date_to)) {
-                    continue;
-                }
-
-                foreach ($season->items->where('is_active', true) as $item) {
-                    if ((float) $item->price <= 0) {
+        if ($package->package_type !== 'day_tour') {
+            foreach ($package->tourPackageAccommodations->where('is_active', true) as $accommodation) {
+                foreach ($accommodation->seasons->where('is_active', true) as $season) {
+                    if (! $this->dateMatches($date, $season->date_from, $season->date_to)) {
                         continue;
                     }
 
-                    $currency = $season->currency ?: $package->currency;
-                    $occupancy = strtolower((string) ($item->occupancy_type ?: 'custom'));
-                    $options->push([
-                        'id' => 'tour:' . $item->id,
-                        'source' => 'tour_package',
-                        'source_id' => $item->id,
-                        'label' => $this->translated($item->label) ?: $accommodation->name,
-                        'description' => collect([$accommodation->name, $season->display_season_name, ucfirst($occupancy)])->filter()->implode(' · '),
-                        'amount' => (float) $item->price,
-                        'price_unit' => in_array($item->price_unit, ['per_person', 'per_room', 'per_booking'], true)
-                            ? $item->price_unit
-                            : 'per_person',
-                        'currency_code' => strtoupper((string) ($currency?->code ?: 'USD')),
-                        'currency_symbol' => (string) ($currency?->symbol ?: '$'),
-                        'occupancy_type' => $occupancy,
-                        'cabin_id' => null,
-                        'available_rooms' => null,
-                        'max_adults_per_room' => $this->occupancyAdults($occupancy),
-                        'max_children_per_room' => 2,
-                        'valid_from' => $season->date_from?->toDateString(),
-                        'valid_to' => $season->date_to?->toDateString(),
-                    ]);
+                    foreach ($season->items->where('is_active', true) as $item) {
+                        if ((float) $item->price <= 0) {
+                            continue;
+                        }
+
+                        $currency = $season->currency ?: $package->currency;
+                        $occupancy = strtolower((string) ($item->occupancy_type ?: 'custom'));
+                        $options->push([
+                            'id' => 'tour:' . $item->id,
+                            'source' => 'tour_package',
+                            'source_id' => $item->id,
+                            'label' => $this->translated($item->label) ?: $accommodation->name,
+                            'description' => collect([$accommodation->name, $season->display_season_name, ucfirst($occupancy)])->filter()->implode(' · '),
+                            'amount' => (float) $item->price,
+                            'price_unit' => in_array($item->price_unit, ['per_person', 'per_room', 'per_booking'], true)
+                                ? $item->price_unit
+                                : 'per_person',
+                            'currency_code' => strtoupper((string) ($currency?->code ?: 'USD')),
+                            'currency_symbol' => (string) ($currency?->symbol ?: '$'),
+                            'occupancy_type' => $occupancy,
+                            'cabin_id' => null,
+                            'available_rooms' => null,
+                            'max_adults_per_room' => $this->occupancyAdults($occupancy),
+                            'max_children_per_room' => 2,
+                            'valid_from' => $season->date_from?->toDateString(),
+                            'valid_to' => $season->date_to?->toDateString(),
+                        ]);
+                    }
                 }
             }
-        }
 
-        foreach ($package->prices as $price) {
-            if ((float) $price->amount <= 0 || ! $this->dateMatches($date, $price->valid_from, $price->valid_to)) {
-                continue;
+            foreach ($package->prices as $price) {
+                if ((float) $price->amount <= 0 || ! $this->dateMatches($date, $price->valid_from, $price->valid_to)) {
+                    continue;
+                }
+
+                $currency = $price->currency ?: $package->currency;
+                $priceUnit = $price->price_type === 'per_group' ? 'per_booking' : 'per_person';
+                $options->push([
+                    'id' => 'price:' . $price->id,
+                    'source' => 'package_price',
+                    'source_id' => $price->id,
+                    'label' => $price->display_label ?: __('Package Price'),
+                    'description' => collect([$price->display_season_name, $price->room_type ? __(ucwords(str_replace('_', ' ', $price->room_type))) : null])->filter()->implode(' · '),
+                    'amount' => (float) $price->amount,
+                    'price_unit' => $priceUnit,
+                    'currency_code' => strtoupper((string) ($currency?->code ?: 'USD')),
+                    'currency_symbol' => (string) ($currency?->symbol ?: '$'),
+                    'occupancy_type' => $price->room_type,
+                    'cabin_id' => null,
+                    'available_rooms' => null,
+                    'max_adults_per_room' => $this->occupancyAdults((string) $price->room_type),
+                    'max_children_per_room' => 2,
+                    'pax_min' => $price->pax_min ?: $price->group_size_min,
+                    'pax_max' => $price->pax_max ?: $price->group_size_max,
+                    'valid_from' => $price->valid_from?->toDateString(),
+                    'valid_to' => $price->valid_to?->toDateString(),
+                ]);
             }
-
-            $currency = $price->currency ?: $package->currency;
-            $priceUnit = $price->price_type === 'per_group' ? 'per_booking' : 'per_person';
-            $options->push([
-                'id' => 'price:' . $price->id,
-                'source' => 'package_price',
-                'source_id' => $price->id,
-                'label' => $price->display_label ?: __('Package Price'),
-                'description' => collect([$price->display_season_name, $price->room_type ? __(ucwords(str_replace('_', ' ', $price->room_type))) : null])->filter()->implode(' · '),
-                'amount' => (float) $price->amount,
-                'price_unit' => $priceUnit,
-                'currency_code' => strtoupper((string) ($currency?->code ?: 'USD')),
-                'currency_symbol' => (string) ($currency?->symbol ?: '$'),
-                'occupancy_type' => $price->room_type,
-                'cabin_id' => null,
-                'available_rooms' => null,
-                'max_adults_per_room' => $this->occupancyAdults((string) $price->room_type),
-                'max_children_per_room' => 2,
-                'pax_min' => $price->pax_min ?: $price->group_size_min,
-                'pax_max' => $price->pax_max ?: $price->group_size_max,
-                'valid_from' => $price->valid_from?->toDateString(),
-                'valid_to' => $price->valid_to?->toDateString(),
-            ]);
         }
 
-        $rawTiers = $package->getRawOriginal('group_pricing_tiers');
-        $hasExplicitTiers = is_array($rawTiers)
-            ? $rawTiers !== []
-            : trim((string) $rawTiers) !== '' && trim((string) $rawTiers) !== '[]';
+        $groupTiers = is_array($package->group_pricing_tiers) ? $package->group_pricing_tiers : [];
+        $hasExplicitTiers = count($groupTiers) > 0;
         $hasExplicitTierColumns = collect([
             $package->price_1_person,
             $package->price_2_persons,
@@ -174,7 +174,7 @@ class PackageBookingService
         ])->contains(fn($value) => $value !== null && (float) $value > 0);
 
         if ($hasExplicitTiers || $hasExplicitTierColumns) {
-            foreach ($package->group_pricing_tiers as $index => $tier) {
+            foreach ($groupTiers as $index => $tier) {
                 if (! is_array($tier) || (float) ($tier['price_per_person'] ?? 0) <= 0) {
                     continue;
                 }
@@ -367,13 +367,13 @@ class PackageBookingService
         }
 
         $operatingDays = collect((array) $package->operating_days)
-            ->map(fn ($day) => strtolower(trim((string) $day)))
+            ->map(fn($day) => strtolower(trim((string) $day)))
             ->filter()
             ->values();
 
         if (
             $operatingDays->isEmpty()
-            || $operatingDays->contains(fn ($day) => in_array($day, ['daily', 'everyday', 'every day', 'all'], true))
+            || $operatingDays->contains(fn($day) => in_array($day, ['daily', 'everyday', 'every day', 'all'], true))
         ) {
             return;
         }

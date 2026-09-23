@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إضافة قائمة'))
+@section('title', admin_t('Add List'))
 
 @section('css')
     <style>
@@ -61,19 +61,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.menus.index') }}">القوائم</a></li>
-                <li class="breadcrumb-item active">إضافة قائمة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.menus.index') }}">Menus</a></li>
+                <li class="breadcrumb-item active">Add List</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">إضافة قائمة جديدة</h5>
-                    <small class="opacity-75">إدخال بيانات القائمة</small>
+                    <h5 class="mb-0">Add New Menu</h5>
+                    <small class="opacity-75">Enter Details Menu</small>
                 </div>
-                <a href="{{ route('admin.menus.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.menus.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="form-body">
@@ -82,7 +82,7 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">اسم القائمة</label>
+                            <label class="form-label">Menu Name</label>
                             <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                         </div>
 
@@ -92,9 +92,9 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">الموقع</label>
+                            <label class="form-label">Location</label>
                             <select name="location" class="form-select">
-                                <option value="">اختر الموقع</option>
+                                <option value="">Select Location</option>
                                 <option value="header" {{ old('location') == 'header' ? 'selected' : '' }}>header</option>
                                 <option value="footer" {{ old('location') == 'footer' ? 'selected' : '' }}>footer</option>
                                 <option value="sidebar" {{ old('location') == 'sidebar' ? 'selected' : '' }}>sidebar
@@ -103,9 +103,9 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">اللغة</label>
+                            <label class="form-label">Language</label>
                             <select name="language_id" class="form-select">
-                                <option value="">اختر اللغة</option>
+                                <option value="">Select Language</option>
                                 @foreach ($languages ?? collect() as $language)
                                     <option value="{{ $language->id }}"
                                         {{ old('language_id') == $language->id ? 'selected' : '' }}>
@@ -116,13 +116,13 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">الترتيب</label>
+                            <label class="form-label">Sort Order</label>
                             <input type="number" name="sort_order" class="form-control"
                                 value="{{ old('sort_order', 0) }}">
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">الوصف</label>
+                            <label class="form-label">Description</label>
                             <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
                         </div>
 
@@ -130,14 +130,14 @@
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" name="is_active"
                                     id="is_active" {{ old('is_active', true) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">مفعل</label>
+                                <label class="form-check-label" for="is_active">Enabled</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.menus.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.menus.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

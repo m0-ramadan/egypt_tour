@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تعديل سؤال شائع'))
+@section('title', admin_t('Edit FAQ'))
 
 @section('css')
     <style>
@@ -68,19 +68,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.faqs.index') }}">الأسئلة الشائعة</a></li>
-                <li class="breadcrumb-item active">تعديل سؤال</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.faqs.index') }}">FAQs</a></li>
+                <li class="breadcrumb-item active">Edit FAQ</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">تعديل السؤال الشائع</h5>
+                    <h5 class="mb-0">Edit Question Common</h5>
                     <small class="opacity-75">{{ adminTrans($faq->question) ?? '' }}</small>
                 </div>
-                <a href="{{ route('admin.faqs.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.faqs.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="form-body">
@@ -88,22 +88,22 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="section-title">بيانات FAQ</div>
+                    <div class="section-title">FAQ Details</div>
 
                     <div class="row">
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">السؤال</label>
+                            <label class="form-label">Question</label>
                             <input type="text" name="question" class="form-control"
                                 value="{{ old('question', adminTrans($faq->question)) }}">
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">الإجابة</label>
+                            <label class="form-label">Answer</label>
                             <textarea name="answer" class="form-control" rows="8">{{ old('answer', adminTrans($faq->answer)) }}</textarea>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">الترتيب</label>
+                            <label class="form-label">Sort Order</label>
                             <input type="number" name="sort_order" class="form-control"
                                 value="{{ old('sort_order', $faq->sort_order ?? 0) }}">
                         </div>
@@ -112,20 +112,20 @@
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" name="is_active"
                                     id="is_active" {{ old('is_active', $faq->is_active ?? true) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">مفعل</label>
+                                <label class="form-check-label" for="is_active">Enabled</label>
                             </div>
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" name="is_featured"
                                     id="is_featured" {{ old('is_featured', $faq->is_featured ?? false) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_featured">مميز</label>
+                                <label class="form-check-label" for="is_featured">Featured</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.faqs.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.faqs.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

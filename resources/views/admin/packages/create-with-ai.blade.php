@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إنشاء رحلة بالذكاء الاصطناعي'))
+@section('title', admin_t('Create Trip with AI'))
 
 @section('css')
     <style>
@@ -176,8 +176,8 @@
     <div class="page-loader" id="pageLoader">
         <div class="loader-box">
             <div class="loader-spinner"></div>
-            <div class="loader-title">جاري إنشاء الرحلة...</div>
-            <div class="loader-text">يتم توليد العنوان، الوصف، البرنامج، المرافق، الأسعار، وSEO</div>
+            <div class="loader-title">In progress Create Trip...</div>
+            <div class="loader-text">Is Generate AddressSEO</div>
 
             <div class="progress-wrapper">
                 <div class="progress-bar-custom" id="progressBar"></div>
@@ -192,28 +192,28 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.index') }}">الرئيسية</a>
+                    <a href="{{ route('admin.index') }}">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.packages.index') }}">الرحلات</a>
+                    <a href="{{ route('admin.packages.index') }}">Trips</a>
                 </li>
-                <li class="breadcrumb-item active">إنشاء بالذكاء الاصطناعي</li>
+                <li class="breadcrumb-item active">Create with AI</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <div>
-                    <h5 class="mb-1">إنشاء رحلة بالذكاء الاصطناعي</h5>
-                    <small class="opacity-75">اكتب فكرة الرحلة وسيتم تجهيز محتوى كامل قابل للتعديل</small>
+                    <h5 class="mb-1">Create Trip with AI</h5>
+                    <small class="opacity-75">Write Idea Trip And Will be Prepare Content Full Ready For Edit</small>
                 </div>
 
                 <div class="d-flex gap-2">
                     <a href="{{ route('admin.packages.create') }}" class="btn btn-light">
-                        إنشاء يدوي
+                        Create Manually
                     </a>
                     <a href="{{ route('admin.packages.index') }}" class="btn btn-light">
-                        رجوع
+                        Back
                     </a>
                 </div>
             </div>
@@ -222,27 +222,27 @@
                 <form action="{{ route('admin.packages.store-with-ai') }}" method="POST" id="packageAiForm">
                     @csrf
 
-                    <div class="section-title">وصف الرحلة</div>
+                    <div class="section-title">Description Trip</div>
 
                     <div class="mb-3">
                         <label class="form-label">Prompt</label>
                         <textarea name="prompt" class="form-control" rows="8"
-                            placeholder="مثال: أنشئ رحلة نيلية فاخرة بين الأقصر وأسوان لمدة 5 أيام تشمل المعابد، الإقامة على مركب دهبية، وجبات كاملة، أسعار حسب الموسم، سياسة أطفال، وSEO مناسب">{{ old('prompt') }}</textarea>
+                            placeholder="Example: Create a luxury Nile Cruise between Luxor and Aswan for 5 days including temples, full board, seasonal pricing, child policy, and proper SEO">{{ old('prompt') }}</textarea>
                         @error('prompt')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="note-box mb-3">
-                        الأفضل تكتب: نوع الرحلة، المدن، عدد الأيام، مستوى الفخامة، نوع العميل المستهدف، البرنامج اليومي،
-                        ونوع الأسعار المطلوبة.
+                        Best to write: Trip type, cities, number of days, luxury level, target clients, daily itinerary,
+                        and required pricing structure.
                     </div>
 
-                    <div class="section-title">إعدادات التوليد</div>
+                    <div class="section-title">Generation Settings</div>
 
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">نوع الرحلة</label>
+                            <label class="form-label">Trip Type</label>
                             <select name="package_type" class="form-select">
                                 <option value="travel_package"
                                     {{ old('package_type') == 'travel_package' ? 'selected' : '' }}>Travel Package</option>
@@ -260,21 +260,21 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">عدد الأيام</label>
+                            <label class="form-label">Number of Days</label>
                             <input type="number" name="duration_days" class="form-control"
                                 value="{{ old('duration_days', 5) }}">
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">عدد الليالي</label>
+                            <label class="form-label">Number of Nights</label>
                             <input type="number" name="duration_nights" class="form-control"
                                 value="{{ old('duration_nights', 4) }}">
                         </div>
 
                         <div class="col-md-4 mb-3" id="ai_destination_wrapper">
-                            <label class="form-label">المدينة</label>
+                            <label class="form-label">City</label>
                             <select id="destination_selector" name="destination_id" class="form-select">
-                                <option value="">اختر المدينة</option>
+                                <option value=""<option value=
                                 @foreach ($destinations ?? collect() as $destination)
                                     <option value="{{ $destination->id }}"
                                         data-country-id="{{ $destination->country_id }}"
@@ -289,9 +289,9 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">التصنيف</label>
+                            <label class="form-label">Category</label>
                             <select name="category_id" class="form-select">
-                                <option value="">اختر التصنيف</option>
+                                <option value="">Select Category</option>
                                 @foreach ($categories ?? collect() as $category)
                                     <option value="{{ $category->id }}"
                                         {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -302,9 +302,9 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">العملة</label>
+                            <label class="form-label">Currency</label>
                             <select name="currency_id" class="form-select">
-                                <option value="">اختر العملة</option>
+                                <option value="">Select Currency</option>
                                 @foreach ($currencies ?? collect() as $currency)
                                     <option value="{{ $currency->id }}"
                                         {{ old('currency_id') == $currency->id || $currency->code == 'USD' ? 'selected' : '' }}>
@@ -315,7 +315,7 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">نوع الجولة</label>
+                            <label class="form-label">Tour Type</label>
                             <select name="tour_type" class="form-select">
                                 <option value="private" {{ old('tour_type') == 'private' ? 'selected' : '' }}>Private
                                 </option>
@@ -327,7 +327,7 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">مستوى الصعوبة</label>
+                            <label class="form-label">Difficulty Level</label>
                             <select name="difficulty_level" class="form-select">
                                 <option value="easy" {{ old('difficulty_level', 'easy') == 'easy' ? 'selected' : '' }}>
                                     Easy</option>
@@ -339,7 +339,7 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">نظام الحجز</label>
+                            <label class="form-label">Booking System</label>
                             <select name="booking_mode" class="form-select">
                                 <option value="request"
                                     {{ old('booking_mode', 'request') == 'request' ? 'selected' : '' }}>Request</option>
@@ -349,23 +349,23 @@
                         </div>
                     </div>
 
-                    <div class="section-title">تفاصيل اختيارية تساعد الذكاء الاصطناعي</div>
+                    <div class="section-title">Details Optional Helps AI Artificial</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">المسار المطلوب</label>
+                            <label class="form-label">Path Required</label>
                             <input type="text" name="route_text" class="form-control"
-                                value="{{ old('route_text') }}" placeholder="مثال: Luxor / Edfu / Kom Ombo / Aswan">
+                                value="{{ old('route_text') }}" placeholder="Example: Luxor / Edfu / Kom Ombo / Aswan">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الجدول</label>
+                            <label class="form-label">Schedule</label>
                             <input type="text" name="schedule_text" class="form-control"
-                                value="{{ old('schedule_text') }}" placeholder="مثال: Every Monday from Luxor">
+                                value="{{ old('schedule_text') }}" placeholder="Example: Every Monday from Luxor">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">مستوى الفخامة</label>
+                            <label class="form-label">Level Luxury</label>
                             <select name="luxury_level" class="form-select">
                                 <option value="standard" {{ old('luxury_level') == 'standard' ? 'selected' : '' }}>
                                     Standard</option>
@@ -377,7 +377,7 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">لغة المحتوى</label>
+                            <label class="form-label">Language Content</label>
                             <select name="content_language" class="form-select">
                                 <option value="en" {{ old('content_language', 'en') == 'en' ? 'selected' : '' }}>
                                     English</option>
@@ -389,23 +389,23 @@
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">تعليمات إضافية</label>
+                            <label class="form-label">Instructions Additional</label>
                             <textarea name="extra_instructions" rows="4" class="form-control"
-                                placeholder="مثال: اجعل المحتوى مناسبًا للسياح الأجانب، أضف سياسة أطفال، أسعار موسمية، وبرنامج يومي مفصل">{{ old('extra_instructions') }}</textarea>
+                                placeholder="Example: Make content suitable for international tourists, add child policy, seasonal prices, and detailed daily itinerary">{{ old('extra_instructions') }}</textarea>
                         </div>
                     </div>
 
-                    <div class="section-title">ماذا يتم توليده؟</div>
+                    <div class="section-title">What will be generated?</div>
 
                     <div class="row">
                         @php
                             $generateOptions = [
-                                'generate_description' => 'الوصف الكامل',
-                                'generate_itinerary' => 'برنامج الرحلة',
-                                'generate_facilities' => 'المرافق',
-                                'generate_inclusions' => 'المشمول وغير المشمول',
-                                'generate_prices' => 'الأسعار',
-                                'generate_policies' => 'السياسات',
+                                'generate_description' => 'Full Description',
+                                'generate_itinerary' => 'Itinerary',
+                                'generate_facilities' => 'Facilities',
+                                'generate_inclusions' => 'Included and Excluded',
+                                'generate_prices' => 'Prices',
+                                'generate_policies' => 'Policies',
                                 'generate_seo' => 'SEO',
                             ];
                         @endphp
@@ -425,11 +425,11 @@
 
                     <div class="mt-4 d-flex gap-2">
                         <button type="submit" class="btn btn-primary" id="submitBtn">
-                            توليد الرحلة
+                            Generate Trip
                         </button>
 
                         <a href="{{ route('admin.packages.create') }}" class="btn btn-outline-secondary">
-                            إنشاء يدوي
+                            Create Manually
                         </a>
                     </div>
 

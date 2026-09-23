@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض دفعة'))
+@section('title', admin_t('View Payment'))
 
 @section('css')
     <style>
@@ -60,21 +60,21 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.payments.index') }}">المدفوعات</a></li>
-                <li class="breadcrumb-item active">عرض دفعة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.payments.index') }}">Payments</a></li>
+                <li class="breadcrumb-item active">View Payment</li>
             </ol>
         </nav>
 
         <div class="profile-card">
             <div class="profile-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="mb-1">{{ $payment->transaction_reference ?: 'بدون مرجع' }}</h4>
+                    <h4 class="mb-1">{{ $payment->transaction_reference ?: 'Without Reference' }}</h4>
                     <small class="opacity-75">{{ $payment->gateway_reference ?: '-' }}</small>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{{ route('admin.payments.edit', $payment) }}" class="btn btn-light">تعديل</a>
-                    <a href="{{ route('admin.payments.index') }}" class="btn btn-outline-light">رجوع</a>
+                    <a href="{{ route('admin.payments.edit', $payment) }}" class="btn btn-light">Edit</a>
+                    <a href="{{ route('admin.payments.index') }}" class="btn btn-outline-light">Back</a>
                 </div>
             </div>
 

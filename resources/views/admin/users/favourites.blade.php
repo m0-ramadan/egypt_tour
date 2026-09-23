@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('المفضلة') . ': ' . $user->name)
+@section('title', admin_t('Favorites') . ': ' . $user->name)
 
 @section('css')
 
@@ -192,19 +192,19 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.index') }}">الرئيسية</a>
+                    <a href="{{ route('admin.index') }}">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.users.index') }}">المستخدمين</a>
+                    <a href="{{ route('admin.users.index') }}">Users</a>
                 </li>
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.users.show', $user) }}">{{ $user->name }}</a>
                 </li>
-                <li class="breadcrumb-item active">المفضلة</li>
+                <li class="breadcrumb-item active">Favorites</li>
             </ol>
         </nav>
 
-        <!-- معلومات المستخدم -->
+        <!-- Information User -->
         <div class="user-info-card" bis_skin_checked="1">
             <div class="row align-items-center" bis_skin_checked="1">
                 <div class="col" bis_skin_checked="1">
@@ -216,13 +216,13 @@
                 </div>
                 <div class="col-auto" bis_skin_checked="1">
                     <a href="{{ route('admin.users.show', $user) }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-right me-2"></i>العودة للتفاصيل
+                        <i class="fas fa-arrow-right me-2"></i>Back to Details
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- الإحصائيات -->
+        <!-- Statistics -->
         <div class="row mb-4" bis_skin_checked="1">
             <div class="col-lg-3 col-md-6 mb-4" bis_skin_checked="1">
                 <div class="stats-card" bis_skin_checked="1">
@@ -232,7 +232,7 @@
                     <div class="stats-number" bis_skin_checked="1">
                         {{ $favourites->total() }}
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">إجمالي المنتجات المفضلة</div>
+                    <div class="stats-label" bis_skin_checked="1">Total Products Favorites</div>
                 </div>
             </div>
 
@@ -247,7 +247,7 @@
                     <div class="stats-number" bis_skin_checked="1">
                         {{ $categoriesCount }}
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">عدد الأقسام المختلفة</div>
+                    <div class="stats-label" bis_skin_checked="1">Number of Sections Different</div>
                 </div>
             </div>
 
@@ -260,9 +260,9 @@
                         <i class="fas fa-money-bill-wave"></i>
                     </div>
                     <div class="stats-number" bis_skin_checked="1">
-                        {{ number_format($averagePrice, 2) }} ج.م
+                        {{ number_format($averagePrice, 2) }} EGP
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">متوسط سعر المنتجات</div>
+                    <div class="stats-label" bis_skin_checked="1">Moderate Price Products</div>
                 </div>
             </div>
 
@@ -277,7 +277,7 @@
                     <div class="stats-number" bis_skin_checked="1">
                         {{ $recentFavourites }}
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">مضاف حديثاً (أسبوع)</div>
+                    <div class="stats-label" bis_skin_checked="1">Added Recently (Week)</div>
                 </div>
             </div>
         </div>
@@ -288,15 +288,15 @@
                     <div class="favourites-header" bis_skin_checked="1">
                         <div class="d-flex justify-content-between align-items-center" bis_skin_checked="1">
                             <div bis_skin_checked="1">
-                                <h5 class="mb-1">المنتجات المفضلة</h5>
-                                <p class="text-muted mb-0">عرض جميع منتجات {{ $user->name }} المفضلة</p>
+                                <h5 class="mb-1">Products Favorites</h5>
+                                <p class="text-muted mb-0">View all favorites for {{ $user->name }}</p>
                             </div>
                             <div class="btn-group" bis_skin_checked="1">
                                 <a href="{{ route('admin.users.show', $user) }}" class="btn btn-outline-info">
-                                    <i class="fas fa-user me-2"></i>تفاصيل المستخدم
+                                    <i class="fas fa-user me-2"></i>User Details
                                 </a>
                                 <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
-                                    <i class="fas fa-arrow-right me-2"></i>جميع المستخدمين
+                                    <i class="fas fa-arrow-right me-2"></i>All Users
                                 </a>
                             </div>
                         </div>
@@ -307,8 +307,8 @@
                             <div class="empty-state-icon" bis_skin_checked="1">
                                 <i class="fas fa-heart"></i>
                             </div>
-                            <h5 class="empty-state-text">لا توجد منتجات مفضلة لهذا المستخدم</h5>
-                            <p class="text-muted">المستخدم لم يضف أي منتجات إلى المفضلة حتى الآن</p>
+                            <h5 class="empty-state-text">No There are Products Favorite For this User</h5>
+                            <p class="text-muted">User Not Add Any Products To Favorites Until Now</p>
                         </div>
                     @else
                         <div class="row" bis_skin_checked="1">
@@ -329,16 +329,16 @@
 
                                             <div class="product-category" bis_skin_checked="1">
                                                 <i class="fas fa-tag me-1"></i>
-                                                {{ $product->category->name ?? 'غير مصنف' }}
+                                                {{ $product->category->name ?? 'Not Classified' }}
                                             </div>
 
                                             <div class="product-price" bis_skin_checked="1">
                                                 <span class="current-price">
-                                                    {{ number_format($product->final_price, 2) }} ج.م
+                                                    {{ number_format($product->final_price, 2) }} EGP.EGP
                                                 </span>
                                                 @if ($product->has_discount && $product->price > $product->final_price)
                                                     <span class="old-price">
-                                                        {{ number_format($product->price, 2) }} ج.م
+                                                        {{ number_format($product->price, 2) }} EGP.EGP
                                                     </span>
                                                 @endif
                                             </div>
@@ -358,11 +358,11 @@
                                             <div class="product-actions" bis_skin_checked="1">
                                                 <a href="{{ route('admin.products.show', $product->id) }}"
                                                     class="btn btn-sm btn-outline-primary flex-grow-1">
-                                                    <i class="fas fa-eye me-1"></i>عرض
+                                                    <i class="fas fa-eye me-1"></i>View
                                                 </a>
                                                 <a href="{{ route('admin.products.edit', $product) }}"
                                                     class="btn btn-sm btn-outline-warning flex-grow-1">
-                                                    <i class="fas fa-edit me-1"></i>تعديل
+                                                    <i class="fas fa-edit me-1"></i>Edit
                                                 </a>
                                             </div>
                                         </div>

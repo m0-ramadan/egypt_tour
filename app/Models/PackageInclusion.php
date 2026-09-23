@@ -21,6 +21,7 @@ class PackageInclusion extends Model
     ];
 
     protected $casts = [
+        'title' => 'array',
         'content' => 'array',
         'sort_order' => 'integer',
     ];

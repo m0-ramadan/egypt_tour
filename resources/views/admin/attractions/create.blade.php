@@ -1,387 +1,324 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إضافة معلم'))
+@section('title', 'Add Attraction')
 
 @section('css')
     <style>
-        :root {
-            --primary-color: #696cff;
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --dark-bg: #1e1e2d;
-            --dark-card: #2b3b4c;
+        .ck.ck-editor {
+            color: #000 !important;
         }
 
-        body {
-            font-family: "Cairo", sans-serif !important;
-            background: var(--dark-bg);
-            color: #fff;
+        .ck.ck-editor__main>.ck-editor__editable {
+            min-height: 250px;
+            background: #ffffff !important;
+            color: #000000 !important;
         }
 
-        .order-card {
-            background: var(--dark-card);
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            padding: 0;
-            border: 1px solid rgba(255, 255, 255, .1);
-            overflow: hidden;
-        }
-
-        .order-header {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 25px 30px;
-        }
-
-        .form-body {
-            padding: 30px;
-        }
-
-        .section-title {
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #fff;
-            border-bottom: 1px solid rgba(255, 255, 255, .1);
-            padding-bottom: 10px;
-        }
-
-        .form-control,
-        .form-select,
-        textarea {
-            background: rgba(255, 255, 255, .05);
-            border: 1px solid rgba(255, 255, 255, .1);
-            color: #fff;
-            border-radius: 10px;
-            min-height: 46px;
-        }
-
-        .form-control:focus,
-        .form-select:focus,
-        textarea:focus {
-            background: rgba(255, 255, 255, .08);
-            color: #fff;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 .25rem rgba(105, 108, 255, .25);
-        }
-
-        .form-label {
-            color: rgba(255, 255, 255, .85);
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .btn-primary {
-            background: var(--primary-gradient);
-            border: none;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, .1);
-            border: 1px solid rgba(255, 255, 255, .15);
-            color: #fff;
-        }
-
-        .page-loader {
-            position: fixed;
-            inset: 0;
-            background: rgba(30, 30, 45, 0.92);
-            z-index: 99999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .page-loader.active {
-            display: flex;
-        }
-
-        .loader-box {
-            width: 100%;
-            max-width: 420px;
-            background: #2b3b4c;
-            border-radius: 20px;
-            padding: 30px 25px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 255, 255, .08);
-        }
-
-        .loader-spinner {
-            width: 65px;
-            height: 65px;
-            border: 5px solid rgba(255, 255, 255, .15);
-            border-top: 5px solid #696cff;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            animation: spin 1s linear infinite;
-        }
-
-        .loader-title {
-            font-size: 22px;
-            font-weight: 700;
+        .tour-link-box {
+            background: rgba(105, 108, 255, 0.08);
+            border: 1px dashed rgba(105, 108, 255, 0.4);
+            border-radius: 8px;
+            padding: 10px 14px;
             margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .loader-text {
-            font-size: 14px;
-            color: rgba(255, 255, 255, .75);
-            margin-bottom: 20px;
-        }
-
-        .progress-wrapper {
-            width: 100%;
-            height: 14px;
-            background: rgba(255, 255, 255, .08);
-            border-radius: 30px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .progress-bar-custom {
-            width: 0%;
-            height: 100%;
-            background: var(--primary-gradient);
-            border-radius: 30px;
-            transition: width .3s ease;
-        }
-
-        .progress-percent {
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .image-preview {
-            margin-top: 12px;
-        }
-
-        .image-preview img {
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, .12);
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
         }
     </style>
 @endsection
 
 @section('content')
-    <div class="page-loader" id="pageLoader">
-        <div class="loader-box">
-            <div class="loader-spinner"></div>
-            <div class="loader-title">جاري إنشاء المعلم...</div>
-            <div class="loader-text">برجاء الانتظار أثناء حفظ البيانات</div>
-
-            <div class="progress-wrapper">
-                <div class="progress-bar-custom" id="progressBar"></div>
-            </div>
-
-            <div class="progress-percent" id="progressPercent">0%</div>
-        </div>
-    </div>
-
     <div class="container-xxl flex-grow-1 container-p-y">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.attractions.index') }}">المعالم السياحية</a></li>
-                <li class="breadcrumb-item active">إضافة معلم</li>
-            </ol>
-        </nav>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="mb-0 text-white fw-bold"><i class="fas fa-plus-circle me-2 text-primary"></i>Add New Attraction</h4>
+            <a href="{{ route('admin.attractions.index') }}" class="btn btn-outline-light">
+                <i class="fas fa-arrow-left me-1"></i> Back to Attractions
+            </a>
+        </div>
 
-        <div class="order-card">
-            <div class="order-header">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5 class="mb-0">إضافة معلم جديد</h5>
-                        <small class="opacity-75">إدخال بيانات المعلم السياحي الأساسية</small>
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        <form action="{{ route('admin.attractions.store') }}" method="POST" enctype="multipart/form-data" id="attractionForm">
+            @csrf
+
+            <div class="row">
+                <!-- Left Main Content Column -->
+                <div class="col-lg-8">
+                    @include('admin.components.lang-tabs', ['activeLocales' => ['en', 'ar']])
+
+                    <div class="tab-content" id="langTabsContent">
+                        @php
+                            $locales = [
+                                'en' => ['name' => 'English', 'flag' => '🇺🇸', 'dir' => 'ltr'],
+                                'ar' => ['name' => 'Arabic', 'flag' => '🇪🇬', 'dir' => 'rtl'],
+                                'fr' => ['name' => 'Français', 'flag' => '🇫🇷', 'dir' => 'ltr'],
+                                'de' => ['name' => 'Deutsch', 'flag' => '🇩🇪', 'dir' => 'ltr'],
+                            ];
+                        @endphp
+
+                        @foreach ($locales as $code => $info)
+                            <div class="tab-pane fade {{ $code === 'en' ? 'show active' : '' }}"
+                                id="tab-pane-{{ $code }}" role="tabpanel">
+                                <div class="card bg-dark text-white border-secondary mb-4">
+                                    <div class="card-header border-secondary">
+                                        <h6 class="mb-0 text-white"><i class="fas fa-edit me-2"></i>Content ({{ $info['name'] }})</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label text-light">Attraction Name ({{ strtoupper($code) }}) @if ($code === 'en') <span class="text-danger">*</span> @endif</label>
+                                            <input type="text" name="name[{{ $code }}]" class="form-control bg-dark text-white border-secondary"
+                                                value="{{ old('name.' . $code) }}" dir="{{ $info['dir'] }}"
+                                                @if ($code === 'en') required @endif
+                                                placeholder="Attraction Name in {{ $info['name'] }}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label text-light">Short Description ({{ strtoupper($code) }})</label>
+                                            <textarea name="short_description[{{ $code }}]" class="form-control bg-dark text-white border-secondary" rows="3"
+                                                dir="{{ $info['dir'] }}" placeholder="Brief summary of the attraction">{{ old('short_description.' . $code) }}</textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <label class="form-label text-light mb-0">Full Description ({{ strtoupper($code) }})</label>
+                                                <small class="text-info"><i class="fas fa-heading me-1"></i> Supports H1, H2, H3 & Hyperlinks</small>
+                                            </div>
+
+                                            <!-- Tour Package Link Helper Box -->
+                                            <div class="tour-link-box d-flex flex-wrap align-items-center gap-2">
+                                                <span class="text-white fw-bold fs-7"><i class="fas fa-link text-warning me-1"></i> Insert Tour Link:</span>
+                                                <select class="form-select form-select-sm tour-select-{{ $code }} bg-dark text-white border-secondary" style="max-width: 280px;">
+                                                    <option value="">-- Choose a Tour Package --</option>
+                                                    @foreach ($packages as $pkg)
+                                                        @php
+                                                            $pkgTitle = adminTrans($pkg->title);
+                                                            $pkgUrl = route('website.trips.show', $pkg->slug);
+                                                        @endphp
+                                                        <option value="{{ $pkgUrl }}" data-title="{{ $pkgTitle }}">{{ $pkgTitle }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <button type="button" class="btn btn-sm btn-primary" onclick="insertTourLink('{{ $code }}')">
+                                                    <i class="fas fa-plus me-1"></i> Insert into Description
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-light" onclick="copyTourLink('{{ $code }}')">
+                                                    <i class="fas fa-copy me-1"></i> Copy Link
+                                                </button>
+                                            </div>
+
+                                            <textarea name="description[{{ $code }}]" class="form-control rich-editor" data-lang="{{ $code }}" rows="8"
+                                                dir="{{ $info['dir'] }}" placeholder="Full detailed description...">{{ old('description.' . $code) }}</textarea>
+                                        </div>
+
+                                        <!-- SEO 2-Fields Section -->
+                                        <div class="border-top border-secondary pt-3 mt-4">
+                                            <h6 class="text-primary mb-3"><i class="fas fa-search me-2"></i>SEO ({{ $info['name'] }})</h6>
+                                            <div class="mb-3">
+                                                <label class="form-label text-light">SEO Title ({{ strtoupper($code) }})</label>
+                                                <input type="text" name="seo_title[{{ $code }}]" class="form-control bg-dark text-white border-secondary"
+                                                    value="{{ old('seo_title.' . $code) }}" dir="{{ $info['dir'] }}"
+                                                    placeholder="Meta title for search engines">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label text-light">SEO Description ({{ strtoupper($code) }})</label>
+                                                <textarea name="seo_description[{{ $code }}]" class="form-control bg-dark text-white border-secondary" rows="2"
+                                                    dir="{{ $info['dir'] }}" placeholder="Meta description for search engine snippets">{{ old('seo_description.' . $code) }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                    <a href="{{ route('admin.attractions.index') }}" class="btn btn-light">رجوع</a>
+                </div>
+
+                <!-- Right Sidebar Settings Column -->
+                <div class="col-lg-4">
+                    <div class="card bg-dark text-white border-secondary mb-4">
+                        <div class="card-header border-secondary">
+                            <h6 class="mb-0 text-white"><i class="fas fa-cog me-2"></i>Settings & Attributes</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label text-light">City / Destination</label>
+                                <select name="city_id" class="form-select bg-dark text-white border-secondary">
+                                    <option value="">Select City</option>
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>
+                                            {{ adminTrans($city->name) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-light">URL Slug</label>
+                                <input type="text" name="slug" class="form-control bg-dark text-white border-secondary"
+                                    value="{{ old('slug') }}" placeholder="auto-generated-if-empty">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-light">Featured Image</label>
+                                <input type="file" name="image" class="form-control bg-dark text-white border-secondary" accept="image/*"
+                                    onchange="previewImage(this, 'imagePreview')">
+                                <div class="mt-2" id="imagePreview"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-light">Opening Hours</label>
+                                <input type="text" name="opening_hours" class="form-control bg-dark text-white border-secondary"
+                                    value="{{ old('opening_hours') }}" placeholder="e.g. Daily 8:00 AM - 5:00 PM">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-light">Google Maps URL</label>
+                                <input type="text" name="map_url" class="form-control bg-dark text-white border-secondary"
+                                    value="{{ old('map_url') }}" placeholder="https://maps.google.com/...">
+                            </div>
+
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label text-light">Latitude</label>
+                                    <input type="text" name="latitude" class="form-control bg-dark text-white border-secondary"
+                                        value="{{ old('latitude') }}" placeholder="29.9792">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label text-light">Longitude</label>
+                                    <input type="text" name="longitude" class="form-control bg-dark text-white border-secondary"
+                                        value="{{ old('longitude') }}" placeholder="31.1342">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-light">Sort Order</label>
+                                <input type="number" name="sort_order" class="form-control bg-dark text-white border-secondary"
+                                    value="{{ old('sort_order', 0) }}">
+                            </div>
+
+                            <hr class="border-secondary">
+
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" name="is_featured" value="1" id="is_featured"
+                                    {{ old('is_featured') ? 'checked' : '' }}>
+                                <label class="form-check-label text-white fw-bold" for="is_featured">Featured Highlight</label>
+                            </div>
+
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" name="is_active" value="1" id="is_active"
+                                    {{ old('is_active', true) ? 'checked' : '' }}>
+                                <label class="form-check-label text-white fw-bold" for="is_active">Enabled / Published</label>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                    <i class="fas fa-save me-1"></i> Save Attraction
+                                </button>
+                                <a href="{{ route('admin.attractions.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-body">
-                <form action="{{ route('admin.attractions.store') }}" method="POST" enctype="multipart/form-data"
-                    id="attractionForm">
-                    @csrf
-
-                    <div class="section-title">البيانات الأساسية</div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">المدينة</label>
-                            <select name="city_id" class="form-select">
-                                <option value="">اختر المدينة</option>
-                                @foreach ($cities as $city)
-                                    <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>
-                                        {{ adminTrans($city->name) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Slug</label>
-                            <input type="text" name="slug" class="form-control" value="{{ old('slug') }}">
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">الاسم</label>
-                            <input type="text" name="name" class="form-control" value="{{ old('name') }}">
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">الصورة</label>
-                            <input type="file" name="image" class="form-control" accept="image/*"
-                                onchange="previewImage(this, 'imagePreview')">
-                            <div class="image-preview" id="imagePreview"></div>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">ساعات العمل</label>
-                            <input type="text" name="opening_hours" class="form-control"
-                                value="{{ old('opening_hours') }}">
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">رابط الخريطة</label>
-                            <input type="text" name="map_url" class="form-control" value="{{ old('map_url') }}">
-                        </div>
-
-                        <div class="col-md-2 mb-3">
-                            <label class="form-label">خط العرض</label>
-                            <input type="text" name="latitude" class="form-control" value="{{ old('latitude') }}">
-                        </div>
-
-                        <div class="col-md-2 mb-3">
-                            <label class="form-label">خط الطول</label>
-                            <input type="text" name="longitude" class="form-control" value="{{ old('longitude') }}">
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">الترتيب</label>
-                            <input type="number" name="sort_order" class="form-control"
-                                value="{{ old('sort_order', 0) }}">
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">مميز</label>
-                            <div class="form-control d-flex align-items-center">
-                                <input class="form-check-input me-2" type="checkbox" name="is_featured" value="1"
-                                    {{ old('is_featured') ? 'checked' : '' }}>
-                                <span>نعم</span>
-                            </div>
-                        </div>
-
-                        <div class="col-12 mb-3">
-                            <label class="form-label">وصف مختصر</label>
-                            <textarea name="short_description" class="form-control" rows="3">{{ old('short_description') }}</textarea>
-                        </div>
-
-                        <div class="col-12 mb-3">
-                            <label class="form-label">الوصف</label>
-                            <textarea name="description" class="form-control" rows="6">{{ old('description') }}</textarea>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">SEO Title</label>
-                            <input type="text" name="seo_title" class="form-control" value="{{ old('seo_title') }}">
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">SEO Description</label>
-                            <textarea name="seo_description" class="form-control" rows="3">{{ old('seo_description') }}</textarea>
-                        </div>
-
-                        <div class="col-12 mb-3 d-flex gap-4">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="is_active" value="1"
-                                    {{ old('is_active', true) ? 'checked' : '' }}>
-                                <label class="form-check-label">مفعل</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="d-flex gap-2 mt-4">
-                        <button type="submit" class="btn btn-primary" id="submitBtn">حفظ</button>
-                        <a href="{{ route('admin.attractions.index') }}" class="btn btn-secondary">إلغاء</a>
-                    </div>
-                </form>
-            </div>
-        </div>
+        </form>
     </div>
 @endsection
 
 @section('js')
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
     <script>
+        const editors = {};
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.rich-editor').forEach(textarea => {
+                const lang = textarea.getAttribute('data-lang') || 'en';
+                ClassicEditor.create(textarea, {
+                    toolbar: {
+                        items: [
+                            'heading', '|',
+                            'bold', 'italic', 'underline', 'strikethrough', '|',
+                            'link', 'bulletedList', 'numberedList', '|',
+                            'outdent', 'indent', '|',
+                            'blockQuote', 'insertTable', 'undo', 'redo'
+                        ]
+                    },
+                    heading: {
+                        options: [
+                            { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                            { model: 'heading1', view: 'h1', title: 'Heading 1 (H1)', class: 'ck-heading_heading1' },
+                            { model: 'heading2', view: 'h2', title: 'Heading 2 (H2)', class: 'ck-heading_heading2' },
+                            { model: 'heading3', view: 'h3', title: 'Heading 3 (H3)', class: 'ck-heading_heading3' }
+                        ]
+                    },
+                    language: lang === 'ar' ? 'ar' : 'en'
+                }).then(editor => {
+                    editors[lang] = editor;
+                }).catch(error => {
+                    console.error('CKEditor Init Error:', error);
+                });
+            });
+
+            const form = document.getElementById('attractionForm');
+            if (form) {
+                form.addEventListener('submit', function() {
+                    Object.keys(editors).forEach(lang => {
+                        if (editors[lang]) {
+                            editors[lang].updateSourceElement();
+                        }
+                    });
+                });
+            }
+        });
+
+        function insertTourLink(lang) {
+            const select = document.querySelector('.tour-select-' + lang);
+            if (!select || !select.value) {
+                alert('Please select a tour package first.');
+                return;
+            }
+            const url = select.value;
+            const title = select.options[select.selectedIndex].getAttribute('data-title') || 'View Tour';
+            const editor = editors[lang];
+            if (editor) {
+                const linkHtml = `<a href="${url}" title="${title}">${title}</a>`;
+                const viewFragment = editor.data.processor.toView(linkHtml);
+                const modelFragment = editor.data.toModel(viewFragment);
+                editor.model.insertContent(modelFragment);
+            } else {
+                const textarea = document.querySelector(`textarea[name="description[${lang}]"]`);
+                if (textarea) {
+                    textarea.value += ` <a href="${url}">${title}</a>`;
+                }
+            }
+        }
+
+        function copyTourLink(lang) {
+            const select = document.querySelector('.tour-select-' + lang);
+            if (!select || !select.value) {
+                alert('Please select a tour package first.');
+                return;
+            }
+            navigator.clipboard.writeText(select.value).then(() => {
+                alert('Tour URL copied to clipboard: ' + select.value);
+            });
+        }
+
         function previewImage(input, previewId) {
             const preview = document.getElementById(previewId);
             preview.innerHTML = '';
-
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    preview.innerHTML = `<img src="${e.target.result}" alt="preview">`;
+                    preview.innerHTML = `<img src="${e.target.result}" class="rounded border border-secondary" style="width: 100%; max-height: 180px; object-fit: cover;">`;
                 };
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('attractionForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const pageLoader = document.getElementById('pageLoader');
-            const progressBar = document.getElementById('progressBar');
-            const progressPercent = document.getElementById('progressPercent');
-
-            let progress = 0;
-            let interval = null;
-            let submitted = false;
-
-            form.addEventListener('submit', function(event) {
-                if (submitted) {
-                    event.preventDefault();
-                    return false;
-                }
-
-                submitted = true;
-                submitBtn.disabled = true;
-                pageLoader.classList.add('active');
-
-                interval = setInterval(() => {
-                    if (progress < 90) {
-                        progress += Math.floor(Math.random() * 10) + 3;
-                        if (progress > 90) progress = 90;
-
-                        progressBar.style.width = progress + '%';
-                        progressPercent.textContent = progress + '%';
-                    }
-                }, 200);
-            });
-
-            window.addEventListener('pageshow', function() {
-                clearInterval(interval);
-                progress = 0;
-
-                if (progressBar) progressBar.style.width = '0%';
-                if (progressPercent) progressPercent.textContent = '0%';
-                if (pageLoader) pageLoader.classList.remove('active');
-                if (submitBtn) submitBtn.disabled = false;
-
-                submitted = false;
-            });
-        });
     </script>
 @endsection

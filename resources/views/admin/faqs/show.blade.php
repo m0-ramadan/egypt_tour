@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض السؤال الشائع'))
+@section('title', admin_t('View FAQ'))
 
 @section('css')
     <style>
@@ -62,21 +62,21 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.faqs.index') }}">الأسئلة الشائعة</a></li>
-                <li class="breadcrumb-item active">عرض السؤال</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.faqs.index') }}">FAQs</a></li>
+                <li class="breadcrumb-item active">View FAQ</li>
             </ol>
         </nav>
 
         <div class="profile-card">
             <div class="profile-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="mb-1">{{ adminTrans($faq->question) ?: 'بدون سؤال' }}</h4>
-                    <small class="opacity-75">ترتيب: {{ $faq->sort_order ?? 0 }}</small>
+                    <h4 class="mb-1">{{ adminTrans($faq->question) ?: 'Without Question' }}</h4>
+                    <small class="opacity-75">Sort Order: {{ $faq->sort_order ?? 0 }}</small>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{{ route('admin.faqs.edit', $faq) }}" class="btn btn-light">تعديل</a>
-                    <a href="{{ route('admin.faqs.index') }}" class="btn btn-outline-light">رجوع</a>
+                    <a href="{{ route('admin.faqs.edit', $faq) }}" class="btn btn-light">Edit</a>
+                    <a href="{{ route('admin.faqs.index') }}" class="btn btn-outline-light">Back</a>
                 </div>
             </div>
 
@@ -84,35 +84,35 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
-                            <div class="info-value">{{ $faq->is_active ?? true ? 'مفعلة' : 'غير مفعلة' }}</div>
+                            <div class="info-label">Status</div>
+                            <div class="info-value">{{ $faq->is_active ?? true ? 'Enabled' : 'Inactive' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">مميزة</div>
-                            <div class="info-value">{{ $faq->is_featured ?? false ? 'نعم' : 'لا' }}</div>
+                            <div class="info-label">Featured</div>
+                            <div class="info-value">{{ $faq->is_featured ?? false ? 'Yes' : 'No' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الترتيب</div>
+                            <div class="info-label">Sort Order</div>
                             <div class="info-value">{{ $faq->sort_order ?? 0 }}</div>
                         </div>
                     </div>
 
                     <div class="col-12">
                         <div class="info-box">
-                            <div class="info-label">السؤال</div>
+                            <div class="info-label">Question</div>
                             <div class="info-value">{{ adminTrans($faq->question) ?: '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-12">
                         <div class="info-box">
-                            <div class="info-label">الإجابة</div>
+                            <div class="info-label">Answer</div>
                             <div class="info-value">{{ adminTrans($faq->answer) ?: '-' }}</div>
                         </div>
                     </div>

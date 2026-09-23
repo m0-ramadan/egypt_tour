@@ -37,8 +37,8 @@
             <div class="modal-content">
                 <img class="img_modal">
                 <div class="modal-footer">
-                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                        {{ admin_t('إلغاء') }}
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                        {{ admin_t('Cancel') }}
                     </button>
                 </div>
             </div>
@@ -293,15 +293,15 @@
             },
             colors: [chartColors.area.series3, chartColors.area.series2, chartColors.area.series1],
             series: [{
-                    name: "العملاء",
+                    name: "Clients",
                     data: "4,26,16,492,127,9,1,0,0,0,0".split(",")
                 },
                 {
-                    name: "السائقين",
+                    name: "Guides",
                     data: "0,0,0,775,143,12,2,1,0,0,0".split(",")
                 },
                 {
-                    name: "الرحلات",
+                    name: "Tours",
                     data: "0,0,0,63,0,0,0,0,0,0,0".split(",")
                 }
             ],
@@ -379,10 +379,10 @@
             },
             colors: [chartColors.area.series3, chartColors.area.series2],
             series: [{
-                name: "الرحلات المكتملة",
+                name: "Completed Tours",
                 data: "0,0,0,11,0,0,0,0,0,0,0".split(",")
             }, {
-                name: "الرحلات الملغاة",
+                name: "Cancelled Tours",
                 data: "0,0,0,51,0,0,0,0,0,0,0".split(",")
             }, ],
             xaxis: {
@@ -555,12 +555,12 @@
 
         if ("") {
             console.log("")
-            $('#sales_data').html(`احصائات الرحلات 2025`);
+            $('#sales_data').html(`Package Statistics 2025`);
+        } else {
+            $('#sales_data').html(`Package Statistics ${selectedYear}`);
         }
-        if ("") {
-            console.log("")
-
-            $('#all_data').html(`الاحصائيات لسنة 2025`);
+        if (selectedYear == '') {
+            $('#all_data').html(`Performance Statistics for 2025`);
         }
 
 

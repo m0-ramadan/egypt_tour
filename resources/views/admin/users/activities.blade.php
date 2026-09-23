@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('نشاطات المستخدم'))
+@section('title', admin_t('Activities User'))
 
 @section('css')
     <style>
@@ -45,19 +45,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">المستخدمين</a></li>
-                <li class="breadcrumb-item active">نشاطات المستخدم</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Users</a></li>
+                <li class="breadcrumb-item active">Activities User</li>
             </ol>
         </nav>
 
         <div class="wrapper-card">
             <div class="wrapper-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">نشاطات {{ $user->name ?? 'المستخدم' }}</h5>
-                    <small class="opacity-75">عرض جميع النشاطات المرتبطة بهذا المستخدم</small>
+                    <h5 class="mb-0">Activities {{ $user->name ?? 'User' }}</h5>
+                    <small class="opacity-75">View All Activities Related With This User</small>
                 </div>
-                <a href="{{ route('admin.users.show', $user) }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.users.show', $user) }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="p-4">
@@ -65,21 +65,21 @@
                     <div class="activity-row">
                         <div class="row">
                             <div class="col-md-4 mb-2">
-                                <strong>النوع:</strong>
+                                <strong>Type:</strong>
                                 <div>{{ $activity->type ?? ($activity->action ?? '-') }}</div>
                             </div>
                             <div class="col-md-4 mb-2">
-                                <strong>الوصف:</strong>
+                                <strong>Description:</strong>
                                 <div>{{ $activity->description ?? '-' }}</div>
                             </div>
                             <div class="col-md-4 mb-2">
-                                <strong>التاريخ:</strong>
+                                <strong>Date:</strong>
                                 <div>{{ optional($activity->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد نشاطات لهذا المستخدم</div>
+                    <div class="text-center py-5">No There are Activities For this User</div>
                 @endforelse
 
                 @if (method_exists($activities, 'links'))

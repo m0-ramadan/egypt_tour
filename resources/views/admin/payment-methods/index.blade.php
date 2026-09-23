@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('وسائل الدفع'))
+@section('title', admin_t('Payment Methods'))
 
 @section('css')
 
@@ -136,8 +136,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">وسائل الدفع</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Payment Methods</li>
             </ol>
         </nav>
 
@@ -148,7 +148,7 @@
                         <i class="fas fa-credit-card"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalMethods) }}</div>
-                    <div class="stats-label">إجمالي الوسائل</div>
+                    <div class="stats-label">Total Methods</div>
                 </div>
             </div>
 
@@ -159,7 +159,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stats-number">{{ number_format($activeMethods) }}</div>
-                    <div class="stats-label">مفعلة</div>
+                    <div class="stats-label">Enabled</div>
                 </div>
             </div>
 
@@ -170,7 +170,7 @@
                         <i class="fas fa-ban"></i>
                     </div>
                     <div class="stats-number">{{ number_format($inactiveMethods) }}</div>
-                    <div class="stats-label">غير مفعلة</div>
+                    <div class="stats-label">Inactive</div>
                 </div>
             </div>
 
@@ -181,7 +181,7 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <div class="stats-number">{{ number_format($defaultMethods) }}</div>
-                    <div class="stats-label">افتراضية</div>
+                    <div class="stats-label">Default</div>
                 </div>
             </div>
         </div>
@@ -190,32 +190,32 @@
             <form method="GET" action="{{ route('admin.payment-methods.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-5">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <input type="text" name="search" class="form-control" value="{{ request('search') }}"
-                            placeholder="ابحث بالاسم أو النوع">
+                            placeholder="Search By name Or Type">
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>مفعل</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>غير مفعل
+                            <option value="">All</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Enabled</option>
+                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Disabled
                             </option>
                         </select>
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">افتراضي</label>
+                        <label class="form-label">Default</label>
                         <select name="default" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="1" {{ request('default') == '1' ? 'selected' : '' }}>نعم</option>
+                            <option value="">All</option>
+                            <option value="1" {{ request('default') == '1' ? 'selected' : '' }}>Yes</option>
                         </select>
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.payment-methods.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.payment-methods.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -224,11 +224,11 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة وسائل الدفع</h5>
-                    <small class="opacity-75">إدارة بوابات وطرق الدفع</small>
+                    <h5 class="mb-0">Methods Payment List</h5>
+                    <small class="opacity-75">Manage Gateways And Methods Payment</small>
                 </div>
                 <a href="{{ route('admin.payment-methods.create') }}" class="btn btn-light">
-                    <i class="fas fa-plus me-2"></i>إضافة وسيلة
+                    <i class="fas fa-plus me-2"></i>Add Method
                 </a>
             </div>
 
@@ -237,54 +237,54 @@
                     <div class="item-card">
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
                             <div>
-                                <h6 class="mb-1">{{ adminTrans($paymentMethod->name) ?: 'بدون اسم' }}</h6>
+                                <h6 class="mb-1">{{ adminTrans($paymentMethod->name) ?: 'No Name' }}</h6>
                                 <small class="text-light opacity-75">{{ $paymentMethod->type ?? '-' }}</small>
                             </div>
 
                             <div class="d-flex gap-2 flex-wrap">
                                 <span
                                     class="badge-status {{ $paymentMethod->is_active ?? true ? 'status-active' : 'status-inactive' }}">
-                                    {{ $paymentMethod->is_active ?? true ? 'مفعل' : 'غير مفعل' }}
+                                    {{ $paymentMethod->is_active ?? true ? 'Enabled' : 'Disabled' }}
                                 </span>
 
                                 @if ($paymentMethod->is_default ?? false)
-                                    <span class="badge-status status-default">افتراضي</span>
+                                    <span class="badge-status status-default">Default</span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-md-3"><strong>النوع:</strong> {{ $paymentMethod->type ?? '-' }}</div>
-                            <div class="col-md-3"><strong>العملة:</strong> {{ $paymentMethod->currency_code ?? '-' }}</div>
-                            <div class="col-md-3"><strong>الترتيب:</strong> {{ $paymentMethod->sort_order ?? 0 }}</div>
-                            <div class="col-md-3"><strong>آخر تحديث:</strong>
+                            <div class="col-md-3"><strong>Type:</strong> {{ $paymentMethod->type ?? '-' }}</div>
+                            <div class="col-md-3"><strong>Currency:</strong> {{ $paymentMethod->currency_code ?? '-' }}</div>
+                            <div class="col-md-3"><strong>Order:</strong> {{ $paymentMethod->sort_order ?? 0 }}</div>
+                            <div class="col-md-3"><strong>Last Updated:</strong>
                                 {{ optional($paymentMethod->updated_at)->translatedFormat('d M Y') ?? '-' }}</div>
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
                             <a href="{{ route('admin.payment-methods.show', $paymentMethod) }}"
-                                class="btn btn-info btn-sm">عرض</a>
+                                class="btn btn-info btn-sm">View</a>
                             <a href="{{ route('admin.payment-methods.edit', $paymentMethod) }}"
-                                class="btn btn-warning btn-sm">تعديل</a>
+                                class="btn btn-warning btn-sm">Edit</a>
 
                             @if (Route::has('admin.payment-methods.toggle-status'))
                                 <form action="{{ route('admin.payment-methods.toggle-status', $paymentMethod) }}"
                                     method="POST">
                                     @csrf
                                     @method('PATCH')
-                                    <button class="btn btn-dark btn-sm" type="submit">تبديل الحالة</button>
+                                    <button class="btn btn-dark btn-sm" type="submit">Toggle Status</button>
                                 </form>
                             @endif
 
                             <form action="{{ route('admin.payment-methods.destroy', $paymentMethod) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد وسائل دفع حالياً</div>
+                    <div class="text-center py-5">No Methods Payment available</div>
                 @endforelse
 
                 @if (method_exists($paymentMethods, 'links'))

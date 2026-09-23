@@ -22,6 +22,11 @@ class PackageTypeContentService
             return;
         }
 
+        if ($package->package_type === 'day_tour') {
+            $package->tourPackageAccommodations()->delete();
+            $package->prices()->delete();
+        }
+
         $payload = (array) $request->input('experience', []);
         if (!empty($payload['_present'])) {
             $this->syncSharedPackageFields($package, $request, $payload);
@@ -131,16 +136,22 @@ class PackageTypeContentService
         }
 
         $package->addons()->delete();
+        $translationService = app(TranslationService::class);
 
         foreach ((array) $payload['addons'] as $index => $row) {
-            $title = trim((string) ($row['title'] ?? ''));
-            if ($title === '') {
+            $rawTitle = trim((string) ($row['title'] ?? ''));
+            if ($rawTitle === '') {
                 continue;
             }
 
+            $rawDesc = trim((string) ($row['description'] ?? ''));
+
+            $title = $translationService->translateTextToAllLanguages($rawTitle);
+            $description = $rawDesc !== '' ? $translationService->translateTextToAllLanguages($rawDesc) : null;
+
             $package->addons()->create([
                 'title' => $title,
-                'description' => $this->nullableString($row['description'] ?? null),
+                'description' => $description,
                 'price' => $this->nullableFloat($row['price'] ?? null),
                 'currency_id' => !empty($row['currency_id']) ? (int) $row['currency_id'] : $package->currency_id,
                 'price_unit' => $this->nullableString($row['price_unit'] ?? null),
@@ -153,6 +164,7 @@ class PackageTypeContentService
     private function syncHighlights(Package $package, mixed $items): void
     {
         $package->highlights()->delete();
+        $translationService = app(TranslationService::class);
 
         if (is_string($items)) {
             $items = preg_split('/[\r\n]+/', $items) ?: [];
@@ -166,30 +178,23 @@ class PackageTypeContentService
                 $rawTitle = $row['title'] ?? $row['text'] ?? $row['description'] ?? null;
                 $rawDesc = $row['description'] ?? $row['title'] ?? $row['text'] ?? null;
 
-                if (is_array($rawTitle)) {
-                    $titleData = $rawTitle;
-                } elseif (is_string($rawTitle) && trim($rawTitle) !== '') {
-                    $t = trim($rawTitle);
-                    $titleData = ['en' => $t, 'ar' => $t];
+                if (!empty($rawTitle)) {
+                    $titleData = $translationService->translateTextToAllLanguages($rawTitle);
                 }
 
-                if (is_array($rawDesc)) {
-                    $descData = $rawDesc;
-                } elseif (is_string($rawDesc) && trim($rawDesc) !== '') {
-                    $d = trim($rawDesc);
-                    $descData = ['en' => $d, 'ar' => $d];
+                if (!empty($rawDesc)) {
+                    $descData = $translationService->translateTextToAllLanguages($rawDesc);
                 }
             } elseif (is_string($row) && trim($row) !== '') {
-                $t = trim($row);
-                $titleData = ['en' => $t, 'ar' => $t];
-                $descData = ['en' => $t, 'ar' => $t];
+                $titleData = $translationService->translateTextToAllLanguages(trim($row));
+                $descData = $titleData;
             }
 
             if (empty($titleData) && empty($descData)) {
                 continue;
             }
 
-            $titleData = $titleData ?: ($descData ?: ['en' => '', 'ar' => '']);
+            $titleData = $titleData ?: ($descData ?: []);
             $descData = $descData ?: $titleData;
 
             $package->highlights()->create([
@@ -365,7 +370,7 @@ class PackageTypeContentService
         }
 
         return collect((array) $value)
-            ->map(fn ($item) => trim((string) $item))
+            ->map(fn($item) => trim((string) $item))
             ->filter()
             ->unique()
             ->values()
@@ -375,8 +380,8 @@ class PackageTypeContentService
     private function intList(mixed $value): array
     {
         return collect((array) $value)
-            ->map(fn ($item) => (int) $item)
-            ->filter(fn ($item) => $item > 0)
+            ->map(fn($item) => (int) $item)
+            ->filter(fn($item) => $item > 0)
             ->unique()
             ->values()
             ->all();

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('المشتركين'))
+@section('title', admin_t('Subscribers'))
 
 @section('css')
 
@@ -207,8 +207,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">المشتركين</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Subscribers</li>
             </ol>
         </nav>
 
@@ -218,14 +218,14 @@
                     <div class="stats-icon" style="background: var(--primary-gradient); color:#fff;"><i
                             class="fas fa-envelope-open-text"></i></div>
                     <div class="stats-number">{{ number_format($total) }}</div>
-                    <div class="stats-label">إجمالي المشتركين</div>
+                    <div class="stats-label">Total Subscribers</div>
                 </div>
             </div>
         </div>
 
         <div class="panel-card">
             <div class="panel-header">
-                <h5 class="mb-0">قائمة المشتركين</h5>
+                <h5 class="mb-0">Subscribers List</h5>
             </div>
             <div class="panel-body">
                 @forelse($subscriptions as $subscription)
@@ -239,13 +239,13 @@
                             class="mt-2 mt-md-0">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-sm btn-danger" type="submit">حذف</button>
+                            <button class="btn btn-sm btn-danger" type="submit">Delete</button>
                         </form>
                     </div>
                 @empty
                     <div class="empty-state">
                         <div class="empty-state-icon"><i class="fas fa-envelope-open-text"></i></div>
-                        <h5 class="empty-state-text">لا يوجد مشتركون</h5>
+                        <h5 class="empty-state-text">No There is Subscribers</h5>
                     </div>
                 @endforelse
                 <div class="mt-3">{{ $subscriptions->links() }}</div>

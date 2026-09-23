@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إدارة الوجهات'))
+@section('title', admin_t('Manage Destinations'))
 
 @section('css')
 
@@ -199,8 +199,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">الوجهات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Destinations</li>
             </ol>
         </nav>
 
@@ -210,7 +210,7 @@
                     <div class="stats-icon" style="background: var(--primary-gradient); color:#fff;"><i
                             class="fas fa-map-marked-alt"></i></div>
                     <div class="stats-number">{{ number_format($totalDestinations) }}</div>
-                    <div class="stats-label">إجمالي الوجهات</div>
+                    <div class="stats-label">Total Destinations</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -219,7 +219,7 @@
                         style="background: rgba(32,201,151,.2); color:#20c997; border:1px solid rgba(32,201,151,.3);"><i
                             class="fas fa-check-circle"></i></div>
                     <div class="stats-number">{{ number_format($activeDestinations) }}</div>
-                    <div class="stats-label">وجهات مفعلة</div>
+                    <div class="stats-label">Destinations Enabled</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -228,7 +228,7 @@
                         style="background: rgba(12,99,228,.2); color:#0c63e4; border:1px solid rgba(12,99,228,.3);"><i
                             class="fas fa-star"></i></div>
                     <div class="stats-number">{{ number_format($featuredDestinations) }}</div>
-                    <div class="stats-label">وجهات مميزة</div>
+                    <div class="stats-label">Destinations Featured</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -237,7 +237,7 @@
                         style="background: rgba(253,126,20,.2); color:#fd7e14; border:1px solid rgba(253,126,20,.3);"><i
                             class="fas fa-ban"></i></div>
                     <div class="stats-number">{{ number_format($inactiveDestinations) }}</div>
-                    <div class="stats-label">وجهات غير مفعلة</div>
+                    <div class="stats-label">Destinations Not Enabled</div>
                 </div>
             </div>
         </div>
@@ -246,18 +246,18 @@
             <form method="GET" action="{{ route('admin.destinations.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <div class="search-box">
                             <i class="fas fa-search search-icon"></i>
                             <input type="text" class="form-control" name="search" value="{{ request('search') }}"
-                                placeholder="ابحث باسم الوجهة أو الـ slug">
+                                placeholder="Search Named Destination Or the slug">
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">الدولة</label>
+                        <label class="form-label">Country</label>
                         <select name="country_id" class="form-select">
-                            <option value="">كل الدول</option>
+                            <option value="">All Countries</option>
                             @foreach ($countries ?? collect() as $country)
                                 <option value="{{ $country->id }}"
                                     {{ request('country_id') == $country->id ? 'selected' : '' }}>
@@ -268,18 +268,18 @@
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>مفعل</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>غير مفعل
+                            <option value="">All</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Enabled</option>
+                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Disabled
                             </option>
                         </select>
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.destinations.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.destinations.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -288,11 +288,11 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة الوجهات</h5>
-                    <small class="opacity-75">إدارة جميع وجهات السفر</small>
+                    <h5 class="mb-0">Destinations List</h5>
+                    <small class="opacity-75">Manage All Destinations Travel</small>
                 </div>
                 <a href="{{ route('admin.destinations.create') }}" class="btn btn-light">
-                    <i class="fas fa-plus me-2"></i>إضافة وجهة
+                    <i class="fas fa-plus me-2"></i>Add Destination
                 </a>
             </div>
 
@@ -301,53 +301,53 @@
                     <div class="item-card">
                         <div class="item-header">
                             <div>
-                                <h6 class="mb-1">{{ adminTrans($destination->name) ?: 'بدون اسم' }}</h6>
+                                <h6 class="mb-1">{{ adminTrans($destination->name) ?: 'No Name' }}</h6>
                                 <small class="text-light opacity-75">{{ $destination->slug ?? '-' }}</small>
                             </div>
 
                             <div class="d-flex gap-2 flex-wrap">
                                 <span
                                     class="badge-status {{ $destination->is_active ?? true ? 'status-active' : 'status-inactive' }}">
-                                    {{ $destination->is_active ?? true ? 'مفعلة' : 'غير مفعلة' }}
+                                    {{ $destination->is_active ?? true ? 'Enabled' : 'Inactive' }}
                                 </span>
                                 @if ($destination->is_featured ?? false)
-                                    <span class="badge-status status-featured">مميزة</span>
+                                    <span class="badge-status status-featured">Featured</span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="detail-row">
                             <div>
-                                <span class="detail-label">الدولة:</span>
+                                <span class="detail-label">Country:</span>
                                 <span>{{ adminTrans(optional($destination->country)->name) ?: '-' }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">المدينة:</span>
+                                <span class="detail-label">City:</span>
                                 <span>{{ adminTrans(optional($destination->city)->name) ?: '-' }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">الترتيب:</span>
+                                <span class="detail-label">Order:</span>
                                 <span>{{ $destination->sort_order ?? 0 }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">الإنشاء:</span>
+                                <span class="detail-label">Created At:</span>
                                 <span>{{ optional($destination->created_at)->translatedFormat('d M Y') ?? '-' }}</span>
                             </div>
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
                             <a href="{{ route('admin.destinations.show', $destination) }}"
-                                class="btn btn-info btn-sm">عرض</a>
+                                class="btn btn-info btn-sm">View</a>
                             <a href="{{ route('admin.destinations.edit', $destination) }}"
-                                class="btn btn-warning btn-sm">تعديل</a>
+                                class="btn btn-warning btn-sm">Edit</a>
                             @if (Route::has('admin.destinations.toggle-status'))
                                 <form action="{{ route('admin.destinations.toggle-status', $destination) }}"
                                     method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-secondary btn-sm">تبديل الحالة</button>
+                                    <button type="submit" class="btn btn-secondary btn-sm">Toggle Status</button>
                                 </form>
                             @endif
                         </div>
@@ -355,8 +355,8 @@
                 @empty
                     <div class="empty-state">
                         <div class="empty-state-icon"><i class="fas fa-map-marked-alt"></i></div>
-                        <h5 class="empty-state-text">لا توجد وجهات حالياً</h5>
-                        <a href="{{ route('admin.destinations.create') }}" class="btn btn-primary">إضافة وجهة جديدة</a>
+                        <h5 class="empty-state-text">No Destinations available</h5>
+                        <a href="{{ route('admin.destinations.create') }}" class="btn btn-primary">Add New Destination</a>
                     </div>
                 @endforelse
                 <!-- Pagination -->

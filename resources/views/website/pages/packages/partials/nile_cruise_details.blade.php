@@ -75,6 +75,9 @@
             $ncAddons->isNotEmpty() ||
             $ncDurations->isNotEmpty() ||
             ($package->tourPackageAccommodations && $package->tourPackageAccommodations->isNotEmpty()) ||
+            ($package->package_type !== 'day_tour' &&
+                $package->tourPackageAccommodations &&
+                $package->tourPackageAccommodations->isNotEmpty()) ||
             $hasInclusionsExclusions ||
             $hasPoliciesData ||
             $hasFacilitiesData;
@@ -400,7 +403,7 @@
                             if (target) {
                                 target.classList.add('active');
                                 target.querySelectorAll('[data-collapse-target]').forEach(function(
-                                trigger) {
+                                    trigger) {
                                     const content = document.getElementById(trigger.dataset
                                         .collapseTarget);
                                     if (content && (content.classList.contains('open') || content

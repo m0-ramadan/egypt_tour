@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض سجل التواصل'))
+@section('title', admin_t('View Communication Log'))
 
 @section('css')
     <style>
@@ -65,26 +65,26 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.communications.index') }}">سجل التواصل</a></li>
-                <li class="breadcrumb-item active">عرض السجل</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.communications.index') }}">Communication Log</a></li>
+                <li class="breadcrumb-item active">View Log</li>
             </ol>
         </nav>
 
         <div class="profile-card">
             <div class="profile-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="mb-1">{{ $communication->subject ?? 'بدون عنوان' }}</h4>
+                    <h4 class="mb-1">{{ $communication->subject ?? 'Without Title' }}</h4>
                     <small class="opacity-75">{{ $communication->channel ?? '-' }}</small>
                 </div>
-                <a href="{{ route('admin.communications.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.communications.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="profile-body">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">نوع السجل</div>
+                            <div class="info-label">Type Log</div>
                             <div class="info-value">{{ $communication->related_type ?? '-' }}</div>
                         </div>
                     </div>
@@ -98,35 +98,35 @@
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">القناة</div>
+                            <div class="info-label">Channel</div>
                             <div class="info-value">{{ $communication->channel ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">المرسل</div>
+                            <div class="info-label">Sender</div>
                             <div class="info-value">{{ $communication->sender_name ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">المستقبل</div>
+                            <div class="info-label">Receiver</div>
                             <div class="info-value">{{ $communication->receiver_name ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-12">
                         <div class="info-box">
-                            <div class="info-label">الرسالة</div>
+                            <div class="info-label">Message</div>
                             <div class="info-value message-box">{{ $communication->message ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-12">
                         <div class="info-box">
-                            <div class="info-label">تاريخ الإنشاء</div>
+                            <div class="info-label">Created At</div>
                             <div class="info-value">
                                 {{ optional($communication->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
                         </div>

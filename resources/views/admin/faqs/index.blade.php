@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('الأسئلة الشائعة'))
+@section('title', admin_t('FAQs'))
 
 @section('css')
 
@@ -129,8 +129,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">الأسئلة الشائعة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">FAQs</li>
             </ol>
         </nav>
 
@@ -141,7 +141,7 @@
                         <i class="fas fa-circle-question"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalFaqs) }}</div>
-                    <div class="stats-label">إجمالي الأسئلة</div>
+                    <div class="stats-label">Total Questions</div>
                 </div>
             </div>
 
@@ -152,7 +152,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stats-number">{{ number_format($activeFaqs) }}</div>
-                    <div class="stats-label">مفعلة</div>
+                    <div class="stats-label">Enabled</div>
                 </div>
             </div>
 
@@ -163,7 +163,7 @@
                         <i class="fas fa-ban"></i>
                     </div>
                     <div class="stats-number">{{ number_format($inactiveFaqs) }}</div>
-                    <div class="stats-label">غير مفعلة</div>
+                    <div class="stats-label">Inactive</div>
                 </div>
             </div>
 
@@ -174,7 +174,7 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <div class="stats-number">{{ number_format($featuredFaqs) }}</div>
-                    <div class="stats-label">مميزة</div>
+                    <div class="stats-label">Featured</div>
                 </div>
             </div>
         </div>
@@ -183,32 +183,32 @@
             <form method="GET" action="{{ route('admin.faqs.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-5">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <input type="text" name="search" class="form-control" value="{{ request('search') }}"
-                            placeholder="ابحث بالسؤال أو الإجابة">
+                            placeholder="Search With Question Or Answer">
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>مفعل</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>غير مفعل
+                            <option value="">All</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Enabled</option>
+                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Disabled
                             </option>
                         </select>
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">مميز</label>
+                        <label class="form-label">Featured</label>
                         <select name="featured" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="1" {{ request('featured') == '1' ? 'selected' : '' }}>مميز</option>
+                            <option value="">All</option>
+                            <option value="1" {{ request('featured') == '1' ? 'selected' : '' }}>Featured</option>
                         </select>
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.faqs.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.faqs.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -217,11 +217,11 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة الأسئلة الشائعة</h5>
-                    <small class="opacity-75">إدارة FAQ الخاصة بالموقع</small>
+                    <h5 class="mb-0">Questions Common List</h5>
+                    <small class="opacity-75">Manage website FAQs</small>
                 </div>
                 <a href="{{ route('admin.faqs.create') }}" class="btn btn-light">
-                    <i class="fas fa-plus me-2"></i>إضافة سؤال
+                    <i class="fas fa-plus me-2"></i>Add FAQ
                 </a>
             </div>
 
@@ -230,50 +230,50 @@
                     <div class="item-card">
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
                             <div>
-                                <h6 class="mb-1">{{ adminTrans($faq->question) ?: 'بدون سؤال' }}</h6>
-                                <small class="text-light opacity-75">الترتيب: {{ $faq->sort_order ?? 0 }}</small>
+                                <h6 class="mb-1">{{ adminTrans($faq->question) ?: 'Without Question' }}</h6>
+                                <small class="text-light opacity-75">Order: {{ $faq->sort_order ?? 0 }}</small>
                             </div>
 
                             <div class="d-flex gap-2 flex-wrap">
                                 <span
                                     class="badge-status {{ $faq->is_active ?? true ? 'status-active' : 'status-inactive' }}">
-                                    {{ $faq->is_active ?? true ? 'مفعل' : 'غير مفعل' }}
+                                    {{ $faq->is_active ?? true ? 'Enabled' : 'Disabled' }}
                                 </span>
 
                                 @if ($faq->is_featured ?? false)
                                     <span class="badge-status"
                                         style="background: rgba(12,99,228,.2); color:#0c63e4; border:1px solid rgba(12,99,228,.3);">
-                                        مميز
+                                        Featured
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <strong>الإجابة:</strong>
+                            <strong>Answer:</strong>
                             {{ \Illuminate\Support\Str::limit(adminTrans($faq->answer) ?? '-', 260) }}
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('admin.faqs.show', $faq) }}" class="btn btn-info btn-sm">عرض</a>
-                            <a href="{{ route('admin.faqs.edit', $faq) }}" class="btn btn-warning btn-sm">تعديل</a>
+                            <a href="{{ route('admin.faqs.show', $faq) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('admin.faqs.edit', $faq) }}" class="btn btn-warning btn-sm">Edit</a>
 
                             @if (Route::has('admin.faqs.toggle-status'))
                                 <form action="{{ route('admin.faqs.toggle-status', $faq) }}" method="POST">
                                     @csrf
-                                    <button class="btn btn-dark btn-sm" type="submit">تبديل الحالة</button>
+                                    <button class="btn btn-dark btn-sm" type="submit">Toggle Status</button>
                                 </form>
                             @endif
 
                             <form action="{{ route('admin.faqs.destroy', $faq) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد أسئلة شائعة حالياً</div>
+                    <div class="text-center py-5">No FAQs available</div>
                 @endforelse
 
                 @if (method_exists($faqs, 'links'))

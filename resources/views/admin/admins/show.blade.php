@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض المدير'))
+@section('title', admin_t('View Admin'))
 
 @section('css')
     <style>
@@ -60,21 +60,21 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.admins.index') }}">المديرون</a></li>
-                <li class="breadcrumb-item active">عرض المدير</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.admins.index') }}">Admins</a></li>
+                <li class="breadcrumb-item active">View Admin</li>
             </ol>
         </nav>
 
         <div class="profile-card">
             <div class="profile-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="mb-1">{{ $admin->name ?? 'بدون اسم' }}</h4>
+                    <h4 class="mb-1">{{ $admin->name ?? 'No Name' }}</h4>
                     <small class="opacity-75">{{ $admin->email ?? '-' }}</small>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{{ route('admin.admins.edit', $admin) }}" class="btn btn-light">تعديل</a>
-                    <a href="{{ route('admin.admins.index') }}" class="btn btn-outline-light">رجوع</a>
+                    <a href="{{ route('admin.admins.edit', $admin) }}" class="btn btn-light">Edit</a>
+                    <a href="{{ route('admin.admins.index') }}" class="btn btn-outline-light">Back</a>
                 </div>
             </div>
 
@@ -82,42 +82,42 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الاسم</div>
+                            <div class="info-label">Name</div>
                             <div class="info-value">{{ $admin->name ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">البريد الإلكتروني</div>
+                            <div class="info-label">Email Address</div>
                             <div class="info-value">{{ $admin->email ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الهاتف</div>
+                            <div class="info-label">Phone Number</div>
                             <div class="info-value">{{ $admin->phone ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الدور</div>
+                            <div class="info-label">Role</div>
                             <div class="info-value">{{ $admin->role->name ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
-                            <div class="info-value">{{ $admin->is_active ?? true ? 'نشط' : 'غير نشط' }}</div>
+                            <div class="info-label">Status</div>
+                            <div class="info-value">{{ $admin->is_active ?? true ? 'Active' : 'Inactive' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">تاريخ الإنشاء</div>
+                            <div class="info-label">Created At</div>
                             <div class="info-value">
                                 {{ optional($admin->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
                         </div>

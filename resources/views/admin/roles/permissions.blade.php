@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('صلاحيات الدور'))
+@section('title', admin_t('Role Permissions'))
 
 @section('css')
     <style>
@@ -67,9 +67,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.roles.index') }}">الأدوار</a></li>
-                <li class="breadcrumb-item active">صلاحيات الدور</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.roles.index') }}">Roles</a></li>
+                <li class="breadcrumb-item active">Role Permissions</li>
             </ol>
         </nav>
 
@@ -77,11 +77,11 @@
             <div class="order-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">إدارة صلاحيات الدور: {{ $role->name }}</h5>
-                        <small class="opacity-75">تفعيل أو إلغاء الصلاحيات المرتبطة بالدور</small>
+                        <h5 class="mb-0">Manage website FAQs Role Permissions: {{ $role->name }}</h5>
+                        <small class="opacity-75">Activate Or Cancel Permissions Related With Role</small>
                     </div>
                     <a href="{{ route('admin.roles.index') }}" class="btn btn-light">
-                        <i class="fas fa-arrow-right me-2"></i>رجوع
+                        <i class="fas fa-arrow-right me-2"></i>Back
                     </a>
                 </div>
             </div>
@@ -107,10 +107,10 @@
 
                     <div class="d-flex gap-2 mt-4">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>حفظ
+                            <i class="fas fa-save me-2"></i>Save
                         </button>
                         <a href="{{ route('admin.roles.show', $role) }}" class="btn btn-secondary">
-                            <i class="fas fa-times me-2"></i>إلغاء
+                            <i class="fas fa-times me-2"></i>Cancel
                         </a>
                     </div>
                 </form>

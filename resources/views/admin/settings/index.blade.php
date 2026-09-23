@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إعدادات النظام'))
+@section('title', admin_t('System Settings'))
 
 @section('css')
 
@@ -188,8 +188,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">إعدادات النظام</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">System Settings</li>
             </ol>
         </nav>
 
@@ -199,7 +199,7 @@
                     <div class="stats-icon" style="background: var(--primary-gradient); color:#fff;"><i
                             class="fas fa-sliders-h"></i></div>
                     <div class="stats-number">4</div>
-                    <div class="stats-label">أقسام رئيسية</div>
+                    <div class="stats-label">Sections Main</div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
@@ -208,7 +208,7 @@
                         style="background: rgba(12,99,228,.2); color:#0c63e4; border:1px solid rgba(12,99,228,.3);"><i
                             class="fas fa-envelope"></i></div>
                     <div class="stats-number">SMTP</div>
-                    <div class="stats-label">البريد والإرسال</div>
+                    <div class="stats-label">Email And Send</div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
@@ -217,7 +217,7 @@
                         style="background: rgba(32,201,151,.2); color:#20c997; border:1px solid rgba(32,201,151,.3);"><i
                             class="fas fa-cog"></i></div>
                     <div class="stats-number">General</div>
-                    <div class="stats-label">إعدادات عامة</div>
+                    <div class="stats-label">General Settings</div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
@@ -226,35 +226,35 @@
                         style="background: rgba(255,193,7,.2); color:#ffc107; border:1px solid rgba(255,193,7,.3);"><i
                             class="fas fa-folder"></i></div>
                     <div class="stats-number">Files</div>
-                    <div class="stats-label">إدارة الملفات</div>
+                    <div class="stats-label">Manage Files</div>
                 </div>
             </div>
         </div>
 
         <div class="panel-card">
             <div class="panel-header">
-                <h5 class="mb-0">لوحة إعدادات النظام</h5>
-                <small class="opacity-75">الوصول السريع لكل إعدادات النظام</small>
+                <h5 class="mb-0">Dashboard Settings System</h5>
+                <small class="opacity-75">Access Quick Per Settings System</small>
             </div>
             <div class="panel-body">
                 <div class="mb-4">
-                    <a class="nav-pill" href="{{ route('admin.settings.general') }}">الإعدادات العامة</a>
-                    <a class="nav-pill" href="{{ route('admin.settings.smtp') }}">إعدادات SMTP</a>
-                    <a class="nav-pill" href="{{ route('admin.settings.communication') }}">إعدادات التواصل</a>
-                    <a class="nav-pill" href="{{ route('admin.settings.files') }}">الملفات</a>
+                    <a class="nav-pill" href="{{ route('admin.settings.general') }}">General Settings</a>
+                    <a class="nav-pill" href="{{ route('admin.settings.smtp') }}">SMTP Settings</a>
+                    <a class="nav-pill" href="{{ route('admin.settings.communication') }}">Communication Settings</a>
+                    <a class="nav-pill" href="{{ route('admin.settings.files') }}">Files</a>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">التخزين</div>
-                            <div class="info-value">إدارة الملفات المؤقتة والمساحة المستخدمة</div>
+                            <div class="info-label">Storage</div>
+                            <div class="info-value">Manage Files Temporary And Storage Used</div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
-                            <div class="info-value">التحكم في الكاش ووضع الصيانة وحالة النظام</div>
+                            <div class="info-label">Status</div>
+                            <div class="info-value">Control In Cash And Mode Maintenance And Status System</div>
                         </div>
                     </div>
                 </div>
@@ -262,11 +262,11 @@
                 <div class="d-flex gap-2 mt-3 flex-wrap">
                     <form action="{{ route('admin.settings.clear-cache') }}" method="POST">
                         @csrf
-                        <button class="btn btn-primary" type="submit">مسح الكاش</button>
+                        <button class="btn btn-primary" type="submit">Clear Cash</button>
                     </form>
                     <form action="{{ route('admin.settings.toggle-maintenance') }}" method="POST">
                         @csrf
-                        <button class="btn btn-secondary" type="submit">تبديل وضع الصيانة</button>
+                        <button class="btn btn-secondary" type="submit">Toggle Mode Maintenance</button>
                     </form>
                 </div>
             </div>

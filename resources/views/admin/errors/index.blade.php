@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('سجل الأخطاء'))
+@section('title', admin_t('Error Logs'))
 
 @section('css')
 
@@ -151,8 +151,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">سجل الأخطاء</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Error Logs</li>
             </ol>
         </nav>
 
@@ -163,7 +163,7 @@
                         <i class="fas fa-triangle-exclamation"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalErrors) }}</div>
-                    <div class="stats-label">إجمالي السجلات</div>
+                    <div class="stats-label">Total Records</div>
                 </div>
             </div>
 
@@ -174,7 +174,7 @@
                         <i class="fas fa-bug"></i>
                     </div>
                     <div class="stats-number">{{ number_format($phpErrors) }}</div>
-                    <div class="stats-label">أخطاء PHP</div>
+                    <div class="stats-label">PHP Errors</div>
                 </div>
             </div>
 
@@ -185,7 +185,7 @@
                         <i class="fas fa-calendar-day"></i>
                     </div>
                     <div class="stats-number">{{ number_format($todayErrors) }}</div>
-                    <div class="stats-label">أخطاء اليوم</div>
+                    <div class="stats-label">Errors Day</div>
                 </div>
             </div>
         </div>
@@ -194,23 +194,23 @@
             <form method="GET" action="{{ route('admin.errors.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-6">
-                        <label class="form-label">بحث داخل السجلات</label>
+                        <label class="form-label">Search Inside Records</label>
                         <input type="text" name="q" class="form-control" value="{{ request('q') }}"
-                            placeholder="ابحث في ملف الخطأ أو الرسالة">
+                            placeholder="Search In File Error Or Message">
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">النوع</label>
+                        <label class="form-label">Type</label>
                         <select name="type" class="form-select">
-                            <option value="">الكل</option>
+                            <option value="">All</option>
                             <option value="php" {{ request('type') == 'php' ? 'selected' : '' }}>PHP</option>
                             <option value="laravel" {{ request('type') == 'laravel' ? 'selected' : '' }}>Laravel</option>
                         </select>
                     </div>
 
                     <div class="col-md-3 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.errors.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.errors.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -219,18 +219,18 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <div>
-                    <h5 class="mb-0">سجل الأخطاء</h5>
-                    <small class="opacity-75">عرض ملفات الأخطاء وسجلات الاستثناءات</small>
+                    <h5 class="mb-0">Error Logs</h5>
+                    <small class="opacity-75">View Files Errors And Logs Exceptions</small>
                 </div>
 
                 <div class="d-flex gap-2 flex-wrap">
-                    <a href="{{ route('admin.errors.php-errors') }}" class="btn btn-light btn-sm">أخطاء PHP</a>
-                    <a href="{{ route('admin.errors.search') }}" class="btn btn-light btn-sm">بحث متقدم</a>
+                    <a href="{{ route('admin.errors.php-errors') }}" class="btn btn-light btn-sm">PHP Errors</a>
+                    <a href="{{ route('admin.errors.search') }}" class="btn btn-light btn-sm">Search Advanced</a>
 
                     @if (Route::has('admin.errors.clear-all'))
                         <form action="{{ route('admin.errors.clear-all') }}" method="POST">
                             @csrf
-                            <button class="btn btn-danger btn-sm" type="submit">حذف الكل</button>
+                            <button class="btn btn-danger btn-sm" type="submit">Delete All</button>
                         </form>
                     @endif
                 </div>
@@ -252,7 +252,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <strong>الحجم:</strong> {{ $error['size'] ?? '-' }}
+                            <strong>Size:</strong> {{ $error['size'] ?? '-' }}
                         </div>
 
                         @if (!empty($error['preview']))
@@ -263,7 +263,7 @@
                             @if (!empty($error['filename']) && Route::has('admin.errors.download'))
                                 <a href="{{ route('admin.errors.download', $error['filename']) }}"
                                     class="btn btn-info btn-sm">
-                                    تحميل
+                                    Download
                                 </a>
                             @endif
 
@@ -272,13 +272,13 @@
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" name="filename" value="{{ $error['filename'] ?? '' }}">
-                                    <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                                 </form>
                             @endif
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد ملفات أخطاء حالياً</div>
+                    <div class="text-center py-5">No Files Errors available</div>
                 @endforelse
             </div>
         </div>

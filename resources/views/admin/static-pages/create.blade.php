@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إضافة صفحة بالذكاء الاصطناعي'))
+@section('title', admin_t('Add Page with AI'))
 
 @section('css')
     <style>
@@ -173,156 +173,156 @@
     <div class="loading-overlay" id="ai-loading">
         <div class="loading-box">
             <div class="spinner"></div>
-            <div>جاري تنفيذ طلب الذكاء الاصطناعي...</div>
+            <div>Processing the AI request...</div>
         </div>
     </div>
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.static-pages.index') }}">الصفحات الثابتة</a></li>
-                <li class="breadcrumb-item active">إضافة صفحة بالذكاء الاصطناعي</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.static-pages.index') }}">Static Pages</a></li>
+                <li class="breadcrumb-item active">Add Page with AI</li>
             </ol>
         </nav>
 
         <div class="panel-card mb-4">
             <div class="panel-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <div>
-                    <h5 class="mb-0">إنشاء صفحة جديدة</h5>
-                    <small class="opacity-75">إنشاء وتحرير محتوى الصفحة مع أدوات الذكاء الاصطناعي</small>
+                    <h5 class="mb-0">Create New Page</h5>
+                    <small class="opacity-75">Create And Edit Content Page With Tools AI Artificial</small>
                 </div>
-                <a href="{{ route('admin.static-pages.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.static-pages.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="panel-body">
                 <div class="ai-box">
-                    <div class="section-title">أدوات الذكاء الاصطناعي</div>
+                    <div class="section-title">AI Tools</div>
 
                     <div class="row">
                         <div class="col-md-8 mb-3">
-                            <label class="form-label">برومبت إنشاء الصفحة</label>
+                            <label class="form-label">Page Generation Prompt</label>
                             <textarea id="ai_prompt" class="form-control" rows="4"
-                                placeholder="مثال: أنشئ صفحة احترافية عن خدمات السياحة الفاخرة في مصر مع التركيز على الأقصر وأسوان ونهر النيل"></textarea>
+                                placeholder="Example: Create Page Professional About Services Tourism Luxury In Egypt With Focus On Luxor And Aswan And River Nile"></textarea>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">القالب</label>
+                            <label class="form-label">Template</label>
                             <select id="template" name="template" class="form-select">
-                                <option value="default" {{ old('template') == 'default' ? 'selected' : '' }}>افتراضي
+                                <option value="default" {{ old('template') == 'default' ? 'selected' : '' }}>Default
                                 </option>
                                 <option value="landing" {{ old('template') == 'landing' ? 'selected' : '' }}>Landing Page
                                 </option>
-                                <option value="about" {{ old('template') == 'about' ? 'selected' : '' }}>من نحن</option>
-                                <option value="services" {{ old('template') == 'services' ? 'selected' : '' }}>خدمات
+                                <option value="about" {{ old('template') == 'about' ? 'selected' : '' }}>About Us</option>
+                                <option value="services" {{ old('template') == 'services' ? 'selected' : '' }}>Services
                                 </option>
-                                <option value="contact" {{ old('template') == 'contact' ? 'selected' : '' }}>تواصل معنا
+                                <option value="contact" {{ old('template') == 'contact' ? 'selected' : '' }}>Contact Us
                                 </option>
-                                <option value="faq" {{ old('template') == 'faq' ? 'selected' : '' }}>الأسئلة الشائعة
+                                <option value="faq" {{ old('template') == 'faq' ? 'selected' : '' }}>FAQs
                                 </option>
                             </select>
                         </div>
                     </div>
 
                     <div class="ai-actions">
-                        <button type="button" class="btn btn-ai" id="btn-generate-page">توليد الصفحة كاملة</button>
-                        <button type="button" class="btn btn-ai" id="btn-generate-title">توليد العنوان</button>
-                        <button type="button" class="btn btn-ai" id="btn-generate-body">توليد المحتوى</button>
-                        <button type="button" class="btn btn-ai" id="btn-enhance-body">تحسين المحتوى</button>
-                        <button type="button" class="btn btn-ai" id="btn-expand-body">توسيع المحتوى</button>
-                        <button type="button" class="btn btn-ai" id="btn-simplify-body">تبسيط المحتوى</button>
-                        <button type="button" class="btn btn-ai" id="btn-format-body">تنسيق المحتوى</button>
-                        <button type="button" class="btn btn-ai" id="btn-grammar-body">تدقيق لغوي</button>
-                        <button type="button" class="btn btn-ai" id="btn-translate-all">ترجمة كل الحقول</button>
-                        <button type="button" class="btn btn-ai" id="btn-generate-seo">توليد SEO</button>
+                        <button type="button" class="btn btn-ai" id="btn-generate-page">Generate Full Page</button>
+                        <button type="button" class="btn btn-ai" id="btn-generate-title">Generate Title</button>
+                        <button type="button" class="btn btn-ai" id="btn-generate-body">Generate Content</button>
+                        <button type="button" class="btn btn-ai" id="btn-enhance-body">Improve Content</button>
+                        <button type="button" class="btn btn-ai" id="btn-expand-body">Expand Content</button>
+                        <button type="button" class="btn btn-ai" id="btn-simplify-body">Simplify Content</button>
+                        <button type="button" class="btn btn-ai" id="btn-format-body">Format Content</button>
+                        <button type="button" class="btn btn-ai" id="btn-grammar-body">Proofread</button>
+                        <button type="button" class="btn btn-ai" id="btn-translate-all">Translate All Fields</button>
+                        <button type="button" class="btn btn-ai" id="btn-generate-seo">Generate SEO</button>
                     </div>
                 </div>
 
                 <form action="{{ route('admin.static-pages.store') }}" method="POST">
                     @csrf
 
-                    <div class="section-title">بيانات الصفحة</div>
+                    <div class="section-title">Page Details</div>
 
                     <div class="row">
                         <div class="col-md-8 mb-3">
-                            <label class="form-label">العنوان</label>
+                            <label class="form-label">Title</label>
                             <input type="text" id="title" name="title" class="form-control"
                                 value="{{ old('title') }}">
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">الرابط المختصر (Slug)</label>
+                            <label class="form-label">Slug</label>
                             <input type="text" id="slug" name="slug" class="form-control"
                                 value="{{ old('slug') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">نوع القالب</label>
+                            <label class="form-label">Template Type</label>
                             <select name="template" class="form-select">
-                                <option value="default" {{ old('template') == 'default' ? 'selected' : '' }}>افتراضي
+                                <option value="default" {{ old('template') == 'default' ? 'selected' : '' }}>Default
                                 </option>
                                 <option value="landing" {{ old('template') == 'landing' ? 'selected' : '' }}>Landing Page
                                 </option>
-                                <option value="about" {{ old('template') == 'about' ? 'selected' : '' }}>من نحن</option>
-                                <option value="services" {{ old('template') == 'services' ? 'selected' : '' }}>خدمات
+                                <option value="about" {{ old('template') == 'about' ? 'selected' : '' }}>About Us</option>
+                                <option value="services" {{ old('template') == 'services' ? 'selected' : '' }}>Services
                                 </option>
-                                <option value="contact" {{ old('template') == 'contact' ? 'selected' : '' }}>تواصل معنا
+                                <option value="contact" {{ old('template') == 'contact' ? 'selected' : '' }}>Contact Us
                                 </option>
-                                <option value="faq" {{ old('template') == 'faq' ? 'selected' : '' }}>الأسئلة الشائعة
+                                <option value="faq" {{ old('template') == 'faq' ? 'selected' : '' }}>FAQs
                                 </option>
                             </select>
                         </div>
 
                         <div class="col-md-3 mb-3">
-                            <label class="form-label">الصفحة الرئيسية</label>
+                            <label class="form-label">Home Page</label>
                             <div class="form-control d-flex align-items-center">
                                 <input class="form-check-input me-2" type="checkbox" name="is_home" value="1"
                                     {{ old('is_home') ? 'checked' : '' }}>
-                                <span>تعيين كصفحة رئيسية</span>
+                                <span>Set as Home Page</span>
                             </div>
                         </div>
 
                         <div class="col-md-3 mb-3">
-                            <label class="form-label">الحالة</label>
+                            <label class="form-label">Status</label>
                             <div class="form-control d-flex align-items-center">
                                 <input class="form-check-input me-2" type="checkbox" name="is_active" value="1"
                                     {{ old('is_active', true) ? 'checked' : '' }}>
-                                <span>مفعلة</span>
+                                <span>Enabled</span>
                             </div>
                         </div>
 
                         <div class="col-12 mb-3">
-                            <label class="form-label">المحتوى</label>
+                            <label class="form-label">Content</label>
                             <textarea name="body" id="body-editor" class="form-control" rows="14">{{ old('body') }}</textarea>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">عنوان الميتا</label>
+                            <label class="form-label">Meta Title</label>
                             <input type="text" id="seo_title" name="seo_title" class="form-control"
                                 value="{{ old('seo_title') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">وصف الميتا</label>
+                            <label class="form-label">Meta Description</label>
                             <textarea id="seo_description" name="seo_description" class="form-control" rows="3">{{ old('seo_description') }}</textarea>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الصورة البارزة</label>
+                            <label class="form-label">Featured Image</label>
                             <input type="file" name="featured_image" class="form-control"
-                                value="{{ old('featured_image') }}" placeholder="رابط الصورة أو المسار">
+                                value="{{ old('featured_image') }}" placeholder="Link Image Or Path">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">تاريخ النشر</label>
+                            <label class="form-label">Publish Date</label>
                             <input type="datetime-local" name="published_at" class="form-control"
                                 value="{{ old('published_at') }}">
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ الصفحة</button>
-                        <a href="{{ route('admin.static-pages.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save Page</button>
+                        <a href="{{ route('admin.static-pages.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>
@@ -401,7 +401,7 @@
                 return data;
             } catch (error) {
                 console.error(error);
-                alert('حدث خطأ أثناء الاتصال بخدمة الذكاء الاصطناعي');
+                alert('An error occurred while connecting to AI service.');
                 return null;
             } finally {
                 hideAiLoading();
@@ -458,7 +458,7 @@
         document.getElementById('btn-enhance-body').addEventListener('click', async function() {
             const data = await postAi('{{ route('admin.static-pages.ai.enhance-content') }}', {
                 content: currentBody(),
-                instruction: 'حسن الأسلوب والتنظيم والوضوح مع الحفاظ على المعنى'
+                instruction: 'Improve Style And organization And clarity With Preserve On Meaning'
             });
 
             if (data && data.content) {
