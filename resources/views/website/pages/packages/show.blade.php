@@ -2400,8 +2400,8 @@
 
 
         /* =========================================================
-                                                           Nile Cruise body redesign — body only, shared header/footer untouched
-                                                           ========================================================= */
+                                                                   Nile Cruise body redesign — body only, shared header/footer untouched
+                                                                   ========================================================= */
         .nile-cruise-page .main-container {
             background:
                 radial-gradient(circle at 8% 8%, rgba(215, 239, 250, .58), transparent 34%),
@@ -3938,20 +3938,15 @@
                                                 {{ $day->day_number }}</div>
                                             <div>
                                                 <h3 class="day-title">
-                                                    {{ $stepUnitText }} {{ $day->day_number }}@if ($day->display_title)
-                                                        : {{ $day->display_title }}
+                                                    @if ($isDayTourActive)
+                                                        {{ $day->display_title ?: __('Activity') . ' ' . $day->day_number }}
+                                                    @else
+                                                        {{ $stepUnitText }} {{ $day->day_number }}@if ($day->display_title)
+                                                            : {{ $day->display_title }}
+                                                        @endif
                                                     @endif
                                                 </h3>
-                                                @if ($isDayTourActive && ($day->start_time || $day->end_time))
-                                                    <small>
-                                                        <i class="la la-clock"></i>
-                                                        {{ $day->start_time ? substr((string) $day->start_time, 0, 5) : '' }}
-                                                        @if ($day->start_time && $day->end_time)
-                                                            –
-                                                        @endif
-                                                        {{ $day->end_time ? substr((string) $day->end_time, 0, 5) : '' }}
-                                                    </small>
-                                                @elseif ($day->duration && !$isDayTourActive)
+                                                @if ($day->duration && !$isDayTourActive)
                                                     <small>
                                                         <i class="la la-clock"></i>
                                                         {{ $day->duration }}
@@ -4108,6 +4103,9 @@
                         )->filter(fn($tier) => is_array($tier) && (float) ($tier['price_per_person'] ?? 0) > 0);
                         $hasAccommodations =
                             $package->tourPackageAccommodations && $package->tourPackageAccommodations->isNotEmpty();
+                        $package->package_type !== 'day_tour' &&
+                            $package->tourPackageAccommodations &&
+                            $package->tourPackageAccommodations->isNotEmpty();
                         $hasAnyStandardPricing =
                             $prices->count() ||
                             $hasCategoryPricing ||

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تعديل وجهة'))
+@section('title', admin_t('Edit Destination'))
 
 @section('css')
     <style>
@@ -90,19 +90,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.destinations.index') }}">الوجهات</a></li>
-                <li class="breadcrumb-item active">تعديل وجهة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.destinations.index') }}">Destinations</a></li>
+                <li class="breadcrumb-item active">Edit Destination</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">تعديل بيانات الوجهة</h5>
+                    <h5 class="mb-0">Edit Destination Details</h5>
                     <small class="opacity-75">{{ adminTrans($destination->name ?? '') }}</small>
                 </div>
-                <a href="{{ route('admin.destinations.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.destinations.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="form-body">
@@ -111,11 +111,11 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="section-title">البيانات الأساسية</div>
+                    <div class="section-title">Basic Information</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الاسم</label>
+                            <label class="form-label">Name</label>
                             <input type="text" name="name" class="form-control"
                                 value="{{ old('name', adminTrans($destination->name)) }}">
                         </div>
@@ -127,7 +127,7 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">النوع</label>
+                            <label class="form-label">Type</label>
                             <select name="type" class="form-select">
                                 <option value="city" {{ old('type', $destination->type) == 'city' ? 'selected' : '' }}>
                                     city</option>
@@ -144,9 +144,9 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">الدولة</label>
+                            <label class="form-label">Country</label>
                             <select name="country_id" id="country_id" class="form-select">
-                                <option value="">اختر الدولة</option>
+                                <option value="">Select Country</option>
                                 @foreach ($countries ?? collect() as $country)
                                     <option value="{{ $country->id }}"
                                         {{ old('country_id', $destination->country_id) == $country->id ? 'selected' : '' }}>
@@ -157,16 +157,16 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">المدينة</label>
+                            <label class="form-label">City</label>
                             <select name="city_id" id="city_id" class="form-select">
-                                <option value="">اختر المدينة</option>
+                                <option value=""<option value=
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الوجهة الأم</label>
+                            <label class="form-label">Parent Destination</label>
                             <select name="parent_id" class="form-select">
-                                <option value="">بدون</option>
+                                <option value="">None</option>
                                 @foreach ($parents ?? collect() as $parent)
                                     <option value="{{ $parent->id }}"
                                         {{ old('parent_id', $destination->parent_id) == $parent->id ? 'selected' : '' }}>
@@ -177,7 +177,7 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الترتيب</label>
+                            <label class="form-label">Sort Order</label>
                             <input type="number" name="sort_order" class="form-control"
                                 value="{{ old('sort_order', $destination->sort_order ?? 0) }}">
                         </div>
@@ -253,21 +253,21 @@
                                 <input class="form-check-input" type="checkbox" value="1" name="is_active"
                                     id="is_active"
                                     {{ old('is_active', $destination->is_active ?? true) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">مفعلة</label>
+                                <label class="form-check-label" for="is_active">Enabled</label>
                             </div>
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" name="is_featured"
                                     id="is_featured"
                                     {{ old('is_featured', $destination->is_featured ?? false) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_featured">مميزة</label>
+                                <label class="form-check-label" for="is_featured">Featured</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.destinations.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.destinations.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>
@@ -283,7 +283,7 @@
         const selectedCityId = "{{ old('city_id', $destination->city_id) }}";
 
         function loadCities(countryId, cityId = null) {
-            citySelect.innerHTML = '<option value="">اختر المدينة</option>';
+            citySelect.innerHTML = '<option value=""<option value=';
 
             if (!countryId) return;
 

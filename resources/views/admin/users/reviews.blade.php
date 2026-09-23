@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تقييمات المستخدم') . ': ' . $user->name)
+@section('title', admin_t('User Reviews') . ': ' . $user->name)
 
 @section('css')
 
@@ -202,19 +202,19 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.index') }}">الرئيسية</a>
+                    <a href="{{ route('admin.index') }}">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.users.index') }}">المستخدمين</a>
+                    <a href="{{ route('admin.users.index') }}">Users</a>
                 </li>
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.users.show', $user) }}">{{ $user->name }}</a>
                 </li>
-                <li class="breadcrumb-item active">التقييمات</li>
+                <li class="breadcrumb-item active">Reviews</li>
             </ol>
         </nav>
 
-        <!-- معلومات المستخدم -->
+        <!-- Information User -->
         <div class="user-info-card" bis_skin_checked="1">
             <div class="row align-items-center" bis_skin_checked="1">
                 <div class="col" bis_skin_checked="1">
@@ -226,13 +226,13 @@
                 </div>
                 <div class="col-auto" bis_skin_checked="1">
                     <a href="{{ route('admin.users.show', $user) }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-right me-2"></i>العودة للتفاصيل
+                        <i class="fas fa-arrow-right me-2"></i>Back to Details
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- الإحصائيات -->
+        <!-- Statistics -->
         <div class="row mb-4" bis_skin_checked="1">
             <div class="col-lg-3 col-md-6 mb-4" bis_skin_checked="1">
                 <div class="stats-card" bis_skin_checked="1">
@@ -242,7 +242,7 @@
                     <div class="stats-number" bis_skin_checked="1">
                         {{ $reviews->total() }}
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">إجمالي التقييمات</div>
+                    <div class="stats-label" bis_skin_checked="1">Total Ratings</div>
                 </div>
             </div>
 
@@ -257,7 +257,7 @@
                     <div class="stats-number" bis_skin_checked="1">
                         {{ number_format($averageRating, 1) }}
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">متوسط التقييم</div>
+                    <div class="stats-label" bis_skin_checked="1">Moderate Rating</div>
                 </div>
             </div>
 
@@ -272,7 +272,7 @@
                     <div class="stats-number" bis_skin_checked="1">
                         {{ $highRatings }}
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">تقييمات عالية (4+)</div>
+                    <div class="stats-label" bis_skin_checked="1">Ratings High (4+)</div>
                 </div>
             </div>
 
@@ -287,7 +287,7 @@
                     <div class="stats-number" bis_skin_checked="1">
                         {{ $lowRatings }}
                     </div>
-                    <div class="stats-label" bis_skin_checked="1">تقييمات منخفضة (2-)</div>
+                    <div class="stats-label" bis_skin_checked="1">Ratings Low (2-)</div>
                 </div>
             </div>
         </div>
@@ -298,15 +298,15 @@
                     <div class="review-header" bis_skin_checked="1">
                         <div class="d-flex justify-content-between align-items-center" bis_skin_checked="1">
                             <div bis_skin_checked="1">
-                                <h5 class="mb-1">تقييمات المستخدم</h5>
-                                <p class="text-muted mb-0">عرض جميع تقييمات {{ $user->name }}</p>
+                                <h5 class="mb-1">User Reviews</h5>
+                                <p class="text-muted mb-0">View all reviews for {{ $user->name }}</p>
                             </div>
                             <div class="btn-group" bis_skin_checked="1">
                                 <a href="{{ route('admin.users.show', $user) }}" class="btn btn-outline-info">
-                                    <i class="fas fa-user me-2"></i>تفاصيل المستخدم
+                                    <i class="fas fa-user me-2"></i>User Details
                                 </a>
                                 <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
-                                    <i class="fas fa-arrow-right me-2"></i>جميع المستخدمين
+                                    <i class="fas fa-arrow-right me-2"></i>All Users
                                 </a>
                             </div>
                         </div>
@@ -317,8 +317,8 @@
                             <div class="empty-state-icon" bis_skin_checked="1">
                                 <i class="fas fa-star"></i>
                             </div>
-                            <h5 class="empty-state-text">لا توجد تقييمات لهذا المستخدم</h5>
-                            <p class="text-muted">المستخدم لم يقم بتقييم أي منتجات حتى الآن</p>
+                            <h5 class="empty-state-text">No There are Ratings For this User</h5>
+                            <p class="text-muted">User Not Do With Rating Any Products Until Now</p>
                         </div>
                     @else
                         @foreach ($reviews as $review)
@@ -335,8 +335,8 @@
                                             </div>
                                         @endif
                                         <div class="product-info" bis_skin_checked="1">
-                                            <h6>{{ $review->product->name ?? 'منتج محذوف' }}</h6>
-                                            <p>{{ $review->product->category->name ?? 'غير مصنف' }}</p>
+                                            <h6>{{ $review->product->name ?? 'Product Deleted' }}</h6>
+                                            <p>{{ $review->product->category->name ?? 'Not Classified' }}</p>
                                         </div>
                                     </div>
 
@@ -365,11 +365,11 @@
                                     <div class="review-actions" bis_skin_checked="1">
                                         <a href="{{ route('admin.products.show', $review->product->id) }}"
                                             class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-eye me-1"></i>عرض المنتج
+                                            <i class="fas fa-eye me-1"></i>View Product
                                         </a>
                                         <a href="{{ route('admin.reviews.edit', $review) }}"
                                             class="btn btn-sm btn-outline-warning">
-                                            <i class="fas fa-edit me-1"></i>تعديل التقييم
+                                            <i class="fas fa-edit me-1"></i>Edit Rating
                                         </a>
                                     </div>
                                 @endif

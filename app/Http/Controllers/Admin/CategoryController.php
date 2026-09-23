@@ -1086,7 +1086,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'حدث خطأ أثناء حذف الأقسام'
+                'message' => 'An error occurred while deleting categories'
             ], 500);
         }
     }
@@ -1115,7 +1115,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'حدث خطأ أثناء تفعيل الأقسام'
+                'message' => 'An error occurred while activating categories'
             ], 500);
         }
     }
@@ -1144,7 +1144,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'حدث خطأ أثناء تعطيل الأقسام'
+                'message' => 'An error occurred while deactivating categories'
             ], 500);
         }
     }
@@ -1165,7 +1165,7 @@ class CategoryController extends Controller
             if (in_array($request->parent_id, $request->category_ids)) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'لا يمكن نقل القسم إلى نفسه'
+                    'message' => 'Cannot move category to itself'
                 ], 400);
             }
 
@@ -1185,7 +1185,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'حدث خطأ أثناء نقل الأقسام'
+                'message' => 'An error occurred while moving categories'
             ], 500);
         }
     }
@@ -1214,7 +1214,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'فشل في تحميل شجرة الأقسام'
+                'message' => 'Failed to load categories tree'
             ], 500);
         }
     }

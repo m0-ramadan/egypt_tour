@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('وسائل التواصل الاجتماعي'))
+@section('title', admin_t('Social Media'))
 
 @section('css')
 
@@ -125,8 +125,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">وسائل التواصل الاجتماعي</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Social Media</li>
             </ol>
         </nav>
 
@@ -137,7 +137,7 @@
                         <i class="fas fa-share-alt"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalLinks) }}</div>
-                    <div class="stats-label">إجمالي المنصات</div>
+                    <div class="stats-label">Total Platforms</div>
                 </div>
             </div>
 
@@ -148,7 +148,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stats-number">{{ number_format($activeLinks) }}</div>
-                    <div class="stats-label">روابط مفعلة</div>
+                    <div class="stats-label">Links Enabled</div>
                 </div>
             </div>
 
@@ -159,7 +159,7 @@
                         <i class="fas fa-ban"></i>
                     </div>
                     <div class="stats-number">{{ number_format($inactiveLinks) }}</div>
-                    <div class="stats-label">روابط غير مفعلة</div>
+                    <div class="stats-label">Links Not Enabled</div>
                 </div>
             </div>
         </div>
@@ -167,12 +167,12 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة وسائل التواصل</h5>
-                    <small class="opacity-75">إدارة روابط المنصات الاجتماعية للموقع</small>
+                    <h5 class="mb-0">Methods Communication List</h5>
+                    <small class="opacity-75">Manage Links Platforms Social For Location</small>
                 </div>
 
                 <a href="{{ route('admin.social-media.create') }}" class="btn btn-light">
-                    <i class="fas fa-plus"></i> إضافة جديد
+                    <i class="fas fa-plus"></i> Add New
                 </a>
             </div>
             <div class="p-4">
@@ -180,29 +180,29 @@
                     <div class="item-card">
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
                             <div>
-                                <h6 class="mb-1">{{ $item->platform ?? ($item->name ?? 'بدون اسم') }}</h6>
+                                <h6 class="mb-1">{{ $item->platform ?? ($item->name ?? 'No Name') }}</h6>
                                 <small class="text-light opacity-75">{{ $item->url ?? '-' }}</small>
                             </div>
 
                             <span class="badge-status {{ $item->is_active ?? true ? 'status-active' : 'status-inactive' }}">
-                                {{ $item->is_active ?? true ? 'مفعل' : 'غير مفعل' }}
+                                {{ $item->is_active ?? true ? 'Enabled' : 'Disabled' }}
                             </span>
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-md-4"><strong>الأيقونة:</strong> {{ $item->icon ?? '-' }}</div>
-                            <div class="col-md-4"><strong>الترتيب:</strong> {{ $item->sort_order ?? 0 }}</div>
-                            <div class="col-md-4"><strong>آخر تحديث:</strong>
+                            <div class="col-md-4"><strong>Icon:</strong> {{ $item->icon ?? '-' }}</div>
+                            <div class="col-md-4"><strong>Order:</strong> {{ $item->sort_order ?? 0 }}</div>
+                            <div class="col-md-4"><strong>Last Updated:</strong>
                                 {{ optional($item->updated_at)->translatedFormat('d M Y') ?? '-' }}</div>
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
                             <a href="{{ route('admin.social-media.edit', $item->id ?? $item->getKey()) }}"
-                                class="btn btn-warning btn-sm">تعديل</a>
+                                class="btn btn-warning btn-sm">Edit</a>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد روابط تواصل حالياً</div>
+                    <div class="text-center py-5">No Links Communication available</div>
                 @endforelse
             </div>
         </div>

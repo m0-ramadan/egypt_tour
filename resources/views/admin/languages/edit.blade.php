@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تعديل لغة'))
+@section('title', admin_t('Edit Language'))
 
 @section('css')
     <style>
@@ -83,9 +83,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.languages.index') }}">اللغات</a></li>
-                <li class="breadcrumb-item active">تعديل لغة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.languages.index') }}">Languages</a></li>
+                <li class="breadcrumb-item active">Edit Language</li>
             </ol>
         </nav>
 
@@ -93,11 +93,11 @@
             <div class="order-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">تعديل بيانات اللغة</h5>
-                        <small class="opacity-75">تحديث بيانات اللغة</small>
+                        <h5 class="mb-0">Edit Language Details</h5>
+                        <small class="opacity-75">Update Details Language</small>
                     </div>
                     <a href="{{ route('admin.languages.index') }}" class="btn btn-light">
-                        <i class="fas fa-arrow-right me-2"></i>رجوع
+                        <i class="fas fa-arrow-right me-2"></i>Back
                     </a>
                 </div>
             </div>
@@ -107,29 +107,29 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="section-title">بيانات اللغة</div>
+                    <div class="section-title">Language Details</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">اسم اللغة</label>
+                            <label class="form-label">Language Name</label>
                             <input type="text" name="name" class="form-control"
                                 value="{{ old('name', $language->name) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الاسم المحلي</label>
+                            <label class="form-label">Local Name</label>
                             <input type="text" name="native_name" class="form-control"
                                 value="{{ old('native_name', $language->native_name) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الكود</label>
+                            <label class="form-label">Code</label>
                             <input type="text" name="code" class="form-control"
                                 value="{{ old('code', $language->code) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الترتيب</label>
+                            <label class="form-label">Sort Order</label>
                             <input type="number" name="sort_order" class="form-control"
                                 value="{{ old('sort_order', $language->sort_order ?? 0) }}">
                         </div>
@@ -138,23 +138,23 @@
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" id="is_active"
                                     name="is_active" {{ old('is_active', $language->is_active ?? true) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">مفعلة</label>
+                                <label class="form-check-label" for="is_active">Enabled</label>
                             </div>
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" id="is_default"
                                     name="is_default" {{ old('is_default', $language->is_default) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_default">افتراضية</label>
+                                <label class="form-check-label" for="is_default">Default</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>حفظ
+                            <i class="fas fa-save me-2"></i>Save
                         </button>
                         <a href="{{ route('admin.languages.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-times me-2"></i>إلغاء
+                            <i class="fas fa-times me-2"></i>Cancel
                         </a>
                     </div>
                 </form>

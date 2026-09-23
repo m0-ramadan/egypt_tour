@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('SEO Meta حسب العنصر'))
+@section('title', admin_t('title\'))
 
 @section('css')
     <style>
@@ -66,19 +66,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.seo-meta.index') }}">SEO Meta</a></li>
-                <li class="breadcrumb-item active">حسب العنصر</li>
+                <li class="breadcrumb-item active">By Item</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">SEO Meta حسب العنصر</h5>
+                    <h5 class="mb-0">title\</h5>
                     <small class="opacity-75">Type: {{ $type }} | ID: {{ $id }}</small>
                 </div>
-                <a href="{{ route('admin.seo-meta.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.seo-meta.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="content-body">
@@ -86,7 +86,7 @@
                     <div class="item-card">
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <div>
-                                <h6 class="mb-1">{{ $item->meta_title ?: 'بدون عنوان' }}</h6>
+                                <h6 class="mb-1">{{ $item->meta_title ?: 'Without Title' }}</h6>
                                 <small class="text-light opacity-75">{{ $item->canonical_url ?: '-' }}</small>
                             </div>
                             @if ($item->locale)
@@ -95,12 +95,12 @@
                         </div>
 
                         <div class="mb-2">
-                            <span class="info-label">الوصف:</span>
+                            <span class="info-label">Description:</span>
                             <span>{{ $item->meta_description ?: '-' }}</span>
                         </div>
 
                         <div class="mb-2">
-                            <span class="info-label">الكلمات المفتاحية:</span>
+                            <span class="info-label">Words Keywords:</span>
                             <span>{{ $item->meta_keywords ?: '-' }}</span>
                         </div>
 
@@ -116,7 +116,7 @@
                     </div>
                 @empty
                     <div class="text-center py-5">
-                        لا توجد بيانات SEO لهذا العنصر
+                        No There are Details SEO For this Item
                     </div>
                 @endforelse
 

@@ -28,7 +28,7 @@
 <body>
 
     <div id="admin-auth-language-switcher" style="position:fixed;top:18px;inset-inline-end:18px;z-index:9999;display:flex;gap:6px">
-        <a href="{{ url()->current() }}?{{ http_build_query(array_merge(request()->query(), ['lang' => 'ar'])) }}" class="btn btn-sm {{ app()->getLocale() === 'ar' ? 'btn-primary' : 'btn-outline-primary' }}">العربية</a>
+        <a href="{{ url()->current() }}?{{ http_build_query(array_merge(request()->query(), ['lang' => 'ar'])) }}" class="btn btn-sm {{ app()->getLocale() === 'ar' ? 'btn-primary' : 'btn-outline-primary' }}">Arabic</a>
         <a href="{{ url()->current() }}?{{ http_build_query(array_merge(request()->query(), ['lang' => 'en'])) }}" class="btn btn-sm {{ app()->getLocale() === 'en' ? 'btn-primary' : 'btn-outline-primary' }}">English</a>
     </div>
 

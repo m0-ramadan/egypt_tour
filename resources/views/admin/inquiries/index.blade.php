@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('الاستفسارات'))
+@section('title', admin_t('Inquiries'))
 
 @section('css')
 
@@ -142,8 +142,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">الاستفسارات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Inquiries</li>
             </ol>
         </nav>
 
@@ -154,7 +154,7 @@
                         <i class="fas fa-circle-question"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalInquiries) }}</div>
-                    <div class="stats-label">إجمالي الاستفسارات</div>
+                    <div class="stats-label">Total Inquiries</div>
                 </div>
             </div>
 
@@ -165,7 +165,7 @@
                         <i class="fas fa-hourglass-half"></i>
                     </div>
                     <div class="stats-number">{{ number_format($newInquiries) }}</div>
-                    <div class="stats-label">جديدة</div>
+                    <div class="stats-label">New</div>
                 </div>
             </div>
 
@@ -176,7 +176,7 @@
                         <i class="fas fa-phone-volume"></i>
                     </div>
                     <div class="stats-number">{{ number_format($contactedInquiries) }}</div>
-                    <div class="stats-label">تم التواصل</div>
+                    <div class="stats-label">Was Communication</div>
                 </div>
             </div>
 
@@ -187,7 +187,7 @@
                         <i class="fas fa-check-double"></i>
                     </div>
                     <div class="stats-number">{{ number_format($convertedInquiries) }}</div>
-                    <div class="stats-label">تحولت لحجز</div>
+                    <div class="stats-label">Converted For Booking</div>
                 </div>
             </div>
         </div>
@@ -196,15 +196,15 @@
             <form method="GET" action="{{ route('admin.inquiries.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <input type="text" name="search" class="form-control" value="{{ request('search') }}"
-                            placeholder="ابحث بالاسم أو البريد أو الموضوع">
+                            placeholder="Search By name Or Email Or Subject">
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
+                            <option value="">All</option>
                             <option value="new" {{ request('status') == 'new' ? 'selected' : '' }}>new</option>
                             <option value="contacted" {{ request('status') == 'contacted' ? 'selected' : '' }}>contacted
                             </option>
@@ -215,9 +215,9 @@
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">الباقة</label>
+                        <label class="form-label">Package</label>
                         <select name="package_id" class="form-select">
-                            <option value="">كل الباقات</option>
+                            <option value="">All Packages</option>
                             @foreach ($packages ?? collect() as $package)
                                 <option value="{{ $package->id }}"
                                     {{ request('package_id') == $package->id ? 'selected' : '' }}>
@@ -228,8 +228,8 @@
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.inquiries.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.inquiries.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -237,8 +237,8 @@
 
         <div class="main-card">
             <div class="main-header">
-                <h5 class="mb-0">قائمة الاستفسارات</h5>
-                <small class="opacity-75">إدارة طلبات واستفسارات الزوار والعملاء</small>
+                <h5 class="mb-0">Inquiries List</h5>
+                <small class="opacity-75">Manage Orders And Inquiries Visitors And Clients</small>
             </div>
 
             <div class="p-4">
@@ -250,11 +250,11 @@
                     <div class="item-card">
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
                             <div>
-                                <h6 class="mb-1">{{ $inquiry->subject ?? 'بدون عنوان' }}</h6>
+                                <h6 class="mb-1">{{ $inquiry->subject ?? 'Without Title' }}</h6>
                                 <small class="text-light opacity-75">
                                     {{ $inquiry->full_name ?? $inquiry->name ?? '-' }}
                                     @if(!empty($inquiry->email))
-                                        - <a href="mailto:{{ $inquiry->email }}" class="text-info text-decoration-none" title="مراسلة عبر البريد الإلكتروني">
+                                        - <a href="mailto:{{ $inquiry->email }}" class="text-info text-decoration-none" title="Message via Email">
                                             <i class="fas fa-envelope text-primary me-1"></i>{{ $inquiry->email }}
                                         </a>
                                     @endif
@@ -268,51 +268,51 @@
 
                         <div class="row mb-3 align-items-center">
                             <div class="col-md-4">
-                                <strong>الهاتف:</strong>
+                                <strong>Phone:</strong>
                                 @if($phoneNum)
                                     <span class="dir-ltr d-inline-block font-monospace mx-1">{{ $phoneNum }}</span>
-                                    <a href="https://wa.me/{{ $cleanPhone }}" target="_blank" class="btn btn-sm btn-success rounded-circle px-2 py-1 me-1" title="مراسلة عبر واتساب">
+                                    <a href="https://wa.me/{{ $cleanPhone }}" target="_blank" class="btn btn-sm btn-success rounded-circle px-2 py-1 me-1" title="Message via WhatsApp">
                                         <i class="fab fa-whatsapp fs-6"></i>
                                     </a>
-                                    <a href="tel:{{ $phoneNum }}" class="btn btn-sm btn-info rounded-circle px-2 py-1" title="اتصال هاتفي">
+                                    <a href="tel:{{ $phoneNum }}" class="btn btn-sm btn-info rounded-circle px-2 py-1" title="Phone Call">
                                         <i class="fas fa-phone-alt fs-6"></i>
                                     </a>
                                 @else
                                     -
                                 @endif
                             </div>
-                            <div class="col-md-3"><strong>الباقة:</strong> {{ $inquiry->package->name ?? '-' }}</div>
-                            <div class="col-md-3"><strong>تاريخ السفر:</strong>
+                            <div class="col-md-3"><strong>Package:</strong> {{ $inquiry->package->name ?? '-' }}</div>
+                            <div class="col-md-3"><strong>Travel Date:</strong>
                                 {{ optional($inquiry->travel_date)->translatedFormat('d M Y') ?? '-' }}</div>
-                            <div class="col-md-2"><strong>الأفراد:</strong> {{ $inquiry->travellers_count ?? $inquiry->adults ?? '-' }}</div>
+                            <div class="col-md-2"><strong>Guests:</strong> {{ $inquiry->travellers_count ?? $inquiry->adults ?? '-' }}</div>
                         </div>
 
                         <div class="mb-3">
-                            <strong>الرسالة:</strong>
+                            <strong>Message:</strong>
                             {{ \Illuminate\Support\Str::limit($inquiry->message ?? '-', 220) }}
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('admin.inquiries.show', $inquiry) }}" class="btn btn-info btn-sm">عرض</a>
+                            <a href="{{ route('admin.inquiries.show', $inquiry) }}" class="btn btn-info btn-sm">View</a>
                             <a href="{{ route('admin.inquiries.edit', $inquiry) }}"
-                                class="btn btn-warning btn-sm">تعديل</a>
+                                class="btn btn-warning btn-sm">Edit</a>
 
                             @if (Route::has('admin.inquiries.convert'))
                                 <form action="{{ route('admin.inquiries.convert', $inquiry) }}" method="POST">
                                     @csrf
-                                    <button class="btn btn-success btn-sm" type="submit">تحويل إلى حجز</button>
+                                    <button class="btn btn-success btn-sm" type="submit">Redirect To Booking</button>
                                 </form>
                             @endif
 
                             <form action="{{ route('admin.inquiries.destroy', $inquiry) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد استفسارات حالياً</div>
+                    <div class="text-center py-5">No Inquiries available</div>
                 @endforelse
 
                 @if (method_exists($inquiries, 'links'))

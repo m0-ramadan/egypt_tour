@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('المدفوعات'))
+@section('title', admin_t('Payments'))
 
 @section('css')
 
@@ -139,8 +139,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">المدفوعات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Payments</li>
             </ol>
         </nav>
 
@@ -150,7 +150,7 @@
                     <div class="stats-icon" style="background: var(--primary-gradient); color:#fff;"><i
                             class="fas fa-credit-card"></i></div>
                     <div class="stats-number">{{ number_format($total) }}</div>
-                    <div class="stats-label">إجمالي المدفوعات</div>
+                    <div class="stats-label">Total Payments</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -159,7 +159,7 @@
                         style="background: rgba(32,201,151,.2); color:#20c997; border:1px solid rgba(32,201,151,.3);"><i
                             class="fas fa-circle-check"></i></div>
                     <div class="stats-number">{{ number_format($paid) }}</div>
-                    <div class="stats-label">مدفوعات ناجحة</div>
+                    <div class="stats-label">Payments Successful</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -168,7 +168,7 @@
                         style="background: rgba(255,193,7,.2); color:#ffc107; border:1px solid rgba(255,193,7,.3);"><i
                             class="fas fa-hourglass-half"></i></div>
                     <div class="stats-number">{{ number_format($pending) }}</div>
-                    <div class="stats-label">مدفوعات معلقة</div>
+                    <div class="stats-label">Payments Pending</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -177,7 +177,7 @@
                         style="background: rgba(12,99,228,.2); color:#0c63e4; border:1px solid rgba(12,99,228,.3);"><i
                             class="fas fa-money-bill-wave"></i></div>
                     <div class="stats-number">{{ number_format($sumPaid, 2) }}</div>
-                    <div class="stats-label">إجمالي المحصل</div>
+                    <div class="stats-label">Total Collected</div>
                 </div>
             </div>
         </div>
@@ -186,14 +186,14 @@
             <form method="GET" action="{{ route('admin.payments.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <input type="text" class="form-control" name="q" value="{{ request('q') }}"
-                            placeholder="بحث بالمرجع أو الحالة أو العملة">
+                            placeholder="Search With Reference Or Status Or Currency">
                     </div>
                     <div class="col-md-2">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
+                            <option value="">All</option>
                             <option value="paid" {{ request('status') == 'paid' ? 'selected' : '' }}>paid</option>
                             <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>pending</option>
                             <option value="failed" {{ request('status') == 'failed' ? 'selected' : '' }}>failed</option>
@@ -202,18 +202,18 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <label class="form-label">العملة</label>
+                        <label class="form-label">Currency</label>
                         <input type="text" class="form-control" name="currency_code"
                             value="{{ request('currency_code') }}">
                     </div>
                     <div class="col-md-2">
-                        <label class="form-label">نوع الدفع</label>
+                        <label class="form-label">Payment Type</label>
                         <input type="text" class="form-control" name="payment_type"
                             value="{{ request('payment_type') }}">
                     </div>
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.payments.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.payments.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -222,10 +222,10 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة المدفوعات</h5>
-                    <small class="opacity-75">إدارة جميع العمليات المالية</small>
+                    <h5 class="mb-0">Payments List</h5>
+                    <small class="opacity-75">Manage All Operations Financial</small>
                 </div>
-                <a href="{{ route('admin.payments.create') }}" class="btn btn-light">إضافة دفعة</a>
+                <a href="{{ route('admin.payments.create') }}" class="btn btn-light">Add Payment</a>
             </div>
 
             <div class="p-4">
@@ -233,7 +233,7 @@
                     <div class="item-card">
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
                             <div>
-                                <h6 class="mb-1">{{ $payment->transaction_reference ?: 'بدون مرجع' }}</h6>
+                                <h6 class="mb-1">{{ $payment->transaction_reference ?: 'Without Reference' }}</h6>
                                 <small class="text-light opacity-75">{{ $payment->gateway_reference ?: '-' }}</small>
                             </div>
 
@@ -257,8 +257,8 @@
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('admin.payments.show', $payment) }}" class="btn btn-info btn-sm">عرض</a>
-                            <a href="{{ route('admin.payments.edit', $payment) }}" class="btn btn-warning btn-sm">تعديل</a>
+                            <a href="{{ route('admin.payments.show', $payment) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('admin.payments.edit', $payment) }}" class="btn btn-warning btn-sm">Edit</a>
 
                             @if (Route::has('admin.payments.refund'))
                                 <form action="{{ route('admin.payments.refund', $payment) }}" method="POST">
@@ -270,12 +270,12 @@
                             <form action="{{ route('admin.payments.destroy', $payment) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد مدفوعات حالياً</div>
+                    <div class="text-center py-5">No Payments available</div>
                 @endforelse
 
                 @if (method_exists($payments, 'links'))

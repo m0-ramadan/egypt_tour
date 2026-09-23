@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إضافة استفسار'))
+@section('title', admin_t('Add Inquiry'))
 
 @section('css')
     <style>
@@ -68,47 +68,47 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.inquiries.index') }}">الاستفسارات</a></li>
-                <li class="breadcrumb-item active">إضافة استفسار</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.inquiries.index') }}">Inquiries</a></li>
+                <li class="breadcrumb-item active">Add Inquiry</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">إضافة استفسار جديد</h5>
-                    <small class="opacity-75">إدخال بيانات الاستفسار</small>
+                    <h5 class="mb-0">Add New Inquiry</h5>
+                    <small class="opacity-75">Enter Details Inquiry</small>
                 </div>
-                <a href="{{ route('admin.inquiries.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.inquiries.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="form-body">
                 <form action="{{ route('admin.inquiries.store') }}" method="POST">
                     @csrf
 
-                    <div class="section-title">بيانات الاستفسار</div>
+                    <div class="section-title">Inquiry Details</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الاسم</label>
+                            <label class="form-label">Name</label>
                             <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">البريد الإلكتروني</label>
+                            <label class="form-label">Email Address</label>
                             <input type="email" name="email" class="form-control" value="{{ old('email') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الهاتف</label>
+                            <label class="form-label">Phone Number</label>
                             <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الباقة</label>
+                            <label class="form-label">Package</label>
                             <select name="package_id" class="form-select">
-                                <option value="">اختر الباقة</option>
+                                <option value="">Select Package</option>
                                 @foreach ($packages ?? collect() as $package)
                                     <option value="{{ $package->id }}"
                                         {{ old('package_id') == $package->id ? 'selected' : '' }}>
@@ -119,28 +119,28 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الموضوع</label>
+                            <label class="form-label">Subject</label>
                             <input type="text" name="subject" class="form-control" value="{{ old('subject') }}">
                         </div>
 
                         <div class="col-md-3 mb-3">
-                            <label class="form-label">تاريخ السفر</label>
+                            <label class="form-label">Travel Date</label>
                             <input type="date" name="travel_date" class="form-control" value="{{ old('travel_date') }}">
                         </div>
 
                         <div class="col-md-3 mb-3">
-                            <label class="form-label">عدد الأفراد</label>
+                            <label class="form-label">Number of Guests</label>
                             <input type="number" name="travellers_count" class="form-control"
                                 value="{{ old('travellers_count') }}">
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">الرسالة</label>
+                            <label class="form-label">Message</label>
                             <textarea name="message" class="form-control" rows="6">{{ old('message') }}</textarea>
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">الحالة</label>
+                            <label class="form-label">Status</label>
                             <select name="status" class="form-select">
                                 <option value="new">new</option>
                                 <option value="contacted">contacted</option>
@@ -151,8 +151,8 @@
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.inquiries.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.inquiries.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

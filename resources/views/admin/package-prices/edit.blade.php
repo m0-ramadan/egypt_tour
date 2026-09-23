@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تعديل سعر الباقة'))
+@section('title', admin_t('Edit Package Price'))
 
 @section('css')
     <style>
@@ -68,19 +68,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.package-prices.index') }}">أسعار الباقات</a></li>
-                <li class="breadcrumb-item active">تعديل السعر</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.package-prices.index') }}">Package Prices</a></li>
+                <li class="breadcrumb-item active">Edit Price</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">تعديل سعر الباقة</h5>
+                    <h5 class="mb-0">Edit Package Price</h5>
                     <small class="opacity-75">{{ $packagePrice->package->name ?? '-' }}</small>
                 </div>
-                <a href="{{ route('admin.package-prices.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.package-prices.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="form-body">
@@ -88,13 +88,13 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="section-title">بيانات السعر</div>
+                    <div class="section-title">Price Details</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الباقة</label>
+                            <label class="form-label">Package</label>
                             <select name="package_id" class="form-select">
-                                <option value="">اختر الباقة</option>
+                                <option value="">Select Package</option>
                                 @foreach ($packages ?? collect() as $package)
                                     <option value="{{ $package->id }}"
                                         {{ old('package_id', $packagePrice->package_id) == $package->id ? 'selected' : '' }}>
@@ -105,9 +105,9 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">العملة</label>
+                            <label class="form-label">Currency</label>
                             <select name="currency_id" class="form-select">
-                                <option value="">اختر العملة</option>
+                                <option value="">Select Currency</option>
                                 @foreach ($currencies ?? collect() as $currency)
                                     <option value="{{ $currency->id }}"
                                         {{ old('currency_id', $packagePrice->currency_id) == $currency->id ? 'selected' : '' }}>
@@ -190,8 +190,8 @@
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.package-prices.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.package-prices.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

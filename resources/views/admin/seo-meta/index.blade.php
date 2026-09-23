@@ -183,7 +183,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active">SEO Meta</li>
             </ol>
         </nav>
@@ -195,7 +195,7 @@
                         <i class="fas fa-magnifying-glass-chart"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalSeo) }}</div>
-                    <div class="stats-label">إجمالي السجلات</div>
+                    <div class="stats-label">Total Records</div>
                 </div>
             </div>
 
@@ -228,7 +228,7 @@
                         <i class="fas fa-language"></i>
                     </div>
                     <div class="stats-number">{{ number_format($localized) }}</div>
-                    <div class="stats-label">سجلات مترجمة</div>
+                    <div class="stats-label">Logs mtrjma</div>
                 </div>
             </div>
         </div>
@@ -237,16 +237,16 @@
             <form method="GET" action="{{ route('admin.seo-meta.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-5">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <div class="search-box">
                             <i class="fas fa-search search-icon"></i>
                             <input type="text" class="form-control" name="q" value="{{ request('q') }}"
-                                placeholder="بحث بعنوان SEO أو النوع أو اللغة">
+                                placeholder="Search With Title SEO Or Type Or Language">
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">اللغة</label>
+                        <label class="form-label">Language</label>
                         <input type="text" class="form-control" name="locale" value="{{ request('locale') }}"
                             placeholder="ar / en">
                     </div>
@@ -257,8 +257,8 @@
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.seo-meta.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.seo-meta.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -266,8 +266,8 @@
 
         <div class="main-card">
             <div class="main-header">
-                <h5 class="mb-0">قائمة SEO Meta</h5>
-                <small class="opacity-75">إدارة بيانات الـ SEO الخاصة بالموديلات المختلفة</small>
+                <h5 class="mb-0">SEO Meta List</h5>
+                <small class="opacity-75">Manage Details the SEO Specific By Models Different</small>
             </div>
 
             <div class="p-4">
@@ -275,7 +275,7 @@
                     <div class="item-card">
                         <div class="item-header">
                             <div>
-                                <h6 class="mb-1">{{ $item->meta_title ?: 'بدون Meta Title' }}</h6>
+                                <h6 class="mb-1">{{ $item->meta_title ?: 'Without Meta Title' }}</h6>
                                 <small class="text-light opacity-75">{{ $item->model_type ?? '-' }}</small>
                             </div>
 
@@ -300,13 +300,13 @@
                                 <span>{{ $item->og_title ?: '-' }}</span>
                             </div>
                             <div>
-                                <span class="detail-label">التاريخ:</span>
+                                <span class="detail-label">Date:</span>
                                 <span>{{ optional($item->created_at)->translatedFormat('d M Y') ?? '-' }}</span>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <span class="detail-label">الوصف:</span>
+                            <span class="detail-label">Description:</span>
                             <span>{{ \Illuminate\Support\Str::limit($item->meta_description ?? '-', 180) }}</span>
                         </div>
 
@@ -314,19 +314,19 @@
                             @if (Route::has('admin.seo-meta.by-model'))
                                 <a href="{{ route('admin.seo-meta.by-model', ['type' => $item->model_type, 'id' => $item->model_id]) }}"
                                     class="btn btn-info btn-sm">
-                                    عرض حسب العنصر
+                                    View By Item
                                 </a>
                             @endif
 
                             <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#editSeoModal{{ $item->id }}">
-                                تعديل
+                                Edit
                             </button>
 
                             <form action="{{ route('admin.seo-meta.destroy', $item) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
@@ -339,7 +339,7 @@
                                     @method('PUT')
 
                                     <div class="modal-header">
-                                        <h5 class="modal-title">تعديل SEO Meta</h5>
+                                        <h5 class="modal-title">Edit SEO Meta</h5>
                                         <button type="button" class="btn-close btn-close-white"
                                             data-bs-dismiss="modal"></button>
                                     </div>
@@ -400,9 +400,9 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button class="btn btn-primary" type="submit">حفظ</button>
+                                        <button class="btn btn-primary" type="submit">Save</button>
                                         <button class="btn btn-secondary" type="button"
-                                            data-bs-dismiss="modal">إلغاء</button>
+                                            data-bs-dismiss="modal">Cancel</button>
                                     </div>
                                 </form>
                             </div>
@@ -413,7 +413,7 @@
                         <div class="empty-state-icon">
                             <i class="fas fa-magnifying-glass-chart"></i>
                         </div>
-                        <h5 class="empty-state-text">لا توجد سجلات SEO حالياً</h5>
+                        <h5 class="empty-state-text">No Logs SEO available</h5>
                     </div>
                 @endforelse
 

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تصنيفات الباقات'))
+@section('title', admin_t('Package Categories'))
 
 @section('css')
 
@@ -198,8 +198,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">تصنيفات الباقات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
+                <li class="breadcrumb-item active">Package Categories</li>
             </ol>
         </nav>
 
@@ -210,7 +210,7 @@
                         <i class="fas fa-layer-group"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalCategories) }}</div>
-                    <div class="stats-label">إجمالي التصنيفات</div>
+                    <div class="stats-label">Total Categories</div>
                 </div>
             </div>
 
@@ -221,7 +221,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stats-number">{{ number_format($activeCategories) }}</div>
-                    <div class="stats-label">تصنيفات مفعلة</div>
+                    <div class="stats-label">Active Categories</div>
                 </div>
             </div>
 
@@ -232,7 +232,7 @@
                         <i class="fas fa-ban"></i>
                     </div>
                     <div class="stats-number">{{ number_format($inactiveCategories) }}</div>
-                    <div class="stats-label">غير مفعلة</div>
+                    <div class="stats-label">Inactive Categories</div>
                 </div>
             </div>
 
@@ -243,7 +243,7 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <div class="stats-number">{{ number_format($featuredCategories) }}</div>
-                    <div class="stats-label">مميزة</div>
+                    <div class="stats-label">Featured Categories</div>
                 </div>
             </div>
         </div>
@@ -252,27 +252,27 @@
             <form method="GET" action="{{ route('admin.package-categories.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-8">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <div class="search-box">
                             <i class="fas fa-search search-icon"></i>
                             <input type="text" class="form-control" name="search" value="{{ request('search') }}"
-                                placeholder="ابحث باسم التصنيف أو الـ slug">
+                                placeholder="Search by category name or slug">
                         </div>
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>مفعل</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>غير مفعل
+                            <option value="">All</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive
                             </option>
                         </select>
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.package-categories.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.package-categories.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -281,11 +281,11 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة التصنيفات</h5>
-                    <small class="opacity-75">إدارة تصنيفات الباقات السياحية</small>
+                    <h5 class="mb-0">Package Categories List</h5>
+                    <small class="opacity-75">Manage travel package categories</small>
                 </div>
                 <a href="{{ route('admin.package-categories.create') }}" class="btn btn-light">
-                    <i class="fas fa-plus me-2"></i>إضافة تصنيف
+                    <i class="fas fa-plus me-2"></i>Add Category
                 </a>
             </div>
 
@@ -294,86 +294,86 @@
                     <div class="item-card">
                         <div class="item-header">
                             <div>
-                                <h6 class="mb-1">{{ adminTrans($category->name) ?: 'بدون اسم' }}</h6>
+                                <h6 class="mb-1">{{ adminTrans($category->name) ?: 'Untitled' }}</h6>
                                 <small class="text-light opacity-75">{{ $category->slug ?? '-' }}</small>
                             </div>
 
                             <div class="d-flex gap-2 flex-wrap">
                                 <span
                                     class="badge-status {{ $category->is_active ? 'status-active' : 'status-inactive' }}">
-                                    {{ $category->is_active ? 'مفعل' : 'غير مفعل' }}
+                                    {{ $category->is_active ? 'Active' : 'Inactive' }}
                                 </span>
                                 @if ($category->is_featured)
-                                    <span class="badge-status status-featured">مميز</span>
+                                    <span class="badge-status status-featured">Featured</span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="detail-row">
                             <div>
-                                <span class="detail-label">عدد الباقات:</span>
+                                <span class="detail-label">Packages Count:</span>
                                 <span>{{ $category->packages_count ?? ($category->packages->count() ?? 0) }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">الترتيب:</span>
+                                <span class="detail-label">Sort Order:</span>
                                 <span>{{ $category->sort_order ?? 0 }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">النوع:</span>
+                                <span class="detail-label">Type:</span>
                                 <span>{{ \App\Models\PackageCategory::TYPES[$category->category_type] ?? $category->category_type }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">التصنيف الأب:</span>
+                                <span class="detail-label">Parent Category:</span>
                                 <span>{{ $category->parent ? adminTrans($category->parent->name) : '-' }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">الإنشاء:</span>
-                                <span>{{ optional($category->created_at)->translatedFormat('d M Y') ?? '-' }}</span>
+                                <span class="detail-label">Created:</span>
+                                <span>{{ optional($category->created_at)->format('d M Y') ?? '-' }}</span>
                             </div>
 
                             <div>
-                                <span class="detail-label">آخر تحديث:</span>
-                                <span>{{ optional($category->updated_at)->translatedFormat('d M Y') ?? '-' }}</span>
+                                <span class="detail-label">Updated:</span>
+                                <span>{{ optional($category->updated_at)->format('d M Y') ?? '-' }}</span>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <span class="detail-label">الوصف:</span>
+                            <span class="detail-label">Description:</span>
                             <span>{{ \Illuminate\Support\Str::limit(adminTrans($category->description) ?: '-', 180) }}</span>
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
                             <a href="{{ route('admin.package-categories.show', $category) }}"
-                                class="btn btn-info btn-sm">عرض</a>
+                                class="btn btn-info btn-sm">View</a>
                             <a href="{{ route('admin.package-categories.edit', $category) }}"
-                                class="btn btn-warning btn-sm">تعديل</a>
+                                class="btn btn-warning btn-sm">Edit</a>
 
                             @if (Route::has('admin.package-categories.toggle-status'))
                                 <form action="{{ route('admin.package-categories.toggle-status', $category) }}"
                                     method="POST">
                                     @csrf
-                                    <button class="btn btn-dark btn-sm" type="submit">تبديل الحالة</button>
+                                    <button class="btn btn-dark btn-sm" type="submit">Toggle Status</button>
                                 </form>
                             @endif
 
                             <form action="{{ route('admin.package-categories.destroy', $category) }}" method="POST"
-                                onsubmit="return confirm('هل أنت متأكد من حذف هذا التصنيف؟ لن يتم حذف الباقات المرتبطة به.')">
+                                onsubmit="return confirm('Are you sure you want to delete this category? Associated packages will not be deleted.')">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
                 @empty
                     <div class="empty-state">
                         <div class="empty-state-icon"><i class="fas fa-layer-group"></i></div>
-                        <h5>لا توجد تصنيفات حالياً</h5>
-                        <a href="{{ route('admin.package-categories.create') }}" class="btn btn-primary">إضافة تصنيف
-                            جديد</a>
+                        <h5>No categories found</h5>
+                        <a href="{{ route('admin.package-categories.create') }}" class="btn btn-primary">Add New
+                            Category</a>
                     </div>
                 @endforelse
 

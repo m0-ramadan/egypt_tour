@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إسناد الأدوار'))
+@section('title', admin_t('Assign Roles'))
 
 @section('css')
     <style>
@@ -98,9 +98,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.roles.index') }}">الأدوار</a></li>
-                <li class="breadcrumb-item active">إسناد الأدوار</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.roles.index') }}">Roles</a></li>
+                <li class="breadcrumb-item active">Assign Roles</li>
             </ol>
         </nav>
 
@@ -108,11 +108,11 @@
             <div class="order-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">إسناد الأدوار للمديرين</h5>
-                        <small class="opacity-75">اختر المدير ثم حدد الأدوار المناسبة له</small>
+                        <h5 class="mb-0">Assign Roles For Admins</h5>
+                        <small class="opacity-75">Select Admin Then Select Roles Suitable For It</small>
                     </div>
                     <a href="{{ route('admin.roles.index') }}" class="btn btn-light">
-                        <i class="fas fa-arrow-right me-2"></i>رجوع
+                        <i class="fas fa-arrow-right me-2"></i>Back
                     </a>
                 </div>
             </div>
@@ -121,13 +121,13 @@
                 <form action="{{ route('admin.roles.assign.store') }}" method="POST">
                     @csrf
 
-                    <div class="section-title">المدير</div>
+                    <div class="section-title">Admin</div>
 
                     <div class="row">
                         <div class="col-md-12 mb-4">
-                            <label class="form-label">اختر المدير</label>
+                            <label class="form-label">Select Admin</label>
                             <select name="admin_id" class="form-select">
-                                <option value="">اختر المدير</option>
+                                <option value="">Select Admin</option>
                                 @foreach ($admins ?? collect() as $admin)
                                     <option value="{{ $admin->id }}">{{ $admin->name }} - {{ $admin->email }}</option>
                                 @endforeach
@@ -135,7 +135,7 @@
                         </div>
                     </div>
 
-                    <div class="section-title">الأدوار</div>
+                    <div class="section-title">Roles</div>
 
                     <div class="role-grid">
                         @foreach ($roles ?? collect() as $role)
@@ -153,10 +153,10 @@
 
                     <div class="d-flex gap-2 mt-4">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>حفظ
+                            <i class="fas fa-save me-2"></i>Save
                         </button>
                         <a href="{{ route('admin.roles.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-times me-2"></i>إلغاء
+                            <i class="fas fa-times me-2"></i>Cancel
                         </a>
                     </div>
                 </form>

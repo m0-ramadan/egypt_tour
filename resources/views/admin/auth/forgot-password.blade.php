@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.auth.layouts.master')
 
-@section('title', admin_t('نسيت كلمة المرور؟'))
+@section('title', admin_t('Forgot Password?'))
 
 @section('styles')
     @if (app()->getLocale() === 'ar')
@@ -14,37 +14,37 @@
         dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
         <div class="authentication-inner row">
 
-            <!-- الجانب الأيسر (الصورة التوضيحية) - يظهر فقط على الشاشات الكبيرة -->
+            <!-- Left side illustration -->
             <div class="d-none d-lg-flex col-lg-7 align-items-center p-0">
                 <div class="auth-cover-bg auth-cover-bg-color d-flex justify-content-center align-items-center w-100 h-100">
                     <img src="{{ asset('dashboard/assets/img/illustrations/forgot-password-illustration-light.png') }}"
-                        alt="غلاف استعادة كلمة المرور" class="img-fluid auth-illustration">
+                        alt="Cover Restore Word Password" class="img-fluid auth-illustration">
 
-                    <img src="{{ asset('dashboard/assets/img/illustrations/bg-shape-image-light.png') }}" alt="خلفية النظام"
+                    <img src="{{ asset('dashboard/assets/img/illustrations/bg-shape-image-light.png') }}" alt="Background System"
                         class="platform-bg">
                 </div>
             </div>
-            <!-- /الجانب الأيسر -->
+            <!-- /Left side -->
 
-            <!-- نموذج استعادة كلمة المرور -->
+            <!-- Reset Password Form -->
             <div class="d-flex col-12 col-lg-5 align-items-center p-4 p-sm-5">
                 <div class="w-px-400 mx-auto">
 
-                    <!-- الشعار -->
+                    <!-- Logo -->
                     <div class="app-brand mb-4 text-center">
                         <a href="{{ url('/') }}" class="app-brand-link justify-content-center">
                             <img src="{{ asset('website/logo/egypt-tour-pro.png') }}"
                                 style="max-height: 85px; width: auto; max-width: 280px; object-fit: contain;"
-                                alt="شعار {{ env('APP_NAME') }}">
+                                alt="Logo {{ env('APP_NAME') }}">
                         </a>
                     </div>
 
-                    <h3 class="mb-2 text-center">نسيت كلمة المرور؟ 🔒</h3>
+                    <h3 class="mb-2 text-center">Forgot Password? 🔒</h3>
                     <p class="mb-4 text-center text-muted">
-                        أدخل بريدك الإلكتروني وسيتم إرسال رابط إعادة تعيين كلمة المرور إليك.
+                        Enter Your Email Electronic And Will be Send Link Reset Set Word Password To You.
                     </p>
 
-                    <!-- رسائل النجاح أو الخطأ العامة -->
+                    <!-- Flash messages -->
                     @if (session('status'))
                         <div class="alert alert-success text-center" role="alert">
                             {{ session('status') }}
@@ -55,9 +55,9 @@
                         novalidate>
                         @csrf
 
-                        <!-- البريد الإلكتروني -->
+                        <!-- Email Address -->
                         <div class="mb-3">
-                            <label for="email" class="form-label">البريد الإلكتروني</label>
+                            <label for="email" class="form-label">Email Address</label>
                             <input type="email" class="form-control text-start @error('email') is-invalid @enderror"
                                 dir="ltr" id="email" name="email" value="{{ old('email') }}"
                                 placeholder="name@example.com" autofocus required>
@@ -67,24 +67,24 @@
                             @enderror
                         </div>
 
-                        <!-- زر إرسال الرابط -->
+                        <!-- Send Link Button -->
                         <button type="submit" class="btn btn-primary d-grid w-100 mb-3">
-                            إرسال رابط إعادة التعيين
+                            Send Link Reset Set
                         </button>
 
-                        <!-- رابط العودة لتسجيل الدخول -->
+                        <!-- Return to Sign In link -->
                         <div class="text-center">
                             <a href="{{ route('admin.login') }}" class="d-flex align-items-center justify-content-center">
                                 <i class="ti ti-chevron-left scaleX-n1-rtl me-1"></i>
-                                العودة إلى تسجيل الدخول
+                                Return To Sign In
                             </a>
                         </div>
                     </form>
 
-                    <!-- التذييل -->
+                    <!-- Footer -->
                     <div class="text-center mt-5">
                         <small class="text-muted">
-                            تم التطوير بواسطة
+                            Developed by
                             <a href="https://nofalseo.com" target="_blank" class="text-primary fw-medium">
                                 {{ env('APP_NAME') }}
                             </a>
@@ -93,15 +93,15 @@
 
                 </div>
             </div>
-            <!-- /نموذج استعادة كلمة المرور -->
+            <!-- /Reset Password Form -->
 
         </div>
     </div>
 @endsection
 
 @section('scripts')
-    <!-- لا نحتاج JS خاص هنا، لكن نتركه للتوافق مع القالب -->
+    <!-- No custom JS needed -->
     <script>
-        // يمكن إضافة أي تحقق إضافي للـ form إذا أردت
+        // Add custom form validation here
     </script>
 @endsection

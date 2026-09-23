@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('سجل التواصل'))
+@section('title', admin_t('Communication Log'))
 
 @section('css')
 
@@ -142,8 +142,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">سجل التواصل</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Communication Log</li>
             </ol>
         </nav>
 
@@ -154,7 +154,7 @@
                         <i class="fas fa-comments"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalCommunications) }}</div>
-                    <div class="stats-label">إجمالي السجلات</div>
+                    <div class="stats-label">Total Records</div>
                 </div>
             </div>
 
@@ -165,7 +165,7 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="stats-number">{{ number_format($clientCount) }}</div>
-                    <div class="stats-label">تواصل العملاء</div>
+                    <div class="stats-label">Communication Clients</div>
                 </div>
             </div>
 
@@ -176,7 +176,7 @@
                         <i class="fas fa-calendar-check"></i>
                     </div>
                     <div class="stats-number">{{ number_format($bookingCount) }}</div>
-                    <div class="stats-label">تواصل الحجوزات</div>
+                    <div class="stats-label">Communication Bookings</div>
                 </div>
             </div>
 
@@ -187,7 +187,7 @@
                         <i class="fas fa-circle-question"></i>
                     </div>
                     <div class="stats-number">{{ number_format($inquiryCount) }}</div>
-                    <div class="stats-label">تواصل الاستفسارات</div>
+                    <div class="stats-label">Communication Inquiries</div>
                 </div>
             </div>
         </div>
@@ -196,15 +196,15 @@
             <form method="GET" action="{{ route('admin.communications.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <input type="text" name="search" class="form-control" value="{{ request('search') }}"
-                            placeholder="ابحث في الموضوع أو الرسالة">
+                            placeholder="Search In Subject Or Message">
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">النوع</label>
+                        <label class="form-label">Type</label>
                         <select name="related_type" class="form-select">
-                            <option value="">الكل</option>
+                            <option value="">All</option>
                             <option value="client" {{ request('related_type') == 'client' ? 'selected' : '' }}>client
                             </option>
                             <option value="booking" {{ request('related_type') == 'booking' ? 'selected' : '' }}>booking
@@ -215,14 +215,14 @@
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">القناة</label>
+                        <label class="form-label">Channel</label>
                         <input type="text" name="channel" class="form-control" value="{{ request('channel') }}"
                             placeholder="email / whatsapp / phone">
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.communications.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.communications.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -230,8 +230,8 @@
 
         <div class="main-card">
             <div class="main-header">
-                <h5 class="mb-0">سجل التواصل</h5>
-                <small class="opacity-75">كل الرسائل والمكالمات والتفاعلات المسجلة</small>
+                <h5 class="mb-0">Communication Log</h5>
+                <small class="opacity-75">All Messages And Calls And Interactions Recorded</small>
             </div>
 
             <div class="p-4">
@@ -248,7 +248,7 @@
                     <div class="item-card">
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
                             <div>
-                                <h6 class="mb-1">{{ $communication->subject ?? 'بدون عنوان' }}</h6>
+                                <h6 class="mb-1">{{ $communication->subject ?? 'Without Title' }}</h6>
                                 <small class="text-light opacity-75">{{ $communication->channel ?? '-' }}</small>
                             </div>
 
@@ -263,37 +263,37 @@
                             <div class="col-md-3"><strong>Sender:</strong> {{ $communication->sender_name ?? '-' }}</div>
                             <div class="col-md-3"><strong>Receiver:</strong> {{ $communication->receiver_name ?? '-' }}
                             </div>
-                            <div class="col-md-3"><strong>التاريخ:</strong>
+                            <div class="col-md-3"><strong>Date:</strong>
                                 {{ optional($communication->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
                         </div>
 
                         <div class="mb-3">
-                            <strong>الرسالة:</strong>
+                            <strong>Message:</strong>
                             {{ \Illuminate\Support\Str::limit($communication->message ?? '-', 220) }}
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
                             <a href="{{ route('admin.communications.show', $communication) }}"
-                                class="btn btn-info btn-sm">عرض</a>
+                                class="btn btn-info btn-sm">View</a>
 
                             @if (($communication->related_type ?? null) === 'client' && Route::has('admin.communications.client'))
                                 <a href="{{ route('admin.communications.client', $communication) }}"
-                                    class="btn btn-success btn-sm">سجل العميل</a>
+                                    class="btn btn-success btn-sm">Log Client</a>
                             @endif
 
                             @if (($communication->related_type ?? null) === 'booking' && Route::has('admin.communications.booking'))
                                 <a href="{{ route('admin.communications.booking', $communication) }}"
-                                    class="btn btn-primary btn-sm">سجل الحجز</a>
+                                    class="btn btn-primary btn-sm">Log Booking</a>
                             @endif
 
                             @if (($communication->related_type ?? null) === 'inquiry' && Route::has('admin.communications.inquiry'))
                                 <a href="{{ route('admin.communications.inquiry', $communication) }}"
-                                    class="btn btn-warning btn-sm">سجل الاستفسار</a>
+                                    class="btn btn-warning btn-sm">Log Inquiry</a>
                             @endif
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد سجلات تواصل حالياً</div>
+                    <div class="text-center py-5">No Logs Communication available</div>
                 @endforelse
 
                 @if (method_exists($communications, 'links'))

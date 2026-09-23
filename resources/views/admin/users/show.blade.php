@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض المستخدم'))
+@section('title', admin_t('View User'))
 
 @section('css')
     <style>
@@ -60,24 +60,24 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">المستخدمين</a></li>
-                <li class="breadcrumb-item active">عرض المستخدم</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Users</a></li>
+                <li class="breadcrumb-item active">View User</li>
             </ol>
         </nav>
 
         <div class="profile-card">
             <div class="profile-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="mb-1">{{ $user->name ?? 'بدون اسم' }}</h4>
+                    <h4 class="mb-1">{{ $user->name ?? 'No Name' }}</h4>
                     <small class="opacity-75">{{ $user->email ?? '-' }}</small>
                 </div>
                 <div class="d-flex gap-2">
                     <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-light">
-                        تعديل
+                        Edit
                     </a>
                     <a href="{{ route('admin.users.index') }}" class="btn btn-outline-light">
-                        رجوع
+                        Back
                     </a>
                 </div>
             </div>
@@ -86,28 +86,28 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الهاتف</div>
+                            <div class="info-label">Phone Number</div>
                             <div class="info-value">{{ $user->phone ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
-                            <div class="info-value">{{ $user->is_active ?? true ? 'نشط' : 'غير نشط' }}</div>
+                            <div class="info-label">Status</div>
+                            <div class="info-value">{{ $user->is_active ?? true ? 'Active' : 'Inactive' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">توثيق البريد</div>
-                            <div class="info-value">{{ !empty($user->email_verified_at) ? 'موثق' : 'غير موثق' }}</div>
+                            <div class="info-label">Verify Email</div>
+                            <div class="info-value">{{ !empty($user->email_verified_at) ? 'Verified' : 'Not Verified' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">تاريخ الإنشاء</div>
+                            <div class="info-label">Created At</div>
                             <div class="info-value">
                                 {{ optional($user->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
                         </div>
@@ -115,7 +115,7 @@
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">آخر تحديث</div>
+                            <div class="info-label">Last Updated</div>
                             <div class="info-value">
                                 {{ optional($user->updated_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
                         </div>
@@ -123,7 +123,7 @@
                 </div>
 
                 <div class="d-flex gap-2 mt-3">
-                    <a href="{{ route('admin.users.activities', $user) }}" class="btn btn-primary">النشاطات</a>
+                    <a href="{{ route('admin.users.activities', $user) }}" class="btn btn-primary">Activities</a>
                 </div>
             </div>
         </div>

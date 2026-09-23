@@ -5,8 +5,7 @@
     $isRtl = $locale === 'ar';
 @endphp
 <html lang="{{ $locale }}" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact"
-    dir="{{ $isRtl ? 'rtl' : 'ltr' }}"
-    data-theme="theme-default" data-assets-path="{{ asset('dashboard/assets') }}/"
+    dir="{{ $isRtl ? 'rtl' : 'ltr' }}" data-theme="theme-default" data-assets-path="{{ asset('dashboard/assets') }}/"
     data-template="vertical-menu-template-no-customizer">
 
 <head>
@@ -15,9 +14,9 @@
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- تنسيق خاص لمعالجة الأخطاء -->
+    <!-- Special formatting for title -->
     <style>
-        /* تنسيق للصور الفاشلة */
+        /* Fallback image styling */
         img.img-error {
             opacity: 0.7;
             border: 2px dashed #ccc !important;
@@ -25,7 +24,7 @@
             padding: 10px !important;
         }
 
-        /* تحسين الأداء للـ animations */
+        /* Performance optimization for animations */
         @media (prefers-reduced-motion: reduce) {
 
             *,
@@ -107,18 +106,23 @@
     @yield('js')
 
     <script>
-        // ✅ حل إسعافي: لو أي Swal اتعملت بدون نصوص للأزرار، نركّب نصوص افتراضية
-        if (window.Swal && typeof Swal.fire === 'function') {
-            const __fire = Swal.fire.bind(Swal);
-            Swal.fire = function(opts, ...rest) {
-                if (opts && typeof opts === 'object') {
-                    if (!opts.confirmButtonText) opts.confirmButtonText = @json(admin_t('موافق'));
-                    if (opts.showCancelButton && !opts.cancelButtonText) opts.cancelButtonText = @json(admin_t('إلغاء'));
-                    if (opts.showDenyButton && !opts.denyButtonText) opts.denyButtonText = @json(admin_t('لا'));
-                }
-                return __fire(opts, ...rest);
-            };
-        }
+        // Fallback: If any Swal is called without button text, set English default text
+        (function() {
+            if (typeof Swal !== 'undefined' && Swal.fire) {
+                const originalSwal = Swal.fire;
+                Swal.fire = function(...args) {
+                    if (args.length === 1 && typeof args[0] === 'object') {
+                        let opts = args[0];
+                        if (!opts.confirmButtonText) opts.confirmButtonText = @json(admin_t('OK'));
+                        if (opts.showCancelButton && !opts.cancelButtonText) opts.cancelButtonText =
+                            @json(admin_t('Cancel'));
+                        if (opts.showDenyButton && !opts.denyButtonText) opts.denyButtonText =
+                            @json(admin_t('No'));
+                    }
+                    return originalSwal.apply(this, args);
+                };
+            }
+        })();
     </script>
 </body>
 

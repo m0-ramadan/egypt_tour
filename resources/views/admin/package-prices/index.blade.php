@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('أسعار الباقات'))
+@section('title', admin_t('Package Prices'))
 
 @section('css')
 
@@ -120,8 +120,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">أسعار الباقات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Package Prices</li>
             </ol>
         </nav>
 
@@ -132,7 +132,7 @@
                         <i class="fas fa-tags"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalPrices) }}</div>
-                    <div class="stats-label">إجمالي الأسعار</div>
+                    <div class="stats-label">Total Prices</div>
                 </div>
             </div>
 
@@ -143,7 +143,7 @@
                         <i class="fas fa-calendar-check"></i>
                     </div>
                     <div class="stats-number">{{ number_format($activePrices) }}</div>
-                    <div class="stats-label">أسعار فعالة</div>
+                    <div class="stats-label">Prices Active</div>
                 </div>
             </div>
 
@@ -154,7 +154,7 @@
                         <i class="fas fa-coins"></i>
                     </div>
                     <div class="stats-number">{{ number_format($currenciesCount) }}</div>
-                    <div class="stats-label">عدد العملات</div>
+                    <div class="stats-label">Number of Currencies</div>
                 </div>
             </div>
 
@@ -165,7 +165,7 @@
                         <i class="fas fa-money-bill-trend-up"></i>
                     </div>
                     <div class="stats-number">{{ number_format($avgPrice ?? 0, 2) }}</div>
-                    <div class="stats-label">متوسط السعر</div>
+                    <div class="stats-label">Moderate Price</div>
                 </div>
             </div>
         </div>
@@ -174,9 +174,9 @@
             <form method="GET" action="{{ route('admin.package-prices.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
-                        <label class="form-label">الباقة</label>
+                        <label class="form-label">Package</label>
                         <select name="package_id" class="form-select">
-                            <option value="">كل الباقات</option>
+                            <option value="">All Packages</option>
                             @foreach ($packages ?? collect() as $package)
                                 <option value="{{ $package->id }}"
                                     {{ request('package_id') == $package->id ? 'selected' : '' }}>
@@ -187,18 +187,18 @@
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">نوع السعر</label>
+                        <label class="form-label">Price Type</label>
                         <input type="text" class="form-control" name="price_type" value="{{ request('price_type') }}">
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">الغرفة</label>
+                        <label class="form-label">Room</label>
                         <input type="text" class="form-control" name="room_type" value="{{ request('room_type') }}">
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.package-prices.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.package-prices.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -207,10 +207,10 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة أسعار الباقات</h5>
-                    <small class="opacity-75">إدارة جميع الأسعار الموسمية والأساسية</small>
+                    <h5 class="mb-0">Prices Packages List</h5>
+                    <small class="opacity-75">Manage All Prices Seasonal And Basic</small>
                 </div>
-                <a href="{{ route('admin.package-prices.create') }}" class="btn btn-light">إضافة سعر</a>
+                <a href="{{ route('admin.package-prices.create') }}" class="btn btn-light">Add Price</a>
             </div>
 
             <div class="p-4">
@@ -249,18 +249,18 @@
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('admin.package-prices.show', $price) }}" class="btn btn-info btn-sm">عرض</a>
+                            <a href="{{ route('admin.package-prices.show', $price) }}" class="btn btn-info btn-sm">View</a>
                             <a href="{{ route('admin.package-prices.edit', $price) }}"
-                                class="btn btn-warning btn-sm">تعديل</a>
+                                class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('admin.package-prices.destroy', $price) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد أسعار حالياً</div>
+                    <div class="text-center py-5">No prices available</div>
                 @endforelse
 
                 @if (method_exists($packagePrices, 'links'))

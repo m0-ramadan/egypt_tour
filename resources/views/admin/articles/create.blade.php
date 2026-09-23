@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إضافة مقال'))
+@section('title', admin_t('Add Article'))
 
 @section('css')
     <style>
@@ -156,16 +156,16 @@
     <div class="loading-overlay" id="ai-loading">
         <div class="loading-box">
             <div class="spinner"></div>
-            <div>جاري تنفيذ طلب الذكاء الاصطناعي...</div>
+            <div>Processing the AI request...</div>
         </div>
     </div>
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.articles.index') }}">المقالات</a></li>
-                <li class="breadcrumb-item active">إضافة مقال</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.articles.index') }}">Articles</a></li>
+                <li class="breadcrumb-item active">Add Article</li>
             </ol>
         </nav>
 
@@ -173,39 +173,39 @@
             <div class="order-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">إضافة مقال جديد</h5>
-                        <small class="opacity-75">إدخال بيانات المقال الأساسية مع أدوات الذكاء الاصطناعي</small>
+                        <h5 class="mb-0">Add New Article</h5>
+                        <small class="opacity-75">Enter the article basic information and use the AI tools</small>
                     </div>
                     <div class="d-flex gap-2">
                         <a href="{{ route('admin.articles.create-with-ai') }}" class="btn btn-light">
-                            إنشاء بالذكاء الاصطناعي
+                            Create with AI
                         </a>
                         <a href="{{ route('admin.articles.index') }}" class="btn btn-light">
-                            رجوع
+                            Back
                         </a>
                     </div>
                 </div>
             </div>
 
             <div class="form-body">
-                <div class="section-title">أدوات الذكاء الاصطناعي</div>
+                <div class="section-title">AI Tools</div>
                 <div class="ai-actions mb-4">
-                    <button type="button" class="btn btn-ai" id="btn-ai-title">توليد العنوان</button>
-                    <button type="button" class="btn btn-ai" id="btn-ai-content">توليد المحتوى</button>
-                    <button type="button" class="btn btn-ai" id="btn-ai-excerpt">توليد الملخص</button>
-                    <button type="button" class="btn btn-ai" id="btn-ai-enhance">تحسين المحتوى</button>
-                    <button type="button" class="btn btn-ai" id="btn-ai-translate">ترجمة الكل</button>
-                    <button type="button" class="btn btn-ai" id="btn-ai-seo">توليد SEO</button>
+                    <button type="button" class="btn btn-ai" id="btn-ai-title">Generate Title</button>
+                    <button type="button" class="btn btn-ai" id="btn-ai-content">Generate Content</button>
+                    <button type="button" class="btn btn-ai" id="btn-ai-excerpt">Generate Summary</button>
+                    <button type="button" class="btn btn-ai" id="btn-ai-enhance">Improve Content</button>
+                    <button type="button" class="btn btn-ai" id="btn-ai-translate">Translate All</button>
+                    <button type="button" class="btn btn-ai" id="btn-ai-seo">Generate SEO</button>
                 </div>
 
                 <form action="{{ route('admin.articles.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <div class="section-title">البيانات الأساسية</div>
+                    <div class="section-title">Basic Information</div>
 
                     <div class="row">
                         <div class="col-md-8 mb-3">
-                            <label class="form-label">عنوان المقال</label>
+                            <label class="form-label">Article Title</label>
                             <input type="text" id="title" name="title" class="form-control"
                                 value="{{ old('title') }}">
                         </div>
@@ -217,29 +217,29 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">النوع</label>
+                            <label class="form-label">Type</label>
                             <input type="text" name="article_type" class="form-control"
                                 value="{{ old('article_type') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">تاريخ النشر</label>
+                            <label class="form-label">Publish Date</label>
                             <input type="datetime-local" name="published_at" class="form-control"
                                 value="{{ old('published_at') }}">
                         </div>
 
                         <div class="col-12 mb-3">
-                            <label class="form-label">الوصف المختصر</label>
+                            <label class="form-label">Short Description</label>
                             <textarea id="excerpt" name="excerpt" class="form-control" rows="3">{{ old('excerpt') }}</textarea>
                         </div>
 
                         <div class="col-12 mb-3">
-                            <label class="form-label">المحتوى</label>
+                            <label class="form-label">Content</label>
                             <textarea id="content-editor" name="content" class="form-control" rows="10">{{ old('content') }}</textarea>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">صورة المقال</label>
+                            <label class="form-label">Article Image</label>
                             <input type="file" name="featured_image" class="form-control">
                         </div>
                     </div>
@@ -262,20 +262,20 @@
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" id="is_active"
                                     name="is_active" {{ old('is_active', true) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">منشور</label>
+                                <label class="form-check-label" for="is_active">Published</label>
                             </div>
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" id="is_featured"
                                     name="is_featured" {{ old('is_featured') ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_featured">مميز</label>
+                                <label class="form-check-label" for="is_featured">Featured</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button type="submit" class="btn btn-primary">حفظ</button>
-                        <a href="{{ route('admin.articles.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="{{ route('admin.articles.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>
@@ -324,7 +324,7 @@
                 return await response.json();
             } catch (error) {
                 console.error(error);
-                alert('حدث خطأ أثناء الاتصال بخدمة الذكاء الاصطناعي');
+                alert('An error occurred while connecting to AI service.');
                 return null;
             } finally {
                 hideAiLoading();
@@ -344,7 +344,7 @@
         document.getElementById('btn-ai-title').addEventListener('click', async function() {
             const data = await postAi('{{ route('admin.articles.ai-generate-title') }}', {
                 topic: document.getElementById('title').value || document.getElementById('excerpt')
-                    .value || 'مقال جديد'
+                    .value || 'Article New'
             });
 
             if (data?.title) {
@@ -354,7 +354,7 @@
 
         document.getElementById('btn-ai-content').addEventListener('click', async function() {
             const data = await postAi('{{ route('admin.articles.ai-generate-content') }}', {
-                title: document.getElementById('title').value || 'مقال جديد',
+                title: document.getElementById('title').value || 'Article New',
                 excerpt: document.getElementById('excerpt').value || ''
             });
 
@@ -365,7 +365,7 @@
 
         document.getElementById('btn-ai-excerpt').addEventListener('click', async function() {
             const data = await postAi('{{ route('admin.articles.ai-generate-excerpt') }}', {
-                title: document.getElementById('title').value || 'مقال جديد',
+                title: document.getElementById('title').value || 'Article New',
                 content: getContent()
             });
 
@@ -377,7 +377,7 @@
         document.getElementById('btn-ai-enhance').addEventListener('click', async function() {
             const data = await postAi('{{ route('admin.articles.ai-enhance-content') }}', {
                 content: getContent(),
-                instruction: 'حسن الأسلوب والتنظيم والوضوح مع الحفاظ على المعنى'
+                instruction: 'Improve Style And organization And clarity With Preserve On Meaning'
             });
 
             if (data?.content) {

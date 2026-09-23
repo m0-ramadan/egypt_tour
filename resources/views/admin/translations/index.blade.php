@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('الترجمات'))
+@section('title', admin_t('Translations'))
 
 @section('css')
 
@@ -207,8 +207,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">الترجمات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Translations</li>
             </ol>
         </nav>
 
@@ -218,7 +218,7 @@
                     <div class="stats-icon" style="background: var(--primary-gradient); color:#fff;"><i
                             class="fas fa-language"></i></div>
                     <div class="stats-number">{{ number_format($total) }}</div>
-                    <div class="stats-label">إجمالي الترجمات</div>
+                    <div class="stats-label">Total Translations</div>
                 </div>
             </div>
         </div>
@@ -226,27 +226,27 @@
         <div class="panel-card">
             <div class="panel-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة الترجمات</h5>
-                    <small class="opacity-75">إدارة وترتيب الترجمات حسب العنصر</small>
+                    <h5 class="mb-0">Translations List</h5>
+                    <small class="opacity-75">Manage And Order Translations By Item</small>
                 </div>
             </div>
             <div class="panel-body">
                 @if ($translations->isEmpty())
                     <div class="empty-state">
                         <div class="empty-state-icon"><i class="fas fa-language"></i></div>
-                        <h5 class="empty-state-text">لا توجد ترجمات</h5>
+                        <h5 class="empty-state-text">No There are Translations</h5>
                     </div>
                 @else
                     @foreach ($translations as $translation)
                         <div class="item-row">
                             <div class="row">
-                                <div class="col-md-3"><strong>اللغة:</strong> {{ $translation->locale ?? '-' }}</div>
-                                <div class="col-md-3"><strong>الحقل:</strong> {{ $translation->field ?? '-' }}</div>
-                                <div class="col-md-3"><strong>النوع:</strong> {{ $translation->translatable_type ?? '-' }}
+                                <div class="col-md-3"><strong>Language:</strong> {{ $translation->locale ?? '-' }}</div>
+                                <div class="col-md-3"><strong>Field:</strong> {{ $translation->field ?? '-' }}</div>
+                                <div class="col-md-3"><strong>Type:</strong> {{ $translation->translatable_type ?? '-' }}
                                 </div>
-                                <div class="col-md-3"><strong>المعرف:</strong> #{{ $translation->translatable_id ?? '-' }}
+                                <div class="col-md-3"><strong>ID:</strong> #{{ $translation->translatable_id ?? '-' }}
                                 </div>
-                                <div class="col-12 mt-3"><strong>القيمة:</strong> {{ $translation->value ?? '-' }}</div>
+                                <div class="col-12 mt-3"><strong>Value:</strong> {{ $translation->value ?? '-' }}</div>
                             </div>
                         </div>
                     @endforeach

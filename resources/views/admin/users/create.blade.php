@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إضافة مستخدم'))
+@section('title', admin_t('Add User'))
 
 @section('css')
     <style>
@@ -83,9 +83,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">المستخدمين</a></li>
-                <li class="breadcrumb-item active">إضافة مستخدم</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Users</a></li>
+                <li class="breadcrumb-item active">Add User</li>
             </ol>
         </nav>
 
@@ -93,11 +93,11 @@
             <div class="order-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">إضافة مستخدم جديد</h5>
-                        <small class="opacity-75">إدخال بيانات المستخدم الأساسية</small>
+                        <h5 class="mb-0">Add New User</h5>
+                        <small class="opacity-75">Enter Details User Basic</small>
                     </div>
                     <a href="{{ route('admin.users.index') }}" class="btn btn-light">
-                        <i class="fas fa-arrow-right me-2"></i>رجوع
+                        <i class="fas fa-arrow-right me-2"></i>Back
                     </a>
                 </div>
             </div>
@@ -106,31 +106,31 @@
                 <form action="{{ route('admin.users.store') }}" method="POST">
                     @csrf
 
-                    <div class="section-title">البيانات الأساسية</div>
+                    <div class="section-title">Basic Information</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الاسم</label>
+                            <label class="form-label">Name</label>
                             <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">البريد الإلكتروني</label>
+                            <label class="form-label">Email Address</label>
                             <input type="email" name="email" class="form-control" value="{{ old('email') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الهاتف</label>
+                            <label class="form-label">Phone Number</label>
                             <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">كلمة المرور</label>
+                            <label class="form-label">Password</label>
                             <input type="password" name="password" class="form-control">
                         </div>
                     </div>
 
-                    <div class="section-title mt-4">الحالة</div>
+                    <div class="section-title mt-4">Status</div>
 
                     <div class="row">
                         <div class="col-md-12 mb-3">
@@ -138,7 +138,7 @@
                                 <input class="form-check-input" type="checkbox" value="1" id="is_active"
                                     name="is_active" {{ old('is_active', true) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="is_active">
-                                    مستخدم نشط
+                                    Active User
                                 </label>
                             </div>
                         </div>
@@ -146,10 +146,10 @@
 
                     <div class="d-flex gap-2 mt-4">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>حفظ
+                            <i class="fas fa-save me-2"></i>Save
                         </button>
                         <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-times me-2"></i>إلغاء
+                            <i class="fas fa-times me-2"></i>Cancel
                         </a>
                     </div>
                 </form>

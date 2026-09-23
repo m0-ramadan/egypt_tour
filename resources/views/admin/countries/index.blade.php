@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إدارة الدول'))
+@section('title', admin_t('Manage Countries'))
 
 @section('css')
 
@@ -219,8 +219,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">الدول</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Countries</li>
             </ol>
         </nav>
 
@@ -230,7 +230,7 @@
                     <div class="stats-icon" style="background: var(--primary-gradient); color:#fff;"><i
                             class="fas fa-flag"></i></div>
                     <div class="stats-number">{{ number_format($totalCountries) }}</div>
-                    <div class="stats-label">إجمالي الدول</div>
+                    <div class="stats-label">Total Countries</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -239,7 +239,7 @@
                         style="background: rgba(32,201,151,.2); color:#20c997; border:1px solid rgba(32,201,151,.3);"><i
                             class="fas fa-check-circle"></i></div>
                     <div class="stats-number">{{ number_format($activeCountries) }}</div>
-                    <div class="stats-label">دول مفعلة</div>
+                    <div class="stats-label">Countries Enabled</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -248,7 +248,7 @@
                         style="background: rgba(253,126,20,.2); color:#fd7e14; border:1px solid rgba(253,126,20,.3);"><i
                             class="fas fa-ban"></i></div>
                     <div class="stats-number">{{ number_format($inactiveCountries) }}</div>
-                    <div class="stats-label">دول غير مفعلة</div>
+                    <div class="stats-label">Countries Not Enabled</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -257,7 +257,7 @@
                         style="background: rgba(12,99,228,.2); color:#0c63e4; border:1px solid rgba(12,99,228,.3);"><i
                             class="fas fa-star"></i></div>
                     <div class="stats-number">{{ number_format($featuredCountries) }}</div>
-                    <div class="stats-label">دول مميزة</div>
+                    <div class="stats-label">Countries Featured</div>
                 </div>
             </div>
         </div>
@@ -266,25 +266,25 @@
             <form method="GET" action="{{ route('admin.countries.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-8">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <div class="search-box">
                             <i class="fas fa-search search-icon"></i>
                             <input type="text" class="form-control" name="search" value="{{ request('search') }}"
-                                placeholder="ابحث باسم الدولة أو الكود">
+                                placeholder="Search Named Country Or Code">
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>مفعل</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>غير مفعل
+                            <option value="">All</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Enabled</option>
+                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Disabled
                             </option>
                         </select>
                     </div>
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.countries.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.countries.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -293,11 +293,11 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة الدول</h5>
-                    <small class="opacity-75">إدارة جميع الدول</small>
+                    <h5 class="mb-0">Countries List</h5>
+                    <small class="opacity-75">Manage All Countries</small>
                 </div>
                 <a href="{{ route('admin.countries.create') }}" class="btn btn-light">
-                    <i class="fas fa-plus me-2"></i>إضافة دولة
+                    <i class="fas fa-plus me-2"></i>Add Country
                 </a>
             </div>
 
@@ -311,57 +311,57 @@
                                         <img src="{{ asset($country->flag) }}" alt="{{ adminTrans($country->name) }}"
                                             class="country-flag">
                                     @else
-                                        <div class="no-image">لا توجد صورة</div>
+                                        <div class="no-image">No Image</div>
                                     @endif
                                 </div>
                             </div>
                             <div>
-                                <h6 class="mb-1">{{ $country->display_name ?? 'بدون اسم' }}</h6>
+                                <h6 class="mb-1">{{ $country->display_name ?? 'No Name' }}</h6>
                                 <small class="text-light opacity-75">{{ $country->code ?? '-' }}</small>
                             </div>
 
                             <span
                                 class="badge-status {{ $country->is_active ?? true ? 'status-active' : 'status-inactive' }}">
-                                {{ $country->is_active ?? true ? 'مفعلة' : 'غير مفعلة' }}
+                                {{ $country->is_active ?? true ? 'Enabled' : 'Inactive' }}
                             </span>
                         </div>
 
                         <div class="detail-row">
                             <div>
-                                <span class="detail-label">المدن:</span>
+                                <span class="detail-label">Cities:</span>
                                 <span>{{ $country->cities_count ?? ($country->cities->count() ?? 0) }}</span>
                             </div>
                             <div>
-                                <span class="detail-label">الترتيب:</span>
+                                <span class="detail-label">Order:</span>
                                 <span>{{ $country->sort_order ?? 0 }}</span>
                             </div>
                             <div>
-                                <span class="detail-label">مميزة:</span>
-                                <span>{{ $country->is_featured ?? false ? 'نعم' : 'لا' }}</span>
+                                <span class="detail-label">Featured:</span>
+                                <span>{{ $country->is_featured ?? false ? 'Yes' : 'No' }}</span>
                             </div>
                             <div>
-                                <span class="detail-label">الإنشاء:</span>
+                                <span class="detail-label">Created At:</span>
                                 <span>{{ optional($country->created_at)->translatedFormat('d M Y') ?? '-' }}</span>
                             </div>
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('admin.countries.show', $country) }}" class="btn btn-info btn-sm">عرض</a>
+                            <a href="{{ route('admin.countries.show', $country) }}" class="btn btn-info btn-sm">View</a>
                             <a href="{{ route('admin.countries.edit', $country) }}"
-                                class="btn btn-warning btn-sm">تعديل</a>
+                                class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('admin.countries.destroy', $country) }}" method="POST"
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('هل أنت متأكد من الحذف؟')">
-                                    حذف
+                                    onclick="return confirm('return confirm')">
+                                    Delete
                                 </button>
                             </form>
                             {{-- @if (Route::has('admin.countries.toggle-status'))
                                 <form action="{{ route('admin.countries.toggle-status', $country) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-secondary btn-sm">تبديل الحالة</button>
+                                    <button type="submit" class="btn btn-secondary btn-sm">Toggle Status</button>
                                 </form>
                             @endif --}}
                         </div>
@@ -369,8 +369,8 @@
                 @empty
                     <div class="empty-state">
                         <div class="empty-state-icon"><i class="fas fa-flag"></i></div>
-                        <h5 class="empty-state-text">لا توجد دول حالياً</h5>
-                        <a href="{{ route('admin.countries.create') }}" class="btn btn-primary">إضافة دولة جديدة</a>
+                        <h5 class="empty-state-text">No Countries available</h5>
+                        <a href="{{ route('admin.countries.create') }}" class="btn btn-primary">Add New Country</a>
                     </div>
                 @endforelse
 

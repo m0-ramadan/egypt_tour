@@ -393,7 +393,7 @@
 
                             <div>
                                 <span class="detail-label">Destination:</span>
-                                <span>{{ adminTrans(optional(optional($package->destination)->city)->name) ?: (adminTrans(optional($package->destination)->name) ?: '-') }}</span>
+                                <span>{{ adminTrans(optional($package->cities->where('pivot.is_primary', 1)->first() ?? $package->cities->first())?->name) ?: (adminTrans(optional(optional($package->destination)->city)->name) ?: (adminTrans(optional($package->destination)->name) ?: '-')) }}</span>
                             </div>
 
                             <div>
@@ -412,12 +412,6 @@
                             <a href="{{ route('admin.packages.edit', $package) }}"
                                 class="btn btn-warning btn-sm">Edit</a>
 
-                            @if (Route::has('admin.package-prices.by-package'))
-                                <a href="{{ route('admin.package-prices.by-package', $package) }}"
-                                    class="btn btn-secondary btn-sm">
-                                    Prices
-                                </a>
-                            @endif
 
                             @if (Route::has('admin.packages.toggle-status'))
                                 <form action="{{ route('admin.packages.toggle-status', $package) }}" method="POST">

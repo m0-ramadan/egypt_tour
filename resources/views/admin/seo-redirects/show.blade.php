@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض Redirect'))
+@section('title', admin_t('View Redirect'))
 
 @section('css')
     <style>
@@ -62,9 +62,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.seo-redirects.index') }}">SEO Redirects</a></li>
-                <li class="breadcrumb-item active">عرض Redirect</li>
+                <li class="breadcrumb-item active">View Redirect</li>
             </ol>
         </nav>
 
@@ -75,8 +75,8 @@
                     <small class="opacity-75">{{ $seoRedirect->new_path }}</small>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{{ route('admin.seo-redirects.edit', $seoRedirect) }}" class="btn btn-light">تعديل</a>
-                    <a href="{{ route('admin.seo-redirects.index') }}" class="btn btn-outline-light">رجوع</a>
+                    <a href="{{ route('admin.seo-redirects.edit', $seoRedirect) }}" class="btn btn-light">Edit</a>
+                    <a href="{{ route('admin.seo-redirects.index') }}" class="btn btn-outline-light">Back</a>
                 </div>
             </div>
 
@@ -105,14 +105,14 @@
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
-                            <div class="info-value">{{ $seoRedirect->is_active ?? true ? 'فعالة' : 'غير فعالة' }}</div>
+                            <div class="info-label">Status</div>
+                            <div class="info-value">{{ $seoRedirect->is_active ?? true ? 'Active' : 'Inactive' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-12">
                         <div class="info-box">
-                            <div class="info-label">تاريخ الإنشاء</div>
+                            <div class="info-label">Created At</div>
                             <div class="info-value">
                                 {{ optional($seoRedirect->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
                         </div>

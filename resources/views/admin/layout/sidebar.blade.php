@@ -62,7 +62,6 @@
                 'admin.package-categories.*',
                 'admin.packages.*',
                 'admin.ready-tours.*',
-                'admin.package-prices.*',
                 'admin.banners.*',
                 'admin.testimonials.*',
             );
@@ -87,13 +86,13 @@
 
                 {{-- <li class="menu-item {{ request()->routeIs('admin.regions.*') ? 'active' : '' }}">
                     <a href="{{ route('admin.regions.index') }}" class="menu-link">
-                        <div>المناطق</div>
+                        <div>Regions</div>
                     </a>
                 </li> --}}
                 {{-- 
                 <li class="menu-item {{ request()->routeIs('admin.destinations.*') ? 'active' : '' }}">
                     <a href="{{ route('admin.destinations.index') }}" class="menu-link">
-                        <div>الوجهات</div>
+                        <div>Destinations</div>
                     </a>
                 </li> --}}
                 <li class="menu-item {{ request()->routeIs('admin.attractions.index') ? 'active' : '' }}">
@@ -119,15 +118,9 @@
                     </a>
                 </li>
 
-                <li class="menu-item {{ request()->routeIs('admin.package-prices.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.package-prices.index') }}" class="menu-link">
-                        <div>{{ admin_t('Package Prices') }}</div>
-                    </a>
-                </li>
-
                 {{-- <li class="menu-item {{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
                     <a href="{{ route('admin.banners.index') }}" class="menu-link">
-                        <div>البانرات</div>
+                        <div>Banners</div>
                     </a>
                 </li> --}}
 
@@ -234,7 +227,7 @@
 
                 {{-- <li class="menu-item {{ request()->routeIs('admin.articles.statistics') ? 'active' : '' }}">
                     <a href="{{ route('admin.articles.statistics') }}" class="menu-link">
-                        <div>إحصائيات المقالات</div>
+                        <div>Articles Statistics</div>
                     </a>
                 </li> --}}
 

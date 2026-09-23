@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إضافة حجز'))
+@section('title', admin_t('Add Booking'))
 
 @section('css')
     <style>
@@ -68,32 +68,32 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.bookings.index') }}">الحجوزات</a></li>
-                <li class="breadcrumb-item active">إضافة حجز</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.bookings.index') }}">Bookings</a></li>
+                <li class="breadcrumb-item active">Add Booking</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">إضافة حجز جديد</h5>
-                    <small class="opacity-75">إدخال بيانات الحجز</small>
+                    <h5 class="mb-0">Add New Booking</h5>
+                    <small class="opacity-75">Enter Details Booking</small>
                 </div>
-                <a href="{{ route('admin.bookings.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.bookings.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="form-body">
                 <form action="{{ route('admin.bookings.store') }}" method="POST">
                     @csrf
 
-                    <div class="section-title">بيانات العميل والباقة</div>
+                    <div class="section-title">Client and Package Details</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">العميل</label>
+                            <label class="form-label">Client</label>
                             <select name="client_id" class="form-select">
-                                <option value="">اختر العميل</option>
+                                <option value="">Select Client</option>
                                 @foreach ($clients ?? collect() as $client)
                                     <option value="{{ $client->id }}"
                                         {{ old('client_id') == $client->id ? 'selected' : '' }}>
@@ -104,9 +104,9 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الباقة</label>
+                            <label class="form-label">Package</label>
                             <select name="package_id" class="form-select">
-                                <option value="">اختر الباقة</option>
+                                <option value="">Select Package</option>
                                 @foreach ($packages ?? collect() as $package)
                                     <option value="{{ $package->id }}"
                                         {{ old('package_id') == $package->id ? 'selected' : '' }}>
@@ -117,36 +117,36 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">مرجع الحجز</label>
+                            <label class="form-label">Booking Reference</label>
                             <input type="text" name="booking_reference" class="form-control"
                                 value="{{ old('booking_reference') }}">
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">البالغين</label>
+                            <label class="form-label">Adults</label>
                             <input type="number" min="1" name="adults" class="form-control"
                                 value="{{ old('adults', 1) }}">
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">الأطفال</label>
+                            <label class="form-label">Children</label>
                             <input type="number" min="0" name="children" class="form-control"
                                 value="{{ old('children', 0) }}">
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">الرضع (Infants)</label>
+                            <label class="form-label">Infants (Infants)</label>
                             <input type="number" min="0" name="infants" class="form-control"
                                 value="{{ old('infants', 0) }}">
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">تاريخ السفر</label>
+                            <label class="form-label">Travel Date</label>
                             <input type="date" name="travel_date" class="form-control" value="{{ old('travel_date') }}">
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">الحالة</label>
+                            <label class="form-label">Status</label>
                             <select name="status" class="form-select">
                                 <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>pending</option>
                                 <option value="confirmed" {{ old('status') == 'confirmed' ? 'selected' : '' }}>confirmed
@@ -159,36 +159,36 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">إجمالي السعر</label>
+                            <label class="form-label">Total Price</label>
                             <input type="number" step="0.01" name="total_amount" class="form-control"
                                 value="{{ old('total_amount') }}">
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">العملة</label>
+                            <label class="form-label">Currency</label>
                             <input type="text" name="currency_code" class="form-control"
                                 value="{{ old('currency_code', 'USD') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الهاتف</label>
+                            <label class="form-label">Phone Number</label>
                             <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">البريد الإلكتروني</label>
+                            <label class="form-label">Email Address</label>
                             <input type="email" name="email" class="form-control" value="{{ old('email') }}">
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">ملاحظات</label>
+                            <label class="form-label">Notes</label>
                             <textarea name="notes" class="form-control" rows="5">{{ old('notes') }}</textarea>
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.bookings.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.bookings.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

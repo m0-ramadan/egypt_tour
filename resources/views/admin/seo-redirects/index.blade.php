@@ -126,7 +126,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active">SEO Redirects</li>
             </ol>
         </nav>
@@ -137,7 +137,7 @@
                     <div class="stats-icon" style="background: var(--primary-gradient); color:#fff;"><i
                             class="fas fa-route"></i></div>
                     <div class="stats-number">{{ number_format($total) }}</div>
-                    <div class="stats-label">إجمالي التحويلات</div>
+                    <div class="stats-label">Total Redirects</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -146,7 +146,7 @@
                         style="background: rgba(32,201,151,.2); color:#20c997; border:1px solid rgba(32,201,151,.3);"><i
                             class="fas fa-check-circle"></i></div>
                     <div class="stats-number">{{ number_format($active) }}</div>
-                    <div class="stats-label">فعالة</div>
+                    <div class="stats-label">Active</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -155,7 +155,7 @@
                         style="background: rgba(253,126,20,.2); color:#fd7e14; border:1px solid rgba(253,126,20,.3);"><i
                             class="fas fa-ban"></i></div>
                     <div class="stats-number">{{ number_format($inactive) }}</div>
-                    <div class="stats-label">غير فعالة</div>
+                    <div class="stats-label">Inactive</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
@@ -173,30 +173,30 @@
             <form method="GET" action="{{ route('admin.seo-redirects.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-5">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <input type="text" class="form-control" name="q" value="{{ request('q') }}"
-                            placeholder="بحث في المسار القديم أو الجديد">
+                            placeholder="Search In Path Old Or New">
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">HTTP Code</label>
                         <select name="http_code" class="form-select">
-                            <option value="">الكل</option>
+                            <option value="">All</option>
                             <option value="301" {{ request('http_code') == '301' ? 'selected' : '' }}>301</option>
                             <option value="302" {{ request('http_code') == '302' ? 'selected' : '' }}>302</option>
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>فعالة</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>غير فعالة
+                            <option value="">All</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive
                             </option>
                         </select>
                     </div>
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.seo-redirects.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.seo-redirects.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -205,10 +205,10 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة التحويلات</h5>
-                    <small class="opacity-75">إدارة تحويلات الروابط</small>
+                    <h5 class="mb-0">Redirects List</h5>
+                    <small class="opacity-75">Manage Redirects Links</small>
                 </div>
-                <a href="{{ route('admin.seo-redirects.create') }}" class="btn btn-light">إضافة Redirect</a>
+                <a href="{{ route('admin.seo-redirects.create') }}" class="btn btn-light">Add Redirect</a>
             </div>
 
             <div class="p-4">
@@ -223,7 +223,7 @@
                             <div class="d-flex gap-2 mt-2 mt-md-0 flex-wrap">
                                 <span
                                     class="badge-status {{ $redirect->is_active ?? true ? 'status-active' : 'status-inactive' }}">
-                                    {{ $redirect->is_active ?? true ? 'فعالة' : 'غير فعالة' }}
+                                    {{ $redirect->is_active ?? true ? 'Active' : 'Inactive' }}
                                 </span>
                                 <span class="badge-status"
                                     style="background: rgba(12,99,228,.2); color:#0c63e4; border:1px solid rgba(12,99,228,.3);">
@@ -234,26 +234,26 @@
 
                         <div class="d-flex gap-2 flex-wrap">
                             <a href="{{ route('admin.seo-redirects.show', $redirect) }}"
-                                class="btn btn-info btn-sm">عرض</a>
+                                class="btn btn-info btn-sm">View</a>
                             <a href="{{ route('admin.seo-redirects.edit', $redirect) }}"
-                                class="btn btn-warning btn-sm">تعديل</a>
+                                class="btn btn-warning btn-sm">Edit</a>
 
                             @if (Route::has('admin.seo-redirects.toggle-status'))
                                 <form action="{{ route('admin.seo-redirects.toggle-status', $redirect) }}" method="POST">
                                     @csrf
-                                    <button class="btn btn-secondary btn-sm" type="submit">تبديل الحالة</button>
+                                    <button class="btn btn-secondary btn-sm" type="submit">Toggle Status</button>
                                 </form>
                             @endif
 
                             <form action="{{ route('admin.seo-redirects.destroy', $redirect) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد تحويلات حالياً</div>
+                    <div class="text-center py-5">No Redirects available</div>
                 @endforelse
 
                 @if (method_exists($seoRedirects, 'links'))

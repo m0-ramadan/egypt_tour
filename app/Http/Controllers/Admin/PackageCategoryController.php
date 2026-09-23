@@ -25,11 +25,11 @@ class PackageCategoryController extends Controller
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($query) use ($search) {
                     $this->applyTranslatedSearch($query, ['name', 'description', 'seo_title', 'seo_description'], $search);
-                    $query->orWhere('slug', 'like', '%'.$search.'%');
+                    $query->orWhere('slug', 'like', '%' . $search . '%');
                 });
             })
-            ->when($request->input('status') === 'active', fn ($query) => $query->where('is_active', true))
-            ->when($request->input('status') === 'inactive', fn ($query) => $query->where('is_active', false))
+            ->when($request->input('status') === 'active', fn($query) => $query->where('is_active', true))
+            ->when($request->input('status') === 'inactive', fn($query) => $query->where('is_active', false))
             ->orderBy('sort_order')
             ->latest('id')
             ->paginate($this->perPage($request))
@@ -75,8 +75,19 @@ class PackageCategoryController extends Controller
         $data['sort_order'] = $data['sort_order'] ?? 0;
 
         PackageCategory::create($data);
+        \Illuminate\Support\Facades\Cache::flush();
 
-        return $this->success('admin.package-categories.index', 'تم إضافة تصنيف الباقات بنجاح.');
+        return $this->success('admin.package-categories.index', 'Package category created successfully.');
+    }
+
+    public function toggleStatus(PackageCategory $packageCategory): RedirectResponse
+    {
+        $packageCategory->update(['is_active' => !(bool) $packageCategory->is_active]);
+        \Illuminate\Support\Facades\Cache::forget('active_package_categories');
+        \Illuminate\Support\Facades\Cache::forget('website_categories');
+        \Illuminate\Support\Facades\Cache::flush();
+
+        return back()->with('success', 'Category status updated successfully.');
     }
 
     public function show(PackageCategory $packageCategory): View
@@ -93,14 +104,14 @@ class PackageCategoryController extends Controller
         $countries = Country::query()
             ->where(function ($query) use ($category) {
                 $query->where('is_active', true)
-                    ->when($category->country_id, fn ($query) => $query->orWhereKey($category->country_id));
+                    ->when($category->country_id, fn($query) => $query->orWhereKey($category->country_id));
             })
             ->orderBy('sort_order')
             ->get();
         $parents = PackageCategory::whereNotIn('id', $excludedParentIds)
             ->where(function ($query) use ($category) {
                 $query->where('is_active', true)
-                    ->when($category->parent_id, fn ($query) => $query->orWhereKey($category->parent_id));
+                    ->when($category->parent_id, fn($query) => $query->orWhereKey($category->parent_id));
             })
             ->orderBy('sort_order')
             ->get();

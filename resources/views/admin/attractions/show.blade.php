@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض المعلم'))
+@section('title', admin_t('View Attraction'))
 
 @section('css')
     <style>
@@ -71,13 +71,13 @@
         <div class="profile-card">
             <div class="profile-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="mb-1">{{ adminTrans($attraction->name) ?: 'بدون اسم' }}</h4>
+                    <h4 class="mb-1">{{ adminTrans($attraction->name) ?: 'No Name' }}</h4>
                     <small class="opacity-75">{{ $attraction->slug ?: '-' }}</small>
                 </div>
 
                 <div class="d-flex gap-2">
-                    <a href="{{ route('admin.attractions.edit', $attraction) }}" class="btn btn-warning">تعديل</a>
-                    <a href="{{ route('admin.attractions.index') }}" class="btn btn-light">رجوع</a>
+                    <a href="{{ route('admin.attractions.edit', $attraction) }}" class="btn btn-warning">Edit</a>
+                    <a href="{{ route('admin.attractions.index') }}" class="btn btn-light">Back</a>
                 </div>
             </div>
 
@@ -92,14 +92,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">الاسم</div>
+                            <div class="info-label">Name</div>
                             <div class="info-value">{{ adminTrans($attraction->name) ?: '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">المدينة</div>
+                            <div class="info-label">City</div>
                             <div class="info-value">{{ adminTrans(optional($attraction->city)->name) ?: '-' }}</div>
                         </div>
                     </div>
@@ -113,52 +113,52 @@
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
-                            <div class="info-value">{{ $attraction->is_active ? 'مفعل' : 'غير مفعل' }}</div>
+                            <div class="info-label">Status</div>
+                            <div class="info-value">{{ $attraction->is_active ? 'Enabled' : 'Disabled' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">مميز</div>
-                            <div class="info-value">{{ $attraction->is_featured ? 'نعم' : 'لا' }}</div>
+                            <div class="info-label">Featured</div>
+                            <div class="info-value">{{ $attraction->is_featured ? 'Yes' : 'No' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الترتيب</div>
+                            <div class="info-label">Sort Order</div>
                             <div class="info-value">{{ $attraction->sort_order ?? 0 }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">خط العرض</div>
+                            <div class="info-label">Latitude</div>
                             <div class="info-value">{{ $attraction->latitude ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">خط الطول</div>
+                            <div class="info-label">Longitude</div>
                             <div class="info-value">{{ $attraction->longitude ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">ساعات العمل</div>
+                            <div class="info-label">Opening Hours</div>
                             <div class="info-value">{{ $attraction->opening_hours ?: '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">رابط الخريطة</div>
+                            <div class="info-label">Map Link</div>
                             <div class="info-value">
                                 @if ($attraction->map_url)
-                                    <a href="{{ $attraction->map_url }}" target="_blank" class="text-info">فتح الرابط</a>
+                                    <a href="{{ $attraction->map_url }}" target="_blank" class="text-info">Open Link</a>
                                 @else
                                     -
                                 @endif
@@ -168,14 +168,14 @@
 
                     <div class="col-12">
                         <div class="info-box">
-                            <div class="info-label">الوصف المختصر</div>
+                            <div class="info-label">Short Description</div>
                             <div class="info-value">{!! adminTrans($attraction->short_description) ?: '-' !!}</div>
                         </div>
                     </div>
 
                     <div class="col-12">
                         <div class="info-box">
-                            <div class="info-label">الوصف</div>
+                            <div class="info-label">Description</div>
                             <div class="info-value">{!! adminTrans($attraction->description) ?: '-' !!}</div>
                         </div>
                     </div>

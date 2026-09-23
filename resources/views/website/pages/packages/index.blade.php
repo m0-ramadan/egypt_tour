@@ -635,50 +635,7 @@
 
     <section class="listing-results">
         <div class="container">
-            <div class="filters-card">
-                <h2 class="filters-title">
-                    <i class="la la-sliders-h"></i>
-                    {{ __('Filter Results') }}
-                </h2>
 
-                <form action="{{ $indexRoute }}" method="GET">
-                    <div class="filters-grid">
-                        <div>
-                            <label for="listing-type">{{ __('Type') }}</label>
-                            <select id="listing-type" name="type" class="form-select">
-                                <option value="">{{ __('All Types') }}</option>
-                                @foreach ($typeOptions as $option)
-                                    <option value="{{ $option['value'] }}" @selected($selectedType === $option['value'])>
-                                        {{ $option['label'] }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div>
-                            <label for="listing-category">{{ __('Categories') }}</label>
-                            <select id="listing-category" name="category" class="form-select">
-                                <option value="">{{ __('All Categories') }}</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category['slug'] }}" @selected($selectedCategorySlug === $category['slug'])>
-                                        {{ $category['name'] }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <button type="submit" class="filter-btn">
-                            <i class="la la-search"></i>
-                            {{ __('Filter Results') }}
-                        </button>
-
-                        <a href="{{ $indexRoute }}" class="reset-btn">
-                            <i class="la la-undo"></i>
-                            {{ __('Reset Filters') }}
-                        </a>
-                    </div>
-                </form>
-            </div>
 
             <div class="results-head">
                 <div>

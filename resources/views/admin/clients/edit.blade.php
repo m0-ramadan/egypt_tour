@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تعديل عميل'))
+@section('title', admin_t('Edit Client'))
 
 @section('css')
 
@@ -86,9 +86,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.clients.index') }}">العملاء</a></li>
-                <li class="breadcrumb-item active">تعديل عميل</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.clients.index') }}">Clients</a></li>
+                <li class="breadcrumb-item active">Edit Client</li>
             </ol>
         </nav>
 
@@ -96,11 +96,11 @@
             <div class="order-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">تعديل عميل جديد</h5>
-                        <small class="opacity-75">إدخال بيانات العميل الأساسية</small>
+                        <h5 class="mb-0">Edit Client Information</h5>
+                        <small class="opacity-75">Enter basic client information</small>
                     </div>
                     <a href="{{ route('admin.clients.index') }}" class="btn btn-light">
-                        <i class="fas fa-arrow-right me-2"></i>رجوع
+                        <i class="fas fa-arrow-right me-2"></i>Back
                     </a>
                 </div>
             </div>
@@ -110,67 +110,67 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="section-title">البيانات الأساسية</div>
+                    <div class="section-title">Basic Information</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الاسم الأول</label>
+                            <label class="form-label">First Name</label>
                             <input type="text" name="first_name" class="form-control"
                                 value="{{ old('first_name', $client->first_name) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الاسم الأخير</label>
+                            <label class="form-label">Last Name</label>
                             <input type="text" name="last_name" class="form-control"
                                 value="{{ old('last_name', $client->last_name) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">البريد الإلكتروني</label>
+                            <label class="form-label">Email Address</label>
                             <input type="email" name="email" class="form-control"
                                 value="{{ old('email', $client->email) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الهاتف</label>
+                            <label class="form-label">Phone Number</label>
                             <input type="text" name="phone" class="form-control"
                                 value="{{ old('phone', $client->phone) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الجنسية</label>
+                            <label class="form-label">Nationality</label>
                             <input type="text" name="nationality" class="form-control"
                                 value="{{ old('nationality', $client->nationality) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">تاريخ الميلاد</label>
+                            <label class="form-label">Date of Birth</label>
                             <input type="date" name="date_of_birth" class="form-control"
                                 value="{{ old('date_of_birth', optional($client->date_of_birth)->format('Y-m-d')) }}">
                         </div>
                     </div>
 
-                    <div class="section-title mt-4">بيانات السفر</div>
+                    <div class="section-title mt-4">Travel Information</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">رقم جواز السفر</label>
+                            <label class="form-label">Passport Number</label>
                             <input type="text" name="passport_number" class="form-control"
                                 value="{{ old('passport_number', $client->passport_number) }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">تاريخ انتهاء الجواز</label>
+                            <label class="form-label">Passport Expiry Date</label>
                             <input type="date" name="passport_expiry" class="form-control"
                                 value="{{ old('passport_expiry', optional($client->passport_expiry)->format('Y-m-d')) }}">
                         </div>
                     </div>
 
-                    <div class="section-title mt-4">إعدادات إضافية</div>
+                    <div class="section-title mt-4">Additional Settings</div>
 
                     <div class="row">
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">ملاحظات</label>
+                            <label class="form-label">Notes</label>
                             <textarea name="notes" class="form-control" rows="5">{{ old('notes', $client->notes) }}</textarea>
                         </div>
 
@@ -180,7 +180,7 @@
                                     name="newsletter_subscribed"
                                     {{ old('newsletter_subscribed', $client->newsletter_subscribed) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="newsletter_subscribed">
-                                    الاشتراك في النشرة البريدية
+                                    Subscribe to Newsletter
                                 </label>
                             </div>
                         </div>
@@ -188,10 +188,10 @@
 
                     <div class="d-flex gap-2 mt-4">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>حفظ
+                            <i class="fas fa-save me-2"></i>Save
                         </button>
                         <a href="{{ route('admin.clients.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-times me-2"></i>إلغاء
+                            <i class="fas fa-times me-2"></i>Cancel
                         </a>
                     </div>
                 </form>

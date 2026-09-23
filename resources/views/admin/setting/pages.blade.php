@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إعدادات الصفحات'))
+@section('title', admin_t('Page Settings'))
 
 @section('css')
     <style>
@@ -46,15 +46,15 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">إعدادات الصفحات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Page Settings</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header">
-                <h5 class="mb-0">إعدادات الصفحات الثابتة</h5>
-                <small class="opacity-75">اختيار وتخصيص الصفحات المرتبطة بإعدادات الموقع</small>
+                <h5 class="mb-0">Pages Static Settings</h5>
+                <small class="opacity-75">Select And Customization Pages Related With Settings Location</small>
             </div>
 
             <div class="p-4">
@@ -63,9 +63,9 @@
 
                     <div class="item-card">
                         <div class="mb-3">
-                            <label class="form-label">صفحة من نحن</label>
+                            <label class="form-label">Page From We</label>
                             <select name="about_page_id" class="form-select">
-                                <option value="">اختر الصفحة</option>
+                                <option value="">Select Page</option>
                                 @foreach ($pages ?? collect() as $page)
                                     <option value="{{ $page->id }}"
                                         {{ old('about_page_id', $settings['about_page_id'] ?? null) == $page->id ? 'selected' : '' }}>
@@ -76,9 +76,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">صفحة الشروط والأحكام</label>
+                            <label class="form-label">Page Terms And Conditions</label>
                             <select name="terms_page_id" class="form-select">
-                                <option value="">اختر الصفحة</option>
+                                <option value="">Select Page</option>
                                 @foreach ($pages ?? collect() as $page)
                                     <option value="{{ $page->id }}"
                                         {{ old('terms_page_id', $settings['terms_page_id'] ?? null) == $page->id ? 'selected' : '' }}>
@@ -89,9 +89,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">صفحة سياسة الخصوصية</label>
+                            <label class="form-label">Page Policy Privacy</label>
                             <select name="privacy_page_id" class="form-select">
-                                <option value="">اختر الصفحة</option>
+                                <option value="">Select Page</option>
                                 @foreach ($pages ?? collect() as $page)
                                     <option value="{{ $page->id }}"
                                         {{ old('privacy_page_id', $settings['privacy_page_id'] ?? null) == $page->id ? 'selected' : '' }}>
@@ -102,9 +102,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">صفحة اتصل بنا</label>
+                            <label class="form-label">Page Contact Us</label>
                             <select name="contact_page_id" class="form-select">
-                                <option value="">اختر الصفحة</option>
+                                <option value="">Select Page</option>
                                 @foreach ($pages ?? collect() as $page)
                                     <option value="{{ $page->id }}"
                                         {{ old('contact_page_id', $settings['contact_page_id'] ?? null) == $page->id ? 'selected' : '' }}>
@@ -116,8 +116,8 @@
                     </div>
 
                     <div class="d-flex gap-2 mt-4 px-4 pb-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

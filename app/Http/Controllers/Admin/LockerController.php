@@ -71,7 +71,7 @@ class LockerController extends Controller
         $branchs=Vault::find($id);
         if($branchs){
             $branchs->delete();
-             Toastr::addSuccess('تم التحديث بنجاح');
+             Toastr::addSuccess('Updated successfully');
                 return redirect()->route('admin.lockers.index');
         }
             toastr()->success('not found');

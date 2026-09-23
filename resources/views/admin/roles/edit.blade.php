@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تعديل دور'))
+@section('title', admin_t('Edit Role'))
 
 @section('css')
     <style>
@@ -96,9 +96,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.roles.index') }}">الأدوار</a></li>
-                <li class="breadcrumb-item active">تعديل دور</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.roles.index') }}">Roles</a></li>
+                <li class="breadcrumb-item active">Edit Role</li>
             </ol>
         </nav>
 
@@ -106,11 +106,11 @@
             <div class="order-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">تعديل بيانات الدور</h5>
-                        <small class="opacity-75">تحديث اسم الدور وصلاحياته</small>
+                        <h5 class="mb-0">Edit Role Details</h5>
+                        <small class="opacity-75">Update Name Role And His Permissions</small>
                     </div>
                     <a href="{{ route('admin.roles.index') }}" class="btn btn-light">
-                        <i class="fas fa-arrow-right me-2"></i>رجوع
+                        <i class="fas fa-arrow-right me-2"></i>Back
                     </a>
                 </div>
             </div>
@@ -120,17 +120,17 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="section-title">بيانات الدور</div>
+                    <div class="section-title">Role Details</div>
 
                     <div class="row">
                         <div class="col-md-12 mb-4">
-                            <label class="form-label">اسم الدور</label>
+                            <label class="form-label">Role Name</label>
                             <input type="text" name="name" class="form-control" value="{{ old('name', $role->name) }}"
-                                placeholder="مثال: Content Manager">
+                                placeholder="Example: Content Manager">
                         </div>
                     </div>
 
-                    <div class="section-title">الصلاحيات</div>
+                    <div class="section-title">Permissions</div>
 
                     <div class="permission-grid">
                         @foreach ($permissions ?? collect() as $permission)
@@ -149,10 +149,10 @@
 
                     <div class="d-flex gap-2 mt-4">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>حفظ
+                            <i class="fas fa-save me-2"></i>Save
                         </button>
                         <a href="{{ route('admin.roles.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-times me-2"></i>إلغاء
+                            <i class="fas fa-times me-2"></i>Cancel
                         </a>
                     </div>
                 </form>

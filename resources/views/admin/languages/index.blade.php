@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إدارة اللغات'))
+@section('title', admin_t('Manage Languages'))
 
 @section('css')
 
@@ -359,8 +359,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">اللغات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Languages</li>
             </ol>
         </nav>
 
@@ -369,7 +369,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-total"><i class="fas fa-language"></i></div>
                     <div class="stats-number">{{ number_format($stats['total']) }}</div>
-                    <div class="stats-label">إجمالي اللغات</div>
+                    <div class="stats-label">Total Languages</div>
                 </div>
             </div>
 
@@ -377,7 +377,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-active"><i class="fas fa-check-circle"></i></div>
                     <div class="stats-number">{{ number_format($stats['active']) }}</div>
-                    <div class="stats-label">لغات مفعلة</div>
+                    <div class="stats-label">Languages Enabled</div>
                 </div>
             </div>
 
@@ -385,7 +385,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-default"><i class="fas fa-star"></i></div>
                     <div class="stats-number">{{ number_format($stats['default']) }}</div>
-                    <div class="stats-label">اللغة الافتراضية</div>
+                    <div class="stats-label">Default Language</div>
                 </div>
             </div>
 
@@ -393,69 +393,69 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-inactive"><i class="fas fa-ban"></i></div>
                     <div class="stats-number">{{ number_format($stats['inactive']) }}</div>
-                    <div class="stats-label">لغات غير مفعلة</div>
+                    <div class="stats-label">Languages Not Enabled</div>
                 </div>
             </div>
         </div>
 
         <div class="status-filter">
             <button class="status-filter-btn {{ !request('status') ? 'active' : '' }}" onclick="filterByStatus('all')">
-                جميع اللغات
+                All Languages
             </button>
             <button class="status-filter-btn {{ request('status') == 'active' ? 'active' : '' }}"
                 onclick="filterByStatus('active')">
-                <i class="fas fa-check-circle me-2"></i>مفعلة
+                <i class="fas fa-check-circle me-2"></i>Enabled
             </button>
             <button class="status-filter-btn {{ request('status') == 'inactive' ? 'active' : '' }}"
                 onclick="filterByStatus('inactive')">
-                <i class="fas fa-ban me-2"></i>غير مفعلة
+                <i class="fas fa-ban me-2"></i>Inactive
             </button>
             <button class="status-filter-btn {{ request('default') == '1' ? 'active' : '' }}"
                 onclick="filterByDefault('1')">
-                <i class="fas fa-star me-2"></i>افتراضية
+                <i class="fas fa-star me-2"></i>Default
             </button>
         </div>
 
         <div class="filter-card">
-            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>فلترة متقدمة</h6>
+            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>Advanced Filters</h6>
 
             <div class="filter-row">
                 <div class="search-box">
                     <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="form-control" placeholder="بحث بالاسم، الكود، الاسم المحلي..."
+                    <input type="text" class="form-control" placeholder="text"
                         id="searchInput" value="{{ request('search') }}">
                 </div>
 
                 <div class="sort-dropdown">
                     <button class="sort-btn">
                         <i class="fas fa-sort-amount-down"></i>
-                        الترتيب حسب
+                        Sort By
                     </button>
                     <div class="sort-dropdown-content">
                         <div class="sort-item {{ request('sort_by') == 'sort_order' && request('sort_direction') == 'asc' ? 'active' : '' }}"
-                            onclick="sortBy('sort_order', 'asc')">الترتيب التصاعدي</div>
+                            onclick="sortBy('sort_order', 'asc')">Ascending Order</div>
                         <div class="sort-item {{ request('sort_by') == 'name' && request('sort_direction') == 'asc' ? 'active' : '' }}"
-                            onclick="sortBy('name', 'asc')">الاسم أ - ي</div>
+                            onclick="sortBy('name', 'asc')">Name A - Z</div>
                         <div class="sort-item {{ request('sort_by') == 'name' && request('sort_direction') == 'desc' ? 'active' : '' }}"
-                            onclick="sortBy('name', 'desc')">الاسم ي - أ</div>
+                            onclick="sortBy('name', 'desc')">Name Z - A</div>
                         <div class="sort-item {{ request('sort_by') == 'created_at' && request('sort_direction') == 'desc' ? 'active' : '' }}"
-                            onclick="sortBy('created_at', 'desc')">الأحدث أولاً</div>
+                            onclick="sortBy('created_at', 'desc')">Newest First</div>
                     </div>
                 </div>
             </div>
 
             <div class="filter-row">
                 <button class="btn btn-primary" onclick="applyFilters()">
-                    <i class="fas fa-filter me-2"></i>تطبيق الفلاتر
+                    <i class="fas fa-filter me-2"></i>Apply Filters
                 </button>
                 <button class="btn btn-outline-secondary" onclick="resetFilters()">
-                    <i class="fas fa-redo me-2"></i>إعادة تعيين
+                    <i class="fas fa-redo me-2"></i>Reset
                 </button>
                 <form action="{{ route('admin.languages.toggle-all') }}" method="POST" class="d-flex gap-2">
                     @csrf
                     <input type="hidden" name="status" value="1">
                     <button type="submit" class="btn btn-secondary">
-                        <i class="fas fa-power-off me-2"></i>تفعيل الكل
+                        <i class="fas fa-power-off me-2"></i>Activate All
                     </button>
                 </form>
             </div>
@@ -467,12 +467,12 @@
                     <div class="order-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="mb-0">قائمة اللغات</h5>
-                                <small class="opacity-75">إدارة جميع لغات النظام</small>
+                                <h5 class="mb-0">Languages List</h5>
+                                <small class="opacity-75">Manage All Languages System</small>
                             </div>
                             <div class="d-flex gap-3">
                                 <a href="{{ route('admin.languages.create') }}" class="btn btn-light">
-                                    <i class="fas fa-plus me-2"></i>إضافة لغة
+                                    <i class="fas fa-plus me-2"></i>Add Language
                                 </a>
                             </div>
                         </div>
@@ -482,10 +482,10 @@
                         @if ($languages->isEmpty())
                             <div class="empty-state">
                                 <div class="empty-state-icon"><i class="fas fa-language"></i></div>
-                                <h5 class="empty-state-text">لا توجد لغات</h5>
-                                <p class="text-muted">لم يتم إنشاء أي لغة حتى الآن</p>
+                                <h5 class="empty-state-text">No There are Languages</h5>
+                                <p class="text-muted">No Language have been created yet</p>
                                 <a href="{{ route('admin.languages.create') }}" class="btn btn-primary">
-                                    <i class="fas fa-plus me-2"></i>إضافة لغة جديدة
+                                    <i class="fas fa-plus me-2"></i>Add New Language
                                 </a>
                             </div>
                         @else
@@ -499,12 +499,12 @@
                                     <div class="order-header-info">
                                         <div class="order-title">
                                             <div class="d-flex align-items-center gap-3 flex-wrap">
-                                                <span>{{ $language->name ?? 'بدون اسم' }}</span>
+                                                <span>{{ $language->name ?? 'No Name' }}</span>
                                                 <span class="badge-status status-{{ $isActive }}">
-                                                    {{ $isActive == 'active' ? 'مفعلة' : 'غير مفعلة' }}
+                                                    {{ $isActive == 'active' ? 'Enabled' : 'Inactive' }}
                                                 </span>
                                                 @if ($isDefault)
-                                                    <span class="badge-status status-default">افتراضية</span>
+                                                    <span class="badge-status status-default">Default</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -516,22 +516,22 @@
 
                                     <div class="order-details">
                                         <div class="detail-item">
-                                            <span class="detail-label">الكود:</span>
+                                            <span class="detail-label">Code:</span>
                                             <span class="detail-value">{{ $language->code ?? '-' }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">الاسم المحلي:</span>
+                                            <span class="detail-label">Name Local:</span>
                                             <span class="detail-value">{{ $language->native_name ?? '-' }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">الترتيب:</span>
+                                            <span class="detail-label">Order:</span>
                                             <span class="detail-value">{{ $language->sort_order ?? 0 }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">آخر تحديث:</span>
+                                            <span class="detail-label">Last Updated:</span>
                                             <span
                                                 class="detail-value">{{ optional($language->updated_at)->translatedFormat('d M Y') ?? '-' }}</span>
                                         </div>
@@ -540,13 +540,13 @@
                                     <div class="order-actions">
                                         <a href="{{ route('admin.languages.edit', $language) }}"
                                             class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit me-1"></i>تعديل
+                                            <i class="fas fa-edit me-1"></i>Edit
                                         </a>
 
                                         <form action="{{ route('admin.languages.toggle', $language) }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn btn-sm btn-secondary">
-                                                <i class="fas fa-power-off me-1"></i>تبديل الحالة
+                                                <i class="fas fa-power-off me-1"></i>Toggle Status
                                             </button>
                                         </form>
 
@@ -555,14 +555,14 @@
                                                 method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-sm btn-info">
-                                                    <i class="fas fa-star me-1"></i>اجعلها افتراضية
+                                                    <i class="fas fa-star me-1"></i>Make It Default
                                                 </button>
                                             </form>
                                         @endif
 
                                         <button type="button" class="btn btn-sm btn-danger delete-btn"
-                                            data-id="{{ $language->id }}" data-name="{{ $language->name ?? 'اللغة' }}">
-                                            <i class="fas fa-trash me-1"></i>حذف
+                                            data-id="{{ $language->id }}" data-name="{{ $language->name ?? 'Language' }}">
+                                            <i class="fas fa-trash me-1"></i>Delete
                                         </button>
                                     </div>
                                 </div>
@@ -599,14 +599,14 @@
                 const languageName = $(this).data('name');
 
                 Swal.fire({
-                    title: 'هل أنت متأكد؟',
-                    text: `سيتم حذف اللغة "${languageName}" نهائياً`,
+                    title: 'Are you sure?',
+                    text: `Will be Delete Language "${languageName}" Will be Delete Article`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'نعم، احذف',
-                    cancelButtonText: 'إلغاء',
+                    confirmButtonText: 'Yes, Delete',
+                    cancelButtonText: 'Cancel',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -621,8 +621,8 @@
                             success: function() {
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'تم الحذف',
-                                    text: 'تم حذف اللغة بنجاح',
+                                    title: 'Was Deletion',
+                                    text: 'Was Delete Language Successfully',
                                     timer: 1500,
                                     showConfirmButton: false
                                 }).then(() => location.reload());
@@ -630,8 +630,8 @@
                             error: function() {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'خطأ',
-                                    text: 'حدث خطأ أثناء الحذف',
+                                    title: 'Error',
+                                    text: 'Event Error While Deletion',
                                     timer: 1500,
                                     showConfirmButton: false
                                 });

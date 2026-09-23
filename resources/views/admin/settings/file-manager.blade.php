@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('مدير الملفات'))
+@section('title', admin_t('File Manager'))
 
 @section('css')
 
@@ -188,34 +188,34 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.settings.index') }}">الإعدادات</a></li>
-                <li class="breadcrumb-item active">مدير الملفات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.settings.index') }}">Settings</a></li>
+                <li class="breadcrumb-item active">File Manager</li>
             </ol>
         </nav>
 
         <div class="panel-card">
             <div class="panel-header">
-                <h5 class="mb-0">مدير الملفات</h5>
-                <small class="opacity-75">عرض الملفات الحالية وحذفها وإدارة المساحة</small>
+                <h5 class="mb-0">File Manager</h5>
+                <small class="opacity-75">View Files Current And Delete Them And Manage Storage</small>
             </div>
             <div class="panel-body">
                 <div class="file-row d-flex justify-content-between align-items-center">
                     <div>
                         <div class="fw-bold">uploads/</div>
-                        <small class="text-light opacity-75">عرض مجلدات وملفات المشروع</small>
+                        <small class="text-light opacity-75">View Folders And Files Project</small>
                     </div>
                     <form action="{{ route('admin.settings.files.delete') }}" method="POST" class="d-flex gap-2">
                         @csrf
                         @method('DELETE')
                         <input type="text" name="path" class="form-control" placeholder="path/to/file.ext">
-                        <button class="btn btn-secondary" type="submit">حذف ملف</button>
+                        <button class="btn btn-secondary" type="submit">Delete File</button>
                     </form>
                 </div>
 
                 <div class="info-box">
-                    <div class="info-label">ملاحظة</div>
-                    <div class="info-value">هذه الصفحة Placeholder بنفس التصميم، ويمكن لاحقًا ربطها بمدير ملفات فعلي.</div>
+                    <div class="info-label">Note</div>
+                    <div class="info-value">This Page Placeholder Same Design Placeholder and can be connected to an actual file manager.</div>
                 </div>
             </div>
         </div>

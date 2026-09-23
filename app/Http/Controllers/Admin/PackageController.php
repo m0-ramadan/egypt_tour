@@ -11,6 +11,7 @@ use App\Models\PaymentMethod;
 use App\Services\PackageAiService;
 use App\Services\NileCruisePackageService;
 use App\Services\PackageTypeContentService;
+use App\Services\TranslationService;
 use App\Traits\ApiResponseTrait;
 use App\Traits\HandlesTranslatedFields;
 use Illuminate\Http\RedirectResponse;
@@ -121,7 +122,7 @@ class PackageController extends Controller
             app(\App\Services\PackagePricingService::class)->recalculate($package);
         });
 
-        return redirect()->route('admin.packages.index')->with('success', 'تم إنشاء الرحلة بنجاح.');
+        return redirect()->route('admin.packages.index')->with('success', 'Package created successfully.');
     }
 
     private function packageMediaData(Package $package): array
@@ -247,14 +248,14 @@ class PackageController extends Controller
             app(\App\Services\PackagePricingService::class)->recalculate($package);
         });
 
-        return $this->success('admin.packages.index', 'تم تعديل الرحلة بنجاح.');
+        return $this->success('admin.packages.index', 'Package updated successfully.');
     }
 
     public function destroy(Package $package): RedirectResponse
     {
         $package->delete();
 
-        return $this->success('admin.packages.index', 'تم حذف الرحلة بنجاح.');
+        return $this->success('admin.packages.index', 'Package deleted successfully.');
     }
 
     public function createWithAI(): View
@@ -315,7 +316,7 @@ class PackageController extends Controller
         ]);
 
         if (!$aiData || !is_array($aiData)) {
-            return back()->withInput()->with('error', 'فشل توليد بيانات الرحلة بالذكاء الاصطناعي.');
+            return back()->withInput()->with('error', 'Failed to generate package content using AI.');
         }
 
         DB::transaction(function () use ($request, $data, $aiData, $destination, $selectedCity) {
@@ -365,21 +366,21 @@ class PackageController extends Controller
 
         return redirect()
             ->route('admin.packages.index')
-            ->with('success', 'تم إنشاء الرحلة بالذكاء الاصطناعي.');
+            ->with('success', 'Package created successfully using AI.');
     }
 
     public function toggleStatus(Package $package): RedirectResponse
     {
         $package->update(['is_active' => !(bool) $package->is_active]);
 
-        return back()->with('success', 'تم تحديث حالة الرحلة.');
+        return back()->with('success', 'Package status updated successfully.');
     }
 
     public function toggleFeatured(Package $package): RedirectResponse
     {
         $package->update(['is_featured' => !(bool) $package->is_featured]);
 
-        return back()->with('success', 'تم تحديث تمييز الرحلة.');
+        return back()->with('success', 'Package feature status updated successfully.');
     }
 
     public function duplicate(Package $package): RedirectResponse
@@ -387,12 +388,13 @@ class PackageController extends Controller
         DB::transaction(function () use ($package) {
             $package->load(['facilities', 'packageAttractions', 'itineraries', 'inclusions', 'prices']);
 
-            $copy = $package->replicate();
-            $copy->slug = $package->slug . '-' . now()->timestamp;
-            $copy->title = [
-                'en' => ($package->display_title ?? $this->adminTrans($package->title)) . ' (Copy)',
-                'ar' => ($package->display_title ?? $this->adminTrans($package->title)) . ' (Copy)',
-            ];
+            $copy = $package->replicate([
+                'created_at',
+                'updated_at',
+            ]);
+
+            $copy->slug = Str::slug(($this->adminTrans($package->title) ?: 'Package') . '-copy-' . time());
+            $copy->is_active = false;
             $copy->save();
 
             foreach ($package->facilities as $facility) {
@@ -463,7 +465,7 @@ class PackageController extends Controller
 
         return redirect()
             ->route('admin.packages.edit', $copyId)
-            ->with('success', 'تم نسخ الرحلة بنجاح.');
+            ->with('success', 'Package cloned successfully.');
     }
 
     public function bulkAction(Request $request): RedirectResponse
@@ -483,7 +485,7 @@ class PackageController extends Controller
             Package::whereIn('id', $ids)->update(['is_active' => false]);
         }
 
-        return back()->with('success', 'تم تنفيذ الإجراء بنجاح.');
+        return back()->with('success', 'Action executed successfully.');
     }
 
     public function statistics()
@@ -816,37 +818,37 @@ class PackageController extends Controller
             $infantMaxAge = (int) $request->input('infant_max_age', 1);
 
             if ($infantMaxAge >= $childMinAge) {
-                $validator->errors()->add('infant_max_age', __('يجب أن يكون الحد الأعلى لعمر الرضع أقل من الحد الأدنى لعمر الأطفال.'));
+                $validator->errors()->add('infant_max_age', 'Maximum infant age must be less than minimum child age.');
             }
 
             if ($childMaxAge >= $adultMinAge) {
-                $validator->errors()->add('child_max_age', __('يجب أن يكون الحد الأعلى لعمر الأطفال أقل من الحد الأدنى لعمر البالغين.'));
+                $validator->errors()->add('child_max_age', 'Maximum child age must be less than minimum adult age.');
             }
 
             if ($adultMinAge <= $infantMaxAge) {
-                $validator->errors()->add('adult_min_age', __('حد البالغين يجب أن يكون أكبر من الحد الأعلى للرضع.'));
+                $validator->errors()->add('adult_min_age', 'Adult age limit must be greater than maximum infant age.');
             }
 
             $packageType = $request->input('package_type');
 
             if ($packageType === 'day_tour') {
                 if ($request->input('duration_type') !== 'hours') {
-                    $validator->errors()->add('duration_type', __('مدة الرحلة اليومية يجب أن تحسب بالساعات.'));
+                    $validator->errors()->add('duration_type', 'Day tour duration must be calculated in hours.');
                 }
                 if ((int) $request->input('duration_hours', 0) < 1) {
-                    $validator->errors()->add('duration_hours', __('يرجى تحديد مدة الرحلة اليومية بالساعات (ساعة واحدة على الأقل).'));
+                    $validator->errors()->add('duration_hours', 'Please specify the day tour duration in hours (at least 1 hour).');
                 }
             }
 
             if ($packageType === 'travel_package') {
                 if ($request->input('duration_type') !== 'days') {
-                    $validator->errors()->add('duration_type', __('مدة الباقة السياحية يجب أن تحسب بالأيام والليالي.'));
+                    $validator->errors()->add('duration_type', 'Travel package duration must be calculated in days and nights.');
                 }
                 if ((int) $request->input('duration_days', 0) < 1) {
-                    $validator->errors()->add('duration_days', __('يرجى تحديد عدد أيام الرحلة (يوم واحد على الأقل).'));
+                    $validator->errors()->add('duration_days', 'Please specify number of days (at least 1 day).');
                 }
                 if ((int) $request->input('duration_nights', 0) < 0) {
-                    $validator->errors()->add('duration_nights', __('عدد الليالي لا يمكن أن يكون بالسالب.'));
+                    $validator->errors()->add('duration_nights', 'Nights count cannot be negative.');
                 }
             }
             $nileCruiseTypeId = $request->input('nile_cruise_type_id');
@@ -854,23 +856,23 @@ class PackageController extends Controller
 
             if ($packageType === 'nile_cruise') {
                 if (empty($nileCruiseTypeId)) {
-                    $validator->errors()->add('nile_cruise_type_id', __('يرجى اختيار نوع نايل كروز (Nile Cruise Type).'));
+                    $validator->errors()->add('nile_cruise_type_id', 'Please select a Nile Cruise Type.');
                 } else {
                     $cruiseType = \App\Models\NileCruiseType::find($nileCruiseTypeId);
                     if ($cruiseType) {
                         $hasCategories = $cruiseType->categories()->count() > 0;
                         if ($hasCategories) {
                             if (empty($nileCruiseCategoryId)) {
-                                $validator->errors()->add('nile_cruise_category_id', __('يرجى اختيار فئة نايل كروز (Nile Cruise Category) لهذا النوع.'));
+                                $validator->errors()->add('nile_cruise_category_id', 'Please select a Nile Cruise Category for this type.');
                             } else {
                                 $category = \App\Models\NileCruiseCategory::find($nileCruiseCategoryId);
                                 if (!$category || (int) $category->nile_cruise_type_id !== (int) $cruiseType->id) {
-                                    $validator->errors()->add('nile_cruise_category_id', __('فئة نايل كروز المختارة لا تنتمي لنوع نايل كروز المختار.'));
+                                    $validator->errors()->add('nile_cruise_category_id', 'Selected Nile Cruise Category does not belong to the selected type.');
                                 }
                             }
                         } else {
                             if (!empty($nileCruiseCategoryId)) {
-                                $validator->errors()->add('nile_cruise_category_id', __('فئة نايل كروز يجب أن تكون فارغة لهذا النوع.'));
+                                $validator->errors()->add('nile_cruise_category_id', 'Nile Cruise Category should be empty for this type.');
                             }
                         }
                     }
@@ -902,7 +904,7 @@ class PackageController extends Controller
                 ) {
                     $validator->errors()->add(
                         "prices.{$index}.pax_max",
-                        'الحد الأقصى لعدد الأفراد يجب أن يساوي أو يزيد عن الحد الأدنى.'
+                        'Maximum guests must be greater than or equal to minimum guests.'
                     );
                 }
             }
@@ -935,16 +937,37 @@ class PackageController extends Controller
             'tags',
         ])->toArray();
 
-        $selectedCity = !empty($data['destination_id'])
-            ? City::find($data['destination_id'])
+        $selectedCityId = !empty($data['destination_id']) ? (int) $data['destination_id'] : null;
+
+        if (empty($selectedCityId) && $request) {
+            $tourCityIds = collect((array) ($request->input('tour_city_ids', []) ?? []))
+                ->map(fn($id) => (int) $id)
+                ->filter()
+                ->values();
+            if ($tourCityIds->isNotEmpty()) {
+                $selectedCityId = $tourCityIds->first();
+            }
+        }
+
+        $selectedCity = $selectedCityId
+            ? City::find($selectedCityId)
             : null;
         $selectedAttraction = $selectedCity
             ? $this->resolveDestinationAttractionFromCityId((int) $selectedCity->id)
             : null;
 
         $data['package_type'] = $this->normalizePackageType($data['package_type'] ?? null);
-        if (in_array($data['package_type'], ['nile_cruise', 'travel_package'], true)) {
-            $data['destination_id'] = null;
+        $categorySlug = match ($data['package_type']) {
+            'day_tour', 'shore_excursion' => 'day-tours',
+            'nile_cruise' => 'nile-cruises',
+            default => 'tour-packages',
+        };
+        $category = PackageCategory::where('slug', $categorySlug)->first();
+        if ($category) {
+            $data['category_id'] = $category->id;
+        }
+        if ($selectedAttraction) {
+            $data['destination_id'] = $selectedAttraction->id;
         }
 
         $data['duration_type'] = match ($data['package_type']) {
@@ -1039,23 +1062,19 @@ class PackageController extends Controller
     private function normalizeFaqItems(array $items): array
     {
         $normalized = [];
+        $translationService = app(TranslationService::class);
 
         foreach ($items as $item) {
-            $question = trim((string) ($item['question'] ?? ''));
-            $answer = trim((string) ($item['answer'] ?? ''));
+            $question = $item['question'] ?? '';
+            $answer = $item['answer'] ?? '';
 
-            if ($question === '' && $answer === '') {
+            if (blank($question) && blank($answer)) {
                 continue;
             }
 
-            $translated = $this->translateModelFields([
-                'question' => $question,
-                'answer' => $answer,
-            ], ['question', 'answer']);
-
             $normalized[] = [
-                'question' => $translated['question'] ?? ['en' => $question, 'ar' => $question],
-                'answer' => $translated['answer'] ?? ['en' => $answer, 'ar' => $answer],
+                'question' => $translationService->translateTextToAllLanguages($question),
+                'answer' => $translationService->translateTextToAllLanguages($answer),
             ];
         }
 
@@ -1144,16 +1163,15 @@ class PackageController extends Controller
 
     private function normalizeTranslatedFields(array $data): array
     {
+        $translationService = app(TranslationService::class);
+
         foreach ($this->translatedFields as $field) {
             if (!array_key_exists($field, $data)) {
                 continue;
             }
 
             if (is_array($data[$field])) {
-                $data[$field] = [
-                    'en' => $data[$field]['en'] ?? $data[$field]['ar'] ?? '',
-                    'ar' => $data[$field]['ar'] ?? $data[$field]['en'] ?? '',
-                ];
+                $data[$field] = $translationService->translateTextToAllLanguages($data[$field]);
                 continue;
             }
 
@@ -1162,7 +1180,7 @@ class PackageController extends Controller
                 continue;
             }
 
-            $data[$field] = ['en' => '', 'ar' => ''];
+            $data[$field] = [];
         }
 
         return $data;
@@ -1215,23 +1233,26 @@ class PackageController extends Controller
 
     private function syncPackageCities(Package $package, ?Request $request = null): void
     {
-        // Advanced Nile Cruise route order is managed by NileCruisePackageService.
-        if ($package->package_type === 'nile_cruise') {
-            $package->cities()->detach();
-            return;
+        $primaryCityId = (int) ($request?->input('destination_id', 0) ?? 0);
+        $tourCityIds = collect((array) ($request?->input('tour_city_ids', []) ?? []))
+            ->map(fn($id) => (int) $id)
+            ->filter()
+            ->unique()
+            ->values();
+
+        if (!$primaryCityId && $tourCityIds->isNotEmpty()) {
+            $primaryCityId = $tourCityIds->first();
         }
 
-        $primaryCityId = (int) ($request?->input('destination_id', 0) ?? 0);
-
-        if ($request && $package->package_type === 'travel_package' && $request->has('tour_city_ids')) {
-            $cityIds = collect((array) $request->input('tour_city_ids', []))
-                ->map(fn($id) => (int) $id)
-                ->filter()
-                ->unique()
-                ->values();
-
-            if ($primaryCityId && !$cityIds->contains($primaryCityId)) {
-                $cityIds->prepend($primaryCityId);
+        if ($primaryCityId || $tourCityIds->isNotEmpty()) {
+            $cityIds = collect();
+            if ($primaryCityId) {
+                $cityIds->push($primaryCityId);
+            }
+            foreach ($tourCityIds as $cid) {
+                if (!$cityIds->contains($cid)) {
+                    $cityIds->push($cid);
+                }
             }
 
             $syncData = [];
@@ -1243,16 +1264,21 @@ class PackageController extends Controller
                 ];
             }
             $package->cities()->sync($syncData);
+
+            if ($primaryCityId) {
+                $attraction = $this->resolveDestinationAttractionFromCityId($primaryCityId);
+                if ($attraction && $package->destination_id !== $attraction->id) {
+                    $package->destination_id = $attraction->id;
+                    if ($attraction->country_id && !$package->primary_country_id) {
+                        $package->primary_country_id = $attraction->country_id;
+                    }
+                    $package->saveQuietly();
+                }
+            }
             return;
         }
 
-        if ($request && $package->package_type === 'day_tour' && $primaryCityId) {
-            $package->cities()->sync([
-                $primaryCityId => ['stop_order' => 0, 'is_primary' => true, 'nights' => null],
-            ]);
-            return;
-        }
-
+        // Fallback for when no city input is provided directly in request
         $package->loadMissing(['destination', 'packageAttractions.attraction']);
         $cityIds = collect();
 
@@ -1267,6 +1293,7 @@ class PackageController extends Controller
         }
 
         $syncData = [];
+        $firstCityId = $cityIds->filter()->unique()->values()->first();
         foreach ($cityIds->filter()->unique()->values() as $index => $cityId) {
             $syncData[$cityId] = [
                 'stop_order' => $index,
@@ -1275,6 +1302,14 @@ class PackageController extends Controller
             ];
         }
         $package->cities()->sync($syncData);
+
+        if ($firstCityId) {
+            $attraction = $this->resolveDestinationAttractionFromCityId($firstCityId);
+            if ($attraction && $package->destination_id !== $attraction->id) {
+                $package->destination_id = $attraction->id;
+                $package->saveQuietly();
+            }
+        }
     }
 
     private function syncItineraries(Package $package, Request $request): void
@@ -1289,10 +1324,18 @@ class PackageController extends Controller
         $package->itineraries()->delete();
         $position = 0;
 
+        $translationService = app(TranslationService::class);
+
         foreach ((array) $request->input('itinerary', []) as $day) {
-            if (empty($day['title']) && empty($day['description'])) {
+            $rawTitle = $day['title'] ?? null;
+            $rawDesc = $day['description'] ?? null;
+
+            if (blank($rawTitle) && blank($rawDesc)) {
                 continue;
             }
+
+            $title = !empty($rawTitle) ? $translationService->translateTextToAllLanguages($rawTitle) : null;
+            $description = !empty($rawDesc) ? $translationService->translateTextToAllLanguages($rawDesc) : null;
 
             $mealsInput = [];
             if (isset($day['meals']) && is_array($day['meals'])) {
@@ -1313,8 +1356,8 @@ class PackageController extends Controller
             $package->itineraries()->create([
                 'duration' => $day['duration'] ?? null,
                 'day_number' => $position + 1,
-                'title' => $day['title'] ?? null,
-                'description' => $day['description'] ?? null,
+                'title' => $title,
+                'description' => $description,
                 'meals' => $package->package_type === 'day_tour' ? [] : $normalizedMeals,
                 'meals_breakfast' => $package->package_type === 'day_tour' ? false : $hasBreakfast,
                 'meals_lunch' => $package->package_type === 'day_tour' ? false : $hasLunch,
@@ -1334,15 +1377,20 @@ class PackageController extends Controller
 
     private function normalizeTourPackageActivities(mixed $activities): array
     {
+        $translationService = app(TranslationService::class);
+
         return collect((array) $activities)
             ->filter(fn($row) => is_array($row))
-            ->map(function (array $row) {
+            ->map(function (array $row) use ($translationService) {
+                $rowTitle = trim((string) ($row['title'] ?? ''));
+                $rowDesc = trim((string) ($row['description'] ?? ''));
+
                 return [
                     'time' => trim((string) ($row['time'] ?? '')) ?: null,
-                    'title' => trim((string) ($row['title'] ?? '')) ?: null,
+                    'title' => $rowTitle !== '' ? $translationService->translateTextToAllLanguages($rowTitle) : null,
                     'location' => trim((string) ($row['location'] ?? '')) ?: null,
                     'duration' => trim((string) ($row['duration'] ?? '')) ?: null,
-                    'description' => trim((string) ($row['description'] ?? '')) ?: null,
+                    'description' => $rowDesc !== '' ? $translationService->translateTextToAllLanguages($rowDesc) : null,
                 ];
             })
             ->filter(fn(array $row) => collect($row)->filter(fn($value) => $value !== null && $value !== '')->isNotEmpty())
@@ -1353,37 +1401,47 @@ class PackageController extends Controller
     private function syncInclusions(Package $package, Request $request): void
     {
         $package->inclusions()->delete();
+        $translationService = app(TranslationService::class);
 
-        foreach ((array) $request->input('included', []) as $index => $item) {
-            $title = trim((string) ($item['title'] ?? ''));
+        foreach (['included' => 'included', 'excluded' => 'excluded'] as $inputKey => $type) {
+            foreach ((array) $request->input($inputKey, []) as $index => $item) {
+                $rawTitle = is_array($item) ? ($item['title'] ?? $item['content'] ?? $item) : $item;
 
-            if ($title === '') {
-                continue;
+                if (is_array($rawTitle)) {
+                    $hasContent = false;
+                    foreach ($rawTitle as $v) {
+                        if (is_string($v) && trim($v) !== '' && trim($v) !== 'Array') {
+                            $hasContent = true;
+                            break;
+                        } elseif (is_array($v)) {
+                            $hasContent = true;
+                            break;
+                        }
+                    }
+                    if (!$hasContent) {
+                        continue;
+                    }
+                    $translated = $translationService->translateTextToAllLanguages($rawTitle);
+                } else {
+                    $rawTitleStr = trim((string) $rawTitle);
+                    if ($rawTitleStr === '' || $rawTitleStr === 'Array') {
+                        continue;
+                    }
+                    $translated = $translationService->translateTextToAllLanguages($rawTitleStr);
+                }
+
+                if (empty($translated)) {
+                    continue;
+                }
+
+                $package->inclusions()->create([
+                    'title' => $translated,
+                    'content' => $translated,
+                    'type' => $type,
+                    'item_type' => $type,
+                    'sort_order' => $index,
+                ]);
             }
-
-            $package->inclusions()->create([
-                'title' => $title,
-                'content' => $title,
-                'type' => 'included',
-                'item_type' => 'included',
-                'sort_order' => $index,
-            ]);
-        }
-
-        foreach ((array) $request->input('excluded', []) as $index => $item) {
-            $title = trim((string) ($item['title'] ?? ''));
-
-            if ($title === '') {
-                continue;
-            }
-
-            $package->inclusions()->create([
-                'title' => $title,
-                'content' => $title,
-                'type' => 'excluded',
-                'item_type' => 'excluded',
-                'sort_order' => $index,
-            ]);
         }
     }
 
@@ -1536,20 +1594,28 @@ class PackageController extends Controller
         return $uploaded;
     }
 
-    private function adminTrans($value, array $preferred = ['ar', 'en']): string
+    private function adminTrans($value, array $preferred = ['en', 'ar']): string
     {
+        if (is_string($value)) {
+            $decoded = json_decode($value, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                $value = $decoded;
+            }
+        }
+
         if (!is_array($value)) {
-            return (string) ($value ?? '');
+            $str = (string) ($value ?? '');
+            return $str === 'Array' ? '' : $str;
         }
 
         foreach ($preferred as $lang) {
-            if (!empty($value[$lang])) {
+            if (!empty($value[$lang]) && $value[$lang] !== 'Array') {
                 return (string) $value[$lang];
             }
         }
 
         foreach ($value as $translation) {
-            if (is_string($translation) && trim($translation) !== '') {
+            if (is_string($translation) && trim($translation) !== '' && trim($translation) !== 'Array') {
                 return trim($translation);
             }
         }

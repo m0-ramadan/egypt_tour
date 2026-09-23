@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('المناطق'))
+@section('title', admin_t('Regions'))
 
 @section('css')
 
@@ -127,8 +127,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">المناطق</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Regions</li>
             </ol>
         </nav>
 
@@ -139,7 +139,7 @@
                         <i class="fas fa-map"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalRegions) }}</div>
-                    <div class="stats-label">إجمالي المناطق</div>
+                    <div class="stats-label">Total Regions</div>
                 </div>
             </div>
 
@@ -150,7 +150,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stats-number">{{ number_format($activeRegions) }}</div>
-                    <div class="stats-label">مفعلة</div>
+                    <div class="stats-label">Enabled</div>
                 </div>
             </div>
 
@@ -161,7 +161,7 @@
                         <i class="fas fa-ban"></i>
                     </div>
                     <div class="stats-number">{{ number_format($inactiveRegions) }}</div>
-                    <div class="stats-label">غير مفعلة</div>
+                    <div class="stats-label">Inactive</div>
                 </div>
             </div>
         </div>
@@ -170,15 +170,15 @@
             <form method="GET" action="{{ route('admin.regions.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-5">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <input type="text" name="q" class="form-control" value="{{ request('q') }}"
-                            placeholder="ابحث باسم المنطقة">
+                            placeholder="Search Named Region">
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">الدولة</label>
+                        <label class="form-label">Country</label>
                         <select name="country_id" class="form-select">
-                            <option value="">كل الدول</option>
+                            <option value="">All Countries</option>
                             @foreach ($countries ?? collect() as $country)
                                 <option value="{{ $country->id }}"
                                     {{ request('country_id') == $country->id ? 'selected' : '' }}>
@@ -189,18 +189,18 @@
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>مفعل</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>غير مفعل
+                            <option value="">All</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Enabled</option>
+                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Disabled
                             </option>
                         </select>
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.regions.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.regions.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -209,11 +209,11 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة المناطق</h5>
-                    <small class="opacity-75">إدارة المناطق وربطها بالدول</small>
+                    <h5 class="mb-0">Regions List</h5>
+                    <small class="opacity-75">Manage Regions And Connect it With Countries</small>
                 </div>
                 <a href="{{ route('admin.regions.create') }}" class="btn btn-light">
-                    <i class="fas fa-plus me-2"></i>إضافة منطقة
+                    <i class="fas fa-plus me-2"></i>Add Region
                 </a>
             </div>
 
@@ -222,39 +222,39 @@
                     <div class="item-card">
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
                             <div>
-                                <h6 class="mb-1">{{ $region->name ?? 'بدون اسم' }}</h6>
+                                <h6 class="mb-1">{{ $region->name ?? 'No Name' }}</h6>
                                 <small class="text-light opacity-75">{{ $region->slug ?? '-' }}</small>
                             </div>
 
                             <span
                                 class="badge-status {{ $region->is_active ?? true ? 'status-active' : 'status-inactive' }}">
-                                {{ $region->is_active ?? true ? 'مفعل' : 'غير مفعل' }}
+                                {{ $region->is_active ?? true ? 'Enabled' : 'Disabled' }}
                             </span>
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-md-4"><strong>الدولة:</strong> {{ $region->country->name ?? '-' }}</div>
-                            <div class="col-md-4"><strong>الترتيب:</strong> {{ $region->sort_order ?? 0 }}</div>
-                            <div class="col-md-4"><strong>الإنشاء:</strong>
+                            <div class="col-md-4"><strong>Country:</strong> {{ $region->country->name ?? '-' }}</div>
+                            <div class="col-md-4"><strong>Order:</strong> {{ $region->sort_order ?? 0 }}</div>
+                            <div class="col-md-4"><strong>Created At:</strong>
                                 {{ optional($region->created_at)->translatedFormat('d M Y') ?? '-' }}</div>
                         </div>
 
                         <div class="mb-3">
-                            <strong>الوصف:</strong> {{ \Illuminate\Support\Str::limit($region->description ?? '-', 180) }}
+                            <strong>Description:</strong> {{ \Illuminate\Support\Str::limit($region->description ?? '-', 180) }}
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('admin.regions.show', $region) }}" class="btn btn-info btn-sm">عرض</a>
-                            <a href="{{ route('admin.regions.edit', $region) }}" class="btn btn-warning btn-sm">تعديل</a>
+                            <a href="{{ route('admin.regions.show', $region) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('admin.regions.edit', $region) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('admin.regions.destroy', $region) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد مناطق حالياً</div>
+                    <div class="text-center py-5">No Regions available</div>
                 @endforelse
 
                 @if (method_exists($regions, 'links'))

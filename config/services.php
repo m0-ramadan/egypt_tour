@@ -76,4 +76,8 @@ return [
         'password' => env('SAVVYHOST_LOGIN_PASSWORD'),
         'token' => env('SAVVYHOST_API_TOKEN'),
     ],
+
+    'ai_translation' => [
+        'enabled' => filter_var(env('AI_TRANSLATION_ENABLED', false), FILTER_VALIDATE_BOOLEAN),
+    ],
 ];

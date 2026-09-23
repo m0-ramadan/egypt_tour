@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('آراء العملاء'))
+@section('title', admin_t('Testimonials'))
 
 @section('css')
 
@@ -208,8 +208,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">آراء العملاء</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Testimonials</li>
             </ol>
         </nav>
 
@@ -219,7 +219,7 @@
                     <div class="stats-icon" style="background: var(--primary-gradient); color:#fff;"><i
                             class="fas fa-comments"></i></div>
                     <div class="stats-number">{{ number_format($total) }}</div>
-                    <div class="stats-label">إجمالي الآراء</div>
+                    <div class="stats-label">Total Testimonials</div>
                 </div>
             </div>
             <div class="col-md-6 mb-4">
@@ -228,14 +228,14 @@
                         style="background: rgba(12,99,228,.2); color:#0c63e4; border:1px solid rgba(12,99,228,.3);"><i
                             class="fas fa-star"></i></div>
                     <div class="stats-number">{{ number_format($featured) }}</div>
-                    <div class="stats-label">آراء مميزة</div>
+                    <div class="stats-label">Testimonials Featured</div>
                 </div>
             </div>
         </div>
 
         <div class="panel-card">
             <div class="panel-header">
-                <h5 class="mb-0">قائمة آراء العملاء</h5>
+                <h5 class="mb-0">Testimonials Clients List</h5>
             </div>
             <div class="panel-body">
                 @forelse($testimonials as $testimonial)
@@ -243,7 +243,7 @@
                         <div class="d-flex justify-content-between align-items-start flex-wrap">
                             <div>
                                 <h6 class="mb-2">
-                                    {{ $testimonial->client_name ?? (adminTrans($testimonial->name) ?: 'بدون اسم') }}
+                                    {{ $testimonial->client_name ?? (adminTrans($testimonial->name) ?: 'No Name') }}
                                 </h6>
                                 <div class="mb-2">{{ adminTrans($testimonial->title) ?: '-' }}</div>
                                 <small
@@ -251,17 +251,17 @@
                             </div>
                             <div class="d-flex gap-2 mt-2 mt-md-0">
                                 @if ($testimonial->is_featured ?? false)
-                                    <span class="badge-status status-featured">مميز</span>
+                                    <span class="badge-status status-featured">Featured</span>
                                 @endif
                                 <a href="{{ route('admin.testimonials.show', $testimonial) }}"
-                                    class="btn btn-sm btn-info">عرض</a>
+                                    class="btn btn-sm btn-info">View</a>
                             </div>
                         </div>
                     </div>
                 @empty
                     <div class="empty-state">
                         <div class="empty-state-icon"><i class="fas fa-comments"></i></div>
-                        <h5 class="empty-state-text">لا توجد آراء</h5>
+                        <h5 class="empty-state-text">No There are Testimonials</h5>
                     </div>
                 @endforelse
                 <div class="mt-3">{{ $testimonials->links() }}</div>

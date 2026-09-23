@@ -1,11 +1,11 @@
 @include('admin.i18n.locale')
 <style>
     /*
-    ملف الأنماط الموحد للبانرات
-    يحتوي على كل الأنماط للصفحات: الإنشاء، التعديل، العرض، الفهرس
+    Unified banner styles
+    Contains styles for create, edit, view, index pages
 */
 
-    /* متغيرات الألوان - تيم مظلم */
+    /* Color variables - Dark theme */
     :root {
         --primary-color: #696cff;
         --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -22,14 +22,14 @@
         --dark-text: #212529;
     }
 
-    /* أنماط عامة */
+    /* General styles */
     body {
         font-family: "Cairo", sans-serif !important;
         background: var(--dark-bg);
         color: var(--light-text);
     }
 
-    /* ===== أنماط النماذج (إنشاء وتعديل) ===== */
+    /* Form styles */
     .form-card {
         background: var(--dark-card);
         border-radius: 15px;
@@ -65,7 +65,7 @@
         gap: 10px;
     }
 
-    /* خيارات الأقسام */
+    /* Category options */
     .category-options {
         display: flex;
         gap: 10px;
@@ -108,7 +108,7 @@
         animation: fadeIn 0.3s ease;
     }
 
-    /* بطاقات الأنواع */
+    /* Type cards */
     .type-card {
         border: 2px solid rgba(255, 255, 255, 0.1);
         border-radius: 10px;
@@ -144,7 +144,7 @@
         margin-top: 10px;
     }
 
-    /* إعدادات السلايدر والشبكة */
+    /* Slider and grid title */
     .grid-settings,
     .slider-settings {
         background: rgba(255, 255, 255, 0.05);
@@ -154,7 +154,7 @@
         border: 2px dashed rgba(255, 255, 255, 0.1);
     }
 
-    /* رفع الصور */
+    /* Image Upload */
     .image-upload-box {
         border: 2px dashed rgba(255, 255, 255, 0.2);
         border-radius: 10px;
@@ -199,7 +199,7 @@
         border: 2px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* الباجات */
+    /* Badges */
     .badge-custom {
         padding: 5px 12px;
         border-radius: 20px;
@@ -218,7 +218,7 @@
         color: white;
     }
 
-    /* باجات الأنواع */
+    /* Type badges */
     .badge-slider {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
@@ -249,7 +249,7 @@
         color: #0f5132;
     }
 
-    /* مفتاح التبديل */
+    /* Switch Toggle */
     .toggle-switch {
         position: relative;
         width: 50px;
@@ -294,7 +294,7 @@
         transform: translateX(24px);
     }
 
-    /* العناصر */
+    /* Items */
     .items-container {
         margin-top: 30px;
     }
@@ -348,7 +348,7 @@
         color: rgba(255, 255, 255, 0.1);
     }
 
-    /* ===== أنماط صفحة العرض (show) ===== */
+    /* View page styles */
     .detail-card {
         background: var(--dark-card);
         border-radius: 15px;
@@ -414,7 +414,7 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* ===== أنماط صفحة الفهرس (index) ===== */
+    /* Index page styles */
     .table-card {
         background: var(--dark-card);
         border-radius: 15px;
@@ -698,7 +698,7 @@
         margin-bottom: 20px;
     }
 
-    /* ===== أنماط عامة للمكونات ===== */
+    /* General component styles */
     .form-control {
         background: rgba(255, 255, 255, 0.05);
         border-color: rgba(255, 255, 255, 0.1);
@@ -783,7 +783,7 @@
         color: rgba(255, 255, 255, 0.7);
     }
 
-    /* Select2 أنماط */
+    /* Select2 styles */
     .select2-container--default .select2-selection--multiple,
     .select2-container--default .select2-selection--single {
         background: rgba(255, 255, 255, 0.05);
@@ -805,7 +805,7 @@
         color: #fff !important;
     }
 
-    /* Modal أنماط */
+    /* Modal styles */
     .modal-content {
         background: var(--dark-card);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -827,7 +827,7 @@
         border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* المساعدات */
+    /* Helpers */
     .help-text {
         color: var(--text-muted);
         font-size: 12px;
@@ -840,7 +840,7 @@
         color: var(--danger-color);
     }
 
-    /* الرسوم المتحركة */
+    /* Animations */
     @keyframes fadeIn {
         from {
             opacity: 0;
@@ -853,7 +853,7 @@
         }
     }
 
-    /* التجاوب */
+    /* Responsive */
     @media (max-width: 768px) {
 
         .category-options,

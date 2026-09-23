@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض رسالة تواصل'))
+@section('title', admin_t('View Contact Message'))
 
 @section('css')
     <style>
@@ -65,39 +65,39 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.contact-us.index') }}">تواصل معنا</a></li>
-                <li class="breadcrumb-item active">عرض الرسالة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.contact-us.index') }}">Contact Us</a></li>
+                <li class="breadcrumb-item active">View Message</li>
             </ol>
         </nav>
 
         <div class="profile-card">
             <div class="profile-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="mb-1">{{ $contactUs->subject ?? 'بدون عنوان' }}</h4>
+                    <h4 class="mb-1">{{ $contactUs->subject ?? 'Without Title' }}</h4>
                     <small class="opacity-75">{{ $contactUs->name ?? '-' }}</small>
                 </div>
-                <a href="{{ route('admin.contact-us.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.contact-us.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="profile-body">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الاسم</div>
+                            <div class="info-label">Name</div>
                             <div class="info-value">{{ $contactUs->name ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">البريد الإلكتروني</div>
+                            <div class="info-label">Email Address</div>
                             <div class="info-value">
                                 @if(!empty($contactUs->email))
                                     <a href="mailto:{{ $contactUs->email }}" class="text-white text-decoration-none me-2">
                                         {{ $contactUs->email }}
                                     </a>
-                                    <a href="mailto:{{ $contactUs->email }}" class="btn btn-sm btn-primary rounded-circle px-2 py-1" title="مراسلة عبر البريد">
+                                    <a href="mailto:{{ $contactUs->email }}" class="btn btn-sm btn-primary rounded-circle px-2 py-1" title="Message via Email">
                                         <i class="fas fa-envelope"></i>
                                     </a>
                                 @else
@@ -109,15 +109,15 @@
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الهاتف</div>
+                            <div class="info-label">Phone Number</div>
                             <div class="info-value">
                                 @if(!empty($contactUs->phone))
                                     @php($cleanCPhone = preg_replace('/[^0-9]/', '', $contactUs->phone))
                                     <span class="dir-ltr d-inline-block font-monospace me-2">{{ $contactUs->phone }}</span>
-                                    <a href="https://wa.me/{{ $cleanCPhone }}" target="_blank" class="btn btn-sm btn-success rounded-circle px-2 py-1 me-1" title="مراسلة عبر واتساب">
+                                    <a href="https://wa.me/{{ $cleanCPhone }}" target="_blank" class="btn btn-sm btn-success rounded-circle px-2 py-1 me-1" title="Message via WhatsApp">
                                         <i class="fab fa-whatsapp fs-6"></i>
                                     </a>
-                                    <a href="tel:{{ $contactUs->phone }}" class="btn btn-sm btn-info rounded-circle px-2 py-1" title="اتصال هاتفي">
+                                    <a href="tel:{{ $contactUs->phone }}" class="btn btn-sm btn-info rounded-circle px-2 py-1" title="Phone Call">
                                         <i class="fas fa-phone-alt fs-6"></i>
                                     </a>
                                 @else
@@ -129,14 +129,14 @@
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
+                            <div class="info-label">Status</div>
                             <div class="info-value">{{ $contactUs->status ?? 'new' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">تاريخ الإرسال</div>
+                            <div class="info-label">Sending Date</div>
                             <div class="info-value">
                                 {{ optional($contactUs->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
                         </div>
@@ -144,7 +144,7 @@
 
                     <div class="col-12">
                         <div class="info-box">
-                            <div class="info-label">الرسالة</div>
+                            <div class="info-label">Message</div>
                             <div class="info-value message-box">{{ $contactUs->message ?? '-' }}</div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                     @if (!empty($contactUs->reply_message))
                         <div class="col-12">
                             <div class="info-box">
-                                <div class="info-label">الرد</div>
+                                <div class="info-label">Reply</div>
                                 <div class="info-value message-box">{{ $contactUs->reply_message }}</div>
                             </div>
                         </div>
@@ -164,13 +164,13 @@
                         <form action="{{ route('admin.contact-us.reply', $contactUs) }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label class="form-label">الرد على الرسالة</label>
+                                <label class="form-label">Reply On Message</label>
                                 <textarea name="reply_message" class="form-control" rows="5">{{ old('reply_message') }}</textarea>
                             </div>
 
                             <div class="d-flex gap-2">
-                                <button class="btn btn-primary" type="submit">إرسال الرد</button>
-                                <a href="{{ route('admin.contact-us.index') }}" class="btn btn-secondary">إلغاء</a>
+                                <button class="btn btn-primary" type="submit">Send Reply</button>
+                                <a href="{{ route('admin.contact-us.index') }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>
                     </div>

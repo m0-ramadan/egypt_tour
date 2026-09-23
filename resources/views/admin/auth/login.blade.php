@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.auth.layouts.master')
 
-@section('title', admin_t('تسجيل الدخول'))
+@section('title', admin_t('Sign In'))
 
 @section('styles')
     @if (app()->getLocale() === 'ar')
@@ -13,44 +13,44 @@
     <div class="authentication-wrapper authentication-cover authentication-bg"
         dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
         <div class="authentication-inner row">
-            <!-- الجانب الأيسر (الصورة التوضيحية) - يظهر فقط على الشاشات الكبيرة -->
+            <!-- Left side illustration -->
             <div class="d-none d-lg-flex col-lg-7 align-items-center p-0" style="max-height: 950px;">
                 <div class="auth-cover-bg auth-cover-bg-color d-flex justify-content-center align-items-center w-100 h-100">
                     <img src="{{ asset('dashboard/assets/img/illustrations/auth-login-illustration-light.png') }}"
-                        alt="غلاف تسجيل الدخول" class="img-fluid auth-illustration">
+                        alt="Cover Sign In" class="img-fluid auth-illustration">
 
-                    <img src="{{ asset('dashboard/assets/img/illustrations/bg-shape-image-light.png') }}" alt="خلفية النظام"
+                    <img src="{{ asset('dashboard/assets/img/illustrations/bg-shape-image-light.png') }}" alt="Background System"
                         class="platform-bg">
                 </div>
             </div>
-            <!-- /الجانب الأيسر -->
+            <!-- /Left side -->
 
-            <!-- نموذج تسجيل الدخول (الجانب الأيمن في RTL) -->
+            <!-- Sign In Form -->
             <div class="d-flex col-12 col-lg-5 align-items-center p-4 p-sm-5">
                 <div class="w-px-400 mx-auto">
 
-                    <!-- الشعار -->
+                    <!-- Logo -->
                     <div class="app-brand mb-4 d-flex justify-content-center align-items-center">
                         <a href="{{ url('/') }}" class="app-brand-link">
                             <img src="{{ asset('website/logo/egypt-tour-pro.png') }}"
                                 style="max-height: 85px; width: auto; max-width: 280px; object-fit: contain;"
-                                alt="شعار {{ env('APP_NAME') }}">
+                                alt="Logo {{ env('APP_NAME') }}">
                         </a>
                     </div>
 
 
-                    <h3 class="mb-2 text-center">مرحباً بك في {{ env('APP_NAME') }} 👋</h3>
+                    <h3 class="mb-2 text-center">Welcome to {{ env('APP_NAME') }} 👋</h3>
                     <p class="mb-4 text-center text-muted">
-                        مرحباً بك في لوحة تحكم تطبيق {{ env('APP_NAME') }}
+                        Welcome to the dashboard of {{ env('APP_NAME') }}
                     </p>
 
                     <form id="formAuthentication" class="mb-3" method="POST" action="{{ route('admin.login') }}"
                         novalidate>
                         @csrf
 
-                        <!-- البريد الإلكتروني -->
+                        <!-- Email Address -->
                         <div class="mb-3">
-                            <label for="email" class="form-label">البريد الإلكتروني</label>
+                            <label for="email" class="form-label">Email Address</label>
                             <input type="email" class="form-control text-start" dir="ltr" id="email"
                                 name="email" value="{{ old('email') }}" placeholder="name@example.com" autofocus
                                 required>
@@ -59,12 +59,12 @@
                             @enderror
                         </div>
 
-                        <!-- كلمة المرور -->
+                        <!-- Password -->
                         <div class="mb-3 form-password-toggle">
                             <div class="d-flex justify-content-between mb-2">
-                                <label class="form-label" for="password">كلمة المرور</label>
+                                <label class="form-label" for="password">Password</label>
                                 <a href="{{ route('admin.password.request') }}">
-                                    <small>نسيت كلمة المرور؟</small>
+                                    <small>Forgot Password?</small>
                                 </a>
                             </div>
 
@@ -80,26 +80,26 @@
                             @enderror
                         </div>
 
-                        <!-- تذكرني -->
+                        <!-- Remember Me -->
                         <div class="mb-4">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember-me">
                                 <label class="form-check-label" for="remember-me">
-                                    تذكرني
+                                    Remember Me
                                 </label>
                             </div>
                         </div>
 
-                        <!-- زر تسجيل الدخول -->
+                        <!-- Sign In Button -->
                         <button type="submit" class="btn btn-primary d-grid w-100 mb-3">
-                            تسجيل الدخول
+                            Sign In
                         </button>
                     </form>
 
-                    <!-- التذييل -->
+                    <!-- Footer -->
                     <div class="text-center">
                         <small class="text-muted">
-                            تم التطوير بواسطة
+                            Developed by
                             <a href="https://nofalseo.com" target="_blank" class="text-primary fw-medium">
                                 {{ env('APP_NAME') }}
                             </a>
@@ -108,14 +108,14 @@
 
                 </div>
             </div>
-            <!-- /نموذج تسجيل الدخول -->
+            <!-- /Sign In Form -->
 
         </div>
     </div>
 @endsection
 
 @section('scripts')
-    <!-- تفعيل زر إظهار/إخفاء كلمة المرور (إذا كان لديك ملف JS للـ template) -->
+    <!-- Toggle password script -->
     <script>
         document.querySelectorAll('.form-password-toggle .input-group-text').forEach(el => {
             el.addEventListener('click', function() {

@@ -108,12 +108,25 @@ class CityController extends Controller
         }
 
         $data['is_featured'] = $request->boolean('is_featured');
-        $data['is_active'] = $request->boolean('is_active', true);
+        $data['is_active'] = $request->has('is_active') ? $request->boolean('is_active') : true;
         $data['sort_order'] = $data['sort_order'] ?? 0;
 
         City::create($data);
+        \Illuminate\Support\Facades\Cache::forget('active_cities');
+        \Illuminate\Support\Facades\Cache::forget('website_destinations');
+        \Illuminate\Support\Facades\Cache::flush();
 
-        return $this->success('admin.cities.index', 'City created.');
+        return $this->success('admin.cities.index', 'City created successfully.');
+    }
+
+    public function toggleStatus(City $city): RedirectResponse
+    {
+        $city->update(['is_active' => !(bool) $city->is_active]);
+        \Illuminate\Support\Facades\Cache::forget('active_cities');
+        \Illuminate\Support\Facades\Cache::forget('website_destinations');
+        \Illuminate\Support\Facades\Cache::flush();
+
+        return back()->with('success', 'City status updated successfully.');
     }
 
     public function show(City $city): View
@@ -183,12 +196,15 @@ class CityController extends Controller
         }
 
         $data['is_featured'] = $request->boolean('is_featured');
-        $data['is_active'] = $request->boolean('is_active', true);
+        $data['is_active'] = $request->boolean('is_active');
         $data['sort_order'] = $data['sort_order'] ?? 0;
 
         $city->update($data);
+        \Illuminate\Support\Facades\Cache::forget('active_cities');
+        \Illuminate\Support\Facades\Cache::forget('website_destinations');
+        \Illuminate\Support\Facades\Cache::flush();
 
-        return $this->success('admin.cities.index', 'City updated.');
+        return $this->success('admin.cities.index', 'City updated successfully.');
     }
 
     public function destroy(City $city): RedirectResponse

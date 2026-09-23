@@ -41,16 +41,16 @@ class RolesController extends Controller
             'permissions' => 'nullable|array',
             'permissions.*' => 'exists:permissions,id',
         ], [
-            'name.required' => 'اسم الدور مطلوب.',
-            'name.unique' => 'اسم الدور موجود بالفعل.',
-            'name.max' => 'اسم الدور يجب ألا يتجاوز 255 حرفًا.',
-            'permissions.*.exists' => 'إحدى الصلاحيات المختارة غير صالحة.',
+            'name.required' => 'Role name is required.',
+            'name.unique' => 'Role name already exists.',
+            'name.max' => 'Role name must not exceed 255 characters.',
+            'permissions.*.exists' => 'One of the selected permissions is invalid.',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'فشل التحقق من البيانات',
+                'message' => 'Validation failed',
                 'errors' => $validator->errors(),
             ], 422);
         }
@@ -72,7 +72,7 @@ class RolesController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'تم إنشاء الدور بنجاح.',
+            'message' => 'Role created successfully.',
         ]);
     }
     public function show($id)
@@ -101,7 +101,7 @@ class RolesController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'فشل التحقق من البيانات',
+                'message' => 'Validation failed',
                 'errors' => $validator->errors(),
             ], 422);
         }
@@ -115,7 +115,7 @@ class RolesController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'تم تحديث الدور بنجاح.',
+            'message' => 'Role updated successfully.',
         ]);
     }
 
@@ -124,6 +124,6 @@ class RolesController extends Controller
         $role = Role::findOrFail($id);
         $role->delete();
 
-        return redirect()->route('admin.roles.index')->with('success', 'تم حذف الدور بنجاح.');
+        return redirect()->route('admin.roles.index')->with('success', 'Role deleted successfully.');
     }
 }

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض الوجهة'))
+@section('title', admin_t('View Destination'))
 
 @section('css')
     <style>
@@ -124,9 +124,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.destinations.index') }}">الوجهات</a></li>
-                <li class="breadcrumb-item active">عرض الوجهة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.destinations.index') }}">Destinations</a></li>
+                <li class="breadcrumb-item active">View Destination</li>
             </ol>
         </nav>
 
@@ -142,14 +142,14 @@
                     @endif
 
                     <div>
-                        <h4 class="mb-1">{{ adminTrans($destination->name) ?: 'بدون اسم' }}</h4>
+                        <h4 class="mb-1">{{ adminTrans($destination->name) ?: 'No Name' }}</h4>
                         <small class="opacity-75">{{ $destination->slug ?? '-' }}</small>
                     </div>
                 </div>
 
                 <div class="d-flex gap-2">
-                    <a href="{{ route('admin.destinations.edit', $destination) }}" class="btn btn-light">تعديل</a>
-                    <a href="{{ route('admin.destinations.index') }}" class="btn btn-outline-light">رجوع</a>
+                    <a href="{{ route('admin.destinations.edit', $destination) }}" class="btn btn-light">Edit</a>
+                    <a href="{{ route('admin.destinations.index') }}" class="btn btn-outline-light">Back</a>
                 </div>
             </div>
 
@@ -162,7 +162,7 @@
                                 <img src="{{ asset($destination->hero_image) }}"
                                     alt="{{ adminTrans($destination->name) }}" class="destination-image">
                             @else
-                                <div class="info-value">لا توجد صورة رئيسية</div>
+                                <div class="info-value">No There are Image Main</div>
                             @endif
                         </div>
                     </div>
@@ -174,7 +174,7 @@
                                 <img src="{{ asset($destination->featured_image) }}"
                                     alt="{{ adminTrans($destination->name) }}" class="destination-image">
                             @else
-                                <div class="info-value">لا توجد صورة مميزة</div>
+                                <div class="info-value">No There are Image Featured</div>
                             @endif
                         </div>
                     </div>
@@ -183,40 +183,40 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">النوع</div>
+                            <div class="info-label">Type</div>
                             <div class="info-value">{{ $destination->type ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الدولة</div>
+                            <div class="info-label">Country</div>
                             <div class="info-value">{{ adminTrans(optional($destination->country)->name) ?: '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">المدينة</div>
+                            <div class="info-label">City</div>
                             <div class="info-value">{{ adminTrans(optional($destination->city)->name) ?: '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الوجهة الأم</div>
+                            <div class="info-label">Parent Destination</div>
                             <div class="info-value">{{ adminTrans(optional($destination->parent)->name) ?: '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الحالة</div>
+                            <div class="info-label">Status</div>
                             <div class="info-value">
                                 @if ($destination->is_active)
-                                    <span class="badge-soft badge-success-soft">مفعلة</span>
+                                    <span class="badge-soft badge-success-soft">Enabled</span>
                                 @else
-                                    <span class="badge-soft badge-danger-soft">غير مفعلة</span>
+                                    <span class="badge-soft badge-danger-soft">Inactive</span>
                                 @endif
                             </div>
                         </div>
@@ -224,12 +224,12 @@
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">مميزة</div>
+                            <div class="info-label">Featured</div>
                             <div class="info-value">
                                 @if ($destination->is_featured)
-                                    <span class="badge-soft badge-warning-soft">نعم</span>
+                                    <span class="badge-soft badge-warning-soft">Yes</span>
                                 @else
-                                    <span class="badge-soft badge-danger-soft">لا</span>
+                                    <span class="badge-soft badge-danger-soft">No</span>
                                 @endif
                             </div>
                         </div>
@@ -237,7 +237,7 @@
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الترتيب</div>
+                            <div class="info-label">Sort Order</div>
                             <div class="info-value">{{ $destination->sort_order ?? 0 }}</div>
                         </div>
                     </div>
@@ -259,14 +259,14 @@
                     <div class="col-md-6">
                         <div class="info-box">
                             <div class="info-label">SEO Title</div>
-                            <div class="info-value">{{ adminTrans($destination->seo_title) ?: 'لا يوجد' }}</div>
+                            <div class="info-value">{{ adminTrans($destination->seo_title) ?: 'No There is' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
                             <div class="info-label">SEO Description</div>
-                            <div class="info-value">{{ adminTrans($destination->seo_description) ?: 'لا يوجد' }}</div>
+                            <div class="info-value">{{ adminTrans($destination->seo_description) ?: 'No There is' }}</div>
                         </div>
                     </div>
 
@@ -274,14 +274,14 @@
                         <div class="info-box">
                             <div class="info-label">Short Description</div>
                             <div class="info-value">
-                                {{ adminTrans($destination->short_description) ?: 'لا يوجد وصف مختصر' }}</div>
+                                {{ adminTrans($destination->short_description) ?: 'No short description' }}</div>
                         </div>
                     </div>
 
                     <div class="col-12">
                         <div class="info-box">
-                            <div class="info-label">الوصف</div>
-                            <div class="info-value">{{ adminTrans($destination->description) ?: 'لا يوجد وصف' }}</div>
+                            <div class="info-label">Description</div>
+                            <div class="info-value">{{ adminTrans($destination->description) ?: 'No description' }}</div>
                         </div>
                     </div>
 
@@ -291,14 +291,14 @@
                             @if ($destination->schema_json)
                                 <pre class="schema-box">{{ $destination->schema_json }}</pre>
                             @else
-                                <div class="info-value">لا يوجد Schema JSON</div>
+                                <div class="info-value">No Schema JSON</div>
                             @endif
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">تاريخ الإنشاء</div>
+                            <div class="info-label">Created At</div>
                             <div class="info-value">
                                 {{ optional($destination->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}
                             </div>
@@ -307,7 +307,7 @@
 
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">آخر تحديث</div>
+                            <div class="info-label">Last Updated</div>
                             <div class="info-value">
                                 {{ optional($destination->updated_at)->translatedFormat('d M Y - h:i A') ?? '-' }}
                             </div>

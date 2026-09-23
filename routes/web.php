@@ -121,13 +121,13 @@ Route::name('website.')->group(function () {
         Route::get('/services', 'services')
             ->name('services');
 
-        Route::get('/about-us', 'redirectLegacy')
-            ->defaults('slug', 'about-us')
-            ->name('pages.about.legacy');
+        Route::get('/why-us', function () {
+            return redirect()->route('website.pages.show', ['slug' => 'why-egypt-tour-pro'], 301);
+        });
 
-        Route::get('/why-luxor-and-aswan-travel', 'redirectLegacy')
-            ->defaults('slug', 'why-us')
-            ->name('pages.why.legacy');
+        Route::get('/why-luxor-and-aswan-travel', function () {
+            return redirect()->route('website.pages.show', ['slug' => 'why-egypt-tour-pro'], 301);
+        });
     });
 
     Route::controller(ContactController::class)->group(function () {
@@ -207,8 +207,15 @@ Route::name('website.')->group(function () {
         ->whereNumber('days')
         ->name('tour_packages.duration');
 
+    Route::get('/luxury-egypt-tours', [PackageController::class, 'category'])
+        ->defaults('category', 'egypt-luxury-tours')
+        ->name('luxury_egypt_tours');
+
+    Route::get('/egypt-luxury-tours', [PackageController::class, 'category'])
+        ->defaults('category', 'egypt-luxury-tours');
+
     Route::get('/tour-packages/{category}', [PackageController::class, 'category'])
-        ->where('category', 'egypt-vacation-packages|private-egypt-tours|egypt-luxury-tours|family-egypt-tours')
+        ->where('category', 'egypt-vacation-packages|private-egypt-tours|egypt-luxury-tours|luxury-egypt-tours|family-egypt-tours')
         ->name('tour_packages.category');
 
     Route::get('/tour-packages/{slug}', [PackageController::class, 'showTravelPackage'])

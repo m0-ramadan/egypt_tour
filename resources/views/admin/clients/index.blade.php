@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إدارة العملاء'))
+@section('title', admin_t('Manage Clients'))
 
 @section('css')
 
@@ -404,9 +404,9 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.index') }}">الرئيسية</a>
+                    <a href="{{ route('admin.index') }}">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">العملاء</li>
+                <li class="breadcrumb-item active">Clients</li>
             </ol>
         </nav>
 
@@ -417,7 +417,7 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="stats-number" bis_skin_checked="1">{{ number_format($stats['total']) }}</div>
-                    <div class="stats-label" bis_skin_checked="1">إجمالي العملاء</div>
+                    <div class="stats-label" bis_skin_checked="1">Total Clients</div>
                 </div>
             </div>
 
@@ -427,7 +427,7 @@
                         <i class="fas fa-user-check"></i>
                     </div>
                     <div class="stats-number" bis_skin_checked="1">{{ number_format($stats['active']) }}</div>
-                    <div class="stats-label" bis_skin_checked="1">عملاء نشطون</div>
+                    <div class="stats-label" bis_skin_checked="1">Clients Active</div>
                 </div>
             </div>
 
@@ -437,7 +437,7 @@
                         <i class="fas fa-suitcase-rolling"></i>
                     </div>
                     <div class="stats-number" bis_skin_checked="1">{{ number_format($stats['bookings']) }}</div>
-                    <div class="stats-label" bis_skin_checked="1">إجمالي الحجوزات</div>
+                    <div class="stats-label" bis_skin_checked="1">Total Bookings</div>
                 </div>
             </div>
 
@@ -447,76 +447,76 @@
                         <i class="fas fa-money-bill-wave"></i>
                     </div>
                     <div class="stats-number" bis_skin_checked="1">{{ number_format($stats['revenue'], 2) }}</div>
-                    <div class="stats-label" bis_skin_checked="1">قيمة الحجوزات</div>
+                    <div class="stats-label" bis_skin_checked="1">Value Bookings</div>
                 </div>
             </div>
         </div>
 
         <div class="status-filter" bis_skin_checked="1">
             <button class="status-filter-btn {{ !request('status') ? 'active' : '' }}" onclick="filterByStatus('all')">
-                جميع العملاء
+                All Clients
             </button>
             <button class="status-filter-btn {{ request('status') == 'active' ? 'active' : '' }}"
                 onclick="filterByStatus('active')">
-                <i class="fas fa-user-check me-2"></i>نشط
+                <i class="fas fa-user-check me-2"></i>Active
             </button>
             <button class="status-filter-btn {{ request('status') == 'inactive' ? 'active' : '' }}"
                 onclick="filterByStatus('inactive')">
-                <i class="fas fa-user-times me-2"></i>غير نشط
+                <i class="fas fa-user-times me-2"></i>Inactive
             </button>
         </div>
 
         <div class="filter-card" bis_skin_checked="1">
-            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>فلترة متقدمة</h6>
+            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>Advanced Filters</h6>
 
             <div class="filter-row" bis_skin_checked="1">
                 <div class="search-box" bis_skin_checked="1">
                     <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="form-control" placeholder="بحث بالاسم، البريد، الهاتف..." id="searchInput"
+                    <input type="text" class="form-control" placeholder="text" id="searchInput"
                         value="{{ request('search') }}">
                 </div>
 
                 <div class="sort-dropdown" bis_skin_checked="1">
                     <button class="sort-btn">
                         <i class="fas fa-sort-amount-down"></i>
-                        الترتيب حسب
+                        Sort By
                     </button>
                     <div class="sort-dropdown-content" bis_skin_checked="1">
                         <div class="sort-item {{ request('sort_by') == 'created_at' && request('sort_direction') == 'desc' ? 'active' : '' }}"
                             onclick="sortBy('created_at', 'desc')">
-                            الأحدث أولاً
+                            Newest First
                         </div>
                         <div class="sort-item {{ request('sort_by') == 'created_at' && request('sort_direction') == 'asc' ? 'active' : '' }}"
                             onclick="sortBy('created_at', 'asc')">
-                            الأقدم أولاً
+                            Oldest First
                         </div>
                         <div class="sort-item {{ request('sort_by') == 'total_spent' && request('sort_direction') == 'desc' ? 'active' : '' }}"
                             onclick="sortBy('total_spent', 'desc')">
-                            الأعلى إنفاقاً
+                            Top Spenders
                         </div>
                         <div class="sort-item {{ request('sort_by') == 'total_spent' && request('sort_direction') == 'asc' ? 'active' : '' }}"
                             onclick="sortBy('total_spent', 'asc')">
-                            الأقل إنفاقاً
+                            Lowest Spenders
                         </div>
                     </div>
                 </div>
 
                 <div class="input-group" bis_skin_checked="1">
                     <input type="date" class="form-control" id="dateFrom" value="{{ request('date_from') }}">
-                    <span class="input-group-text">إلى</span>
+                    <span class="input-group-text">To</span>
                     <input type="date" class="form-control" id="dateTo" value="{{ request('date_to') }}">
                 </div>
             </div>
 
             <div class="filter-row" bis_skin_checked="1">
-                <input type="number" class="form-control" id="bookingCount" placeholder="أقل عدد حجوزات"
+                <input type="number" class="form-control" id="bookingCount" placeholder="Less Number Bookings"
                     value="{{ request('bookings_min') }}">
 
                 <button class="btn btn-primary" onclick="applyFilters()">
-                    <i class="fas fa-filter me-2"></i>تطبيق الفلاتر
+                    <i class="fas fa-filter me-2"></i>Apply Filters
                 </button>
                 <button class="btn btn-outline-secondary" onclick="resetFilters()">
-                    <i class="fas fa-redo me-2"></i>إعادة تعيين
+                    <i class="fas fa-redo me-2"></i>Reset
                 </button>
             </div>
         </div>
@@ -527,15 +527,15 @@
                     <div class="order-header" bis_skin_checked="1">
                         <div class="d-flex justify-content-between align-items-center" bis_skin_checked="1">
                             <div bis_skin_checked="1">
-                                <h5 class="mb-0">قائمة العملاء</h5>
-                                <small class="opacity-75">إدارة جميع عملاء منصة السفر</small>
+                                <h5 class="mb-0">Clients List</h5>
+                                <small class="opacity-75">Manage All Clients Platform Travel</small>
                             </div>
                             <div class="d-flex gap-3" bis_skin_checked="1">
                                 <a href="{{ route('admin.clients.export') }}" class="btn btn-light">
-                                    <i class="fas fa-file-export me-2"></i>تصدير
+                                    <i class="fas fa-file-export me-2"></i>Export
                                 </a>
                                 <a href="{{ route('admin.clients.create') }}" class="btn btn-light">
-                                    <i class="fas fa-plus me-2"></i>إضافة عميل جديد
+                                    <i class="fas fa-plus me-2"></i>Add New Client
                                 </a>
                             </div>
                         </div>
@@ -547,10 +547,10 @@
                                 <div class="empty-state-icon" bis_skin_checked="1">
                                     <i class="fas fa-users"></i>
                                 </div>
-                                <h5 class="empty-state-text">لا يوجد عملاء</h5>
-                                <p class="text-muted">لم يتم إنشاء أي عميل حتى الآن</p>
+                                <h5 class="empty-state-text">No There is Clients</h5>
+                                <p class="text-muted">No Client have been created yet</p>
                                 <a href="{{ route('admin.clients.create') }}" class="btn btn-primary">
-                                    <i class="fas fa-plus me-2"></i>إضافة عميل جديد
+                                    <i class="fas fa-plus me-2"></i>Add New Client
                                 </a>
                             </div>
                         @else
@@ -564,9 +564,9 @@
                                     <div class="order-header-info" bis_skin_checked="1">
                                         <div class="order-title" bis_skin_checked="1">
                                             <div class="d-flex align-items-center gap-3" bis_skin_checked="1">
-                                                <span>{{ $fullName ?: 'بدون اسم' }}</span>
+                                                <span>{{ $fullName ?: 'No Name' }}</span>
                                                 <span class="badge-status status-{{ $isActive }}">
-                                                    {{ $isActive == 'active' ? 'نشط' : 'غير نشط' }}
+                                                    {{ $isActive == 'active' ? 'Active' : 'Inactive' }}
                                                 </span>
                                             </div>
                                         </div>
@@ -578,33 +578,33 @@
 
                                     <div class="order-details" bis_skin_checked="1">
                                         <div class="detail-item" bis_skin_checked="1">
-                                            <span class="detail-label">البريد:</span>
+                                            <span class="detail-label">Email:</span>
                                             <span class="detail-value">{{ $client->email ?? '-' }}</span>
                                         </div>
 
                                         <div class="detail-item" bis_skin_checked="1">
-                                            <span class="detail-label">الهاتف:</span>
+                                            <span class="detail-label">Phone:</span>
                                             <span class="detail-value">{{ $client->phone ?? '-' }}</span>
                                         </div>
 
                                         <div class="detail-item" bis_skin_checked="1">
-                                            <span class="detail-label">الجنسية:</span>
+                                            <span class="detail-label">Nationality:</span>
                                             <span class="detail-value">{{ $client->nationality ?? '-' }}</span>
                                         </div>
 
                                         <div class="detail-item" bis_skin_checked="1">
-                                            <span class="detail-label">إجمالي الحجوزات:</span>
+                                            <span class="detail-label">Total Bookings:</span>
                                             <span class="detail-value">{{ $client->total_bookings ?? 0 }}</span>
                                         </div>
 
                                         <div class="detail-item" bis_skin_checked="1">
-                                            <span class="detail-label">إجمالي الإنفاق:</span>
+                                            <span class="detail-label">Total Spending:</span>
                                             <span
                                                 class="detail-value">{{ number_format($client->total_spent ?? 0, 2) }}</span>
                                         </div>
 
                                         <div class="detail-item" bis_skin_checked="1">
-                                            <span class="detail-label">آخر نشاط:</span>
+                                            <span class="detail-label">Last Activity:</span>
                                             <span class="detail-value">
                                                 {{ optional($client->last_activity)->translatedFormat('d M Y') ?? '-' }}
                                             </span>
@@ -613,23 +613,23 @@
 
                                     <div class="order-actions" bis_skin_checked="1">
                                         <a href="{{ route('admin.clients.show', $client) }}" class="btn btn-sm btn-info">
-                                            <i class="fas fa-eye me-1"></i>عرض التفاصيل
+                                            <i class="fas fa-eye me-1"></i>View Details
                                         </a>
                                         <a href="{{ route('admin.clients.edit', $client) }}"
                                             class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit me-1"></i>تعديل
+                                            <i class="fas fa-edit me-1"></i>Edit
                                         </a>
                                         <a href="{{ route('admin.clients.bookings', $client) }}"
                                             class="btn btn-sm btn-secondary">
-                                            <i class="fas fa-suitcase me-1"></i>الحجوزات
+                                            <i class="fas fa-suitcase me-1"></i>Bookings
                                         </a>
                                         <a href="{{ route('admin.clients.inquiries', $client) }}"
                                             class="btn btn-sm btn-primary">
-                                            <i class="fas fa-comments me-1"></i>الاستفسارات
+                                            <i class="fas fa-comments me-1"></i>Inquiries
                                         </a>
                                         <button type="button" class="btn btn-sm btn-danger delete-btn"
-                                            data-id="{{ $client->id }}" data-name="{{ $fullName ?: 'العميل' }}">
-                                            <i class="fas fa-trash me-1"></i>حذف
+                                            data-id="{{ $client->id }}" data-name="{{ $fullName ?: 'Client' }}">
+                                            <i class="fas fa-trash me-1"></i>Delete
                                         </button>
                                     </div>
                                 </div>
@@ -666,14 +666,14 @@
                 const clientName = $(this).data('name');
 
                 Swal.fire({
-                    title: 'هل أنت متأكد؟',
-                    text: `سيتم حذف العميل "${clientName}" نهائياً`,
+                    title: 'Are you sure?',
+                    text: `Will be Delete Client "${clientName}" Will be Delete Article`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'نعم، احذف',
-                    cancelButtonText: 'إلغاء',
+                    confirmButtonText: 'Yes, Delete',
+                    cancelButtonText: 'Cancel',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -687,8 +687,8 @@
                             success: function() {
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'تم الحذف',
-                                    text: 'تم حذف العميل بنجاح',
+                                    title: 'Was Deletion',
+                                    text: 'Was Delete Client Successfully',
                                     timer: 1500,
                                     showConfirmButton: false
                                 }).then(() => location.reload());
@@ -696,8 +696,8 @@
                             error: function() {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'خطأ',
-                                    text: 'حدث خطأ أثناء الحذف',
+                                    title: 'Error',
+                                    text: 'Event Error While Deletion',
                                     timer: 1500,
                                     showConfirmButton: false
                                 });

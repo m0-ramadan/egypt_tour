@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('سجل تواصل الحجز'))
+@section('title', admin_t('Booking Communication Log'))
 
 @section('css')
     <style>
@@ -49,15 +49,15 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.communications.index') }}">سجل التواصل</a></li>
-                <li class="breadcrumb-item active">تواصل الحجز</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.communications.index') }}">Communication Log</a></li>
+                <li class="breadcrumb-item active">Communication Booking</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header">
-                <h5 class="mb-0">سجل تواصل الحجز</h5>
+                <h5 class="mb-0">Booking Communication Log</h5>
                 <small class="opacity-75">
                     {{ $booking->booking_reference ?? ($communication->related_id ?? '-') }}
                 </small>
@@ -66,14 +66,14 @@
             <div class="content-body">
                 @forelse($communications ?? collect([$communication]) as $item)
                     <div class="item-card">
-                        <h6 class="mb-2">{{ $item->subject ?? 'بدون عنوان' }}</h6>
-                        <div class="mb-2"><strong>القناة:</strong> {{ $item->channel ?? '-' }}</div>
-                        <div class="mb-2"><strong>التاريخ:</strong>
+                        <h6 class="mb-2">{{ $item->subject ?? 'Without Title' }}</h6>
+                        <div class="mb-2"><strong>Channel:</strong> {{ $item->channel ?? '-' }}</div>
+                        <div class="mb-2"><strong>Date:</strong>
                             {{ optional($item->created_at)->translatedFormat('d M Y - h:i A') ?? '-' }}</div>
-                        <div><strong>الرسالة:</strong> {{ $item->message ?? '-' }}</div>
+                        <div><strong>Message:</strong> {{ $item->message ?? '-' }}</div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد سجلات لهذا الحجز</div>
+                    <div class="text-center py-5">No There are Logs For this Booking</div>
                 @endforelse
             </div>
         </div>

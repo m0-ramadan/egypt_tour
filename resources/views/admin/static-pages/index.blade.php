@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('الصفحات الثابتة'))
+@section('title', admin_t('Static Pages'))
 
 @section('css')
 
@@ -207,8 +207,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">الصفحات الثابتة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Static Pages</li>
             </ol>
         </nav>
 
@@ -218,7 +218,7 @@
                     <div class="stats-icon" style="background: var(--primary-gradient); color:#fff;"><i
                             class="fas fa-file-lines"></i></div>
                     <div class="stats-number">{{ number_format($total) }}</div>
-                    <div class="stats-label">إجمالي الصفحات</div>
+                    <div class="stats-label">Total Pages</div>
                 </div>
             </div>
         </div>
@@ -226,11 +226,11 @@
         <div class="panel-card">
             <div class="panel-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة الصفحات الثابتة</h5>
-                    <small class="opacity-75">إدارة محتوى الصفحات العامة</small>
+                    <h5 class="mb-0">Pages Static List</h5>
+                    <small class="opacity-75">Manage Content Pages General</small>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{{ route('admin.static-pages.create') }}" class="btn btn-light">إضافة صفحة</a>
+                    <a href="{{ route('admin.static-pages.create') }}" class="btn btn-light">Add Page</a>
                 </div>
             </div>
             <div class="panel-body">
@@ -238,15 +238,15 @@
                     <div class="item-row">
                         <div class="d-flex justify-content-between align-items-start flex-wrap">
                             <div>
-                                <h6 class="mb-2">{{ adminTrans($page->title) ?: 'بدون عنوان' }}</h6>
+                                <h6 class="mb-2">{{ adminTrans($page->title) ?: 'Without Title' }}</h6>
                                 <div class="mb-2">Slug: {{ $page->slug ?? '-' }}</div>
                                 <small
                                     class="text-light opacity-75">{{ \Illuminate\Support\Str::limit(adminTrans($page->content) ?: '-', 140) }}</small>
                             </div>
                             <div class="d-flex gap-2 mt-2 mt-md-0">
-                                <a href="{{ route('admin.static-pages.show', $page) }}" class="btn btn-sm btn-info">عرض</a>
+                                <a href="{{ route('admin.static-pages.show', $page) }}" class="btn btn-sm btn-info">View</a>
                                 <a href="{{ route('admin.static-pages.edit', $page) }}"
-                                    class="btn btn-sm btn-warning">تعديل</a>
+                                    class="btn btn-sm btn-warning">Edit</a>
                                 <a href="{{ route('admin.static-pages.edit-with-ai', $page) }}"
                                     class="btn btn-sm btn-secondary">AI</a>
                             </div>
@@ -255,7 +255,7 @@
                 @empty
                     <div class="empty-state">
                         <div class="empty-state-icon"><i class="fas fa-file-lines"></i></div>
-                        <h5 class="empty-state-text">لا توجد صفحات</h5>
+                        <h5 class="empty-state-text">No There are Pages</h5>
                     </div>
                 @endforelse
                 <div class="mt-3">{{ $pages->links() }}</div>

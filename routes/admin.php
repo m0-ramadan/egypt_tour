@@ -228,9 +228,9 @@ Route::prefix('admin')->name('admin.')->middleware('translate.admin')->group(fun
         | Packages
         |--------------------------------------------------------------------------
         */
+        Route::post('package-categories/{packageCategory}/toggle-status', [PackageCategoryController::class, 'toggleStatus'])->name('package-categories.toggle-status');
         Route::resource('package-categories', PackageCategoryController::class);
         Route::resource('packages', PackageController::class);
-        Route::resource('package-prices', PackagePriceController::class);
 
         Route::prefix('package')->name('packages.')->group(function () {
             Route::get('statistics', [PackageController::class, 'statistics'])->name('statistics');
@@ -251,10 +251,8 @@ Route::prefix('admin')->name('admin.')->middleware('translate.admin')->group(fun
             Route::post('translate-field', [TranslationController::class, 'translateField'])->name('translate-field');
         });
 
-        Route::prefix('package-prices')->name('package-prices.')->group(function () {
-            Route::get('by-package/{package}', [PackagePriceController::class, 'byPackage'])->name('by-package');
-            Route::post('bulk-action', [PackagePriceController::class, 'bulkAction'])->name('bulk-action');
-        });
+        Route::redirect('package-prices', '/admin/packages')->name('package-prices.index');
+        Route::get('package-prices/{any}', fn() => redirect()->route('admin.packages.index'))->where('any', '.*');
 
         /*
         |--------------------------------------------------------------------------

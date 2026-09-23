@@ -28,6 +28,9 @@ class CheckoutController extends BaseWebsiteController
 
         $hasAccommodations = $package->tourPackageAccommodations->where('is_active', true)->isNotEmpty()
             || ! empty($bookingService->getTravelPackageMatrix($package)['accommodations']);
+        $hasAccommodations = $package->package_type !== 'day_tour'
+            && ($package->tourPackageAccommodations->where('is_active', true)->isNotEmpty()
+                || ! empty($bookingService->getTravelPackageMatrix($package)['accommodations']));
         $isTravelPackage = $package->package_type === 'travel_package'
             && $hasAccommodations
             && request('pricing_option') !== 'category'

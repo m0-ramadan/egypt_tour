@@ -48,7 +48,7 @@ class StoreController extends Controller
             $path = 'Admin.branchs.index';
         } else {
             if (!$userBranchId) {
-                return redirect()->back()->with('error', 'لم يتم تعيين فرع للمستخدم');
+                return redirect()->back()->with('error', 'No branch assigned to user');
             }
 
             $shipments = Shipment::with(['person'])
@@ -123,9 +123,9 @@ class StoreController extends Controller
 
         try {
             Store::create($validated);
-            return redirect()->route('admin.stores.index')->with('success', 'تم إضافة المخزن بنجاح');
+            return redirect()->route('admin.stores.index')->with('success', 'Store added successfully');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة المخزن')->withInput();
+            return redirect()->back()->with('error', 'An error occurred while adding store')->withInput();
         }
     }
 
@@ -152,9 +152,9 @@ class StoreController extends Controller
 
         try {
             $store->update($validated);
-            return redirect()->route('admin.stores.index')->with('success', 'تم تحديث المخزن بنجاح');
+            return redirect()->route('admin.stores.index')->with('success', 'Store updated successfully');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'حدث خطأ أثناء تحديث المخزن')->withInput();
+            return redirect()->back()->with('error', 'An error occurred while updating store')->withInput();
         }
     }
 
@@ -162,9 +162,9 @@ class StoreController extends Controller
     {
         try {
             $store->delete();
-            return redirect()->route('admin.stores.index')->with('success', 'تم حذف المخزن بنجاح');
+            return redirect()->route('admin.stores.index')->with('success', 'Store deleted successfully');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'حدث خطأ أثناء حذف المخزن');
+            return redirect()->back()->with('error', 'An error occurred while deleting store');
         }
     }
 
@@ -192,7 +192,7 @@ class StoreController extends Controller
 
     //         return view('Admin.stores.incoming', compact('shipments'));
     //     } catch (\Exception $e) {
-    //         return redirect()->back()->with('error', 'حدث خطأ أثناء جلب الشحنات: ' . $e->getMessage());
+    //         return redirect()->back()->with('error', 'An error occurred while fetching shipments: ' . $e->getMessage());
     //     }
     // }
 
@@ -229,7 +229,7 @@ class StoreController extends Controller
                 ->get();
             return view('Admin.stores.incoming', compact('shipments'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'حدث خطأ أثناء جلب الشحنات: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while fetching shipments: ' . $e->getMessage());
         }
     }
 }

@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('مكتبة الصور والوسائط'))
+@section('title', admin_t('Media Library'))
 
 @section('css')
     <style>
@@ -596,7 +596,7 @@
                         @csrf
                         <button type="submit" class="btn btn-fetch-media" id="syncBtn">
                             <i class="fas fa-cloud-download-alt me-2" id="syncIcon"></i>
-                            <span id="syncText">جلب الصور / Fetch Media</span>
+                            <span id="syncText">Fetch Media</span>
                         </button>
                     </form>
                 </div>
@@ -641,7 +641,7 @@
                                             </span>
                                             @if ($item->is_downloaded || $item->local_path)
                                                 <span class="badge bg-success text-white border border-success">
-                                                    <i class="fas fa-hdd me-1"></i>محلي
+                                                    <i class="fas fa-hdd me-1"></i>Local
                                                 </span>
                                             @endif
                                         </div>
@@ -734,7 +734,7 @@
                                             </span>
                                             @if ($item->is_downloaded || $item->local_path)
                                                 <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 ms-1">
-                                                    <i class="fas fa-hdd me-1"></i>محلي
+                                                    <i class="fas fa-hdd me-1"></i>Local
                                                 </span>
                                             @endif
                                         </td>
@@ -837,12 +837,12 @@
                 <div class="modal-header border-bottom border-secondary border-opacity-25">
                     <h5 class="modal-title fw-bold text-white d-flex align-items-center gap-2">
                         <i class="fas fa-cloud-download-alt text-primary"></i>
-                        <span>جاري جلب وتنزيل الصور محلياً</span>
+                        <span>Fetching and downloading media locally</span>
                     </h5>
                 </div>
                 <div class="modal-body p-4 text-center">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="text-white-50 fw-bold">نسبة الإنجاز:</span>
+                        <span class="text-white-50 fw-bold">Progress:</span>
                         <span class="fw-bold fs-4 text-primary" id="syncPercentText">0%</span>
                     </div>
 
@@ -857,22 +857,22 @@
                     {{-- Detailed Stats Card --}}
                     <div class="p-3 rounded-3 border border-secondary border-opacity-50 text-start" style="background: rgba(0,0,0,0.35);">
                         <div class="d-flex justify-content-between mb-2">
-                            <span class="text-white-50"><i class="fas fa-download text-success me-2"></i>الصور التي تم تنزيلها محلياً:</span>
+                            <span class="text-white-50"><i class="fas fa-download text-success me-2"></i>Images downloaded locally:</span>
                             <span class="fw-bold text-success fs-6" id="syncDownloadedText">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span class="text-white-50"><i class="fas fa-images text-info me-2"></i>إجمالي صور الـ API:</span>
+                            <span class="text-white-50"><i class="fas fa-images text-info me-2"></i>Total API Images:</span>
                             <span class="fw-bold text-info fs-6" id="syncTotalText">0</span>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <span class="text-white-50"><i class="fas fa-tasks text-warning me-2"></i>الصور التي تم معالجتها:</span>
+                            <span class="text-white-50"><i class="fas fa-tasks text-warning me-2"></i>Processed images:</span>
                             <span class="fw-bold text-warning fs-6" id="syncProcessedText">0 / 0</span>
                         </div>
                     </div>
 
                     <div class="text-muted small mt-3 d-flex align-items-center justify-content-center gap-2" id="syncStatusWrapper">
                         <div class="spinner-border spinner-border-sm text-primary" role="status" id="syncSpinner"></div>
-                        <span id="syncStatusMsg">جاري البدء والاتصال بالخادم...</span>
+                        <span id="syncStatusMsg">Starting and connecting to server...</span>
                     </div>
                 </div>
             </div>
@@ -910,7 +910,7 @@
                 $('#syncDownloadedText').text('0');
                 $('#syncTotalText').text('0');
                 $('#syncProcessedText').text('0 / 0');
-                $('#syncStatusMsg').text('جاري الاتصال بالسيرفر وجلب القائمة...');
+                $('#syncStatusMsg').text('Connecting to server and fetching media list...');
                 $('#syncSpinner').show();
 
                 // Poll progress endpoint every 700ms
@@ -947,7 +947,7 @@
                         $('#syncProgressBar').css('width', '100%').text('100%');
                         $('#syncPercentText').text('100%');
                         $('#syncSpinner').hide();
-                        $('#syncStatusMsg').text('تم اكتمال التنزيل بنجاح!');
+                        $('#syncStatusMsg').text('Download completed successfully!');
 
                         setTimeout(function() {
                             progressModal.hide();
@@ -957,16 +957,16 @@
                             if (window.Swal) {
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'تم التنزيل بنجاح!',
-                                    text: response.message || 'تم مزامنة وتنزيل جميع الصور بنجاح.',
-                                    confirmButtonText: 'حسناً',
+                                    title: 'Downloaded successfully!',
+                                    text: response.message || 'All images synchronized and downloaded successfully.',
+                                    confirmButtonText: 'OK',
                                     background: '#1e1e2d',
                                     color: '#fff'
                                 }).then(() => {
                                     window.location.reload();
                                 });
                             } else {
-                                alert(response.message || 'تم التنزيل بنجاح!');
+                                alert(response.message || 'Downloaded successfully!');
                                 window.location.reload();
                             }
                         }, 700);
@@ -977,18 +977,18 @@
                         btn.prop('disabled', false);
                         $('#syncIcon').removeClass('fa-spinner fa-spin').addClass('fa-cloud-download-alt');
 
-                        const msg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'حدث خطأ أثناء تنزيل الصور.';
+                        const msg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'An error occurred while downloading images.';
                         if (window.Swal) {
                             Swal.fire({
                                 icon: 'error',
-                                title: 'خطأ',
+                                title: 'Error',
                                 text: msg,
-                                confirmButtonText: 'حسناً',
+                                confirmButtonText: 'OK',
                                 background: '#1e1e2d',
                                 color: '#fff'
                             });
                         } else {
-                            alert('خطأ: ' + msg);
+                            alert('Error: ' + msg);
                         }
                     }
                 });
@@ -1043,8 +1043,8 @@
                 if (window.Swal) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'تم النسخ!',
-                        text: 'تم نسخ الرابط إلى الحافظة بنجاح.',
+                        title: 'Copied!',
+                        text: 'Link copied to clipboard successfully.',
                         toast: true,
                         position: 'top-end',
                         showConfirmButton: false,
@@ -1053,7 +1053,7 @@
                         color: '#fff'
                     });
                 } else {
-                    alert('تم النسخ إلى الحافظة.');
+                    alert('Copied to clipboard.');
                 }
             }).catch(function(err) {
                 console.error('Failed to copy URL: ', err);

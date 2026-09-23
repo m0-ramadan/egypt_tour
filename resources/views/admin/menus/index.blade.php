@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('القوائم'))
+@section('title', admin_t('Menus'))
 
 @section('css')
 
@@ -148,8 +148,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">القوائم</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Menus</li>
             </ol>
         </nav>
 
@@ -160,7 +160,7 @@
                         <i class="fas fa-bars"></i>
                     </div>
                     <div class="stats-number">{{ number_format($totalMenus) }}</div>
-                    <div class="stats-label">إجمالي القوائم</div>
+                    <div class="stats-label">Total Menus</div>
                 </div>
             </div>
 
@@ -171,7 +171,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stats-number">{{ number_format($activeMenus) }}</div>
-                    <div class="stats-label">قوائم مفعلة</div>
+                    <div class="stats-label">Menus Enabled</div>
                 </div>
             </div>
 
@@ -182,7 +182,7 @@
                         <i class="fas fa-window-maximize"></i>
                     </div>
                     <div class="stats-number">{{ number_format($headerMenus) }}</div>
-                    <div class="stats-label">قوائم Header</div>
+                    <div class="stats-label">Menus Header</div>
                 </div>
             </div>
 
@@ -193,7 +193,7 @@
                         <i class="fas fa-grip-lines"></i>
                     </div>
                     <div class="stats-number">{{ number_format($footerMenus) }}</div>
-                    <div class="stats-label">قوائم Footer</div>
+                    <div class="stats-label">Menus Footer</div>
                 </div>
             </div>
         </div>
@@ -202,15 +202,15 @@
             <form method="GET" action="{{ route('admin.menus.index') }}">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-5">
-                        <label class="form-label">بحث</label>
+                        <label class="form-label">Search</label>
                         <input type="text" name="search" class="form-control" value="{{ request('search') }}"
-                            placeholder="ابحث باسم القائمة أو الموقع">
+                            placeholder="Search Named Menu Or Location">
                     </div>
 
                     <div class="col-md-3">
-                        <label class="form-label">الموقع</label>
+                        <label class="form-label">Location</label>
                         <select name="location" class="form-select">
-                            <option value="">الكل</option>
+                            <option value="">All</option>
                             <option value="header" {{ request('location') == 'header' ? 'selected' : '' }}>header</option>
                             <option value="footer" {{ request('location') == 'footer' ? 'selected' : '' }}>footer</option>
                             <option value="sidebar" {{ request('location') == 'sidebar' ? 'selected' : '' }}>sidebar
@@ -219,18 +219,18 @@
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">الحالة</label>
+                        <label class="form-label">Status</label>
                         <select name="status" class="form-select">
-                            <option value="">الكل</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>مفعل</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>غير مفعل
+                            <option value="">All</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Enabled</option>
+                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Disabled
                             </option>
                         </select>
                     </div>
 
                     <div class="col-md-2 d-flex gap-2">
-                        <button class="btn btn-primary w-100" type="submit">فلترة</button>
-                        <a href="{{ route('admin.menus.index') }}" class="btn btn-secondary w-100">إعادة</a>
+                        <button class="btn btn-primary w-100" type="submit">Filter</button>
+                        <a href="{{ route('admin.menus.index') }}" class="btn btn-secondary w-100">Reset</a>
                     </div>
                 </div>
             </form>
@@ -239,11 +239,11 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">قائمة القوائم</h5>
-                    <small class="opacity-75">إدارة القوائم الرئيسية والفرعية للموقع</small>
+                    <h5 class="mb-0">Menus List</h5>
+                    <small class="opacity-75">Manage main and sub menus of the website</small>
                 </div>
                 <a href="{{ route('admin.menus.create') }}" class="btn btn-light">
-                    <i class="fas fa-plus me-2"></i>إضافة قائمة
+                    <i class="fas fa-plus me-2"></i>Add List
                 </a>
             </div>
 
@@ -261,14 +261,14 @@
                     <div class="item-card">
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
                             <div>
-                                <h6 class="mb-1">{{ adminTrans($menu->name) ?: 'بدون اسم' }}</h6>
+                                <h6 class="mb-1">{{ adminTrans($menu->name) ?: 'No Name' }}</h6>
                                 <small class="text-light opacity-75">{{ $menu->slug ?? '-' }}</small>
                             </div>
 
                             <div class="d-flex gap-2 flex-wrap">
                                 <span
                                     class="badge-status {{ $menu->is_active ?? true ? 'status-active' : 'status-inactive' }}">
-                                    {{ $menu->is_active ?? true ? 'مفعل' : 'غير مفعل' }}
+                                    {{ $menu->is_active ?? true ? 'Enabled' : 'Disabled' }}
                                 </span>
                                 <span class="badge-status {{ $locationClass }}">
                                     {{ $menu->location ?? '-' }}
@@ -277,32 +277,32 @@
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-md-3"><strong>عدد العناصر:</strong>
+                            <div class="col-md-3"><strong>Number of Items:</strong>
                                 {{ $menu->items_count ?? ($menu->items->count() ?? 0) }}</div>
-                            <div class="col-md-3"><strong>الترتيب:</strong> {{ $menu->sort_order ?? 0 }}</div>
-                            <div class="col-md-3"><strong>اللغة:</strong> {{ $menu->language->name ?? '-' }}</div>
-                            <div class="col-md-3"><strong>آخر تحديث:</strong>
+                            <div class="col-md-3"><strong>Order:</strong> {{ $menu->sort_order ?? 0 }}</div>
+                            <div class="col-md-3"><strong>Language:</strong> {{ $menu->language->name ?? '-' }}</div>
+                            <div class="col-md-3"><strong>Last Updated:</strong>
                                 {{ optional($menu->updated_at)->translatedFormat('d M Y') ?? '-' }}</div>
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('admin.menus.show', $menu) }}" class="btn btn-info btn-sm">عرض</a>
-                            <a href="{{ route('admin.menus.edit', $menu) }}" class="btn btn-warning btn-sm">تعديل</a>
+                            <a href="{{ route('admin.menus.show', $menu) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('admin.menus.edit', $menu) }}" class="btn btn-warning btn-sm">Edit</a>
 
                             @if (Route::has('admin.menus.items'))
                                 <a href="{{ route('admin.menus.items', $menu) }}"
-                                    class="btn btn-secondary btn-sm">العناصر</a>
+                                    class="btn btn-secondary btn-sm">Items</a>
                             @endif
 
                             <form action="{{ route('admin.menus.destroy', $menu) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">حذف</button>
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-5">لا توجد قوائم حالياً</div>
+                    <div class="text-center py-5">No menus available</div>
                 @endforelse
 
                 @if (method_exists($menus, 'links'))

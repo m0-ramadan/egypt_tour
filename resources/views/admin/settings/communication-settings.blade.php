@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إعدادات التواصل المتقدمة المتقدمة'))
+@section('title', admin_t('Advanced Communication Settings'))
 
 @section('css')
 
@@ -188,16 +188,16 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.settings.index') }}">الإعدادات</a></li>
-                <li class="breadcrumb-item active">إعدادات التواصل</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.settings.index') }}">Settings</a></li>
+                <li class="breadcrumb-item active">Communication Settings</li>
             </ol>
         </nav>
 
         <div class="panel-card">
             <div class="panel-header">
-                <h5 class="mb-0">إعدادات التواصل</h5>
-                <small class="opacity-75">واتساب، الهاتف، البريد، الروابط الخارجية</small>
+                <h5 class="mb-0">Communication Settings</h5>
+                <small class="opacity-75">WhatsApp, phone, email, and external links</small>
             </div>
             <div class="panel-body">
                 <form action="{{ route('admin.settings.communication.update') }}" method="POST">
@@ -205,12 +205,12 @@
                     @method('PUT')
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">رقم الهاتف الرئيسي</label>
+                            <label class="form-label">Primary Phone Number</label>
                             <input type="text" name="primary_phone" class="form-control"
                                 value="{{ $settings['primary_phone'] ?? '' }}">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">واتساب</label>
+                            <label class="form-label">WhatsApp</label>
                             <input type="text" name="whatsapp" class="form-control"
                                 value="{{ $settings['whatsapp'] ?? '' }}">
                         </div>
@@ -220,12 +220,12 @@
                                 value="{{ $settings['messenger_contact'] ?? '' }}">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">البريد العام</label>
+                            <label class="form-label">General Email</label>
                             <input type="email" name="contact_email" class="form-control"
                                 value="{{ $settings['contact_email'] ?? '' }}">
                         </div>
                     </div>
-                    <button class="btn btn-primary" type="submit">حفظ</button>
+                    <button class="btn btn-primary" type="submit">Save</button>
                 </form>
             </div>
         </div>

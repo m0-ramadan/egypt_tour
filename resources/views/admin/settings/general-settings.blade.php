@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إعدادات عامة متقدمة'))
+@section('title', admin_t('Advanced General Settings'))
 
 @section('css')
 
@@ -188,51 +188,51 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.settings.index') }}">الإعدادات</a></li>
-                <li class="breadcrumb-item active">إعدادات عامة متقدمة</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.settings.index') }}">Settings</a></li>
+                <li class="breadcrumb-item active">Advanced General Settings</li>
             </ol>
         </nav>
 
         <div class="panel-card">
             <div class="panel-header">
-                <h5 class="mb-0">الإعدادات العامة</h5>
-                <small class="opacity-75">اسم الموقع، الشعار، المنطقة الزمنية، اللغة الافتراضية</small>
+                <h5 class="mb-0">General Settings</h5>
+                <small class="opacity-75">Site name, logo, time zone, and default language</small>
             </div>
             <div class="panel-body">
                 <form action="{{ route('admin.settings.general.update') }}" method="POST">
                     @csrf
                     @method('PUT')
 
-                    <div class="section-title">البيانات الأساسية</div>
+                    <div class="section-title">Basic Information</div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">اسم الموقع</label>
+                            <label class="form-label">Site Name</label>
                             <input type="text" name="site_name" class="form-control"
                                 value="{{ $settings['site_name'] ?? '' }}">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">البريد العام</label>
+                            <label class="form-label">General Email</label>
                             <input type="email" name="site_email" class="form-control"
                                 value="{{ $settings['site_email'] ?? '' }}">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">الهاتف</label>
+                            <label class="form-label">Phone Number</label>
                             <input type="text" name="site_phone" class="form-control"
                                 value="{{ $settings['site_phone'] ?? '' }}">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">المنطقة الزمنية</label>
+                            <label class="form-label">Time Zone</label>
                             <input type="text" name="timezone" class="form-control"
                                 value="{{ $settings['timezone'] ?? 'Africa/Cairo' }}">
                         </div>
                         <div class="col-12 mb-3">
-                            <label class="form-label">العنوان</label>
+                            <label class="form-label">Title</label>
                             <textarea name="site_address" class="form-control" rows="3">{{ $settings['site_address'] ?? '' }}</textarea>
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" type="submit">حفظ</button>
+                    <button class="btn btn-primary" type="submit">Save</button>
                 </form>
             </div>
         </div>

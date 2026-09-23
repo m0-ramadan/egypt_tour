@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('إدارة الصلاحيات'))
+@section('title', admin_t('Manage Permissions'))
 
 @section('css')
 
@@ -327,8 +327,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item active">الصلاحيات</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Permissions</li>
             </ol>
         </nav>
 
@@ -337,7 +337,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-total"><i class="fas fa-key"></i></div>
                     <div class="stats-number">{{ number_format($total) }}</div>
-                    <div class="stats-label">إجمالي الصلاحيات</div>
+                    <div class="stats-label">Total Permissions</div>
                 </div>
             </div>
 
@@ -345,7 +345,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-modules"><i class="fas fa-cubes"></i></div>
                     <div class="stats-number">{{ number_format($modules) }}</div>
-                    <div class="stats-label">عدد الموديولات</div>
+                    <div class="stats-label">Number of Modules</div>
                 </div>
             </div>
 
@@ -353,7 +353,7 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-system"><i class="fas fa-shield-halved"></i></div>
                     <div class="stats-number">{{ number_format($system) }}</div>
-                    <div class="stats-label">صلاحيات النظام</div>
+                    <div class="stats-label">Permissions System</div>
                 </div>
             </div>
 
@@ -361,52 +361,52 @@
                 <div class="stats-card">
                     <div class="stats-icon icon-custom"><i class="fas fa-sliders"></i></div>
                     <div class="stats-number">{{ number_format($custom) }}</div>
-                    <div class="stats-label">صلاحيات مخصصة</div>
+                    <div class="stats-label">Permissions Custom</div>
                 </div>
             </div>
         </div>
 
         <div class="filter-card">
-            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>فلترة متقدمة</h6>
+            <h6 class="mb-3"><i class="fas fa-filter me-2"></i>Advanced Filters</h6>
 
             <div class="filter-row">
                 <div class="search-box">
                     <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="form-control" placeholder="بحث باسم الصلاحية أو الموديول..."
+                    <input type="text" class="form-control" placeholder="Search Named Permission Or Module..."
                         id="searchInput" value="{{ request('search') }}">
                 </div>
 
                 <div class="sort-dropdown">
                     <button class="sort-btn">
                         <i class="fas fa-sort-amount-down"></i>
-                        الترتيب حسب
+                        Sort By
                     </button>
                     <div class="sort-dropdown-content">
                         <div class="sort-item {{ request('sort_by') == 'name' && request('sort_direction') == 'asc' ? 'active' : '' }}"
-                            onclick="sortBy('name', 'asc')">الاسم أ - ي</div>
+                            onclick="sortBy('name', 'asc')">Name A - Z</div>
                         <div class="sort-item {{ request('sort_by') == 'name' && request('sort_direction') == 'desc' ? 'active' : '' }}"
-                            onclick="sortBy('name', 'desc')">الاسم ي - أ</div>
+                            onclick="sortBy('name', 'desc')">Name Z - A</div>
                         <div class="sort-item {{ request('sort_by') == 'created_at' && request('sort_direction') == 'desc' ? 'active' : '' }}"
-                            onclick="sortBy('created_at', 'desc')">الأحدث أولاً</div>
+                            onclick="sortBy('created_at', 'desc')">Newest First</div>
                     </div>
                 </div>
 
-                <input type="text" class="form-control" id="moduleFilter" placeholder="اسم الموديول"
+                <input type="text" class="form-control" id="moduleFilter" placeholder="Module Name"
                     value="{{ request('module') }}">
             </div>
 
             <div class="filter-row">
                 <button class="btn btn-primary" onclick="applyFilters()">
-                    <i class="fas fa-filter me-2"></i>تطبيق الفلاتر
+                    <i class="fas fa-filter me-2"></i>Apply Filters
                 </button>
                 <button class="btn btn-outline-secondary" onclick="resetFilters()">
-                    <i class="fas fa-redo me-2"></i>إعادة تعيين
+                    <i class="fas fa-redo me-2"></i>Reset
                 </button>
                 <form action="{{ route('admin.permissions.generate') }}" method="POST" class="d-flex gap-2">
                     @csrf
-                    <input type="text" name="module" class="form-control" placeholder="اسم الموديول لإنشاء صلاحياته">
+                    <input type="text" name="module" class="form-control" placeholder="Module For Create His Permissions Name">
                     <button type="submit" class="btn btn-secondary">
-                        <i class="fas fa-magic me-2"></i>توليد صلاحيات
+                        <i class="fas fa-magic me-2"></i>Generate Permissions
                     </button>
                 </form>
             </div>
@@ -418,12 +418,12 @@
                     <div class="order-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="mb-0">قائمة الصلاحيات</h5>
-                                <small class="opacity-75">إدارة جميع صلاحيات النظام</small>
+                                <h5 class="mb-0">Permissions List</h5>
+                                <small class="opacity-75">Manage All Permissions System</small>
                             </div>
                             <div class="d-flex gap-3">
                                 <a href="{{ route('admin.permissions.create') }}" class="btn btn-light">
-                                    <i class="fas fa-plus me-2"></i>إضافة صلاحية
+                                    <i class="fas fa-plus me-2"></i>Add Permission
                                 </a>
                             </div>
                         </div>
@@ -433,10 +433,10 @@
                         @if ($permissions->isEmpty())
                             <div class="empty-state">
                                 <div class="empty-state-icon"><i class="fas fa-key"></i></div>
-                                <h5 class="empty-state-text">لا توجد صلاحيات</h5>
-                                <p class="text-muted">لم يتم إنشاء أي صلاحية حتى الآن</p>
+                                <h5 class="empty-state-text">No There are Permissions</h5>
+                                <p class="text-muted">No Permission have been created yet</p>
                                 <a href="{{ route('admin.permissions.create') }}" class="btn btn-primary">
-                                    <i class="fas fa-plus me-2"></i>إضافة صلاحية جديدة
+                                    <i class="fas fa-plus me-2"></i>Add New Permission
                                 </a>
                             </div>
                         @else
@@ -462,22 +462,22 @@
 
                                     <div class="order-details">
                                         <div class="detail-item">
-                                            <span class="detail-label">الموديول:</span>
+                                            <span class="detail-label">Module:</span>
                                             <span class="detail-value">{{ $module }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">النوع:</span>
+                                            <span class="detail-label">Type:</span>
                                             <span class="detail-value">{{ $action }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">المعرف:</span>
+                                            <span class="detail-label">ID:</span>
                                             <span class="detail-value">#{{ $permission->id }}</span>
                                         </div>
 
                                         <div class="detail-item">
-                                            <span class="detail-label">الحارس:</span>
+                                            <span class="detail-label">Guard:</span>
                                             <span class="detail-value">{{ $permission->guard_name ?? 'admin' }}</span>
                                         </div>
                                     </div>
@@ -485,11 +485,11 @@
                                     <div class="order-actions">
                                         <a href="{{ route('admin.permissions.edit', $permission) }}"
                                             class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit me-1"></i>تعديل
+                                            <i class="fas fa-edit me-1"></i>Edit
                                         </a>
                                         <button type="button" class="btn btn-sm btn-danger delete-btn"
                                             data-id="{{ $permission->id }}" data-name="{{ $permission->name }}">
-                                            <i class="fas fa-trash me-1"></i>حذف
+                                            <i class="fas fa-trash me-1"></i>Delete
                                         </button>
                                     </div>
                                 </div>
@@ -523,14 +523,14 @@
                 const permissionName = $(this).data('name');
 
                 Swal.fire({
-                    title: 'هل أنت متأكد؟',
-                    text: `سيتم حذف الصلاحية "${permissionName}" نهائياً`,
+                    title: 'Are you sure?',
+                    text: `Will be Delete Permission "${permissionName}" Will be Delete Article`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'نعم، احذف',
-                    cancelButtonText: 'إلغاء',
+                    confirmButtonText: 'Yes, Delete',
+                    cancelButtonText: 'Cancel',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -545,8 +545,8 @@
                             success: function() {
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'تم الحذف',
-                                    text: 'تم حذف الصلاحية بنجاح',
+                                    title: 'Was Deletion',
+                                    text: 'Was Delete Permission Successfully',
                                     timer: 1500,
                                     showConfirmButton: false
                                 }).then(() => location.reload());
@@ -554,8 +554,8 @@
                             error: function() {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'خطأ',
-                                    text: 'حدث خطأ أثناء الحذف',
+                                    title: 'Error',
+                                    text: 'Event Error While Deletion',
                                     timer: 1500,
                                     showConfirmButton: false
                                 });

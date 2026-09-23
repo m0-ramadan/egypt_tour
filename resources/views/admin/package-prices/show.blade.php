@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('عرض سعر الباقة'))
+@section('title', admin_t('View Package Price'))
 
 @section('css')
     <style>
@@ -60,9 +60,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.package-prices.index') }}">أسعار الباقات</a></li>
-                <li class="breadcrumb-item active">عرض السعر</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.package-prices.index') }}">Package Prices</a></li>
+                <li class="breadcrumb-item active">View Price</li>
             </ol>
         </nav>
 
@@ -73,8 +73,8 @@
                     <small class="opacity-75">{{ $packagePrice->label ?? '-' }}</small>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{{ route('admin.package-prices.edit', $packagePrice) }}" class="btn btn-light">تعديل</a>
-                    <a href="{{ route('admin.package-prices.index') }}" class="btn btn-outline-light">رجوع</a>
+                    <a href="{{ route('admin.package-prices.edit', $packagePrice) }}" class="btn btn-light">Edit</a>
+                    <a href="{{ route('admin.package-prices.index') }}" class="btn btn-outline-light">Back</a>
                 </div>
             </div>
 
@@ -82,21 +82,21 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">الباقة</div>
+                            <div class="info-label">Package</div>
                             <div class="info-value">{{ $packagePrice->package->name ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">العملة</div>
+                            <div class="info-label">Currency</div>
                             <div class="info-value">{{ $packagePrice->currency->code ?? '-' }}</div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="info-box">
-                            <div class="info-label">المبلغ</div>
+                            <div class="info-label">Amount</div>
                             <div class="info-value">{{ number_format($packagePrice->amount ?? 0, 2) }}</div>
                         </div>
                     </div>

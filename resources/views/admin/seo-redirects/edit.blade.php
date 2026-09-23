@@ -1,7 +1,7 @@
 @include('admin.i18n.locale')
 @extends('admin.layout.master')
 
-@section('title', admin_t('تعديل Redirect'))
+@section('title', admin_t('Edit Redirect'))
 
 @section('css')
     <style>
@@ -66,19 +66,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">الرئيسية</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('admin.seo-redirects.index') }}">SEO Redirects</a></li>
-                <li class="breadcrumb-item active">تعديل Redirect</li>
+                <li class="breadcrumb-item active">Edit Redirect</li>
             </ol>
         </nav>
 
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">تعديل Redirect</h5>
+                    <h5 class="mb-0">Edit Redirect</h5>
                     <small class="opacity-75">{{ $seoRedirect->old_path }}</small>
                 </div>
-                <a href="{{ route('admin.seo-redirects.index') }}" class="btn btn-light">رجوع</a>
+                <a href="{{ route('admin.seo-redirects.index') }}" class="btn btn-light">Back</a>
             </div>
 
             <div class="form-body">
@@ -86,7 +86,7 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="section-title">بيانات التحويل</div>
+                    <div class="section-title">Redirect Details</div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -115,14 +115,14 @@
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" value="1" name="is_active"
                                     id="is_active" {{ old('is_active', $seoRedirect->is_active ?? true) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">فعالة</label>
+                                <label class="form-check-label" for="is_active">Active</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <a href="{{ route('admin.seo-redirects.index') }}" class="btn btn-secondary">إلغاء</a>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="{{ route('admin.seo-redirects.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>
