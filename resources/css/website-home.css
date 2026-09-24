@@ -2274,6 +2274,7 @@ html[data-theme="dark"] .deal-card,
 html[data-theme="dark"] .destination-card,
 html[data-theme="dark"] .article-card,
 html[data-theme="dark"] .testimonial-card,
+html[data-theme="dark"] .showcase-tour-card,
 html[data-theme="dark"] .newsletter-box,
 html[data-theme="dark"] .empty-state,
 html[data-theme="dark"] .modal-content {
@@ -2281,9 +2282,37 @@ html[data-theme="dark"] .modal-content {
         180deg,
         rgba(28, 28, 28, 0.95) 0%,
         rgba(43, 43, 43, 0.92) 100%
-    );
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    ) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45) !important;
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .showcase-tour-card__heading h2 {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .showcase-tour-card__rating small {
+    color: #aaa39b !important;
+}
+
+html[data-theme="dark"] .showcase-tour-card__body > p {
+    color: #d6d0c8 !important;
+}
+
+html[data-theme="dark"] .showcase-tour-card__meta > span {
+    color: #f8fafc !important;
+    border-inline-end-color: rgba(243, 107, 10, 0.45) !important;
+}
+
+html[data-theme="dark"] .showcase-tour-card__meta > span i {
+    color: #ff7300 !important;
+}
+
+html[data-theme="dark"] .showcase-tour-card__category {
+    background: rgba(17, 17, 17, 0.95) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
 }
 
 html[data-theme="dark"] .feature-card::before,

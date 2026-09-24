@@ -107,14 +107,14 @@
                     <a class="nav-link{{ $isNileCruisesPage ? ' is-active' : '' }}"
                         href="{{ route('website.nile_cruises.index') }}">
                         <i class="la la-ship"></i>
-                        {{ __('Egypt Nile Cruise') }}
+                        {{ __('Nile Cruise') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link{{ $isTravelPackagesPage ? ' is-active' : '' }}"
                         href="{{ $travelPackagesUrl }}">
                         <i class="la la-suitcase"></i>
-                        {{ __('Tours Packages') }}
+                        {{ __('Tour Packages') }}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -165,6 +165,10 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end language-menu" id="desktopLanguageMenu">
                         @foreach ($activeLanguages as $lang)
+                            @if ($lang->normalized_code === 'ar')
+                                {{-- Arabic language option commented out --}}
+                                @continue
+                            @endif
                             <li>
                                 <a class="dropdown-item {{ $currentLocale === $lang->normalized_code ? 'active' : '' }}"
                                     href="{{ route('website.lang.switch', $lang->normalized_code) }}">
@@ -238,14 +242,14 @@
         <div class="mobile-nav-item">
             <a href="{{ route('website.nile_cruises.index') }}"
                 class="mobile-nav-link{{ $isNileCruisesPage ? ' is-active' : '' }}">
-                <i class="la la-ship"></i> {{ __('Egypt Nile Cruise') }}
+                <i class="la la-ship"></i> {{ __('Nile Cruise') }}
             </a>
         </div>
 
         <div class="mobile-nav-item">
             <a href="{{ $travelPackagesUrl }}"
                 class="mobile-nav-link{{ $isTravelPackagesPage ? ' is-active' : '' }}">
-                <i class="la la-suitcase"></i> {{ __('Tours Packages') }}
+                <i class="la la-suitcase"></i> {{ __('Tour Packages') }}
             </a>
         </div>
 
@@ -288,6 +292,10 @@
             </button>
             <div class="mobile-language-submenu" id="mobileLanguageSubmenu">
                 @foreach ($activeLanguages as $lang)
+                    @if ($lang->normalized_code === 'ar')
+                        {{-- Arabic language option commented out --}}
+                        @continue
+                    @endif
                     <div class="mobile-language-item">
                         <a href="{{ route('website.lang.switch', $lang->normalized_code) }}"
                             class="mobile-language-link {{ $currentLocale === $lang->normalized_code ? 'active' : '' }}">

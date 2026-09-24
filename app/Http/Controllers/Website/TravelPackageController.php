@@ -61,7 +61,7 @@ class TravelPackageController extends BaseWebsiteController
         ];
 
         // Duration cards matching reference page
-        $packageCards = array_merge($featuredCategories, [
+        $packageCards = [
             [
                 'days' => 2,
                 'title' => __('2-Day Egypt Tours'),
@@ -174,7 +174,7 @@ class TravelPackageController extends BaseWebsiteController
                 'desc' => __('The ultimate grand tour of Egypt! Experience every iconic landmark from Alexandria in the north to Abu Simbel in the south, plus luxury Nile cruise and Red Sea.'),
                 'url' => route('website.tour_packages.duration', ['days' => 15]),
             ],
-        ]);
+        ];
 
         $features = [
             [
@@ -243,6 +243,7 @@ class TravelPackageController extends BaseWebsiteController
             'pageContent',
             'totalPackages',
             'packageCards',
+            'featuredCategories',
             'features',
             'faqs'
         ));

@@ -89,7 +89,7 @@ class PageController extends BaseWebsiteController
 
         $pageContent = [
             'badge' => __('Luxury Nile Journeys'),
-            'title' => __('Egypt Nile Cruise'),
+            'title' => __('Nile Cruise'),
             'subtitle' => __('Sail through the heart of Egypt with elegant Nile cruise experiences between Luxor and Aswan.'),
             'overview_title' => __('Curated Nile cruise itineraries across timeless Egyptian landmarks'),
             'overview_text' => $featuredCategory
@@ -104,7 +104,7 @@ class PageController extends BaseWebsiteController
             'cta_label' => __('View Cruise'),
             'empty_title' => __('No Nile cruises found'),
             'empty_text' => __('Please change the filters or add Nile cruise packages from the admin panel.'),
-            'breadcrumb_title' => __('Egypt Nile Cruise'),
+            'breadcrumb_title' => __('Nile Cruise'),
         ];
 
         $stats = [
@@ -181,6 +181,18 @@ class PageController extends BaseWebsiteController
         $pageBody = $page->display_body;
         $pageExcerpt = $page->display_seo_description ?: $this->plainText($pageBody, 200);
         $heroImage = $this->imageUrl($page->featured_image, 'website/photos/home2.webp');
+
+        $viewName = 'website.pages.static-pages.' . $page->slug;
+        if (view()->exists($viewName)) {
+            return view($viewName, compact(
+                'page',
+                'pageTitle',
+                'seoTitle',
+                'pageBody',
+                'pageExcerpt',
+                'heroImage'
+            ));
+        }
 
         return view('website.pages.static-pages.index', compact(
             'page',

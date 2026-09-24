@@ -1,8 +1,9 @@
 @extends('website.layouts.master')
 
-@section('title', ($pageContent['title'] ?? __('Egypt Nile Cruise')) . ' - Egypt Tour Pro')
+@section('title', ($pageContent['title'] ?? __('Nile Cruise')) . ' - Egypt Tour Pro')
 @section('description', $pageContent['description'] ?? $pageContent['overview_text'])
-@section('keywords', 'Egypt Nile Cruise, Nile cruises in Egypt, Luxor to Aswan cruise, luxury Nile cruise, Egypt Tour Pro Nile cruise')
+@section('keywords', 'Egypt Nile Cruise, Nile cruises in Egypt, Luxor to Aswan cruise, luxury Nile cruise, Egypt Tour
+    Pro Nile cruise')
 @section('image', $heroImage)
 
 @section('css')
@@ -468,6 +469,7 @@
         }
 
         @media (max-width: 1199px) {
+
             .tours-grid,
             .filters-container {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -519,7 +521,7 @@
             <div class="breadcrumb-list">
                 <ul>
                     <li><a href="{{ route('website.home') }}">{{ __('Home') }}</a></li>
-                    <li>{{ $pageContent['breadcrumb_title'] ?? __('Egypt Nile Cruise') }}</li>
+                    <li>{{ $pageContent['breadcrumb_title'] ?? __('Nile Cruise') }}</li>
                 </ul>
             </div>
         </div>
@@ -576,9 +578,12 @@
                         {{ __('Filter by Price') }}
                     </label>
                     <select onchange="window.location.href=this.value" class="filter-select">
-                        <option value="{{ $routeWith(['pricerange' => null]) }}" @selected(!request()->filled('pricerange'))>{{ __('All Prices') }}</option>
-                        <option value="{{ $routeWith(['pricerange' => 1]) }}" @selected(request('pricerange') == '1')>{{ __('Less than $1,500') }}</option>
-                        <option value="{{ $routeWith(['pricerange' => 2]) }}" @selected(request('pricerange') == '2')>$1,500 - $2,500</option>
+                        <option value="{{ $routeWith(['pricerange' => null]) }}" @selected(!request()->filled('pricerange'))>
+                            {{ __('All Prices') }}</option>
+                        <option value="{{ $routeWith(['pricerange' => 1]) }}" @selected(request('pricerange') == '1')>
+                            {{ __('Less than $1,500') }}</option>
+                        <option value="{{ $routeWith(['pricerange' => 2]) }}" @selected(request('pricerange') == '2')>$1,500 - $2,500
+                        </option>
                         <option value="{{ $routeWith(['pricerange' => 3]) }}" @selected(request('pricerange') == '3')>$2,500+</option>
                     </select>
                 </div>
@@ -589,10 +594,14 @@
                         {{ __('Filter by Duration') }}
                     </label>
                     <select onchange="window.location.href=this.value" class="filter-select">
-                        <option value="{{ $routeWith(['days' => null]) }}" @selected(!request()->filled('days'))>{{ __('All Durations') }}</option>
-                        <option value="{{ $routeWith(['days' => 1]) }}" @selected(request('days') == '1')>{{ __('Less than 10 Days') }}</option>
-                        <option value="{{ $routeWith(['days' => 2]) }}" @selected(request('days') == '2')>{{ __('10 to 20 Days') }}</option>
-                        <option value="{{ $routeWith(['days' => 3]) }}" @selected(request('days') == '3')>{{ __('20+ Days') }}</option>
+                        <option value="{{ $routeWith(['days' => null]) }}" @selected(!request()->filled('days'))>
+                            {{ __('All Durations') }}</option>
+                        <option value="{{ $routeWith(['days' => 1]) }}" @selected(request('days') == '1')>
+                            {{ __('Less than 10 Days') }}</option>
+                        <option value="{{ $routeWith(['days' => 2]) }}" @selected(request('days') == '2')>
+                            {{ __('10 to 20 Days') }}</option>
+                        <option value="{{ $routeWith(['days' => 3]) }}" @selected(request('days') == '3')>{{ __('20+ Days') }}
+                        </option>
                     </select>
                 </div>
 
@@ -602,9 +611,12 @@
                         {{ __('Sort by') }}
                     </label>
                     <select onchange="window.location.href=this.value" class="filter-select">
-                        <option value="{{ $routeWith(['sort' => null]) }}" @selected(!request()->filled('sort'))>{{ __('Default Order') }}</option>
-                        <option value="{{ $routeWith(['sort' => 'price']) }}" @selected(request('sort') === 'price')>{{ __('Sort by Price') }}</option>
-                        <option value="{{ $routeWith(['sort' => 'duration']) }}" @selected(request('sort') === 'duration')>{{ __('Sort by Duration') }}</option>
+                        <option value="{{ $routeWith(['sort' => null]) }}" @selected(!request()->filled('sort'))>
+                            {{ __('Default Order') }}</option>
+                        <option value="{{ $routeWith(['sort' => 'price']) }}" @selected(request('sort') === 'price')>
+                            {{ __('Sort by Price') }}</option>
+                        <option value="{{ $routeWith(['sort' => 'duration']) }}" @selected(request('sort') === 'duration')>
+                            {{ __('Sort by Duration') }}</option>
                     </select>
                 </div>
 
@@ -677,7 +689,8 @@
                 @empty
                     <div class="empty-tours-box">
                         <h3>{{ $pageContent['empty_title'] ?? __('No Nile cruises found') }}</h3>
-                        <p>{{ $pageContent['empty_text'] ?? __('Please change the filters or add Nile cruise packages from the admin panel.') }}</p>
+                        <p>{{ $pageContent['empty_text'] ?? __('Please change the filters or add Nile cruise packages from the admin panel.') }}
+                        </p>
                     </div>
                 @endforelse
             </div>

@@ -2400,8 +2400,8 @@
 
 
         /* =========================================================
-                                                                   Nile Cruise body redesign — body only, shared header/footer untouched
-                                                                   ========================================================= */
+                                                                       Nile Cruise body redesign — body only, shared header/footer untouched
+                                                                       ========================================================= */
         .nile-cruise-page .main-container {
             background:
                 radial-gradient(circle at 8% 8%, rgba(215, 239, 250, .58), transparent 34%),
@@ -4097,7 +4097,7 @@
                     @include('website.pages.packages.partials.common_experience_details')
                     @php
                         $groupTiersForDisplay = collect(
-                            $package->package_type === 'nile_cruise'
+                            in_array($package->package_type, ['nile_cruise', 'travel_package'], true)
                                 ? []
                                 : (array) ($package->group_pricing_tiers ?? []),
                         )->filter(fn($tier) => is_array($tier) && (float) ($tier['price_per_person'] ?? 0) > 0);
@@ -4106,8 +4106,10 @@
                         $package->package_type !== 'day_tour' &&
                             $package->tourPackageAccommodations &&
                             $package->tourPackageAccommodations->isNotEmpty();
+                        $showStandardPriceTable =
+                            $package->package_type !== 'travel_package' && $prices->isNotEmpty();
                         $hasAnyStandardPricing =
-                            $prices->count() ||
+                            $showStandardPriceTable ||
                             $hasCategoryPricing ||
                             $pricingInformation ||
                             $priceFrom > 0 ||
@@ -4263,7 +4265,7 @@
                                 </div>
                             @endif
 
-                            @if ($prices->count())
+                            @if ($showStandardPriceTable)
                                 <div class="price-box pricing-options">
                                     <div class="price-table-wrap">
                                         <table class="price-table">

@@ -1840,6 +1840,26 @@
                                             @enderror
                                         </div>
 
+                                        <div>
+                                            <label class="form-label"
+                                                for="category_id">{{ admin_t('Subcategory') }}</label>
+                                            <select id="category_id" name="category_id"
+                                                class="form-select @error('category_id') is-invalid @enderror">
+                                                <option value="">-- {{ admin_t('Select Subcategory') }} --</option>
+                                                @foreach ($categories ?? [] as $cat)
+                                                    <option value="{{ $cat->id }}"
+                                                        data-category-type="{{ $cat->category_type }}"
+                                                        data-parent-id="{{ $cat->parent_id ?? '' }}"
+                                                        {{ old('category_id') == $cat->id ? 'selected' : '' }}>
+                                                        {{ $cat->display_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('category_id')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
 
                                         <div class="tour-type-conditional"
                                             data-tour-type-section="day_tour,shore_excursion,custom"
@@ -1901,7 +1921,8 @@
                                         </div>
 
                                         <div>
-                                            <label class="form-label" for="currency_id">{{ admin_t('Currency') }}</label>
+                                            <label class="form-label"
+                                                for="currency_id">{{ admin_t('Currency') }}</label>
                                             <select id="currency_id" name="currency_id"
                                                 class="form-select @error('currency_id') is-invalid @enderror">
                                                 <option value="">{{ admin_t('Select Currency') }}</option>
@@ -4958,6 +4979,54 @@
                 </form>
             </div>
         </div>
-    </div>
-    <script src="{{ asset('admin/js/unified-pricing.js') }}"></script>
-@endsection
+        <script src="{{ asset('admin/js/unified-pricing.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.9/jodit.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const descElem = document.getElementById('description');
+                if (descElem) {
+                    const joditDesc = Jodit.make(descElem, {
+                        height: 450,
+                        language: '{{ app()->getLocale() === 'ar' ? 'ar' : 'en' }}',
+                        direction: '{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}',
+                        toolbarButtonSize: 'middle',
+                        theme: 'default',
+                        iframeStyle: 'html, body { color: #111111 !important; background: #ffffff !important; }',
+                        style: {
+                            color: '#111111',
+                            background: '#ffffff'
+                        },
+                        buttons: [
+                            'source', '|',
+                            'bold', 'italic', 'underline', 'strikethrough', '|',
+                            'font', 'fontsize', 'brush', '|',
+                            'paragraph', 'align', '|',
+                            'ul', 'ol', 'outdent', 'indent', '|',
+                            'direction', '|',
+                            'image', 'video', 'link', 'table', '|',
+                            'hr', 'eraser', 'copyformat', '|',
+                            'symbol', 'fullsize', '|',
+                            'undo', 'redo', 'find'
+                        ],
+                        uploader: {
+                            insertImageAsBase64URI: true
+                        },
+                        showXPathInStatusbar: false
+                    });
+
+                    joditDesc.events.on('change', function() {
+                        descElem.value = joditDesc.value;
+                    });
+
+                    const mainForm = descElem.closest('form');
+                    if (mainForm) {
+                        mainForm.addEventListener('submit', function() {
+                            if (joditDesc) {
+                                descElem.value = joditDesc.value;
+                            }
+                        });
+                    }
+                }
+            });
+        </script>
+    @endsection
