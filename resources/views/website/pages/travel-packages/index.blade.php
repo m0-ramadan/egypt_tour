@@ -2,7 +2,8 @@
 
 @section('title', $pageContent['title'] . ' - Egypt Tour Pro')
 @section('description', $pageContent['subtitle'])
-@section('keywords', 'Egypt Vacation Packages, Egypt Tours 2026, 7 Days Egypt Tour, 10 Days Egypt Vacation, Luxury Egypt
+@section('keywords',
+    'Egypt Vacation Packages, Egypt Tours 2026, 7 Days Egypt Tour, 10 Days Egypt Vacation, Luxury Egypt
     Tours, Egypt Holidays, Nile Cruise Packages')
 @section('image', $heroImage)
 
@@ -516,6 +517,53 @@
         </div>
     </section>
 
+    <!-- Explore Egypt Tours by Travel Style Section -->
+    <section class="py-5 my-4 bg-light">
+        <div class="container">
+            <div class="text-center mx-auto mb-5" style="max-width: 880px;">
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3"
+                    style="background: rgba(243, 107, 10, 0.15); color: #F36B0A; font-weight: 700; font-size: 0.85rem;">
+                    <i class="la la-compass"></i> {{ __('Travel Styles') }}
+                </div>
+                <h2 class="h1 fw-bold text-dark mb-3" style="font-family: 'Playfair Display', serif;">
+                    {{ __('Explore Egypt Tours by Travel Style') }}
+                </h2>
+                <p class="text-muted lead fs-6" style="line-height: 1.8;">
+                    {{ __('Find the ideal travel style for your journey, from luxury vacations and private tours to family getaways.') }}
+                </p>
+            </div>
+
+            <div class="row g-4">
+                @foreach ($featuredCategories as $card)
+                    <div class="col-lg-3 col-md-6">
+                        <div class="package-duration-card">
+                            <div class="package-img-wrap">
+                                <img src="{{ asset($card['image']) }}" alt="{{ $card['title'] }}" loading="lazy"
+                                    onerror="this.onerror=null;this.src='{{ asset('website/photos/Dest/Egypt.jpg') }}';">
+                                <div class="package-badge-tag">
+                                    <i class="la la-star"></i> {{ $card['badge'] }}
+                                </div>
+                            </div>
+                            <div class="package-card-body">
+                                <h3 class="package-card-title">
+                                    <a href="{{ $card['url'] }}">{{ $card['title'] }}</a>
+                                </h3>
+                                <p class="package-card-desc">{{ $card['desc'] }}</p>
+
+                                <div class="mt-auto">
+                                    <a href="{{ $card['url'] }}" class="package-explore-btn">
+                                        <span>{{ __('Explore') }}</span>
+                                        <i class="la la-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     <!-- Why Travel With Us Section -->
     <section class="py-5 bg-light">
         <div class="container py-3">
@@ -557,7 +605,7 @@
                     <i class="la la-question-circle"></i> {{ __('Traveler Questions') }}
                 </div>
                 <h2 class="h1 fw-bold text-dark mb-2" style="font-family: 'Playfair Display', serif;">
-                    {{ __('Egypt Tours Packages FAQs') }}
+                    {{ __('Egypt Tour Packages FAQs') }}
                 </h2>
                 <p class="text-muted fs-6">
                     {{ __('Answers to common questions when planning your Egypt vacation package.') }}</p>

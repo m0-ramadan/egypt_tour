@@ -347,30 +347,51 @@
 @endsection
 
 @section('js')
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.9/jodit.min.js"></script>
 
     <script>
-        let bodyEditor;
         const csrfToken = '{{ csrf_token() }}';
 
-        ClassicEditor
-            .create(document.querySelector('#body-editor'), {
-                licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE4MDY0NTExOTksImp0aSI6ImQ4ZTJkMmViLTU3MzgtNDBlNy05NDdjLTQyMDZmODRjZjAwYSIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkUyUCIsIkUyVyJdLCJyZW1vdmVGZWF0dXJlcyI6WyJQQiIsIlJGIiwiU0NIIiwiVENQIiwiVEwiLCJUQ1IiLCJJUiIsIlNVQSIsIkI2NEEiLCJMUCIsIkhFIiwiUkVEIiwiUEZPIiwiV0MiLCJGQVIiLCJCS00iLCJGUEgiLCJNUkUiXSwidmMiOiJkYTIyOTI0NSJ9.2qP138AkjE60FSHcexHum5kGto4HUDWbtEv8YA5s_wQuhj4j-MbQPjMGDAGzXiTifLzrUPSCAR5djloNMk8YxA',
-                language: 'ar',
-                toolbar: [
-                    'heading', '|',
-                    'bold', 'italic', 'link',
-                    'bulletedList', 'numberedList', '|',
-                    'blockQuote', 'insertTable', '|',
-                    'undo', 'redo'
-                ]
-            })
-            .then(editor => {
-                bodyEditor = editor;
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        const joditInstance = Jodit.make('#body-editor', {
+            height: 550,
+            language: '{{ app()->getLocale() === 'ar' ? 'ar' : 'en' }}',
+            direction: '{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}',
+            toolbarButtonSize: 'middle',
+            theme: 'default',
+            iframeStyle: 'html, body { color: #111111 !important; background: #ffffff !important; }',
+            style: {
+                color: '#111111',
+                background: '#ffffff'
+            },
+            buttons: [
+                'source', '|',
+                'bold', 'italic', 'underline', 'strikethrough', '|',
+                'font', 'fontsize', 'brush', '|',
+                'paragraph', 'align', '|',
+                'ul', 'ol', 'outdent', 'indent', '|',
+                'direction', '|',
+                'image', 'video', 'link', 'table', '|',
+                'hr', 'eraser', 'copyformat', '|',
+                'symbol', 'fullsize', '|',
+                'undo', 'redo', 'find'
+            ],
+            uploader: {
+                insertImageAsBase64URI: true
+            },
+            showXPathInStatusbar: false
+        });
+
+        const bodyEditor = {
+            getData: () => joditInstance ? joditInstance.value : (document.getElementById('body-editor')?.value || ''),
+            setData: (val) => {
+                if (joditInstance) {
+                    joditInstance.value = val || '';
+                }
+                if (document.getElementById('body-editor')) {
+                    document.getElementById('body-editor').value = val || '';
+                }
+            }
+        };
 
         function showLoading(text = 'In progress Processing Request...') {
             document.getElementById('loading-text').textContent = text;

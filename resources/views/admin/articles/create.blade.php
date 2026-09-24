@@ -284,20 +284,52 @@
 @endsection
 
 @section('js')
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.9/jodit.min.js"></script>
 
     <script>
-        let contentEditor;
         const csrfToken = '{{ csrf_token() }}';
 
-        ClassicEditor
-            .create(document.querySelector('#content-editor'), {
-                language: 'ar'
-            })
-            .then(editor => {
-                contentEditor = editor;
-            })
-            .catch(error => console.error(error));
+        const joditInstance = Jodit.make('#content-editor', {
+            height: 500,
+            language: '{{ app()->getLocale() === 'ar' ? 'ar' : 'en' }}',
+            direction: '{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}',
+            toolbarButtonSize: 'middle',
+            theme: 'default',
+            iframeStyle: 'html, body { color: #111111 !important; background: #ffffff !important; }',
+            style: {
+                color: '#111111',
+                background: '#ffffff'
+            },
+            buttons: [
+                'source', '|',
+                'bold', 'italic', 'underline', 'strikethrough', '|',
+                'font', 'fontsize', 'brush', '|',
+                'paragraph', 'align', '|',
+                'ul', 'ol', 'outdent', 'indent', '|',
+                'direction', '|',
+                'image', 'video', 'link', 'table', '|',
+                'hr', 'eraser', 'copyformat', '|',
+                'symbol', 'fullsize', '|',
+                'undo', 'redo', 'find'
+            ],
+            uploader: {
+                insertImageAsBase64URI: true
+            },
+            showXPathInStatusbar: false
+        });
+
+        const contentEditor = {
+            getData: () => joditInstance ? joditInstance.value : (document.getElementById('content-editor')?.value ||
+                ''),
+            setData: (val) => {
+                if (joditInstance) {
+                    joditInstance.value = val || '';
+                }
+                if (document.getElementById('content-editor')) {
+                    document.getElementById('content-editor').value = val || '';
+                }
+            }
+        };
 
         function showAiLoading() {
             document.getElementById('ai-loading').style.display = 'flex';

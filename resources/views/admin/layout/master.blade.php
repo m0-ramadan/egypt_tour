@@ -49,10 +49,116 @@
         }
     </style>
     @include('admin.layout.css')
+    @yield('css')
 
+    <!-- Jodit Global CSS Overrides (Must be at the very end of head) -->
+    <style>
+        :root {
+            --jd-color-text: #111111 !important;
+            --jd-color-background: #ffffff !important;
+            --jd-color-border: #cccccc !important;
+            --jd-color-panel-background: #f8f9fa !important;
+            --jd-color-icon: #333333 !important;
+        }
 
+        body .jodit-container,
+        body .jodit,
+        body .jodit-popup,
+        body .jodit-dialog,
+        body .jodit-prompter,
+        body .jodit-tooltip,
+        body .jodit-toolbar-content,
+        body .jodit-ui-form,
+        body .jodit-workplace {
+            background-color: #ffffff !important;
+            color: #111111 !important;
+        }
+
+        body .jodit-container .jodit-wysiwyg,
+        body .jodit-container .jodit-workplace,
+        body .jodit-workplace iframe {
+            background-color: #ffffff !important;
+            color: #111111 !important;
+        }
+
+        body .jodit-wysiwyg *,
+        body .jodit-popup *,
+        body .jodit-dialog *,
+        body .jodit-toolbar-content *,
+        body .jodit-ui-form * {
+            color: #111111 !important;
+        }
+
+        /* Input fields, textareas, selects inside Jodit container, popups & dialogs */
+        body .jodit-popup input,
+        body .jodit-popup textarea,
+        body .jodit-popup select,
+        body .jodit-dialog input,
+        body .jodit-dialog textarea,
+        body .jodit-dialog select,
+        body .jodit-container input,
+        body .jodit-container textarea,
+        body .jodit-container select,
+        body .jodit-ui-input__input,
+        body .jodit-ui-select__select,
+        body .jodit-ui-textarea__textarea,
+        body input.jodit-input,
+        body input.jodit-ui-input__input,
+        body .jodit input,
+        body .jodit textarea,
+        body .jodit select {
+            background-color: #ffffff !important;
+            color: #111111 !important;
+            -webkit-text-fill-color: #111111 !important;
+            border: 1px solid #cccccc !important;
+            caret-color: #111111 !important;
+            opacity: 1 !important;
+            box-shadow: none !important;
+        }
+
+        body .jodit-popup input:focus,
+        body .jodit-popup textarea:focus,
+        body .jodit-popup select:focus,
+        body .jodit-dialog input:focus,
+        body .jodit-dialog textarea:focus,
+        body .jodit-dialog select:focus,
+        body .jodit-ui-input__input:focus,
+        body input.jodit-input:focus {
+            background-color: #ffffff !important;
+            color: #111111 !important;
+            -webkit-text-fill-color: #111111 !important;
+            border-color: #007bff !important;
+            outline: none !important;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25) !important;
+        }
+
+        body .jodit-popup label,
+        body .jodit-dialog label,
+        body .jodit-ui-input__label,
+        body .jodit-ui-label,
+        body .jodit-form__label,
+        body .jodit-toolbar-button__button,
+        body .jodit-status-bar * {
+            color: #333333 !important;
+        }
+
+        body .jodit-ui-button_color_primary,
+        body .jodit-popup button.jodit-ui-button_color_primary,
+        body .jodit-dialog button.jodit-ui-button_color_primary,
+        body .jodit-ui-button[type="submit"] {
+            background-color: #007bff !important;
+            color: #ffffff !important;
+            border-color: #007bff !important;
+        }
+
+        body .jodit-ui-button_color_primary *,
+        body .jodit-popup button.jodit-ui-button_color_primary *,
+        body .jodit-dialog button.jodit-ui-button_color_primary * {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+    </style>
 </head>
-@yield('css')
 
 <body>
     <!-- Layout wrapper -->

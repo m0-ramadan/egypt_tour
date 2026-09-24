@@ -118,6 +118,7 @@
                                     </span>
                                 </div>
                                 <p>{{ __('Sail the timeless Nile, visit iconic temples, and enjoy unforgettable views.') }}
+                                </p>
                                 <div class="showcase-tour-card__meta">
                                     <span><i class="la la-clock"></i>{{ __('4 Days') }}</span>
                                     <span><i class="la la-user-friends"></i>{{ __('From $499') }}</span>
@@ -297,10 +298,9 @@
                         <div class="card-image">
                             <div class="badge-top">{{ __('Nile Cruises') }}</div>
 
-                            <a href="{{ route('website.nile_cruises.index') }}"
-                                aria-label="{{ __('Egypt Nile Cruise') }}">
+                            <a href="{{ route('website.nile_cruises.index') }}" aria-label="{{ __('Nile Cruise') }}">
                                 <img src="{{ asset('website/photos/experiences/nile-cruises.jpg') }}"
-                                    alt="{{ __('Egypt Nile Cruise') }}" width="800" height="500" loading="lazy"
+                                    alt="{{ __('Nile Cruise') }}" width="800" height="500" loading="lazy"
                                     decoding="async"
                                     onerror="this.onerror=null;this.src='{{ asset('website/images/nile-cruises/luxor-aswan.jpg') }}';">
                             </a>
@@ -308,7 +308,7 @@
 
                         <div class="card-body">
                             <h3 class="deal-title">
-                                <a href="{{ route('website.nile_cruises.index') }}">{{ __('Egypt Nile Cruise') }}</a>
+                                <a href="{{ route('website.nile_cruises.index') }}">{{ __('Nile Cruise') }}</a>
                             </h3>
 
                             <div class="deal-meta">

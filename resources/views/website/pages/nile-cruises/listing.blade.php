@@ -127,7 +127,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('website.home') }}">{{ __('Home') }}</a></li>
                     <li class="breadcrumb-item"><a
-                            href="{{ route('website.nile_cruises.index') }}">{{ __('Egypt Nile Cruise') }}</a></li>
+                            href="{{ route('website.nile_cruises.index') }}">{{ __('Nile Cruise') }}</a></li>
                     @if (isset($category))
                         <li class="breadcrumb-item"><a
                                 href="{{ route('website.nile_cruises.luxor_aswan') }}">{{ $type->display_name }}</a></li>

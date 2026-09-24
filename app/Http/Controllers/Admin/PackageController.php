@@ -957,14 +957,16 @@ class PackageController extends Controller
             : null;
 
         $data['package_type'] = $this->normalizePackageType($data['package_type'] ?? null);
-        $categorySlug = match ($data['package_type']) {
-            'day_tour', 'shore_excursion' => 'day-tours',
-            'nile_cruise' => 'nile-cruises',
-            default => 'tour-packages',
-        };
-        $category = PackageCategory::where('slug', $categorySlug)->first();
-        if ($category) {
-            $data['category_id'] = $category->id;
+        if (empty($data['category_id'])) {
+            $categorySlug = match ($data['package_type']) {
+                'day_tour', 'shore_excursion' => 'day-tours',
+                'nile_cruise' => 'nile-cruises',
+                default => 'tour-packages',
+            };
+            $category = PackageCategory::where('slug', $categorySlug)->first();
+            if ($category) {
+                $data['category_id'] = $category->id;
+            }
         }
         if ($selectedAttraction) {
             $data['destination_id'] = $selectedAttraction->id;
