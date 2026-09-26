@@ -605,8 +605,11 @@ class PackageController extends Controller
             'is_active' => ['nullable', 'boolean'],
 
             'featured_image' => ['nullable', 'image', 'max:5120'],
+            'remove_featured_image' => ['nullable', 'boolean'],
             'gallery_images' => ['nullable', 'array'],
             'gallery_images.*' => ['nullable', 'image', 'max:5120'],
+            'remove_gallery_indices' => ['nullable', 'array'],
+            'remove_gallery_indices.*' => ['integer', 'min:0'],
 
             'facilities' => ['nullable', 'array'],
             'facilities.*.title' => ['nullable', 'string'],
@@ -935,7 +938,9 @@ class PackageController extends Controller
     {
         $data = collect($validated)->except([
             'featured_image',
+            'remove_featured_image',
             'gallery_images',
+            'remove_gallery_indices',
             'facilities',
             'attraction_ids',
             'itinerary',
@@ -1046,12 +1051,40 @@ class PackageController extends Controller
 
         if ($request->hasFile('featured_image')) {
             $data['featured_image'] = $this->uploadFile($request->file('featured_image'), 'packages');
+        } elseif ($package && $request->boolean('remove_featured_image')) {
+            $featuredPath = is_array($package->featured_image)
+                ? ($package->featured_image['path'] ?? $package->featured_image['url'] ?? null)
+                : $package->featured_image;
+            if (is_string($featuredPath) && !preg_match('~^https?://~i', $featuredPath)) {
+                Storage::disk('public')->delete(preg_replace('~^/?storage/~', '', $featuredPath));
+            }
+            $data['featured_image'] = null;
         } elseif ($package) {
             unset($data['featured_image']);
         }
 
+        $currentGallery = collect($package?->gallery_images ?? [])->values();
+        $removedGalleryIndices = collect($request->input('remove_gallery_indices', []))
+            ->map(fn ($index) => (int) $index)
+            ->unique();
+
+        if ($package && $removedGalleryIndices->isNotEmpty()) {
+            foreach ($removedGalleryIndices as $index) {
+                $image = $currentGallery->get($index);
+                $path = is_array($image) ? ($image['path'] ?? $image['url'] ?? null) : $image;
+                if (is_string($path) && !preg_match('~^https?://~i', $path)) {
+                    Storage::disk('public')->delete(preg_replace('~^/?storage/~', '', $path));
+                }
+            }
+        }
+
         if ($request->hasFile('gallery_images')) {
             $data['gallery_images'] = $this->uploadMultipleFiles($request->file('gallery_images'), 'packages/gallery');
+        } elseif ($package && $removedGalleryIndices->isNotEmpty()) {
+            $data['gallery_images'] = $currentGallery
+                ->reject(fn ($image, $index) => $removedGalleryIndices->contains($index))
+                ->values()
+                ->all();
         } elseif ($package) {
             unset($data['gallery_images']);
         }

@@ -2190,7 +2190,7 @@
                                             <div class="preview-grid" id="featuredPreview">
                                                 @if ($savedFeaturedUrl)
                                                     <div class="preview-card"><img src="{{ $savedFeaturedUrl }}"
-                                                            alt="{{ $packageTitle }}"></div>
+                                                            alt="{{ $packageTitle }}"><div class="preview-card-footer"><span>{{ admin_t('Main Image') }}</span><button type="button" class="preview-remove" data-remove-saved-featured aria-label="{{ admin_t('Remove') }}"><i class="ti ti-trash"></i></button></div></div>
                                                 @endif
                                             </div>
                                         </div>
@@ -2214,9 +2214,9 @@
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                             <div class="preview-grid" id="galleryPreview">
-                                                @foreach ($savedGalleryUrls as $imageUrl)
+                                                @foreach ($savedGalleryUrls as $imageIndex => $imageUrl)
                                                     <div class="preview-card"><img src="{{ $imageUrl }}"
-                                                            alt="{{ $packageTitle }}" loading="lazy"></div>
+                                                            alt="{{ $packageTitle }}" loading="lazy"><div class="preview-card-footer"><span>{{ admin_t('Gallery Image') }}</span><button type="button" class="preview-remove" data-remove-saved-gallery="{{ $imageIndex }}" aria-label="{{ admin_t('Remove') }}"><i class="ti ti-trash"></i></button></div></div>
                                                 @endforeach
                                                 @if (!$savedGalleryUrls)
                                                     <div class="empty-state" id="galleryEmptyState">
@@ -3769,6 +3769,8 @@
             let isSubmitting = false;
             let featuredFile = null;
             let galleryFiles = [];
+            let removeSavedFeatured = false;
+            const removedGalleryIndices = new Set();
 
             const texts = {
                 complete: 'Complete',
@@ -4184,7 +4186,7 @@
                 counter.textContent = `${input.value.length} / ${max}`;
             }
 
-            function appendSavedPreview(container, url, label) {
+            function appendSavedPreview(container, url, label, savedIndex = null) {
                 const card = document.createElement('div');
                 card.className = 'preview-card';
                 const image = document.createElement('img');
@@ -4192,6 +4194,12 @@
                 image.alt = label;
                 image.loading = 'lazy';
                 card.appendChild(image);
+                if (savedIndex !== null) {
+                    const footer = document.createElement('div');
+                    footer.className = 'preview-card-footer';
+                    footer.innerHTML = `<span>${label}</span><button type="button" class="preview-remove" data-remove-saved-gallery="${savedIndex}" aria-label="${texts.remove}"><i class="ti ti-trash"></i></button>`;
+                    card.appendChild(footer);
+                }
                 container.appendChild(card);
             }
 
@@ -4200,7 +4208,11 @@
                 featuredPreview.innerHTML = '';
 
                 if (!featuredFile) {
-                    if (savedFeaturedUrl) appendSavedPreview(featuredPreview, savedFeaturedUrl, texts.imagePreview);
+                    if (savedFeaturedUrl && !removeSavedFeatured) {
+                        appendSavedPreview(featuredPreview, savedFeaturedUrl, texts.imagePreview);
+                        const card = featuredPreview.querySelector('.preview-card');
+                        card?.insertAdjacentHTML('beforeend', `<div class="preview-card-footer"><span>${texts.imagePreview}</span><button type="button" class="preview-remove" data-remove-saved-featured aria-label="${texts.remove}"><i class="ti ti-trash"></i></button></div>`);
+                    }
                     return;
                 }
 
@@ -4238,9 +4250,10 @@
 
                 if (!galleryFiles.length) {
                     if (savedGalleryUrls.length) {
-                        savedGalleryUrls.forEach(url => appendSavedPreview(galleryPreview, url, texts
-                            .galleryPreview));
-                        return;
+                        savedGalleryUrls.forEach((url, index) => {
+                            if (!removedGalleryIndices.has(index)) appendSavedPreview(galleryPreview, url, texts.galleryPreview, index);
+                        });
+                        if (removedGalleryIndices.size < savedGalleryUrls.length) return;
                     }
                     galleryPreview.innerHTML =
                         `<div class="empty-state" id="galleryEmptyState">${texts.noGallery}</div>`;
@@ -4846,6 +4859,22 @@
             });
 
             featuredPreview?.addEventListener('click', function(event) {
+                const savedRemoveButton = event.target.closest('[data-remove-saved-featured]');
+                if (savedRemoveButton) {
+                    removeSavedFeatured = true;
+                    let hidden = form?.querySelector('input[name="remove_featured_image"]');
+                    if (!hidden && form) {
+                        hidden = document.createElement('input');
+                        hidden.type = 'hidden';
+                        hidden.name = 'remove_featured_image';
+                        form.appendChild(hidden);
+                    }
+                    if (hidden) hidden.value = '1';
+                    isDirty = true;
+                    renderFeaturedPreview();
+                    updateSummary();
+                    return;
+                }
                 const removeButton = event.target.closest('[data-remove-featured]');
                 if (!removeButton) {
                     return;
@@ -4857,6 +4886,20 @@
             });
 
             galleryPreview?.addEventListener('click', function(event) {
+                const savedRemoveButton = event.target.closest('[data-remove-saved-gallery]');
+                if (savedRemoveButton) {
+                    const index = Number(savedRemoveButton.dataset.removeSavedGallery);
+                    removedGalleryIndices.add(index);
+                    const hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = 'remove_gallery_indices[]';
+                    hidden.value = String(index);
+                    form?.appendChild(hidden);
+                    isDirty = true;
+                    renderGalleryPreview();
+                    updateSummary();
+                    return;
+                }
                 const removeButton = event.target.closest('[data-gallery-index]');
                 if (!removeButton) {
                     return;
