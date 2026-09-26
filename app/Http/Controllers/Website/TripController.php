@@ -231,12 +231,12 @@ class TripController extends BaseWebsiteController
 
         $inclusions = $package->inclusions
             ->map(function ($item) {
-                $rawContent = method_exists($item, 'getRawOriginal')
-                    ? ($item->getRawOriginal('content') ?? $item->content)
-                    : $item->content;
+                $rawContent = method_exists($item, 'getRawOriginal') ? ($item->getRawOriginal('content') ?? $item->content) : $item->content;
+                $rawTitle = method_exists($item, 'getRawOriginal') ? ($item->getRawOriginal('title') ?? $item->title) : $item->title;
+                $rawDesc = method_exists($item, 'getRawOriginal') ? ($item->getRawOriginal('description') ?? $item->description) : $item->description;
 
-                $fallback = $item->description ?? $item->title ?? '';
-                $item->display_content = __($this->transValue($rawContent, $fallback));
+                $display = $this->transValue($rawContent, $this->transValue($rawTitle, $this->transValue($rawDesc, '')));
+                $item->display_content = __((string) $display);
 
                 return $item;
             })

@@ -43,6 +43,9 @@ class PackageTypeContentService
 
         if ($package->package_type === 'travel_package') {
             $this->syncTourPackageDetail($package, (array) $request->input('tour_package', []));
+        }
+
+        if (in_array($package->package_type, ['travel_package', 'nile_cruise'], true)) {
             $this->syncTourPackagePricing($package, $request);
         }
     }
@@ -226,7 +229,7 @@ class PackageTypeContentService
 
     public function syncTourPackagePricing(Package $package, Request $request): void
     {
-        if ($package->package_type !== 'travel_package' || !$request->has('tour_package_accommodations')) {
+        if (!in_array($package->package_type, ['travel_package', 'nile_cruise'], true) || !$request->has('tour_package_accommodations')) {
             return;
         }
 
@@ -255,17 +258,25 @@ class PackageTypeContentService
                 $keepSeasonIds = [];
                 foreach ($accData['seasons'] as $sIndex => $sData) {
                     $sName = trim((string) (is_array($sData['name'] ?? null) ? ($sData['name']['en'] ?? '') : ($sData['name'] ?? '')));
-                    if ($sName === '') {
+                    $period = trim((string) ($sData['period'] ?? ''));
+                    if ($sName === '' && $period === '') {
                         continue;
                     }
 
-                    $seasonNameJson = is_array($sData['name'] ?? null) ? $sData['name'] : ['en' => $sName, 'ar' => $sName];
+                    if ($sName === '') {
+                        $sName = $period;
+                    }
+
+                    $seasonNameJson = is_array($sData['name'] ?? null) ? $sData['name'] : [];
+                    $seasonNameJson['en'] = trim((string) ($seasonNameJson['en'] ?? '')) ?: $sName;
+                    $seasonNameJson['ar'] = trim((string) ($seasonNameJson['ar'] ?? '')) ?: $sName;
 
                     $season = $acc->seasons()->updateOrCreate(
                         ['id' => $sData['id'] ?? null],
                         [
                             'package_id' => $package->id,
                             'name' => $seasonNameJson,
+                            'period' => $this->nullableString($sData['period'] ?? null),
                             'date_from' => !empty($sData['date_from']) ? $sData['date_from'] : null,
                             'date_to' => !empty($sData['date_to']) ? $sData['date_to'] : null,
                             'currency_id' => !empty($sData['currency_id']) ? (int) $sData['currency_id'] : $package->currency_id,
