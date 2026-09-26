@@ -1030,7 +1030,7 @@
         .sidebar {
             position: sticky;
             top: 100px;
-            background: #fff;
+            background: var(--etp-navy-900, #1c1c1c);
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 15px 40px rgba(6, 27, 62, .14);
@@ -1038,8 +1038,8 @@
         }
 
         .sidebar-header {
-            background: linear-gradient(135deg, var(--etp-navy-950, #061B3E), #1a4b66);
-            color: #fff;
+            background: var(--etp-navy-gradient, linear-gradient(135deg, #111111, #1c1c1c));
+            color: var(--etp-white, #fff);
             padding: 25px;
             text-align: center
         }
@@ -1063,8 +1063,8 @@
         .reserve-action-tabs {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            background: #fff;
-            border-bottom: 1px solid rgba(6, 27, 62, .1)
+            background: var(--etp-navy-800, #2b2b2b);
+            border-bottom: 1px solid rgba(243, 107, 10, .28)
         }
 
         .package-show-template .reserve-tab-btn {
@@ -1075,15 +1075,16 @@
             padding: 18px 10px;
             border: 0;
             border-bottom: 4px solid transparent;
-            background: #fff;
-            color: #68727d !important;
+            background: var(--etp-navy-800, #2b2b2b);
+            color: rgba(255, 255, 255, .72) !important;
             font-weight: 800;
             cursor: pointer
         }
 
         .package-show-template .reserve-tab-btn.is-active {
-            color: #061B3E !important;
-            border-bottom-color: #d7a035 !important
+            color: var(--etp-white, #fff) !important;
+            background: var(--etp-navy-900, #1c1c1c);
+            border-bottom-color: var(--etp-orange-500, #F36B0A) !important
         }
 
         .package-show-template .reserve-tab-btn i {
@@ -2400,8 +2401,8 @@
 
 
         /* =========================================================
-                                                                       Nile Cruise body redesign — body only, shared header/footer untouched
-                                                                       ========================================================= */
+                                                                               Nile Cruise body redesign — body only, shared header/footer untouched
+                                                                               ========================================================= */
         .nile-cruise-page .main-container {
             background:
                 radial-gradient(circle at 8% 8%, rgba(215, 239, 250, .58), transparent 34%),
@@ -4101,13 +4102,18 @@
                                 ? []
                                 : (array) ($package->group_pricing_tiers ?? []),
                         )->filter(fn($tier) => is_array($tier) && (float) ($tier['price_per_person'] ?? 0) > 0);
-                        $hasAccommodations =
-                            $package->tourPackageAccommodations && $package->tourPackageAccommodations->isNotEmpty();
+                        $hasAccommodations = $package->tourPackageAccommodations &&
+                            $package->tourPackageAccommodations->where('is_active', true)->contains(
+                                fn($accommodation) => $accommodation->seasons->where('is_active', true)->contains(
+                                    fn($season) => $season->items->where('is_active', true)->contains(
+                                        fn($item) => (float) $item->price > 0
+                                    )
+                                )
+                            );
                         $package->package_type !== 'day_tour' &&
                             $package->tourPackageAccommodations &&
                             $package->tourPackageAccommodations->isNotEmpty();
-                        $showStandardPriceTable =
-                            $package->package_type !== 'travel_package' && $prices->isNotEmpty();
+                        $showStandardPriceTable = $package->package_type !== 'travel_package' && $prices->isNotEmpty();
                         $hasAnyStandardPricing =
                             $showStandardPriceTable ||
                             $hasCategoryPricing ||
@@ -4162,6 +4168,10 @@
                             @endif
 
                             @if ($hasAccommodations)
+                                @include('website.pages.packages.partials.nile_cruise.imported_pricing')
+                            @endif
+
+                            @if ($hasAccommodations && false)
                                 <div class="tour-accommodations-showcase mt-4">
                                     <h3 class="fw-bold mb-3"
                                         style="color: var(--etp-navy-950, #061B3E); font-family: 'Playfair Display', serif;">

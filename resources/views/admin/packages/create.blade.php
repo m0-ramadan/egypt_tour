@@ -3983,6 +3983,22 @@
                 }
             }
 
+            function updatePricingTypeBlocks() {
+                const packageType = document.getElementById('package_type')?.value || '';
+                document.querySelectorAll('.pricing-type-block').forEach(block => {
+                    const targetType = block.getAttribute('data-pricing-type');
+                    const match = targetType === packageType;
+                    block.style.display = match ? 'block' : 'none';
+                    block.querySelectorAll('input, select, textarea, button').forEach(el => {
+                        if (!match && !el.classList.contains('js-keep-enabled')) {
+                            el.disabled = true;
+                        } else {
+                            el.disabled = false;
+                        }
+                    });
+                });
+            }
+
             function updateCounter(input) {
                 if (!input) return;
                 const max = Number(input.dataset.counterMax || 0);
@@ -4629,6 +4645,7 @@
                 }
                 if (event.target.matches('#package_type, [data-tour-package-itinerary-mode]')) {
                     updateItineraryMode();
+                    updatePricingTypeBlocks();
                 }
                 updateSummary();
             });
@@ -4728,6 +4745,7 @@
                         ensureEmptyState('#faq-wrapper', '.faq-item', 'faqEmptyState',
                             @json(admin_t('No FAQs have been added yet.')));
                         updateItineraryMode();
+                        updatePricingTypeBlocks();
                         updateSummary();
                     }, 260);
 

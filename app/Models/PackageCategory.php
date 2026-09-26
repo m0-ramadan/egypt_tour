@@ -108,4 +108,22 @@ class PackageCategory extends Model
     {
         return $this->translatedValue('seo_description');
     }
+
+    public function getImageUrlAttribute(): string
+    {
+        if ($this->image) {
+            if (str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://')) {
+                return $this->image;
+            }
+            if (str_starts_with($this->image, 'storage/')) {
+                return asset($this->image);
+            }
+            if (file_exists(public_path('storage/' . $this->image))) {
+                return asset('storage/' . $this->image);
+            }
+            return asset($this->image);
+        }
+
+        return asset('website/photos/home2.webp');
+    }
 }

@@ -60,6 +60,25 @@ class TravelPackageController extends BaseWebsiteController
             ],
         ];
 
+        $categorySlugs = [
+            'egypt-vacation-packages',
+            'private-egypt-tours',
+            'egypt-luxury-tours',
+            'family-egypt-tours',
+        ];
+        $dbCategories = \App\Models\PackageCategory::whereIn('slug', $categorySlugs)->get()->keyBy('slug');
+
+        foreach ($featuredCategories as &$catCard) {
+            $catSlug = basename($catCard['url']);
+            if (isset($dbCategories[$catSlug])) {
+                $categoryModel = $dbCategories[$catSlug];
+                if ($categoryModel->image) {
+                    $catCard['image'] = $categoryModel->image_url;
+                }
+            }
+        }
+        unset($catCard);
+
         // Duration cards matching reference page
         $packageCards = [
             [

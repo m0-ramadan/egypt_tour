@@ -226,10 +226,7 @@ class PackageController extends BaseWebsiteController
 
         $destinations = City::query()
             ->where('is_active', true)
-            ->where(function ($q) use ($allowedTypes) {
-                $q->whereHas('packages', fn($sub) => $sub->where('is_active', true)->whereIn('package_type', $allowedTypes))
-                    ->orWhereHas('attractions.packageAttractions.package', fn($sub) => $sub->where('is_active', true)->whereIn('package_type', $allowedTypes));
-            })
+            ->whereHas('packages', fn($sub) => $sub->where('is_active', true)->whereIn('package_type', $allowedTypes))
             ->orderBy('sort_order')
             ->orderBy('id')
             ->get();
@@ -254,26 +251,10 @@ class PackageController extends BaseWebsiteController
             ->when($selectedCategory, fn($query) => $query->where('category_id', $selectedCategory->id))
             ->when($selectedDestination, function ($query) use ($selectedDestination) {
                 $cityId = $selectedDestination->id;
-                $citySlug = $selectedDestination->slug;
-                $rawName = $selectedDestination->getRawOriginal('name');
-                $nameEn = is_array($rawName) ? ($rawName['en'] ?? '') : '';
-                $nameAr = is_array($rawName) ? ($rawName['ar'] ?? '') : '';
 
-                $query->where(function ($q) use ($cityId, $citySlug, $nameEn, $nameAr) {
+                $query->where(function ($q) use ($cityId) {
                     $q->whereHas('cities', fn($sub) => $sub->where('cities.id', $cityId))
-                        ->orWhereHas('destination', fn($sub) => $sub->where('city_id', $cityId))
-                        ->orWhereHas('packageAttractions.attraction', fn($sub) => $sub->where('city_id', $cityId))
-                        ->orWhere('destinations_text', 'like', "%{$citySlug}%");
-
-                    if ($nameEn !== '') {
-                        $q->orWhere('destinations_text', 'like', "%{$nameEn}%")
-                            ->orWhere('title', 'like', "%{$nameEn}%")
-                            ->orWhere('slug', 'like', "%{$citySlug}%");
-                    }
-                    if ($nameAr !== '') {
-                        $q->orWhere('destinations_text', 'like', "%{$nameAr}%")
-                            ->orWhere('title', 'like', "%{$nameAr}%");
-                    }
+                        ->orWhereHas('destination', fn($sub) => $sub->where('city_id', $cityId));
                 });
             })
             ->when($duration, function ($query) use ($duration) {

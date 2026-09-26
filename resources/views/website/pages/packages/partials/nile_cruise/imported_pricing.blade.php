@@ -4,9 +4,27 @@
         border: 1px solid #e2e8f0;
         border-radius: 12px;
         overflow: hidden;
-        background: #ffffff;
+        background: var(--etp-white, #ffffff);
         box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
         transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nc-fare-tier-title {
+        margin: 28px 0 16px;
+        text-align: center;
+        color: var(--etp-navy-950, #061B3E);
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+
+    .nc-fare-tier-title::after {
+        content: '';
+        display: block;
+        width: 30px;
+        height: 2px;
+        margin: 9px auto 0;
+        background: var(--etp-orange-500, #F36B0A);
     }
 
     .nc-fare-card summary {
@@ -17,8 +35,8 @@
         padding: 18px 24px;
         cursor: pointer;
         list-style: none;
-        background: #1f405c;
-        color: #ffffff;
+        background: var(--etp-navy-800, #1f405c);
+        color: var(--etp-white, #ffffff);
         user-select: none;
     }
 
@@ -32,7 +50,7 @@
         font-family: 'Playfair Display', Georgia, serif;
         font-size: 1.15rem;
         font-weight: 700;
-        color: #ffffff;
+        color: var(--etp-white, #ffffff);
         letter-spacing: 0.2px;
     }
 
@@ -40,7 +58,7 @@
         flex: 1;
         text-align: center;
         font-size: 0.95rem;
-        color: #cbd5e1;
+        color: var(--etp-white, #ffffff);
         font-weight: 400;
     }
 
@@ -76,13 +94,13 @@
         gap: 16px;
         padding: 20px 24px;
         border-top: 1px solid #f1f5f9;
-        background: #ffffff;
+        background: var(--etp-white, #ffffff);
     }
 
     .nc-fare-label {
         font-weight: 700;
         font-size: 1.05rem;
-        color: #1e293b;
+        color: var(--etp-navy-950, #061B3E);
     }
 
     .nc-fare-amount {
@@ -120,6 +138,37 @@
         font-size: 0.82rem;
         margin-top: 4px;
         font-weight: 400;
+    }
+
+    .nc-fare-hotels {
+        padding: 14px;
+        border-top: 1px solid var(--etp-navy-700, #294d6b);
+        background: var(--etp-navy-900, #102a43);
+    }
+
+    .nc-fare-hotels-title {
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: var(--etp-navy-800, #1f405c);
+        color: var(--etp-white, #fff);
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .nc-fare-hotel {
+        margin-top: 12px;
+        padding: 14px;
+        border: 1px solid var(--etp-navy-700, #294d6b);
+        border-radius: 10px;
+        background: var(--etp-navy-800, #1f405c);
+    }
+
+    .nc-fare-hotel-name { color: var(--etp-white, #fff); font-weight: 700; }
+    .nc-fare-hotel-city { float: right; color: var(--etp-orange-200, #fdba74); font-size: .8rem; }
+    .nc-fare-hotel-stars { color: var(--etp-orange-500, #F36B0A); margin-top: 4px; }
+
+    .nc-fare-hotel small {
+        color: var(--etp-orange-100, #ffedd5);
     }
 
     html[data-theme='dark'] .nc-fare-card {
@@ -173,12 +222,15 @@
         }
     }
 </style>
-@php $fareAccommodations = $package->tourPackageAccommodations->where('is_active', true); @endphp
+@php
+    $fareAccommodations = $package->tourPackageAccommodations->where('is_active', true)->filter(
+        fn($accommodation) => $accommodation->seasons->where('is_active', true)->contains(
+            fn($season) => $season->items->where('is_active', true)->contains(fn($item) => (float) $item->price > 0)
+        )
+    );
+@endphp
 @foreach ($fareAccommodations as $accommodation)
-    @if ($fareAccommodations->count() > 1)
-        <h3 class="mb-3" style="font-family: 'Playfair Display', serif; color: var(--primary-navy, #1c325c);">
-            {{ $accommodation->name }}</h3>
-    @endif
+    <h3 class="nc-fare-tier-title">{{ $accommodation->name }}</h3>
     @foreach ($accommodation->seasons->where('is_active', true)->values() as $seasonIndex => $season)
         @php
             $fareItems = $season->items->where('is_active', true)->filter(fn($item) => (float) $item->price > 0);
@@ -195,10 +247,9 @@
             }
         @endphp
         @if ($fareItems->isNotEmpty())
-            <details class="nc-fare-card" {{ $seasonIndex < 2 ? 'open' : '' }}>
+            <details class="nc-fare-card">
                 <summary>
-                    <span class="nc-fare-duration">{{ $season->display_season_name }}</span>
-                    <span class="nc-fare-period">{{ $seasonPeriod }}</span>
+                    <span class="nc-fare-duration">{{ $seasonPeriod ?: $season->display_season_name }}</span>
                     <div class="nc-fare-right">
                         <span class="nc-fare-from">{{ __('From') }}: {{ $fareSymbol }}{{ number_format((float) $fareItems->min('price'), 0) }}</span>
                         <svg class="nc-fare-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -210,9 +261,9 @@
                 @foreach ($fareItems as $item)
                     @php
                         $cabinLabels = [
-                            'triple' => __('Triple Cabin'),
-                            'double' => __('Double Cabin'),
-                            'single' => __('Single Cabin'),
+                            'triple' => $package->package_type === 'travel_package' ? __('Per Person in Triple Room') : __('Triple Cabin'),
+                            'double' => $package->package_type === 'travel_package' ? __('Per Person in Double Room') : __('Double Cabin'),
+                            'single' => $package->package_type === 'travel_package' ? __('Per Person in Single Room') : __('Single Cabin'),
                         ];
                         $cabinNotes = [
                             'triple' => __('per adult in a triple share cabin'),
@@ -241,6 +292,19 @@
                         </div>
                     </div>
                 @endforeach
+                @if ($package->package_type === 'travel_package' && $accommodation->hotels->where('is_active', true)->isNotEmpty())
+                    <div class="nc-fare-hotels">
+                        <div class="nc-fare-hotels-title"><i class="la la-hotel me-1"></i> {{ __('Hotels') }}</div>
+                        @foreach ($accommodation->hotels->where('is_active', true) as $hotel)
+                            <div class="nc-fare-hotel">
+                                <span class="nc-fare-hotel-city">{{ $hotel->city_name ?: $hotel->city?->display_name }}</span>
+                                <div class="nc-fare-hotel-name">{{ $hotel->hotel_name }}</div>
+                                @if ($hotel->star_rating)<div class="nc-fare-hotel-stars">{{ str_repeat('★', (int) $hotel->star_rating) }}</div>@endif
+                                @if ($hotel->description)<small>{{ $hotel->description }}</small>@endif
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </details>
         @endif
     @endforeach

@@ -416,7 +416,20 @@
                             @if (Route::has('admin.packages.toggle-status'))
                                 <form action="{{ route('admin.packages.toggle-status', $package) }}" method="POST">
                                     @csrf
-                                    <button class="btn btn-dark btn-sm" type="submit">Toggle Status</button>
+                                    <button class="btn btn-dark btn-sm"
+                                        type="submit">{{ $package->is_active ? 'Deactivate' : 'Activate' }}</button>
+                                </form>
+                            @endif
+
+                            @if (Route::has('admin.packages.toggle-featured'))
+                                <form action="{{ route('admin.packages.toggle-featured', $package) }}" method="POST">
+                                    @csrf
+                                    <button
+                                        class="btn {{ $package->is_featured ? 'btn-warning' : 'btn-outline-warning' }} btn-sm"
+                                        type="submit" title="إظهار / إخفاء بالهوم">
+                                        <i class="fas fa-star me-1"></i>
+                                        {{ $package->is_featured ? 'Unfeature' : 'Feature on Home' }}
+                                    </button>
                                 </form>
                             @endif
 

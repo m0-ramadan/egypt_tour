@@ -23,7 +23,7 @@
     <section class="content-section" id="pricing-packages">
         <h2 class="section-header">{{ __('Pricing & Packages') }}</h2>
         <p class="section-subtitle">
-            {{ __('Choose your preferred duration and season. Prices are shown using the cruise pricing configured for each cabin or occupancy option.') }}
+            {{ __('Choose your preferred accommodation level and season. Prices are quoted per person in US Dollars unless otherwise stated.') }}
         </p>
 
         @if ($hasSeasonPrices)

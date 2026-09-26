@@ -122,6 +122,8 @@ class PackageController extends Controller
             app(\App\Services\PackagePricingService::class)->recalculate($package);
         });
 
+        $this->clearCache();
+
         return redirect()->route('admin.packages.index')->with('success', 'Package created successfully.');
     }
 
@@ -248,12 +250,15 @@ class PackageController extends Controller
             app(\App\Services\PackagePricingService::class)->recalculate($package);
         });
 
+        $this->clearCache();
+
         return $this->success('admin.packages.index', 'Package updated successfully.');
     }
 
     public function destroy(Package $package): RedirectResponse
     {
         $package->delete();
+        $this->clearCache();
 
         return $this->success('admin.packages.index', 'Package deleted successfully.');
     }
@@ -369,9 +374,17 @@ class PackageController extends Controller
             ->with('success', 'Package created successfully using AI.');
     }
 
+    private function clearCache(): void
+    {
+        \Illuminate\Support\Facades\Cache::forget('website.home.version');
+        \Illuminate\Support\Facades\Cache::increment('website.home.version');
+        \Illuminate\Support\Facades\Cache::flush();
+    }
+
     public function toggleStatus(Package $package): RedirectResponse
     {
         $package->update(['is_active' => !(bool) $package->is_active]);
+        $this->clearCache();
 
         return back()->with('success', 'Package status updated successfully.');
     }
@@ -379,6 +392,7 @@ class PackageController extends Controller
     public function toggleFeatured(Package $package): RedirectResponse
     {
         $package->update(['is_featured' => !(bool) $package->is_featured]);
+        $this->clearCache();
 
         return back()->with('success', 'Package feature status updated successfully.');
     }
