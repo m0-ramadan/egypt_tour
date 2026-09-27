@@ -21,7 +21,9 @@
         imagesizes="100vw" media="(min-width: 768px)" fetchpriority="high">
 @endsection
 
-@php($isRtl = app()->getLocale() === 'ar')
+@php
+    $isRtl = app()->getLocale() === 'ar';
+@endphp
 
 @section('css')
     @vite('resources/css/website-home.css')
@@ -32,13 +34,21 @@
 
         <section class="showcase-hero" id="home">
             <picture class="showcase-hero__media" aria-hidden="true">
-                <source media="(max-width: 767px)" type="image/webp"
-                    srcset="{{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }}">
-                <source type="image/webp"
-                    srcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
-                    sizes="100vw">
-                <img src="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }}" alt=""
-                    width="1677" height="938" fetchpriority="high" loading="eager" decoding="async">
+                @php
+                    $customHeroHome = \App\Models\Setting::where('key', 'hero_image_home')->value('value');
+                    $heroHomeBg = $customHeroHome
+                        ? asset($customHeroHome)
+                        : asset('website/photos/optimized/home-pyramids-desktop-1280.webp');
+                @endphp
+                @if (!$customHeroHome)
+                    <source media="(max-width: 767px)" type="image/webp"
+                        srcset="{{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }}">
+                    <source type="image/webp"
+                        srcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
+                        sizes="100vw">
+                @endif
+                <img src="{{ $heroHomeBg }}" alt="" width="1677" height="938" fetchpriority="high"
+                    loading="eager" decoding="async">
             </picture>
             <div class="showcase-hero__flight" aria-hidden="true">
                 <span class="showcase-hero__flight-path"></span>
@@ -396,7 +406,7 @@
                     </div>
 
                     <div class="cards-grid">
-                        @foreach ($featuredPackages->take(3) as $package)
+                        @foreach ($featuredPackages as $package)
                             <div class="deal-card reveal-up">
                                 <div class="card-image">
                                     @if (!empty($package['is_ultra_luxury']))

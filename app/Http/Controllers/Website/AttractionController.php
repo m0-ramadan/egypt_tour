@@ -35,9 +35,7 @@ class AttractionController extends BaseWebsiteController
                     });
                 }
             })
-            ->orderByDesc('is_featured')
-            ->orderByRaw('sort_order IS NULL, sort_order ASC')
-            ->latest('id')
+            ->displayOrder()
             ->paginate(6)
             ->withQueryString();
 

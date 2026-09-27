@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasTranslatableAttributes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -177,6 +178,20 @@ class Package extends Model
         'is_ultra_luxury' => 'boolean',
         'is_active' => 'boolean',
     ];
+
+    /**
+     * Put explicitly positioned tours first. Zero/null means "not positioned".
+     * Featured flags are only tie-breakers and can no longer override positions.
+     */
+    public function scopeDisplayOrder(Builder $query): Builder
+    {
+        return $query
+            ->orderByRaw('CASE WHEN sort_order IS NULL OR sort_order < 1 THEN 1 ELSE 0 END')
+            ->orderBy('sort_order')
+            ->orderByDesc('is_featured')
+            ->orderByDesc('is_best_seller')
+            ->orderByDesc('id');
+    }
 
     public function category(): BelongsTo
     {

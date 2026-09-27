@@ -164,9 +164,7 @@ class DestinationController extends BaseWebsiteController
                         ->orWhere('slug', 'like', "%{$search}%");
                 });
             })
-            ->orderByDesc('is_featured')
-            ->orderByRaw('sort_order IS NULL, sort_order ASC')
-            ->latest('id')
+            ->displayOrder()
             ->paginate(9)
             ->withQueryString();
 

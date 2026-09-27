@@ -168,6 +168,15 @@ class ContactController extends BaseWebsiteController
             ]);
         }
 
+        \App\Services\AdminNotificationService::sendAdminNotification('New Contact Us Message', [
+            'Name' => $fullName,
+            'Email' => $validated['email'],
+            'Phone' => $validated['phone'] ?? 'N/A',
+            'Country' => $validated['country'] ?? 'N/A',
+            'Subject' => $validated['subject'] ?? 'N/A',
+            'Message' => $message,
+        ]);
+
         return redirect()
             ->route('website.contact.index')
             ->with('success', __('Your message has been sent successfully. We will contact you shortly.'));

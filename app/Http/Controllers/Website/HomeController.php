@@ -19,10 +19,7 @@ class HomeController extends BaseWebsiteController
             $packages = Package::query()
                 ->with(['currency', 'highlights', 'tags', 'prices'])
                 ->where('is_active', true)
-                ->orderByDesc('is_featured')
-                ->orderByDesc('is_best_seller')
-                ->orderByRaw('sort_order IS NULL, sort_order ASC')
-                ->latest('id')
+                ->displayOrder()
                 ->limit(6)
                 ->get();
 

@@ -2190,7 +2190,14 @@
                                             <div class="preview-grid" id="featuredPreview">
                                                 @if ($savedFeaturedUrl)
                                                     <div class="preview-card"><img src="{{ $savedFeaturedUrl }}"
-                                                            alt="{{ $packageTitle }}"><div class="preview-card-footer"><span>{{ admin_t('Main Image') }}</span><button type="button" class="preview-remove" data-remove-saved-featured aria-label="{{ admin_t('Remove') }}"><i class="ti ti-trash"></i></button></div></div>
+                                                            alt="{{ $packageTitle }}">
+                                                        <div class="preview-card-footer">
+                                                            <span>{{ admin_t('Main Image') }}</span><button
+                                                                type="button" class="preview-remove"
+                                                                data-remove-saved-featured
+                                                                aria-label="{{ admin_t('Remove') }}"><i
+                                                                    class="ti ti-trash"></i></button></div>
+                                                    </div>
                                                 @endif
                                             </div>
                                         </div>
@@ -2216,7 +2223,14 @@
                                             <div class="preview-grid" id="galleryPreview">
                                                 @foreach ($savedGalleryUrls as $imageIndex => $imageUrl)
                                                     <div class="preview-card"><img src="{{ $imageUrl }}"
-                                                            alt="{{ $packageTitle }}" loading="lazy"><div class="preview-card-footer"><span>{{ admin_t('Gallery Image') }}</span><button type="button" class="preview-remove" data-remove-saved-gallery="{{ $imageIndex }}" aria-label="{{ admin_t('Remove') }}"><i class="ti ti-trash"></i></button></div></div>
+                                                            alt="{{ $packageTitle }}" loading="lazy">
+                                                        <div class="preview-card-footer">
+                                                            <span>{{ admin_t('Gallery Image') }}</span><button
+                                                                type="button" class="preview-remove"
+                                                                data-remove-saved-gallery="{{ $imageIndex }}"
+                                                                aria-label="{{ admin_t('Remove') }}"><i
+                                                                    class="ti ti-trash"></i></button></div>
+                                                    </div>
                                                 @endforeach
                                                 @if (!$savedGalleryUrls)
                                                     <div class="empty-state" id="galleryEmptyState">
@@ -3331,10 +3345,12 @@
 
                                             <div>
                                                 <label class="form-label"
-                                                    for="sort_order">{{ admin_t('Sort Order') }}</label>
+                                                    for="sort_order">{{ admin_t('Tour Order / Position (ترتيب الظهور بالصفحات)') }}</label>
                                                 <input id="sort_order" type="number" name="sort_order"
                                                     class="form-control"
-                                                    value="{{ old('sort_order', $package->sort_order ?? 0) }}">
+                                                    value="{{ old('sort_order', $package->sort_order ?? 0) }}" min="0"
+                                                    placeholder="1, 2, 3...">
+                                                <small class="text-white-50">اكتب 1 أو 2 أو 3 لتحديد مكان الرحلة. القيمة 0 تعني بدون ترتيب وتظهر بعد الرحلات المرتبة.</small>
                                             </div>
                                         </div>
 
@@ -4197,7 +4213,8 @@
                 if (savedIndex !== null) {
                     const footer = document.createElement('div');
                     footer.className = 'preview-card-footer';
-                    footer.innerHTML = `<span>${label}</span><button type="button" class="preview-remove" data-remove-saved-gallery="${savedIndex}" aria-label="${texts.remove}"><i class="ti ti-trash"></i></button>`;
+                    footer.innerHTML =
+                        `<span>${label}</span><button type="button" class="preview-remove" data-remove-saved-gallery="${savedIndex}" aria-label="${texts.remove}"><i class="ti ti-trash"></i></button>`;
                     card.appendChild(footer);
                 }
                 container.appendChild(card);
@@ -4211,7 +4228,9 @@
                     if (savedFeaturedUrl && !removeSavedFeatured) {
                         appendSavedPreview(featuredPreview, savedFeaturedUrl, texts.imagePreview);
                         const card = featuredPreview.querySelector('.preview-card');
-                        card?.insertAdjacentHTML('beforeend', `<div class="preview-card-footer"><span>${texts.imagePreview}</span><button type="button" class="preview-remove" data-remove-saved-featured aria-label="${texts.remove}"><i class="ti ti-trash"></i></button></div>`);
+                        card?.insertAdjacentHTML('beforeend',
+                            `<div class="preview-card-footer"><span>${texts.imagePreview}</span><button type="button" class="preview-remove" data-remove-saved-featured aria-label="${texts.remove}"><i class="ti ti-trash"></i></button></div>`
+                            );
                     }
                     return;
                 }
@@ -4251,7 +4270,8 @@
                 if (!galleryFiles.length) {
                     if (savedGalleryUrls.length) {
                         savedGalleryUrls.forEach((url, index) => {
-                            if (!removedGalleryIndices.has(index)) appendSavedPreview(galleryPreview, url, texts.galleryPreview, index);
+                            if (!removedGalleryIndices.has(index)) appendSavedPreview(galleryPreview, url,
+                                texts.galleryPreview, index);
                         });
                         if (removedGalleryIndices.size < savedGalleryUrls.length) return;
                     }

@@ -350,6 +350,14 @@
                                     </button>
                                 </form>
                             @endif
+                            <form action="{{ route('admin.cities.destroy', $city) }}" method="POST"
+                                onsubmit="return confirm('{{ __('Are you sure you want to delete this city?') }}');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash me-1"></i>Delete
+                                </button>
+                            </form>
                         </div>
                     </div>
                 @empty

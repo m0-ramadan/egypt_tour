@@ -397,64 +397,76 @@
                             </div>
 
                             <div>
-                                <span class="detail-label">Sort Order:</span>
-                                <span>{{ $package->sort_order ?? 0 }}</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="detail-label" title="موقع الرحلة في الصفحات (1، 2، 3...)">Order /
+                                        الترتيب:</span>
+                                    <form action="{{ route('admin.packages.update-sort-order', $package) }}"
+                                        method="POST" class="d-flex align-items-center gap-1">
+                                        @csrf
+                                        <input type="number" name="sort_order" value="{{ $package->sort_order ?? 0 }}"
+                                            class="form-control form-control-sm text-center py-0 px-1"
+                                            style="width: 65px; height: 30px;" min="0">
+                                        <button type="submit" class="btn btn-sm btn-primary py-0 px-2"
+                                            style="height: 30px;" title="حفظ الترتيب">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <span class="detail-label">Description:</span>
+                                <span>{{ \Illuminate\Support\Str::limit(adminTrans($package->short_description) ?: (adminTrans($package->description) ?: '-'), 180) }}</span>
+                            </div>
+
+                            <div class="d-flex gap-2 flex-wrap">
+                                <a href="{{ route('admin.packages.show', $package) }}"
+                                    class="btn btn-info btn-sm">View</a>
+                                <a href="{{ route('admin.packages.edit', $package) }}"
+                                    class="btn btn-warning btn-sm">Edit</a>
+
+
+                                @if (Route::has('admin.packages.toggle-status'))
+                                    <form action="{{ route('admin.packages.toggle-status', $package) }}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-dark btn-sm"
+                                            type="submit">{{ $package->is_active ? 'Deactivate' : 'Activate' }}</button>
+                                    </form>
+                                @endif
+
+                                @if (Route::has('admin.packages.toggle-featured'))
+                                    <form action="{{ route('admin.packages.toggle-featured', $package) }}"
+                                        method="POST">
+                                        @csrf
+                                        <button
+                                            class="btn {{ $package->is_featured ? 'btn-warning' : 'btn-outline-warning' }} btn-sm"
+                                            type="submit" title="إظهار / إخفاء بالهوم">
+                                            <i class="fas fa-star me-1"></i>
+                                            {{ $package->is_featured ? 'Unfeature' : 'Feature on Home' }}
+                                        </button>
+                                    </form>
+                                @endif
+
+                                @if (Route::has('admin.packages.duplicate'))
+                                    <form action="{{ route('admin.packages.duplicate', $package) }}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-primary btn-sm" type="submit">Duplicate</button>
+                                    </form>
+                                @endif
+
+                                <form action="{{ route('admin.packages.destroy', $package) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                                </form>
                             </div>
                         </div>
-
-                        <div class="mb-3">
-                            <span class="detail-label">Description:</span>
-                            <span>{{ \Illuminate\Support\Str::limit(adminTrans($package->short_description) ?: (adminTrans($package->description) ?: '-'), 180) }}</span>
+                    @empty
+                        <div class="empty-state">
+                            <div class="empty-state-icon">
+                                <i class="fas fa-suitcase"></i>
+                            </div>
+                            <h5 class="empty-state-text">No packages found</h5>
+                            <a href="{{ route('admin.packages.create') }}" class="btn btn-primary">Add New Tour</a>
                         </div>
-
-                        <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('admin.packages.show', $package) }}" class="btn btn-info btn-sm">View</a>
-                            <a href="{{ route('admin.packages.edit', $package) }}"
-                                class="btn btn-warning btn-sm">Edit</a>
-
-
-                            @if (Route::has('admin.packages.toggle-status'))
-                                <form action="{{ route('admin.packages.toggle-status', $package) }}" method="POST">
-                                    @csrf
-                                    <button class="btn btn-dark btn-sm"
-                                        type="submit">{{ $package->is_active ? 'Deactivate' : 'Activate' }}</button>
-                                </form>
-                            @endif
-
-                            @if (Route::has('admin.packages.toggle-featured'))
-                                <form action="{{ route('admin.packages.toggle-featured', $package) }}" method="POST">
-                                    @csrf
-                                    <button
-                                        class="btn {{ $package->is_featured ? 'btn-warning' : 'btn-outline-warning' }} btn-sm"
-                                        type="submit" title="إظهار / إخفاء بالهوم">
-                                        <i class="fas fa-star me-1"></i>
-                                        {{ $package->is_featured ? 'Unfeature' : 'Feature on Home' }}
-                                    </button>
-                                </form>
-                            @endif
-
-                            @if (Route::has('admin.packages.duplicate'))
-                                <form action="{{ route('admin.packages.duplicate', $package) }}" method="POST">
-                                    @csrf
-                                    <button class="btn btn-primary btn-sm" type="submit">Duplicate</button>
-                                </form>
-                            @endif
-
-                            <form action="{{ route('admin.packages.destroy', $package) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-                            </form>
-                        </div>
-                    </div>
-                @empty
-                    <div class="empty-state">
-                        <div class="empty-state-icon">
-                            <i class="fas fa-suitcase"></i>
-                        </div>
-                        <h5 class="empty-state-text">No packages found</h5>
-                        <a href="{{ route('admin.packages.create') }}" class="btn btn-primary">Add New Tour</a>
-                    </div>
                 @endforelse
 
                 @include('admin.layout.pagination', ['paginator' => $packages])
