@@ -887,6 +887,20 @@ body.website-theme-shell .language-toggle:hover {
     border-color: rgba(243, 107, 10, 0.45) !important;
 }
 
+/* Keep every navigation label visually consistent across links and controls. */
+body.website-theme-shell .navbar .nav-link,
+body.website-theme-shell .navbar .dropdown-item,
+body.website-theme-shell .navbar .btn-tailor,
+body.website-theme-shell .navbar .language-toggle,
+body.website-theme-shell .navbar .language-toggle span,
+body.website-theme-shell .mobile-menu .mobile-nav-link,
+body.website-theme-shell .mobile-menu .mobile-destinations-toggle,
+body.website-theme-shell .mobile-menu .mobile-language-toggle {
+    font-family: var(--font-body) !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+}
+
 body.website-theme-shell .mobile-actions {
     display: flex;
     align-items: center;

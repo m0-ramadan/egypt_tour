@@ -135,10 +135,10 @@
                         </div>
                     </div>
 
-                    <div class="section-divider">Main Website Hero Images (صور أجزاء الموقع الرئيسية)</div>
+                    <div class="section-divider">Main Website Hero Images</div>
                     <div class="row">
                         <div class="col-md-6 mb-4">
-                            <label class="form-label">Home Hero Image (صورة الهيرو بالصفحة الرئيسية)</label>
+                            <label class="form-label">Home Hero Image</label>
                             <input type="file" name="hero_image_home" class="form-control" accept="image/*">
                             @if (!empty($settings['hero_image_home']))
                                 <div class="d-flex align-items-center gap-2 mt-2">
@@ -150,7 +150,7 @@
                         </div>
 
                         <div class="col-md-6 mb-4">
-                            <label class="form-label">Packages Section Hero Image (صورة باقات السفر)</label>
+                            <label class="form-label">Packages Section Hero Image</label>
                             <input type="file" name="hero_image_packages" class="form-control" accept="image/*">
                             @if (!empty($settings['hero_image_packages']))
                                 <div class="d-flex align-items-center gap-2 mt-2">
@@ -162,7 +162,7 @@
                         </div>
 
                         <div class="col-md-6 mb-4">
-                            <label class="form-label">Nile Cruises Hero Image (صورة كروزات النيل)</label>
+                            <label class="form-label">Nile Cruises Hero Image</label>
                             <input type="file" name="hero_image_cruises" class="form-control" accept="image/*">
                             @if (!empty($settings['hero_image_cruises']))
                                 <div class="d-flex align-items-center gap-2 mt-2">
