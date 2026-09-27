@@ -23,8 +23,7 @@ class TourController extends BaseWebsiteController
                         ->orWhere('description', 'like', $search);
                 });
             })
-            ->orderByDesc('is_featured')
-            ->orderByRaw('sort_order IS NULL, sort_order ASC')
+            ->displayOrder()
             ->paginate(12)
             ->withQueryString();
 
@@ -57,9 +56,7 @@ class TourController extends BaseWebsiteController
             ->where('is_active', true)
             ->whereNotNull('offer_price')
             ->where('offer_price', '>', 0)
-            ->orderByDesc('is_featured')
-            ->orderByRaw('sort_order IS NULL, sort_order ASC')
-            ->latest('id')
+            ->displayOrder()
             ->paginate(9)
             ->withQueryString();
 

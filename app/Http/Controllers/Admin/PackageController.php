@@ -76,7 +76,7 @@ class PackageController extends Controller
             ->when($request->filled('is_featured'), function ($query) use ($request) {
                 $query->where('is_featured', (bool) $request->integer('is_featured'));
             })
-            ->latest()
+            ->displayOrder()
             ->paginate($this->perPage($request))
             ->withQueryString();
 
@@ -106,6 +106,8 @@ class PackageController extends Controller
 
         DB::transaction(function () use ($request, $validated) {
             $packageData = $this->preparePackageData($request, $validated);
+
+            $this->reserveSortPosition((int) ($packageData['sort_order'] ?? 0));
 
             $package = Package::create($packageData);
 
@@ -235,6 +237,11 @@ class PackageController extends Controller
         DB::transaction(function () use ($request, $validated, $package) {
             $packageData = $this->preparePackageData($request, $validated, $package);
 
+            $newSortOrder = (int) ($packageData['sort_order'] ?? 0);
+            if ($newSortOrder !== (int) ($package->sort_order ?? 0)) {
+                $this->reserveSortPosition($newSortOrder, $package->id);
+            }
+
             $package->update($packageData);
 
             if ($request->has('facilities')) {
@@ -359,6 +366,8 @@ class PackageController extends Controller
 
             $packageData = $this->prepareAiPackageData($finalData);
 
+            $this->reserveSortPosition((int) ($packageData['sort_order'] ?? 0));
+
             $package = Package::create($packageData);
 
             $this->createFacilitiesFromArray($package, $aiData['facilities'] ?? []);
@@ -395,6 +404,37 @@ class PackageController extends Controller
         $this->clearCache();
 
         return back()->with('success', 'Package feature status updated successfully.');
+    }
+
+    public function updateSortOrder(Request $request, Package $package): RedirectResponse
+    {
+        $request->validate([
+            'sort_order' => ['required', 'integer', 'min:0'],
+        ]);
+
+        $newSortOrder = (int) $request->input('sort_order');
+
+        DB::transaction(function () use ($package, $newSortOrder) {
+            if ($newSortOrder !== (int) ($package->sort_order ?? 0)) {
+                $this->reserveSortPosition($newSortOrder, $package->id);
+                $package->update(['sort_order' => $newSortOrder]);
+            }
+        });
+        $this->clearCache();
+
+        return back()->with('success', 'Package sort order updated successfully.');
+    }
+
+    private function reserveSortPosition(int $position, ?int $ignorePackageId = null): void
+    {
+        if ($position < 1) {
+            return;
+        }
+
+        Package::query()
+            ->when($ignorePackageId, fn($query) => $query->where('id', '!=', $ignorePackageId))
+            ->where('sort_order', '>=', $position)
+            ->increment('sort_order');
     }
 
     public function duplicate(Package $package): RedirectResponse
@@ -592,7 +632,7 @@ class PackageController extends Controller
 
             'video_url' => ['nullable', 'string'],
             'published_at' => ['nullable', 'date'],
-            'sort_order' => ['nullable', 'integer'],
+            'sort_order' => ['nullable', 'integer', 'min:0'],
 
             'seo_title' => ['nullable', 'string'],
             'seo_description' => ['nullable', 'string'],

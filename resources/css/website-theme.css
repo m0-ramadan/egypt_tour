@@ -44,8 +44,6 @@ html[data-theme="dark"] .tours-section,
 html[data-theme="dark"] .card-area,
 html[data-theme="dark"] .search-hero,
 html[data-theme="dark"] .search-form-container,
-html[data-theme="dark"] .offers-breadcrumb,
-html[data-theme="dark"] .breadcrumb-top-bar,
 html[data-theme="dark"] .why-choose-section {
     background-color: var(--pearl-luxury) !important;
     color: var(--charcoal-deep) !important;
@@ -1129,35 +1127,72 @@ body.website-theme-shell:not(.home-reference-page) .article-meta {
     z-index: 3;
 }
 
-body.website-theme-shell:not(.home-reference-page) .hero-section .hero-title,
-body.website-theme-shell:not(.home-reference-page) .offers-hero .offers-title,
-body.website-theme-shell:not(.home-reference-page) .contact-hero .contact-title,
-body.website-theme-shell:not(.home-reference-page) .listing-hero .listing-title,
-body.website-theme-shell:not(.home-reference-page) .article-hero .article-title,
-body.website-theme-shell:not(.home-reference-page) .tailor-hero .hero-title,
-body.website-theme-shell:not(.home-reference-page)
-    .static-page-hero
-    .static-page-title,
-body.website-theme-shell:not(.home-reference-page) .search-hero .hero-title {
+body.website-theme-shell .hero-section .hero-title,
+body.website-theme-shell .offers-hero .offers-title,
+body.website-theme-shell .contact-hero .contact-title,
+body.website-theme-shell .listing-hero .listing-title,
+body.website-theme-shell .article-hero .article-title,
+body.website-theme-shell .tailor-hero .hero-title,
+body.website-theme-shell .static-page-hero .static-page-title,
+body.website-theme-shell .search-hero .hero-title,
+body.website-theme-shell .nile-hero .nile-title,
+body.website-theme-shell .nile-hero h1,
+body.website-theme-shell .nile-listing-hero .nile-title,
+body.website-theme-shell .nile-listing-hero h1,
+body.website-theme-shell .packages-hero .hero-title-main,
+body.website-theme-shell .packages-hero h1,
+body.website-theme-shell .day-tours-hero .hero-title-main,
+body.website-theme-shell .day-tours-hero h1,
+body.website-theme-shell .tips-hero .tips-title,
+body.website-theme-shell .tips-hero h1,
+body.website-theme-shell .package-hero .hero-title,
+body.website-theme-shell .package-hero h1,
+body.website-theme-shell .destinations-hero .hero-title,
+body.website-theme-shell .destinations-hero h1,
+body.website-theme-shell .blogs-hero .hero-title,
+body.website-theme-shell .blogs-hero h1,
+body.website-theme-shell .attraction-hero .hero-title,
+body.website-theme-shell .attraction-hero h1,
+body.website-theme-shell .multi-country-hero .hero-title,
+body.website-theme-shell .multi-country-hero h1,
+.nile-title,
+.hero-title-main,
+.static-page-title,
+.tips-title {
     font-family: "Playfair Display", serif;
-    color: var(--website-shell-hero-title) !important;
+    color: #ffffff !important;
     background: none !important;
-    -webkit-text-fill-color: currentColor;
+    -webkit-text-fill-color: #ffffff !important;
     letter-spacing: -0.04em;
-    text-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+    text-shadow: 0 12px 28px rgba(0, 0, 0, 0.45) !important;
 }
 
-body.website-theme-shell:not(.home-reference-page) .hero-section .hero-subtitle,
-body.website-theme-shell:not(.home-reference-page)
-    .hero-section
-    .hero-description,
-body.website-theme-shell:not(.home-reference-page) .offers-subtitle,
-body.website-theme-shell:not(.home-reference-page) .contact-subtitle,
-body.website-theme-shell:not(.home-reference-page) .listing-subtitle,
-body.website-theme-shell:not(.home-reference-page) .static-page-subtitle,
-body.website-theme-shell:not(.home-reference-page) .search-hero .hero-subtitle {
-    color: var(--website-shell-hero-subtitle) !important;
-    text-shadow: 0 3px 14px rgba(0, 0, 0, 0.24);
+body.website-theme-shell .hero-section .hero-subtitle,
+body.website-theme-shell .hero-section .hero-description,
+body.website-theme-shell .offers-subtitle,
+body.website-theme-shell .contact-subtitle,
+body.website-theme-shell .listing-subtitle,
+body.website-theme-shell .static-page-subtitle,
+body.website-theme-shell .search-hero .hero-subtitle,
+body.website-theme-shell .nile-hero .nile-subtitle,
+body.website-theme-shell .nile-hero p,
+body.website-theme-shell .nile-listing-hero .nile-subtitle,
+body.website-theme-shell .nile-listing-hero p,
+body.website-theme-shell .packages-hero .hero-subtitle-lead,
+body.website-theme-shell .packages-hero p,
+body.website-theme-shell .day-tours-hero .hero-subtitle-lead,
+body.website-theme-shell .day-tours-hero p,
+body.website-theme-shell .tips-hero .tips-subtitle,
+body.website-theme-shell .tips-hero p,
+body.website-theme-shell .package-hero .hero-subtitle,
+body.website-theme-shell .package-hero p,
+.nile-subtitle,
+.hero-subtitle-lead,
+.static-page-subtitle,
+.tips-subtitle {
+    color: rgba(255, 255, 255, 0.94) !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.94) !important;
+    text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35) !important;
 }
 
 body.website-theme-shell .section-kicker,
@@ -1487,10 +1522,25 @@ body.website-theme-shell .offers-breadcrumb {
     backdrop-filter: blur(12px);
 }
 
+html[data-theme="dark"] body.website-theme-shell .breadcrumb-top-bar,
+html[data-theme="dark"] body.website-theme-shell .breadcrumb-section,
+html[data-theme="dark"] body.website-theme-shell .offers-breadcrumb,
+html[data-theme="dark"] .breadcrumb-top-bar {
+    background: var(--website-nav-bg, #061b3e) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-top: none !important;
+}
+
 body.website-theme-shell .breadcrumb a,
 body.website-theme-shell .breadcrumb-list a,
 body.website-theme-shell .breadcrumb-item a {
     color: var(--website-shell-heading) !important;
+}
+
+html[data-theme="dark"] body.website-theme-shell .breadcrumb a,
+html[data-theme="dark"] body.website-theme-shell .breadcrumb-list a,
+html[data-theme="dark"] body.website-theme-shell .breadcrumb-item a {
+    color: var(--rich-gold, #f36b0a) !important;
 }
 
 body.website-theme-shell .breadcrumb-item.active,
@@ -2131,7 +2181,9 @@ html[data-theme="dark"] .tp-price-summary-box small {
 }
 
 /* Keep package, cruise, and day-tour card titles readable in both themes. */
-html[data-theme="light"] body.website-theme-shell :is(
+html[data-theme="light"]
+    body.website-theme-shell
+    :is(
         .package-card-title a,
         .journey-title a,
         .cruise-title a,
@@ -2141,7 +2193,9 @@ html[data-theme="light"] body.website-theme-shell :is(
     color: #1c1c1c !important;
 }
 
-html[data-theme="dark"] body.website-theme-shell :is(
+html[data-theme="dark"]
+    body.website-theme-shell
+    :is(
         .package-card-title a,
         .journey-title a,
         .cruise-title a,
@@ -2151,7 +2205,9 @@ html[data-theme="dark"] body.website-theme-shell :is(
     color: #f8fafc !important;
 }
 
-html[data-theme] body.website-theme-shell :is(
+html[data-theme]
+    body.website-theme-shell
+    :is(
         .package-card-title a,
         .journey-title a,
         .cruise-title a,

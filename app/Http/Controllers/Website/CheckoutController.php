@@ -265,6 +265,23 @@ class CheckoutController extends BaseWebsiteController
             return $booking->fresh(['client', 'package', 'items', 'travelers']);
         }, 3);
 
+        \App\Services\AdminNotificationService::sendAdminNotification('New Tour Booking Order', [
+            'Booking Number' => $booking->booking_number,
+            'Package' => $package->title,
+            'Total Amount' => $booking->currency_code . ' ' . number_format($booking->total_amount, 2),
+            'Travel Date' => $booking->travel_date,
+            'Lead Traveler' => ($data['travelers'][0]['first_name'] ?? '') . ' ' . ($data['travelers'][0]['last_name'] ?? ''),
+            'Email' => $data['email'],
+            'Phone' => $data['phone'],
+            'Nationality' => $data['nationality'] ?? 'N/A',
+            'Adults' => $data['adults'],
+            'Children' => $data['children'],
+            'Infants' => $data['infants'],
+            'Pickup Location' => $data['pickup_location'] ?? 'N/A',
+            'Special Requests' => $data['special_requests'] ?? 'N/A',
+            'Payment Method' => $data['payment_method'],
+        ]);
+
         try {
             /** @var PaymentMethod $method */
             $method = $selectedMethod['model'];

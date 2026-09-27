@@ -6,6 +6,7 @@ use App\Models\Page;
 use App\Models\Setting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class SettingController extends Controller
@@ -19,31 +20,52 @@ class SettingController extends Controller
 
     public function edit(): View
     {
-        $settings = Setting::where('group', 'basic')->pluck('value', 'key');
+        $settings = Setting::all()->pluck('value', 'key');
         return $this->view('admin.setting.edit', compact('settings'));
     }
 
     public function update(Request $request): RedirectResponse
     {
-        foreach ($request->except(['_token']) as $key => $value) {
-            Setting::updateOrCreate(
-                ['group' => 'basic', 'key' => $key],
-                ['value' => is_array($value) ? json_encode($value) : $value, 'type' => 'text']
-            );
+        foreach ($request->except(['_token', '_method']) as $key => $value) {
+            if ($request->hasFile($key)) {
+                $file = $request->file($key);
+                $filename = time() . '_' . $key . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('settings', $filename, 'public');
+                $value = 'storage/' . $path;
+            }
+
+            if ($value !== null) {
+                Setting::updateOrCreate(
+                    ['key' => $key],
+                    [
+                        'group' => 'basic',
+                        'value' => is_array($value) ? json_encode($value) : $value,
+                        'type' => $request->hasFile($key) ? 'image' : 'text',
+                    ]
+                );
+            }
         }
 
-        return back()->with('success', 'Basic settings updated.');
+        Cache::flush();
+
+        return back()->with('success', 'Basic settings & images updated successfully.');
     }
 
     public function updatepages(Request $request): RedirectResponse
     {
-        foreach ($request->except(['_token']) as $key => $value) {
+        foreach ($request->except(['_token', '_method']) as $key => $value) {
             Setting::updateOrCreate(
-                ['group' => 'pages', 'key' => $key],
-                ['value' => is_array($value) ? json_encode($value) : $value, 'type' => 'text']
+                ['key' => $key],
+                [
+                    'group' => 'pages',
+                    'value' => is_array($value) ? json_encode($value) : $value,
+                    'type' => 'text',
+                ]
             );
         }
 
-        return back()->with('success', 'Page settings updated.');
+        Cache::flush();
+
+        return back()->with('success', 'Page settings updated successfully.');
     }
 }

@@ -74,7 +74,7 @@ class InquiryController extends BaseWebsiteController
             if ($tierData) {
                 $pricePerPerson = (float) $tierData['price_per_person'];
                 $calculatedTotal = $adults * $pricePerPerson;
-                
+
                 $tierSummaryText = sprintf(
                     'Pricing Tier: %s (%d %s) @ %s%s/person = %s%s total',
                     $tierData['title'],
@@ -116,6 +116,20 @@ class InquiryController extends BaseWebsiteController
         $filteredData = array_filter($data, fn($key) => in_array($key, $columns, true), ARRAY_FILTER_USE_KEY);
 
         DB::table('inquiries')->insert($filteredData);
+
+        \App\Services\AdminNotificationService::sendAdminNotification('New Tour Inquiry / Book Form', [
+            'Name' => $validated['name'],
+            'Email' => $validated['email'],
+            'Phone' => $request->input('phone') ?? 'N/A',
+            'Nationality' => $request->input('nationality') ?? 'N/A',
+            'Travel Date' => $travelDate ?? 'N/A',
+            'Adults' => $adults,
+            'Children' => $children,
+            'Infants' => $infants,
+            'Package / Tour' => $package?->title ?? $request->input('title') ?? 'General Inquiry',
+            'Estimated Total' => $calculatedTotal > 0 ? '$' . number_format($calculatedTotal, 2) : 'N/A',
+            'Message' => $data['message'] ?? 'N/A',
+        ]);
 
         if ($request->wantsJson()) {
             return response()->json([

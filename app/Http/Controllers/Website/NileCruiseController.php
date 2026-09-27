@@ -68,8 +68,7 @@ class NileCruiseController extends BaseWebsiteController
                 $q->where('nile_cruise_type_id', $type->id)
                   ->orWhere(fn($sub) => $sub->where('package_type', 'nile_cruise')->whereNull('nile_cruise_type_id'));
             })
-            ->orderByDesc('is_featured')
-            ->orderByRaw('sort_order IS NULL, sort_order ASC')
+            ->displayOrder()
             ->take(6)
             ->get();
 
@@ -145,8 +144,7 @@ class NileCruiseController extends BaseWebsiteController
                         ->orWhere('description', 'like', $term);
                 });
             })
-            ->orderByDesc('is_featured')
-            ->orderByRaw('sort_order IS NULL, sort_order ASC');
+            ->displayOrder();
 
         $paginated = $query->paginate(12)->withQueryString();
         $packages = $paginated->through(fn($pkg) => $this->formatPackage($pkg));
@@ -226,8 +224,7 @@ class NileCruiseController extends BaseWebsiteController
                         ->orWhere('description', 'like', $term);
                 });
             })
-            ->orderByDesc('is_featured')
-            ->orderByRaw('sort_order IS NULL, sort_order ASC');
+            ->displayOrder();
 
         $paginated = $query->paginate(12)->withQueryString();
         $packages = $paginated->through(fn($pkg) => $this->formatPackage($pkg));

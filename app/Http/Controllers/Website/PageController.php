@@ -72,10 +72,7 @@ class PageController extends BaseWebsiteController
             ->when($request->sort === 'price', fn($query) => $query->orderBy('start_from_price'))
             ->when($request->sort === 'duration', fn($query) => $query->orderBy('duration_days'))
             ->when(!in_array($request->sort, ['price', 'duration'], true), function ($query) {
-                $query->orderByDesc('is_featured')
-                    ->orderByRaw('sort_order IS NULL, sort_order ASC')
-                    ->latest('published_at')
-                    ->latest('id');
+                $query->displayOrder();
             })
             ->paginate(12)
             ->withQueryString();

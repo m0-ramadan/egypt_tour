@@ -237,6 +237,7 @@ Route::prefix('admin')->name('admin.')->middleware('translate.admin')->group(fun
             Route::post('bulk-action', [PackageController::class, 'bulkAction'])->name('bulk-action');
             Route::post('{package}/toggle-status', [PackageController::class, 'toggleStatus'])->name('toggle-status');
             Route::post('{package}/toggle-featured', [PackageController::class, 'toggleFeatured'])->name('toggle-featured');
+            Route::post('{package}/update-sort-order', [PackageController::class, 'updateSortOrder'])->name('update-sort-order');
             Route::post('{package}/duplicate', [PackageController::class, 'duplicate'])->name('duplicate');
 
             Route::get('create-with-ai', [PackageController::class, 'createWithAI'])->name('create-with-ai');

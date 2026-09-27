@@ -26,8 +26,7 @@ class TripController extends BaseWebsiteController
                 });
             })
             ->when($request->filled('type'), fn($query) => $query->where('package_type', $request->type))
-            ->orderByDesc('is_featured')
-            ->orderByRaw('sort_order IS NULL, sort_order ASC')
+            ->displayOrder()
             ->paginate(12)
             ->withQueryString();
 
@@ -203,14 +202,21 @@ class TripController extends BaseWebsiteController
 
         $highlights = $package->highlights
             ->map(function ($highlight) {
-                $highlight->display_title = $this->transValue(
+                $title = trim((string) $this->transValue(
                     $highlight->getRawOriginal('title') ?? $highlight->title,
                     ''
-                );
-                $highlight->display_description = $this->transValue(
+                ));
+                $description = trim((string) $this->transValue(
                     $highlight->getRawOriginal('description') ?? $highlight->description,
                     ''
-                );
+                ));
+
+                if (mb_strtolower($title) === mb_strtolower($description)) {
+                    $description = '';
+                }
+
+                $highlight->display_title = $title;
+                $highlight->display_description = $description;
 
                 return $highlight;
             })
@@ -349,6 +355,7 @@ class TripController extends BaseWebsiteController
             ->where('is_active', true)
             ->where('id', '!=', $package->id)
             ->when($package->category_id, fn($query) => $query->where('category_id', $package->category_id))
+            ->displayOrder()
             ->limit(3)
             ->get()
             ->map(function (Package $related) {

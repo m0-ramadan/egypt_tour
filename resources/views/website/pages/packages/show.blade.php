@@ -190,6 +190,19 @@
             border-bottom: 1px solid rgba(243, 107, 10, .18)
         }
 
+        html[data-theme='dark'] .breadcrumb-top-bar {
+            background: var(--etp-navy-950, #061b3e) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        }
+
+        html[data-theme='dark'] .breadcrumb-list a {
+            color: var(--etp-orange-500, #f36b0a) !important;
+        }
+
+        html[data-theme='dark'] .breadcrumb-list li {
+            color: #cbd5e1 !important;
+        }
+
         .breadcrumb-list ul {
             list-style: none;
             display: flex;
@@ -1161,11 +1174,12 @@
         }
 
         .day-tour-price-box {
-            background: linear-gradient(135deg, #fdfbf7 0%, #f9f4ea 100%);
-            border: 1.5px solid rgba(210, 154, 78, 0.35);
+            background: linear-gradient(135deg, #2b2b2b 0%, #202020 100%);
+            border: 1.5px solid rgba(243, 107, 10, 0.42);
             border-radius: 12px;
             padding: 14px 16px;
             margin: 14px 0 10px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
         }
 
         .day-tour-price-header {
@@ -1178,14 +1192,14 @@
         .day-tour-price-label {
             font-size: 13px;
             font-weight: 600;
-            color: #555;
+            color: rgba(255, 255, 255, 0.68);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .day-tour-tier-badge {
-            background: rgba(210, 154, 78, 0.15);
-            color: #b0782b;
+            background: rgba(243, 107, 10, 0.16);
+            color: #ff9a52;
             font-size: 11px;
             font-weight: 700;
             padding: 3px 8px;
@@ -1195,14 +1209,14 @@
         .day-tour-price-total {
             font-size: 26px;
             font-weight: 800;
-            color: #061B3E;
+            color: #ffffff;
             line-height: 1.1;
         }
 
         .day-tour-price-breakdown {
             font-size: 12px;
             margin-top: 4px;
-            color: #777;
+            color: rgba(255, 255, 255, 0.58) !important;
         }
 
         .package-show-template .sidebar-option-name {
@@ -2401,8 +2415,8 @@
 
 
         /* =========================================================
-                                                                               Nile Cruise body redesign — body only, shared header/footer untouched
-                                                                               ========================================================= */
+                                                                                           Nile Cruise body redesign — body only, shared header/footer untouched
+                                                                                           ========================================================= */
         .nile-cruise-page .main-container {
             background:
                 radial-gradient(circle at 8% 8%, rgba(215, 239, 250, .58), transparent 34%),
@@ -3678,7 +3692,9 @@
                                             @if ($highlight->display_title)
                                                 <strong>{{ $highlight->display_title }}</strong>
                                             @endif
-                                            @if ($highlight->display_description)
+                                            @if (
+                                                $highlight->display_description &&
+                                                    trim(mb_strtolower($highlight->display_description)) !== trim(mb_strtolower($highlight->display_title ?? '')))
                                                 <span class="price-meta">{{ $highlight->display_description }}</span>
                                             @endif
                                         </li>
@@ -4102,18 +4118,23 @@
                                 ? []
                                 : (array) ($package->group_pricing_tiers ?? []),
                         )->filter(fn($tier) => is_array($tier) && (float) ($tier['price_per_person'] ?? 0) > 0);
-                        $hasAccommodations = $package->tourPackageAccommodations &&
-                            $package->tourPackageAccommodations->where('is_active', true)->contains(
-                                fn($accommodation) => $accommodation->seasons->where('is_active', true)->contains(
-                                    fn($season) => $season->items->where('is_active', true)->contains(
-                                        fn($item) => (float) $item->price > 0
-                                    )
-                                )
-                            );
+                        $hasAccommodations =
+                            $package->tourPackageAccommodations &&
+                            $package->tourPackageAccommodations
+                                ->where('is_active', true)
+                                ->contains(
+                                    fn($accommodation) => $accommodation->seasons
+                                        ->where('is_active', true)
+                                        ->contains(
+                                            fn($season) => $season->items
+                                                ->where('is_active', true)
+                                                ->contains(fn($item) => (float) $item->price > 0),
+                                        ),
+                                );
                         $package->package_type !== 'day_tour' &&
                             $package->tourPackageAccommodations &&
                             $package->tourPackageAccommodations->isNotEmpty();
-                        $showStandardPriceTable = $package->package_type !== 'travel_package' && $prices->isNotEmpty();
+                        $showStandardPriceTable = $prices->isNotEmpty();
                         $hasAnyStandardPricing =
                             $showStandardPriceTable ||
                             $hasCategoryPricing ||

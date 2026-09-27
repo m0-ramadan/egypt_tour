@@ -107,7 +107,7 @@
                     <a class="nav-link{{ $isNileCruisesPage ? ' is-active' : '' }}"
                         href="{{ route('website.nile_cruises.index') }}">
                         <i class="la la-ship"></i>
-                        {{ __('Nile Cruise') }}
+                        {{ __('Nile Cruises') }}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -242,7 +242,7 @@
         <div class="mobile-nav-item">
             <a href="{{ route('website.nile_cruises.index') }}"
                 class="mobile-nav-link{{ $isNileCruisesPage ? ' is-active' : '' }}">
-                <i class="la la-ship"></i> {{ __('Nile Cruise') }}
+                <i class="la la-ship"></i> {{ __('Nile Cruises') }}
             </a>
         </div>
 

@@ -106,9 +106,7 @@ class SearchController extends BaseWebsiteController
                         });
                 });
             })
-            ->orderByDesc('is_featured')
-            ->orderByRaw('sort_order IS NULL, sort_order ASC')
-            ->latest('id');
+            ->displayOrder();
 
         if (!$paginate) {
             $collection = $query->limit($perPage)->get();

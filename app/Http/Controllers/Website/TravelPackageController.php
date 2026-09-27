@@ -13,8 +13,8 @@ class TravelPackageController extends BaseWebsiteController
      */
     public function index(Request $request): View
     {
-        $heroImage = asset('website/images/travel-packages/7-days-egypt-vacation.jpg');
-        $heroImage = asset('website/images/travel-packages/hero-travel-packages.jpg');
+        $customHeroPackages = \App\Models\Setting::where('key', 'hero_image_packages')->value('value');
+        $heroImage = $customHeroPackages ? asset($customHeroPackages) : asset('website/images/travel-packages/hero-travel-packages.jpg');
 
         $pageContent = [
             'badge' => __('Egypt Vacation Packages'),

@@ -3170,9 +3170,11 @@
 
                                             <div>
                                                 <label class="form-label"
-                                                    for="sort_order">{{ admin_t('Sort Order') }}</label>
+                                                    for="sort_order">{{ admin_t('Tour Order / Position (ترتيب الظهور بالصفحات)') }}</label>
                                                 <input id="sort_order" type="number" name="sort_order"
-                                                    class="form-control" value="{{ old('sort_order') }}">
+                                                    class="form-control" value="{{ old('sort_order', 0) }}" min="0"
+                                                    placeholder="1, 2, 3...">
+                                                <small class="text-white-50">اكتب 1 أو 2 أو 3 لتحديد مكان الرحلة. القيمة 0 تعني بدون ترتيب وتظهر بعد الرحلات المرتبة.</small>
                                             </div>
                                         </div>
 

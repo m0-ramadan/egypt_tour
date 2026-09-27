@@ -141,6 +141,20 @@ class TailorMadeController extends BaseWebsiteController
             'status' => 'new',
         ]);
 
+        \App\Services\AdminNotificationService::sendAdminNotification('New Tailor-Made Custom Tour Request', [
+            'Name' => $validated['name'],
+            'Email' => $validated['email'],
+            'Phone' => $validated['phone'] ?? 'N/A',
+            'Nationality' => $validated['nationality'] ?? 'N/A',
+            'Start Date' => $validated['start_date'] ?? 'N/A',
+            'Duration' => ($validated['days'] ?? 'N/A') . ' days',
+            'Adults' => $validated['adults'] ?? 1,
+            'Children' => $validated['children'] ?? 0,
+            'Infants' => $validated['infants'] ?? 0,
+            'Accommodation' => $validated['acommodation'] ?? 'N/A',
+            'Summary Details' => $summary,
+        ]);
+
         return redirect()
             ->route('website.tailor_made.index')
             ->with('success', __('Your travel request has been sent successfully. We will contact you shortly.'));
@@ -152,7 +166,7 @@ class TailorMadeController extends BaseWebsiteController
         $occasion = $this->occasionOptions()[$validated['occasion'] ?? ''] ?? null;
         $interestOptions = $this->interestOptions();
         $interestLabels = collect($validated['interests'] ?? [])
-            ->map(fn (string $key) => $interestOptions[$key] ?? $key)
+            ->map(fn(string $key) => $interestOptions[$key] ?? $key)
             ->filter()
             ->implode(', ');
 

@@ -538,7 +538,7 @@
 }
 
 .showcase-hero__wave-fill {
-    fill: #fff;
+    fill: #111111;
     stroke: none !important;
 }
 
@@ -4598,6 +4598,11 @@ html[data-theme] body.home-reference-page .mini-route span {
 html[data-theme] body.home-reference-page .trust-section {
     margin-top: 0;
     padding: 16px 0 29px;
+    border: 0;
+}
+
+html[data-theme] body.home-reference-page .trust-section::after {
+    display: none;
 }
 
 html[data-theme] body.home-reference-page .trust-box {
