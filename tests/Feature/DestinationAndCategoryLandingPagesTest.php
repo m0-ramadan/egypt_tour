@@ -133,6 +133,25 @@ class DestinationAndCategoryLandingPagesTest extends TestCase
         $this->get('/Egypt/travel-pakages')->assertRedirect('/tour-packages');
     }
 
+    public function test_luxury_card_uses_the_explicit_category_route(): void
+    {
+        $response = $this->get('/tour-packages');
+
+        $response->assertOk();
+        $response->assertSee(route('website.luxury_egypt_tours'), false);
+        $this->get(route('website.luxury_egypt_tours'))
+            ->assertOk()
+            ->assertViewIs('website.pages.packages.index');
+    }
+
+    public function test_travel_tips_renders_without_a_database_page_record(): void
+    {
+        $this->get(route('website.travel_tips'))
+            ->assertOk()
+            ->assertViewIs('website.pages.static-pages.travel-tips')
+            ->assertSee('Egypt Travel Tips &amp; Complete Visitor Guide', false);
+    }
+
     public function test_trips_route_only_shows_travel_packages_and_never_day_tours_or_nile_cruises(): void
     {
         $country = Country::first();
