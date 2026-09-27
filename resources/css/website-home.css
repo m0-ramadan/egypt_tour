@@ -538,8 +538,16 @@
 }
 
 .showcase-hero__wave-fill {
-    fill: #111111;
+    fill: #ffffff;
     stroke: none !important;
+}
+
+html[data-theme="dark"] .showcase-hero__wave-fill {
+    fill: #111111;
+}
+
+html[data-theme="light"] .showcase-hero__wave-fill {
+    fill: #ffffff;
 }
 
 .showcase-hero__wave-line {
