@@ -49,7 +49,7 @@ class TravelPackageController extends BaseWebsiteController
                 'badge' => __('Ultra Luxury'),
                 'image' => 'website/images/travel-packages/luxury-egypt-tours.jpg',
                 'desc' => __('Discover Egypt in exceptional comfort with premier hotels, private guides, and luxury Nile cruises.'),
-                'url' => route('website.tour_packages.category', ['category' => 'egypt-luxury-tours']),
+                'url' => route('website.luxury_egypt_tours'),
             ],
             [
                 'title' => __('Family Egypt Tours'),

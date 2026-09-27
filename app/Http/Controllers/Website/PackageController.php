@@ -37,7 +37,7 @@ class PackageController extends BaseWebsiteController
             }
         }
 
-        if (($selectedType === null || $selectedType === 'travel_package') && !$duration && $destinationSlug === '' && $search === '' && $category === '') {
+        if (($selectedType === null || $selectedType === 'travel_package') && !$duration && $destinationSlug === '' && $search === '' && $category === '' && !$request->boolean('luxury')) {
             return app(TravelPackageController::class)->index($request);
         }
 

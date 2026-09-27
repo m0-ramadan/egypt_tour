@@ -55,7 +55,7 @@
                     <li><a href="{{ route('website.pages.show', 'privacy-policy') }}"><i
                                 class="las la-chevron-right mr-1"></i>{{ __('Privacy Policy') }}</a>
                     </li>
-                    <li><a href="{{ route('website.pages.show', 'travel-tips') }}"><i
+                    <li><a href="{{ route('website.travel_tips') }}"><i
                                 class="las la-chevron-right mr-1"></i>{{ __('Travel Tips') }}</a>
                     </li>
                     <li><a href="{{ route('website.blogs.index') }}"><i

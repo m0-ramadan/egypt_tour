@@ -12,6 +12,23 @@ use Illuminate\View\View;
 
 class PageController extends BaseWebsiteController
 {
+    public function travelTips(): View
+    {
+        $page = Page::query()
+            ->publiclyVisible()
+            ->where('slug', 'travel-tips')
+            ->first();
+
+        return view('website.pages.static-pages.travel-tips', [
+            'page' => $page,
+            'pageTitle' => $page?->display_title ?: __('Egypt Travel Tips & Complete Visitor Guide'),
+            'seoTitle' => $page?->display_seo_title ?: __('Egypt Travel Tips & Visitor Guide - Egypt Tour Pro'),
+            'pageBody' => $page?->display_body ?: '',
+            'pageExcerpt' => $page?->display_seo_description ?: __('Essential Egypt travel tips covering visas, weather, money, tipping, clothing, safety, transport, and packing.'),
+            'heroImage' => $this->imageUrl($page?->featured_image, 'website/photos/home2.webp'),
+        ]);
+    }
+
     public function show(string $slug): View|RedirectResponse
     {
         $page = Page::query()

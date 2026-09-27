@@ -318,6 +318,9 @@ Route::name('website.')->group(function () {
     Route::get('search', [SearchController::class, 'index'])
         ->name('search.index');
 
+    Route::get('/travel-tips', [PageController::class, 'travelTips'])
+        ->name('travel_tips');
+
     Route::get('/{slug}', [PageController::class, 'show'])
         ->where('slug', '[A-Za-z0-9\-]+')
         ->name('pages.show');
