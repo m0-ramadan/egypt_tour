@@ -42,8 +42,7 @@ class TranslateAdminHtml
 
     protected function shouldTranslate(Request $request, SymfonyResponse $response): bool
     {
-        if (!(bool) config('translation.legacy_admin_html_enabled', true)
-            || app()->getLocale() === config('translation.source_locale', 'en')) {
+        if (!(bool) config('translation.legacy_admin_html_enabled', true)) {
             return false;
         }
 
@@ -68,6 +67,24 @@ class TranslateAdminHtml
     {
         if (isset(static::$translationCache[$locale])) {
             return static::$translationCache[$locale];
+        }
+
+        if ($locale === 'en') {
+            $maps = require dirname(__DIR__, 3) . '/resources/views/admin/i18n/translations.php';
+            $translations = [];
+
+            foreach (($maps['en'] ?? []) as $source => $target) {
+                if (is_string($source)
+                    && is_string($target)
+                    && preg_match('/[\x{0600}-\x{06FF}]/u', $source)
+                    && !preg_match('/[\x{0600}-\x{06FF}]/u', $target)) {
+                    $translations[trim($source)] = trim($target);
+                }
+            }
+
+            uksort($translations, fn (string $a, string $b) => mb_strlen($b) <=> mb_strlen($a));
+
+            return static::$translationCache[$locale] = $translations;
         }
 
         $path = lang_path($locale . '.json');

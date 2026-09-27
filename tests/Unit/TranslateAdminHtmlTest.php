@@ -8,6 +8,19 @@ use ReflectionMethod;
 
 class TranslateAdminHtmlTest extends TestCase
 {
+    public function test_english_admin_map_only_translates_arabic_sources_to_english(): void
+    {
+        $method = new ReflectionMethod(TranslateAdminHtml::class, 'translationsFor');
+        $translations = $method->invoke(new TranslateAdminHtml(), 'en');
+
+        $this->assertSame('Add', $translations['إضافة']);
+        $this->assertArrayNotHasKey('Add', $translations);
+        $this->assertDoesNotMatchRegularExpression(
+            '/[\x{0600}-\x{06FF}]/u',
+            implode(' ', array_values($translations))
+        );
+    }
+
     public function test_it_preserves_dynamic_markup_inside_scripts_while_translating_html(): void
     {
         $script = <<<'HTML'

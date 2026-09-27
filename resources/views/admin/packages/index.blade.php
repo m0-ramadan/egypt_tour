@@ -398,8 +398,7 @@
 
                             <div>
                                 <div class="d-flex align-items-center gap-2">
-                                    <span class="detail-label" title="موقع الرحلة في الصفحات (1، 2، 3...)">Order /
-                                        الترتيب:</span>
+                                    <span class="detail-label" title="Package position on listing pages (1, 2, 3...)">Order:</span>
                                     <form action="{{ route('admin.packages.update-sort-order', $package) }}"
                                         method="POST" class="d-flex align-items-center gap-1">
                                         @csrf
@@ -407,7 +406,7 @@
                                             class="form-control form-control-sm text-center py-0 px-1"
                                             style="width: 65px; height: 30px;" min="0">
                                         <button type="submit" class="btn btn-sm btn-primary py-0 px-2"
-                                            style="height: 30px;" title="حفظ الترتيب">Save</button>
+                                            style="height: 30px;" title="Save order">Save</button>
                                     </form>
                                 </div>
                             </div>
@@ -438,7 +437,7 @@
                                         @csrf
                                         <button
                                             class="btn {{ $package->is_featured ? 'btn-warning' : 'btn-outline-warning' }} btn-sm"
-                                            type="submit" title="إظهار / إخفاء بالهوم">
+                                            type="submit" title="Show or hide on the home page">
                                             <i class="fas fa-star me-1"></i>
                                             {{ $package->is_featured ? 'Unfeature' : 'Feature on Home' }}
                                         </button>

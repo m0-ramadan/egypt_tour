@@ -53,7 +53,7 @@ return new class extends Migration
             $table->text('excerpt')->nullable();
             $table->longText('content')->nullable();
             $table->string('featured_image')->nullable();
-            $table->enum('article_type', ['blog', 'guide', 'wiki'])->default('blog');
+            $table->string('article_type', 100)->default('blog');
             $table->boolean('is_featured')->default(false);
             $table->boolean('is_active')->default(true);
             $table->timestamp('published_at')->nullable();

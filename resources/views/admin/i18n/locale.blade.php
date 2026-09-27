@@ -115,28 +115,13 @@
         function admin_t($key, array $replace = []): string
         {
             $key = trim((string) $key);
-            $locale = app()->getLocale();
             $maps = admin_translation_maps();
 
-            $translated = null;
-
-            if ($locale === 'en') {
-                if (isset($maps['en'][$key])) {
-                    $val = $maps['en'][$key];
-                    if (preg_match('/[\x{0600}-\x{06FF}]/u', $val) && !preg_match('/[\x{0600}-\x{06FF}]/u', $key)) {
-                        $translated = $key;
-                    } else {
-                        $translated = $val;
-                    }
-                } else {
-                    $cleanKey = trim(preg_replace('/^[\'"]+|[\'"]+$/', '', $key));
-                    if (isset($maps['en'][$cleanKey])) {
-                        $translated = $maps['en'][$cleanKey];
-                    }
-                }
-            } else {
-                $translated = $maps[$locale][$key] ?? null;
-            }
+            // The CMS is English-only. Never translate an already-English label
+            // through the legacy map because many old entries point to Arabic.
+            $translated = preg_match('/[\x{0600}-\x{06FF}]/u', $key)
+                ? ($maps['en'][$key] ?? null)
+                : $key;
 
             if ($translated === null || preg_match('/[\x{0600}-\x{06FF}]/u', $translated)) {
                 $translated = admin_arabic_fallback_translation($key);
