@@ -74,8 +74,8 @@
                     </div>
                     <div class="award-image-container">
 
-                        <img loading="lazy" decoding="async" width="500" height="500"
-                            src="{{ asset('website/photos/google-reviews-badge.jpg') }}"
+                        <img loading="lazy" decoding="async" width="320" height="320"
+                            src="{{ asset('website/photos/google-reviews-badge-320.webp') }}"
                             alt="{{ __('Google Reviews Rating') }}" class="award-image"
                             style="border-radius: 12px; max-width: 160px; margin: 0 auto; display: block;">
                         <div class="award-glow"></div>

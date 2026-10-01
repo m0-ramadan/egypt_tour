@@ -10,7 +10,11 @@
 @section('image', asset('website/logo/egypt-tour-pro-charcoal.png'))
 @section('preferred_theme', 'light')
 @section('body_class', 'home-reference-page')
-@section('home_style_bundle', '1')
+@section('css')
+    @vite('resources/css/website-home-critical.css')
+    <link rel="preload" as="style" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}"></noscript>
+@endsection
 
 @section('lcp_preload')
     <link rel="preload" as="image" type="image/webp"
@@ -49,7 +53,7 @@
                         sizes="100vw">
                 @endif
                 <img src="{{ $heroHomeBg }}" alt="" width="1677" height="938" fetchpriority="high"
-                    loading="eager" decoding="sync">
+                    loading="eager" decoding="async">
             </picture>
             <div class="showcase-hero__flight" aria-hidden="true">
                 <span class="showcase-hero__flight-path"></span>
@@ -543,8 +547,8 @@
                             <div class="card-image">
                                 <div class="badge-top">{{ $destination['country'] ?: __('Destination') }}</div>
                                 <div class="destination-watermark-logo">
-                                    <img src="{{ asset('website/logo/egypt-tour-pro-light.png') }}" alt="Egypt Tour Pro"
-                                        loading="lazy">
+                                    <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
+                                        alt="Egypt Tour Pro" width="239" height="96" loading="lazy" decoding="async">
                                 </div>
                                 <a href="{{ $destination['url'] }}">
                                     <img src="{{ $destination['image'] }}" alt="{{ $destination['title'] }}"
@@ -603,8 +607,8 @@
                         <div class="article-card reveal-up">
                             <div class="card-image">
                                 <div class="destination-watermark-logo">
-                                    <img src="{{ asset('website/logo/egypt-tour-pro-light.png') }}" alt="Egypt Tour Pro"
-                                        loading="lazy">
+                                    <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
+                                        alt="Egypt Tour Pro" width="239" height="96" loading="lazy" decoding="async">
                                 </div>
                                 <a href="{{ $article['url'] }}">
                                     <img src="{{ $article['image'] }}" alt="{{ $article['title'] }}" width="800"

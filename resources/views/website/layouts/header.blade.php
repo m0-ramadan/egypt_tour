@@ -28,7 +28,7 @@
             <img class="brand-logo-img logo-dark" src="{{ asset('website/logo/egypt-tour-pro-dark-270.webp') }}"
                 srcset="{{ asset('website/logo/egypt-tour-pro-dark-270.webp') }} 270w, {{ asset('website/logo/egypt-tour-pro-dark.webp') }} 473w"
                 sizes="(max-width: 500px) 135px, (max-width: 991px) 165px, 200px"
-                alt="{{ __('Egypt Tour Pro') }}" width="200" height="64" fetchpriority="high"
+                alt="{{ __('Egypt Tour Pro') }}" width="200" height="64" decoding="async"
                 onerror="this.onerror=null;this.src='{{ asset('website/logo/egypt-tour-pro-dark.png') }}';">
         </a>
 

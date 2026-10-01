@@ -279,7 +279,8 @@
                                             @endif
                                         </div>
                                         <div class="form-text mt-2" bis_skin_checked="1">
-                                            Permission name will be generated automatically based on selected module and action
+                                            Permission name will be generated automatically based on selected module and
+                                            action
                                         </div>
                                     </div>
                                 </div>
@@ -296,7 +297,8 @@
                                         <ul class="mb-0 ps-3">
                                             <li class="mb-2">Choose a clear description for the permission</li>
                                             <li class="mb-2">Use a concise description explaining permission scope</li>
-                                            <li class="mb-2">Ensure From That Permission No Conflict With Permissions Other</li>
+                                            <li class="mb-2">Ensure From That Permission No Conflict With Permissions
+                                                Other</li>
                                             <li>You can edit permission later if needed</li>
                                         </ul>
                                     </div>
@@ -384,7 +386,7 @@
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/jquery/jquery.js') }}"></script>
     <script>
         $(document).ready(function() {
             // Generate SEO Preview Name Permission
@@ -433,7 +435,9 @@
                     const originalAction = "{{ $actionVal ?? '' }}";
 
                     if (module !== originalModule || action !== originalAction) {
-                        if (!confirm('Changing module or action will change permission name. Do you want to proceed?')) {
+                        if (!confirm(
+                                'Changing module or action will change permission name. Do you want to proceed?'
+                            )) {
                             e.preventDefault();
                             return false;
                         }

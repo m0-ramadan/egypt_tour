@@ -544,8 +544,8 @@
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 
     <script>
         function loadVisitorsChart(year = null) {

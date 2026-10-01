@@ -3172,9 +3172,10 @@
                                                 <label class="form-label"
                                                     for="sort_order">{{ admin_t('Tour Order / Position') }}</label>
                                                 <input id="sort_order" type="number" name="sort_order"
-                                                    class="form-control" value="{{ old('sort_order', 0) }}" min="0"
-                                                    placeholder="1, 2, 3...">
-                                                <small class="text-white-50">Enter 1, 2, or 3 to set the tour position. A value of 0 means no priority, so it appears after ordered tours.</small>
+                                                    class="form-control" value="{{ old('sort_order', 0) }}"
+                                                    min="0" placeholder="1, 2, 3...">
+                                                <small class="text-white-50">Enter 1, 2, or 3 to set the tour position. A
+                                                    value of 0 means no priority, so it appears after ordered tours.</small>
                                             </div>
                                         </div>
 
@@ -5000,7 +5001,7 @@
             </div>
         </div>
         <script src="{{ asset('admin/js/unified-pricing.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.9/jodit.min.js"></script>
+        <script src="{{ asset('dashboard/assets/vendor/libs/jodit/jodit.min.js') }}"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const descElem = document.getElementById('description');

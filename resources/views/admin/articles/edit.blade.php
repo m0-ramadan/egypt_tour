@@ -384,7 +384,7 @@
 @endsection
 
 @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.9/jodit.min.js"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/jodit/jodit.min.js') }}"></script>
 
     <script>
         const csrfToken = '{{ csrf_token() }}';

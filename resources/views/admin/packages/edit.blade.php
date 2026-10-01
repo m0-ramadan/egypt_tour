@@ -2196,7 +2196,8 @@
                                                                 type="button" class="preview-remove"
                                                                 data-remove-saved-featured
                                                                 aria-label="{{ admin_t('Remove') }}"><i
-                                                                    class="ti ti-trash"></i></button></div>
+                                                                    class="ti ti-trash"></i></button>
+                                                        </div>
                                                     </div>
                                                 @endif
                                             </div>
@@ -2229,7 +2230,8 @@
                                                                 type="button" class="preview-remove"
                                                                 data-remove-saved-gallery="{{ $imageIndex }}"
                                                                 aria-label="{{ admin_t('Remove') }}"><i
-                                                                    class="ti ti-trash"></i></button></div>
+                                                                    class="ti ti-trash"></i></button>
+                                                        </div>
                                                     </div>
                                                 @endforeach
                                                 @if (!$savedGalleryUrls)
@@ -3348,9 +3350,10 @@
                                                     for="sort_order">{{ admin_t('Tour Order / Position') }}</label>
                                                 <input id="sort_order" type="number" name="sort_order"
                                                     class="form-control"
-                                                    value="{{ old('sort_order', $package->sort_order ?? 0) }}" min="0"
-                                                    placeholder="1, 2, 3...">
-                                                <small class="text-white-50">Enter 1, 2, or 3 to set the tour position. A value of 0 means no priority, so it appears after ordered tours.</small>
+                                                    value="{{ old('sort_order', $package->sort_order ?? 0) }}"
+                                                    min="0" placeholder="1, 2, 3...">
+                                                <small class="text-white-50">Enter 1, 2, or 3 to set the tour position. A
+                                                    value of 0 means no priority, so it appears after ordered tours.</small>
                                             </div>
                                         </div>
 
@@ -4230,7 +4233,7 @@
                         const card = featuredPreview.querySelector('.preview-card');
                         card?.insertAdjacentHTML('beforeend',
                             `<div class="preview-card-footer"><span>${texts.imagePreview}</span><button type="button" class="preview-remove" data-remove-saved-featured aria-label="${texts.remove}"><i class="ti ti-trash"></i></button></div>`
-                            );
+                        );
                     }
                     return;
                 }
@@ -5334,7 +5337,7 @@
                     </div>
                 </form>
                 <script src="{{ asset('admin/js/unified-pricing.js') }}"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.9/jodit.min.js"></script>
+                <script src="{{ asset('dashboard/assets/vendor/libs/jodit/jodit.min.js') }}"></script>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const descElem = document.getElementById('description');
