@@ -12,6 +12,7 @@
 @section('body_class', 'home-reference-page')
 @section('css')
     @vite('resources/css/website-home-critical.css')
+    @vite('resources/css/website-home-mobile.css')
     <link rel="preload" as="style" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}"></noscript>
 @endsection

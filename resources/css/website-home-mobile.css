@@ -1,0 +1,10 @@
+@media (max-width: 767px) {
+    .showcase-hero__features {
+        display: none !important;
+    }
+
+    .trust-section {
+        content-visibility: auto;
+        contain-intrinsic-size: 400px;
+    }
+}

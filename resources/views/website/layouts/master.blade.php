@@ -166,7 +166,7 @@
     <main id="main-content" tabindex="-1">
         @yield('content')
 
-        <!-- Include Footer -->
+        @if (!request()->routeIs('website.home'))
         <!-- Why Travel With Us Section -->
         <section class="why-choose-section" style="background: var(--pearl-luxury); padding: 80px 0;">
             <div class="container">
@@ -345,6 +345,7 @@
                 </div>
             </div>
         </section>
+        @endif
 
     </main>
 
