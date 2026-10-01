@@ -52,7 +52,6 @@
                     loading="eager" decoding="async">
             </picture>
             <div class="showcase-hero__flight" aria-hidden="true">
-                <span class="showcase-hero__flight-path"></span>
                 <i class="la la-plane"></i>
             </div>
             <div class="showcase-hero__signature" aria-hidden="true">
@@ -145,8 +144,8 @@
 
             <svg class="showcase-hero__wave" viewBox="0 0 2170 82" preserveAspectRatio="none" aria-hidden="true">
                 <path class="showcase-hero__wave-fill"
-                    d="M0,18 C205,88 455,40 720,56 C1120,82 1540,88 2170,8 L2170,85 L0,85 Z"></path>
-                <path class="showcase-hero__wave-line" d="M0,18 C205,88 455,40 720,56 C1120,82 1540,88 2170,8"></path>
+                    d="M0,8 L2170,8 L2170,85 L0,85 Z"></path>
+                <path class="showcase-hero__wave-line" d="M0,8 L2170,8"></path>
             </svg>
         </section>
 
