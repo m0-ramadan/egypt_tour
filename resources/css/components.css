@@ -528,3 +528,153 @@ html[dir="rtl"] .floating-whatsapp {
         min-width: 260px !important;
     }
 }
+
+/* Custom styled searchable country code flag picker */
+.iti {
+    width: 100%;
+    display: block;
+}
+
+.iti__country-container {
+    z-index: 5;
+}
+
+.iti__flag-box {
+    width: 20px !important;
+    min-width: 20px !important;
+    flex: 0 0 20px !important;
+}
+
+.iti__flag {
+    width: 20px !important;
+    height: 15px !important;
+    flex: 0 0 auto !important;
+    background-image: url("/website/vendor/intl-tel-input/img/flags.png") !important;
+    background-size: 5762px 15px !important;
+}
+
+@media (min-resolution: 2dppx) {
+    .iti__flag {
+        background-image: url("/website/vendor/intl-tel-input/img/flags@2x.png") !important;
+    }
+}
+
+.iti__selected-country {
+    padding: 0 12px !important;
+    border-radius: 14px 0 0 14px !important;
+    background: transparent !important;
+}
+
+html[dir="rtl"] .iti__selected-country {
+    border-radius: 0 14px 14px 0 !important;
+}
+
+.iti__selected-dial-code {
+    font-weight: 700;
+    color: #2b2b2b;
+    font-size: 0.95rem;
+    margin-left: 6px;
+}
+
+html[dir="rtl"] .iti__selected-dial-code {
+    margin-left: 0;
+    margin-right: 6px;
+}
+
+.iti__dropdown-content {
+    background-color: #ffffff !important;
+    border-radius: 18px !important;
+    box-shadow: 0 16px 40px rgba(17, 17, 17, 0.22) !important;
+    border: 1px solid rgba(43, 43, 43, 0.12) !important;
+    padding: 8px !important;
+    z-index: 99999 !important;
+}
+
+.iti__search-input {
+    width: 100% !important;
+    padding: 10px 14px !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(43, 43, 43, 0.15) !important;
+    font-size: 0.9rem !important;
+    outline: none !important;
+    margin-bottom: 8px !important;
+    background: #f8fbff !important;
+    color: #2b2b2b !important;
+}
+
+.iti__country-list {
+    border-top: 1px solid rgba(43, 43, 43, 0.08) !important;
+    border-radius: 0 0 14px 14px !important;
+    max-height: 240px !important;
+}
+
+.iti__country {
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
+    font-size: 0.92rem !important;
+    color: #2b2b2b !important;
+    transition: background-color 0.15s ease;
+}
+
+.iti__country:hover,
+.iti__country.iti__highlight {
+    background-color: rgba(243, 107, 10, 0.12) !important;
+}
+
+.iti input.form-control,
+.iti input.iti__tel-input {
+    width: 100% !important;
+    min-height: 58px !important;
+    border-radius: 18px !important;
+}
+
+/* Dark theme support */
+html[data-theme='dark'] .iti__selected-dial-code {
+    color: #f8fafc !important;
+}
+
+html[data-theme='dark'] .iti__dropdown-content {
+    background-color: #111111 !important;
+    border-color: rgba(170, 163, 155, 0.2) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45) !important;
+}
+
+html[data-theme='dark'] .iti__search-input {
+    background-color: #111111 !important;
+    color: #ffffff !important;
+    border-color: rgba(170, 163, 155, 0.24) !important;
+}
+
+html[data-theme='dark'] .iti__country {
+    color: #efe9e2 !important;
+}
+
+/* --------------------------------------------------
+   10. DROPDOWN SUBMENU
+   -------------------------------------------------- */
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu > .dropdown-submenu-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    display: none;
+    position: absolute;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    border: none;
+    min-width: 220px;
+    background: #ffffff;
+}
+
+[dir="rtl"] .dropdown-submenu > .dropdown-submenu-menu {
+    left: auto;
+    right: 100%;
+}
+
+.dropdown-submenu:hover > .dropdown-submenu-menu {
+    display: block;
+}
+

@@ -1577,6 +1577,10 @@
         }
 
         @media(max-width:991px) {
+            body.package-show-template .breadcrumb-top-bar {
+                display: none;
+            }
+
             body.package-show-template #main-content {
                 padding-bottom: 76px;
             }

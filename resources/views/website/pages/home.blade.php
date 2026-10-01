@@ -10,10 +10,14 @@
 @section('image', asset('website/logo/egypt-tour-pro-charcoal.png'))
 @section('preferred_theme', 'light')
 @section('body_class', 'home-reference-page')
+@section('home_style_bundle', '1')
 
 @section('lcp_preload')
     <link rel="preload" as="image" type="image/webp"
-        href="{{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }}" media="(max-width: 767px)"
+        href="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }}"
+        imagesrcset="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }} 480w, {{ asset('website/photos/optimized/home-pyramids-mobile-640.webp') }} 640w, {{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }} 744w"
+        imagesizes="100vw"
+        media="(max-width: 767px)"
         fetchpriority="high">
     <link rel="preload" as="image" type="image/webp"
         href="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }}"
@@ -25,14 +29,10 @@
     $isRtl = app()->getLocale() === 'ar';
 @endphp
 
-@section('css')
-    @vite('resources/css/website-home.css')
-@endsection
-
 @section('content')
     <div class="tour-page">
 
-        <section class="showcase-hero" id="home">
+        <section class="showcase-hero" id="home" data-critical-fold>
             <picture class="showcase-hero__media" aria-hidden="true">
                 @php
                     $customHeroHome = \App\Models\Setting::where('key', 'hero_image_home')->value('value');
@@ -42,13 +42,14 @@
                 @endphp
                 @if (!$customHeroHome)
                     <source media="(max-width: 767px)" type="image/webp"
-                        srcset="{{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }}">
+                        srcset="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }} 480w, {{ asset('website/photos/optimized/home-pyramids-mobile-640.webp') }} 640w, {{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }} 744w"
+                        sizes="100vw">
                     <source type="image/webp"
                         srcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
                         sizes="100vw">
                 @endif
                 <img src="{{ $heroHomeBg }}" alt="" width="1677" height="938" fetchpriority="high"
-                    loading="eager" decoding="async">
+                    loading="eager" decoding="sync">
             </picture>
             <div class="showcase-hero__flight" aria-hidden="true">
                 <span class="showcase-hero__flight-path"></span>
@@ -114,7 +115,7 @@
                             <div class="showcase-tour-card__image">
                                 <img src="{{ asset('website/photos/optimized/home-nile-cruise-900.webp') }}"
                                     alt="{{ __('Luxury Nile cruise at sunset') }}" width="900" height="473"
-                                    loading="eager" decoding="sync">
+                                    loading="lazy" decoding="async">
                                 <span class="showcase-tour-card__category">
                                     <i class="la la-map-marker"></i>{{ __('Nile Cruise') }}
                                 </span>
@@ -237,10 +238,14 @@
                             <div class="badge-top">{{ __('Day Tours') }}</div>
 
                             <a href="{{ route('website.day_tours.index') }}" aria-label="{{ __('Egypt Day Tours') }}">
-                                <img src="{{ asset('website/photos/experiences/day-tours.jpg') }}"
-                                    alt="{{ __('Egypt Day Tours') }}" width="800" height="500" loading="lazy"
-                                    decoding="async"
-                                    onerror="this.onerror=null;this.src='{{ asset('website/images/day-tours/cairo-day-tours.jpg') }}';">
+                                <picture>
+                                    <source type="image/avif" srcset="{{ asset('website/photos/experiences/day-tours-480.avif') }} 480w, {{ asset('website/photos/experiences/day-tours-768.avif') }} 768w, {{ asset('website/photos/experiences/day-tours-1024.avif') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                    <source type="image/webp" srcset="{{ asset('website/photos/experiences/day-tours-480.webp') }} 480w, {{ asset('website/photos/experiences/day-tours-768.webp') }} 768w, {{ asset('website/photos/experiences/day-tours-1024.webp') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                    <img src="{{ asset('website/photos/experiences/day-tours.jpg') }}"
+                                        alt="{{ __('Egypt Day Tours') }}" width="800" height="500" loading="lazy"
+                                        decoding="async"
+                                        onerror="this.onerror=null;this.src='{{ asset('website/images/day-tours/cairo-day-tours.jpg') }}';">
+                                </picture>
                             </a>
                         </div>
 
@@ -273,10 +278,14 @@
 
                             <a href="{{ route('website.travel_packages.index') }}"
                                 aria-label="{{ __('Egypt Tour Packages') }}">
-                                <img src="{{ asset('website/photos/experiences/travel-packages.jpg') }}"
-                                    alt="{{ __('Egypt Tour Packages') }}" width="800" height="500" loading="lazy"
-                                    decoding="async"
-                                    onerror="this.onerror=null;this.src='{{ asset('website/images/travel-packages/7-days-egypt-vacation.jpg') }}';">
+                                <picture>
+                                    <source type="image/avif" srcset="{{ asset('website/photos/experiences/travel-packages-480.avif') }} 480w, {{ asset('website/photos/experiences/travel-packages-768.avif') }} 768w, {{ asset('website/photos/experiences/travel-packages-1024.avif') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                    <source type="image/webp" srcset="{{ asset('website/photos/experiences/travel-packages-480.webp') }} 480w, {{ asset('website/photos/experiences/travel-packages-768.webp') }} 768w, {{ asset('website/photos/experiences/travel-packages-1024.webp') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                    <img src="{{ asset('website/photos/experiences/travel-packages.jpg') }}"
+                                        alt="{{ __('Egypt Tour Packages') }}" width="800" height="500" loading="lazy"
+                                        decoding="async"
+                                        onerror="this.onerror=null;this.src='{{ asset('website/images/travel-packages/7-days-egypt-vacation.jpg') }}';">
+                                </picture>
                             </a>
                         </div>
 
@@ -308,17 +317,21 @@
                         <div class="card-image">
                             <div class="badge-top">{{ __('Nile Cruises') }}</div>
 
-                            <a href="{{ route('website.nile_cruises.index') }}" aria-label="{{ __('Nile Cruise') }}">
-                                <img src="{{ asset('website/photos/experiences/nile-cruises.jpg') }}"
-                                    alt="{{ __('Nile Cruise') }}" width="800" height="500" loading="lazy"
-                                    decoding="async"
-                                    onerror="this.onerror=null;this.src='{{ asset('website/images/nile-cruises/luxor-aswan.jpg') }}';">
+                            <a href="{{ route('website.nile_cruises.index') }}" aria-label="{{ __('Egypt Nile Cruise') }}">
+                                <picture>
+                                    <source type="image/avif" srcset="{{ asset('website/photos/experiences/nile-cruises-480.avif') }} 480w, {{ asset('website/photos/experiences/nile-cruises-768.avif') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.avif') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                    <source type="image/webp" srcset="{{ asset('website/photos/experiences/nile-cruises-480.webp') }} 480w, {{ asset('website/photos/experiences/nile-cruises-768.webp') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.webp') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                    <img src="{{ asset('website/photos/experiences/nile-cruises.jpg') }}"
+                                        alt="{{ __('Egypt Nile Cruise') }}" width="800" height="500" loading="lazy"
+                                        decoding="async"
+                                        onerror="this.onerror=null;this.src='{{ asset('website/images/nile-cruises/luxor-aswan.jpg') }}';">
+                                </picture>
                             </a>
                         </div>
 
                         <div class="card-body">
                             <h3 class="deal-title">
-                                <a href="{{ route('website.nile_cruises.index') }}">{{ __('Nile Cruise') }}</a>
+                                <a href="{{ route('website.nile_cruises.index') }}">{{ __('Egypt Nile Cruise') }}</a>
                             </h3>
 
                             <div class="deal-meta">
@@ -803,176 +816,4 @@
         </div>
 
     </div>
-@endsection
-
-@section('js')
-    <script>
-        function initReveal() {
-            const revealItems = document.querySelectorAll('.reveal-up');
-
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-visible');
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, {
-                    threshold: 0.05,
-                    rootMargin: '0px 0px 50px 0px'
-                });
-
-                revealItems.forEach(function(item, index) {
-                    item.style.transitionDelay = (index % 4) * 60 + 'ms';
-                    observer.observe(item);
-                });
-            } else {
-                revealItems.forEach(function(item) {
-                    item.classList.add('is-visible');
-                });
-            }
-
-            setTimeout(function() {
-                document.querySelectorAll('.reveal-up:not(.is-visible)').forEach(function(item) {
-                    item.classList.add('is-visible');
-                });
-            }, 400);
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initReveal);
-        } else {
-            initReveal();
-        }
-
-        // Testimonials Slider JS
-        document.addEventListener('DOMContentLoaded', function() {
-            const slider = document.getElementById('testimonialsSlider');
-            const prevBtn = document.querySelector('.testimonials-nav-btn.prev-btn');
-            const nextBtn = document.querySelector('.testimonials-nav-btn.next-btn');
-            const dotsContainer = document.getElementById('testimonialsDots');
-
-            if (!slider) return;
-
-            const cards = slider.querySelectorAll('.testimonial-card');
-            if (cards.length === 0) return;
-
-            // Generate dots based on scroll positions
-            function updateDots() {
-                dotsContainer.innerHTML = '';
-                const cardWidth = cards[0].offsetWidth + 24; // width + gap
-                const visibleCount = Math.round(slider.offsetWidth / cardWidth) || 1;
-                const totalPages = Math.ceil(cards.length / visibleCount);
-
-                if (totalPages <= 1) {
-                    dotsContainer.style.display = 'none';
-                    return;
-                }
-                dotsContainer.style.display = 'flex';
-
-                const currentPage = Math.round(slider.scrollLeft / (cardWidth * visibleCount));
-
-                for (let i = 0; i < totalPages; i++) {
-                    const dot = document.createElement('button');
-                    dot.type = 'button';
-                    dot.classList.add('testimonials-dot');
-                    if (i === currentPage) dot.classList.add('active');
-                    dot.setAttribute('aria-label', 'Go to page ' + (i + 1));
-                    dot.addEventListener('click', function() {
-                        slider.scrollTo({
-                            left: i * cardWidth * visibleCount,
-                            behavior: 'smooth'
-                        });
-                    });
-                    dotsContainer.appendChild(dot);
-                }
-            }
-
-            if (prevBtn) {
-                prevBtn.addEventListener('click', function() {
-                    const cardWidth = cards[0].offsetWidth + 24;
-                    const isRtl = document.documentElement.getAttribute('dir') === 'rtl';
-                    const scrollAmount = isRtl ? cardWidth : -cardWidth;
-                    slider.scrollBy({
-                        left: scrollAmount,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-
-            if (nextBtn) {
-                nextBtn.addEventListener('click', function() {
-                    const cardWidth = cards[0].offsetWidth + 24;
-                    const isRtl = document.documentElement.getAttribute('dir') === 'rtl';
-                    const scrollAmount = isRtl ? -cardWidth : cardWidth;
-                    slider.scrollBy({
-                        left: scrollAmount,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-
-            // --- Mouse Drag to Scroll ---
-            let isDown = false;
-            let startX = 0;
-            let scrollLeftStart = 0;
-            let dragged = false;
-
-            slider.addEventListener('mousedown', function(e) {
-                isDown = true;
-                dragged = false;
-                startX = e.pageX - slider.offsetLeft;
-                scrollLeftStart = slider.scrollLeft;
-                slider.style.cursor = 'grabbing';
-                slider.style.userSelect = 'none';
-                e.preventDefault();
-            });
-
-            window.addEventListener('mouseup', function() {
-                if (!isDown) return;
-                isDown = false;
-                slider.style.cursor = 'grab';
-                slider.style.userSelect = '';
-            });
-
-            slider.addEventListener('mouseleave', function() {
-                if (isDown) {
-                    isDown = false;
-                    slider.style.cursor = 'grab';
-                    slider.style.userSelect = '';
-                }
-            });
-
-            slider.addEventListener('mousemove', function(e) {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - slider.offsetLeft;
-                const walk = (x - startX) * 1.5;
-                if (Math.abs(walk) > 5) dragged = true;
-                slider.scrollLeft = scrollLeftStart - walk;
-            });
-
-            // Prevent click on cards when dragging
-            slider.addEventListener('click', function(e) {
-                if (dragged) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    dragged = false;
-                }
-            }, true);
-
-            // Set grab cursor on hover
-            slider.style.cursor = 'grab';
-
-            let scrollTimer;
-            slider.addEventListener('scroll', function() {
-                clearTimeout(scrollTimer);
-                scrollTimer = setTimeout(updateDots, 100);
-            });
-
-            window.addEventListener('resize', updateDots);
-            updateDots();
-        });
-    </script>
 @endsection

@@ -145,7 +145,12 @@
                                                 'single' => __('Single Room Supplement'),
                                             ];
                                             $itemPrices = [];
-                                            foreach ((array) $items as $item) {
+                                            // $items is an Eloquent Collection when editing an existing package
+                                            // and a plain array after validation errors. Casting a Collection to
+                                            // array exposes its internal properties instead of its models, which
+                                            // made every saved price render as an empty field and get deleted on
+                                            // the next update.
+                                            foreach (collect($items) as $item) {
                                                 $occType = is_object($item)
                                                     ? $item->occupancy_type
                                                     : $item['occupancy_type'] ?? '';
