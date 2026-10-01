@@ -8,9 +8,17 @@
         <div class="footer-content">
             <div class="footer-section">
                 <a href="{{ route('website.home') }}" class="d-inline-block mb-3" aria-label="{{ __('Egypt Tour Pro') }}">
-                    <img class="footer-logo" src="{{ asset('website/logo/egypt-tour-pro-dark.webp') }}"
-                        srcset="{{ asset('website/logo/egypt-tour-pro-dark-270.webp') }} 270w, {{ asset('website/logo/egypt-tour-pro-dark.webp') }} 473w"
-                        sizes="200px" alt="{{ __('Egypt Tour Pro') }}" width="200" height="64" loading="lazy"
+                    <img class="footer-logo"
+                        src="{{ asset('website/logo/egypt-tour-pro-dark-200.webp') }}"
+                        srcset="{{ asset('website/logo/egypt-tour-pro-dark-135.webp') }} 135w,
+                                {{ asset('website/logo/egypt-tour-pro-dark-165.webp') }} 165w,
+                                {{ asset('website/logo/egypt-tour-pro-dark-200.webp') }} 200w,
+                                {{ asset('website/logo/egypt-tour-pro-dark-270.webp') }} 270w"
+                        sizes="200px"
+                        alt="{{ __('Egypt Tour Pro') }}"
+                        width="200"
+                        height="64"
+                        loading="lazy"
                         decoding="async">
                 </a>
                 <p>{{ __('Egypt Tour Pro - Turn Your Dreams into Reality. Best travel agency in Egypt specialized in providing professional advice on planning Travel Packages, Nile Cruises and Day Tours.') }}
