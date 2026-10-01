@@ -25,10 +25,17 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="{{ route('website.home') }}" aria-label="{{ __('Egypt Tour Pro') }}">
-            <img class="brand-logo-img logo-dark" src="{{ asset('website/logo/egypt-tour-pro-dark-270.webp') }}"
-                srcset="{{ asset('website/logo/egypt-tour-pro-dark-270.webp') }} 270w, {{ asset('website/logo/egypt-tour-pro-dark.webp') }} 473w"
+            <img class="brand-logo-img logo-dark"
+                src="{{ asset('website/logo/egypt-tour-pro-dark-200.webp') }}"
+                srcset="{{ asset('website/logo/egypt-tour-pro-dark-135.webp') }} 135w,
+                        {{ asset('website/logo/egypt-tour-pro-dark-165.webp') }} 165w,
+                        {{ asset('website/logo/egypt-tour-pro-dark-200.webp') }} 200w,
+                        {{ asset('website/logo/egypt-tour-pro-dark-270.webp') }} 270w"
                 sizes="(max-width: 500px) 135px, (max-width: 991px) 165px, 200px"
-                alt="{{ __('Egypt Tour Pro') }}" width="200" height="64" decoding="async"
+                alt="{{ __('Egypt Tour Pro') }}"
+                width="200"
+                height="64"
+                decoding="async"
                 onerror="this.onerror=null;this.src='{{ asset('website/logo/egypt-tour-pro-dark.png') }}';">
         </a>
 
@@ -190,8 +197,16 @@
 <div class="modern-mobile-menu" id="modernMobileMenu" aria-label="{{ __('Mobile Navigation') }}">
     <div class="mobile-menu-header">
         <div class="mobile-menu-brand">
-            <img class="brand-logo-img logo-dark" src="{{ asset('website/logo/egypt-tour-pro-dark-270.webp') }}"
-                alt="{{ __('Egypt Tour Pro') }}" width="140" height="46" loading="lazy" decoding="async"
+            <img class="brand-logo-img logo-dark"
+                src="{{ asset('website/logo/egypt-tour-pro-dark-165.webp') }}"
+                srcset="{{ asset('website/logo/egypt-tour-pro-dark-135.webp') }} 135w,
+                        {{ asset('website/logo/egypt-tour-pro-dark-165.webp') }} 165w"
+                sizes="140px"
+                alt="{{ __('Egypt Tour Pro') }}"
+                width="140"
+                height="46"
+                loading="lazy"
+                decoding="async"
                 onerror="this.onerror=null;this.src='{{ asset('website/logo/egypt-tour-pro-dark.png') }}';">
         </div>
         <button type="button" class="mobile-close-btn" data-mobile-menu-toggle aria-label="{{ __('Close Menu') }}">
