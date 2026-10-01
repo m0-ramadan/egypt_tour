@@ -36,22 +36,25 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::directive('ezyIntegrity', static function (): string {
             return '<?php \\EzyCode\\Core\\Security\\IntegrityManager::verify(); ?>';
-        });
+});
 
-        \Illuminate\Pagination\Paginator::useBootstrapFive();
-        \Illuminate\Pagination\Paginator::defaultView('vendor.pagination.bootstrap-5');
+\Illuminate\Pagination\Paginator::useBootstrapFive();
+\Illuminate\Pagination\Paginator::defaultView('vendor.pagination.bootstrap-5');
 
-        View::composer(['website.layouts.header', 'website.layouts.footer'], function ($view) {
-            $view->with('navigationDestinations', app(WebsiteDestinationService::class)->homeDestinations(24));
-        });
+View::composer(['website.layouts.header', 'website.layouts.footer'], function ($view) {
+$view->with(
+'navigationDestinations',
+app(WebsiteDestinationService::class)->homeDestinations(8)
+); });
 
-        $invalidateWebsiteCache = static function (): void {
-            Cache::forever('website.home.version', (int) Cache::get('website.home.version', 1) + 1);
-        };
+$invalidateWebsiteCache = static function (): void {
+Cache::forever('website.home.version', (int) Cache::get('website.home.version', 1) + 1);
+};
 
-        foreach ([Article::class, Attraction::class, City::class, Country::class, Package::class, Testimonial::class] as $model) {
-            $model::saved($invalidateWebsiteCache);
-            $model::deleted($invalidateWebsiteCache);
-        }
-    }
+foreach ([Article::class, Attraction::class, City::class, Country::class, Package::class, Testimonial::class] as $model)
+{
+$model::saved($invalidateWebsiteCache);
+$model::deleted($invalidateWebsiteCache);
+}
+}
 }

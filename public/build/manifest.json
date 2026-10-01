@@ -180,6 +180,11 @@
     "src": "resources/css/website-home-deferred.css",
     "isEntry": true
   },
+  "resources/css/website-home-mobile.css": {
+    "file": "assets/website-home-mobile-CQrlCY2G.css",
+    "src": "resources/css/website-home-mobile.css",
+    "isEntry": true
+  },
   "resources/css/website-home.css": {
     "file": "assets/website-home-Cqkah0by.css",
     "src": "resources/css/website-home.css",
