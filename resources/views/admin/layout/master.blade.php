@@ -43,7 +43,7 @@
     </title>
 
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/fonts/fontawesome.css') }}">
     <style>
         body {
             font-family: {{ $isRtl ? '"Cairo", "Noto Kufi Arabic", sans-serif' : '"Public Sans", sans-serif' }} !important;

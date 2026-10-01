@@ -3,19 +3,8 @@
 <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('favicon-48x48.png') }}" />
 <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap"
-    rel="stylesheet" />
-
-
-
 <!-- Icons -->
-{{-- <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/fonts/fontawesome.css') }}"> --}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    crossorigin="anonymous">
+<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/fonts/fontawesome.css') }}">
 
 
 <!-- Fonts -->
@@ -53,7 +42,7 @@
 <link rel="stylesheet" href="{{ asset('dashboard/assets/css/custome.css') }}" />
 
 <!-- Jodit WYSIWYG Editor CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.9/jodit.min.css" />
+<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/jodit/jodit.min.css') }}" />
 <style>
     /* Jodit Editor Styling Overrides */
     .jodit-container {
@@ -125,8 +114,3 @@
 
 
 <script src="{{ asset('dashboard/assets/js/config.js') }}"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-    href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Noto+Kufi+Arabic:wght@100..900&display=swap"
-    rel="stylesheet">

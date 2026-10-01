@@ -19,41 +19,49 @@
         }
 
         /* Force Entire Admin Page into Dark Mode */
-        html, body {
+        html,
+        body {
             background-color: var(--dark-bg) !important;
             color: #e1e1e6 !important;
             font-family: "Cairo", sans-serif !important;
         }
 
-        .layout-wrapper, .layout-container, .content-wrapper, .layout-page {
+        .layout-wrapper,
+        .layout-container,
+        .content-wrapper,
+        .layout-page {
             background-color: var(--dark-bg) !important;
         }
 
         /* Navbar & Sidebar Dark Mode Overrides */
-        .layout-navbar, .bg-navbar-theme {
+        .layout-navbar,
+        .bg-navbar-theme {
             background-color: #1e1e2d !important;
             color: #fff !important;
             border-bottom: 1px solid var(--dark-border) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
         }
 
-        .bg-menu-theme, #layout-menu {
+        .bg-menu-theme,
+        #layout-menu {
             background-color: #1e1e2d !important;
             color: #a2a3b7 !important;
             border-right: 1px solid var(--dark-border) !important;
         }
 
-        .bg-menu-theme .menu-link, .bg-menu-theme .menu-header {
+        .bg-menu-theme .menu-link,
+        .bg-menu-theme .menu-header {
             color: #a2a3b7 !important;
         }
 
-        .bg-menu-theme .menu-item.active > .menu-link,
-        .bg-menu-theme .menu-item.open > .menu-link {
+        .bg-menu-theme .menu-item.active>.menu-link,
+        .bg-menu-theme .menu-item.open>.menu-link {
             background-color: rgba(105, 108, 255, 0.16) !important;
             color: #696cff !important;
         }
 
-        .footer, .footer-theme {
+        .footer,
+        .footer-theme {
             background-color: #1e1e2d !important;
             color: #a2a3b7 !important;
             border-top: 1px solid var(--dark-border) !important;
@@ -200,7 +208,8 @@
         .media-grid-img-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 75%; /* 4:3 Aspect Ratio */
+            padding-top: 75%;
+            /* 4:3 Aspect Ratio */
             background-color: #11111b;
             overflow: hidden;
         }
@@ -387,7 +396,8 @@
             transition: all 0.2s ease;
         }
 
-        .view-btn.active, .view-btn:hover {
+        .view-btn.active,
+        .view-btn:hover {
             background: var(--primary-color);
             color: #fff;
             border-color: var(--primary-color);
@@ -427,22 +437,27 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}" class="text-light opacity-75">{{ admin_t('Home') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.index') }}"
+                        class="text-light opacity-75">{{ admin_t('Home') }}</a></li>
                 <li class="breadcrumb-item active text-white fw-bold">{{ admin_t('Media Library') }}</li>
             </ol>
         </nav>
 
         @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show bg-success text-white border-0 mb-4 shadow" role="alert">
+            <div class="alert alert-success alert-dismissible fade show bg-success text-white border-0 mb-4 shadow"
+                role="alert">
                 <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
             </div>
         @endif
 
         @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show bg-danger text-white border-0 mb-4 shadow" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show bg-danger text-white border-0 mb-4 shadow"
+                role="alert">
                 <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
             </div>
         @endif
 
@@ -459,7 +474,8 @@
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="stats-card">
-                    <div class="stats-icon" style="background: rgba(32,201,151,.15); color:#20c997; border:1px solid rgba(32,201,151,.3);">
+                    <div class="stats-icon"
+                        style="background: rgba(32,201,151,.15); color:#20c997; border:1px solid rgba(32,201,151,.3);">
                         <i class="fas fa-download"></i>
                     </div>
                     <div class="stats-number">{{ number_format($stats['downloaded'] ?? 0) }}</div>
@@ -468,7 +484,8 @@
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="stats-card">
-                    <div class="stats-icon" style="background: rgba(253,126,20,.15); color:#fd7e14; border:1px solid rgba(253,126,20,.3);">
+                    <div class="stats-icon"
+                        style="background: rgba(253,126,20,.15); color:#fd7e14; border:1px solid rgba(253,126,20,.3);">
                         <i class="fas fa-globe"></i>
                     </div>
                     <div class="stats-number">{{ number_format($stats['global']) }}</div>
@@ -477,7 +494,8 @@
             </div>
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="stats-card">
-                    <div class="stats-icon" style="background: rgba(12,99,228,.15); color:#0c63e4; border:1px solid rgba(12,99,228,.3);">
+                    <div class="stats-icon"
+                        style="background: rgba(12,99,228,.15); color:#0c63e4; border:1px solid rgba(12,99,228,.3);">
                         <i class="fas fa-sync-alt"></i>
                     </div>
                     <div class="stats-number fs-6">
@@ -519,7 +537,8 @@
                         <select name="country_slug" class="form-select form-select-dark">
                             <option value="">{{ admin_t('All Countries') }}</option>
                             @foreach ($countries as $country)
-                                <option value="{{ $country }}" {{ request('country_slug') == $country ? 'selected' : '' }}>
+                                <option value="{{ $country }}"
+                                    {{ request('country_slug') == $country ? 'selected' : '' }}>
                                     {{ $country }}
                                 </option>
                             @endforeach
@@ -543,7 +562,8 @@
                         <select name="sub_category" class="form-select form-select-dark">
                             <option value="">{{ admin_t('All Sub Categories') }}</option>
                             @foreach ($subCategories as $subCat)
-                                <option value="{{ $subCat }}" {{ request('sub_category') == $subCat ? 'selected' : '' }}>
+                                <option value="{{ $subCat }}"
+                                    {{ request('sub_category') == $subCat ? 'selected' : '' }}>
                                     {{ $subCat }}
                                 </option>
                             @endforeach
@@ -555,7 +575,8 @@
                         <select name="storage_type" class="form-select form-select-dark">
                             <option value="">{{ admin_t('All Storage') }}</option>
                             @foreach ($storageTypes as $st)
-                                <option value="{{ $st }}" {{ request('storage_type') == $st ? 'selected' : '' }}>
+                                <option value="{{ $st }}"
+                                    {{ request('storage_type') == $st ? 'selected' : '' }}>
                                     {{ ucfirst($st) }}
                                 </option>
                             @endforeach
@@ -566,7 +587,8 @@
                         <button class="btn btn-primary w-100 font-weight-bold" type="submit">
                             <i class="fas fa-filter me-1"></i> {{ admin_t('Apply Filters') }}
                         </button>
-                        <a href="{{ route('admin.media.index') }}" class="btn btn-outline-secondary w-100 text-white border-secondary">
+                        <a href="{{ route('admin.media.index') }}"
+                            class="btn btn-outline-secondary w-100 text-white border-secondary">
                             <i class="fas fa-redo me-1"></i> {{ admin_t('Reset') }}
                         </a>
                     </div>
@@ -578,16 +600,19 @@
         <div class="main-card">
             <div class="main-header d-flex justify-content-between align-items-center flex-wrap gap-3">
                 <div>
-                    <h5 class="mb-0 text-white fw-bold"><i class="fas fa-photo-video me-2"></i>{{ admin_t('Media Library') }}</h5>
+                    <h5 class="mb-0 text-white fw-bold"><i
+                            class="fas fa-photo-video me-2"></i>{{ admin_t('Media Library') }}</h5>
                     <small class="opacity-75">{{ admin_t('Manage and synchronize SavvyHost media files') }}</small>
                 </div>
                 <div class="d-flex align-items-center gap-3">
                     {{-- Grid / Table View Switcher --}}
                     <div class="btn-group" role="group">
-                        <button type="button" class="view-btn {{ request('view', 'grid') === 'grid' ? 'active' : '' }}" onclick="switchView('grid')" title="Grid View">
+                        <button type="button" class="view-btn {{ request('view', 'grid') === 'grid' ? 'active' : '' }}"
+                            onclick="switchView('grid')" title="Grid View">
                             <i class="fas fa-th-large"></i>
                         </button>
-                        <button type="button" class="view-btn {{ request('view') === 'table' ? 'active' : '' }}" onclick="switchView('table')" title="Table View">
+                        <button type="button" class="view-btn {{ request('view') === 'table' ? 'active' : '' }}"
+                            onclick="switchView('table')" title="Table View">
                             <i class="fas fa-list"></i>
                         </button>
                     </div>
@@ -603,7 +628,7 @@
             </div>
 
             <div class="p-4">
-                @if(request('view', 'grid') === 'grid')
+                @if (request('view', 'grid') === 'grid')
                     {{-- Grid View --}}
                     <div class="row g-4">
                         @forelse($mediaItems as $item)
@@ -617,26 +642,30 @@
                                         <img src="{{ $thumbSrc }}" alt="{{ $item->alt_text ?? $item->filename }}"
                                             class="media-grid-img" loading="lazy"
                                             onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=No+Image';">
-                                        
+
                                         <div class="media-grid-overlay">
                                             <button type="button" class="btn btn-sm btn-info rounded-circle p-2"
-                                                onclick="openPreviewModal({{ json_encode($item) }})" title="{{ admin_t('Preview') }}">
+                                                onclick="openPreviewModal({{ json_encode($item) }})"
+                                                title="{{ admin_t('Preview') }}">
                                                 <i class="fas fa-eye"></i>
                                             </button>
                                             @if ($displayUrl)
-                                                <a href="{{ $displayUrl }}" target="_blank" class="btn btn-sm btn-light rounded-circle p-2"
+                                                <a href="{{ $displayUrl }}" target="_blank"
+                                                    class="btn btn-sm btn-light rounded-circle p-2"
                                                     title="{{ admin_t('Open Image') }}">
                                                     <i class="fas fa-external-link-alt"></i>
                                                 </a>
                                                 <button type="button" class="btn btn-sm btn-warning rounded-circle p-2"
-                                                    onclick="copyUrl('{{ $displayUrl }}')" title="{{ admin_t('Copy URL') }}">
+                                                    onclick="copyUrl('{{ $displayUrl }}')"
+                                                    title="{{ admin_t('Copy URL') }}">
                                                     <i class="fas fa-copy"></i>
                                                 </button>
                                             @endif
                                         </div>
 
                                         <div class="position-absolute top-0 start-0 m-2 d-flex gap-1 flex-wrap">
-                                            <span class="badge-storage {{ $item->is_global || $item->storage_type === 'global' ? 'badge-global' : 'badge-private' }}">
+                                            <span
+                                                class="badge-storage {{ $item->is_global || $item->storage_type === 'global' ? 'badge-global' : 'badge-private' }}">
                                                 {{ ucfirst($item->storage_type ?? ($item->is_global ? 'global' : 'private')) }}
                                             </span>
                                             @if ($item->is_downloaded || $item->local_path)
@@ -650,8 +679,10 @@
                                         <div class="media-grid-title" title="{{ $item->title ?: $item->filename }}">
                                             {{ $item->title ?: $item->filename }}
                                         </div>
-                                        <div class="d-flex justify-content-between align-items-center mt-2 media-grid-meta">
-                                            <span class="badge bg-dark border border-secondary text-light">#{{ $item->remote_id ?? $item->id }}</span>
+                                        <div
+                                            class="d-flex justify-content-between align-items-center mt-2 media-grid-meta">
+                                            <span
+                                                class="badge bg-dark border border-secondary text-light">#{{ $item->remote_id ?? $item->id }}</span>
                                             <span>{{ $item->size_human ?: ($item->size_bytes ? number_format($item->size_bytes / 1024, 1) . ' KB' : '-') }}</span>
                                         </div>
                                     </div>
@@ -661,8 +692,10 @@
                             <div class="col-12">
                                 <div class="empty-state">
                                     <div class="empty-state-icon"><i class="fas fa-photo-video"></i></div>
-                                    <h5 class="empty-state-text text-white fw-bold">{{ admin_t('No media records found') }}</h5>
-                                    <p class="text-muted">{{ admin_t('Click "Fetch Media" to synchronize images from SavvyHost API.') }}</p>
+                                    <h5 class="empty-state-text text-white fw-bold">
+                                        {{ admin_t('No media records found') }}</h5>
+                                    <p class="text-muted">
+                                        {{ admin_t('Click "Fetch Media" to synchronize images from SavvyHost API.') }}</p>
                                 </div>
                             </div>
                         @endforelse
@@ -693,12 +726,14 @@
                                     @endphp
                                     <tr>
                                         <td class="ps-4">
-                                            <img src="{{ $thumbSrc }}" alt="{{ $item->alt_text ?? $item->filename }}"
-                                                class="media-thumbnail" loading="lazy"
+                                            <img src="{{ $thumbSrc }}"
+                                                alt="{{ $item->alt_text ?? $item->filename }}" class="media-thumbnail"
+                                                loading="lazy"
                                                 onerror="this.onerror=null; this.src='https://via.placeholder.com/70?text=No+Image';">
                                         </td>
                                         <td>
-                                            <span class="badge bg-dark border border-secondary text-light">#{{ $item->remote_id ?? $item->id }}</span>
+                                            <span
+                                                class="badge bg-dark border border-secondary text-light">#{{ $item->remote_id ?? $item->id }}</span>
                                         </td>
                                         <td>
                                             <div class="fw-bold text-white">{{ $item->title ?: $item->filename }}</div>
@@ -706,7 +741,8 @@
                                         </td>
                                         <td>
                                             @if ($item->category)
-                                                <span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">{{ $item->category }}</span>
+                                                <span
+                                                    class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">{{ $item->category }}</span>
                                             @else
                                                 <span class="text-muted">-</span>
                                             @endif
@@ -723,23 +759,27 @@
                                         </td>
                                         <td>
                                             @if ($item->sub_category)
-                                                <span class="badge bg-secondary bg-opacity-25 text-light border border-secondary border-opacity-25">{{ $item->sub_category }}</span>
+                                                <span
+                                                    class="badge bg-secondary bg-opacity-25 text-light border border-secondary border-opacity-25">{{ $item->sub_category }}</span>
                                             @else
                                                 <span class="text-muted">-</span>
                                             @endif
                                         </td>
                                         <td>
-                                            <span class="badge-storage {{ $item->is_global || $item->storage_type === 'global' ? 'badge-global' : 'badge-private' }}">
+                                            <span
+                                                class="badge-storage {{ $item->is_global || $item->storage_type === 'global' ? 'badge-global' : 'badge-private' }}">
                                                 {{ ucfirst($item->storage_type ?? ($item->is_global ? 'global' : 'private')) }}
                                             </span>
                                             @if ($item->is_downloaded || $item->local_path)
-                                                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 ms-1">
+                                                <span
+                                                    class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 ms-1">
                                                     <i class="fas fa-hdd me-1"></i>Local
                                                 </span>
                                             @endif
                                         </td>
                                         <td>
-                                            <small class="text-light">{{ $item->size_human ?: ($item->size_bytes ? number_format($item->size_bytes / 1024, 1) . ' KB' : '-') }}</small>
+                                            <small
+                                                class="text-light">{{ $item->size_human ?: ($item->size_bytes ? number_format($item->size_bytes / 1024, 1) . ' KB' : '-') }}</small>
                                         </td>
                                         <td>
                                             <small class="text-muted">
@@ -754,13 +794,15 @@
                                                 </button>
 
                                                 @if ($displayUrl)
-                                                    <a href="{{ $displayUrl }}" target="_blank" class="btn btn-sm btn-outline-light"
+                                                    <a href="{{ $displayUrl }}" target="_blank"
+                                                        class="btn btn-sm btn-outline-light"
                                                         title="{{ admin_t('Open Image') }}">
                                                         <i class="fas fa-external-link-alt"></i>
                                                     </a>
 
                                                     <button type="button" class="btn btn-sm btn-outline-warning"
-                                                        onclick="copyUrl('{{ $displayUrl }}')" title="{{ admin_t('Copy URL') }}">
+                                                        onclick="copyUrl('{{ $displayUrl }}')"
+                                                        title="{{ admin_t('Copy URL') }}">
                                                         <i class="fas fa-copy"></i>
                                                     </button>
                                                 @endif
@@ -772,8 +814,11 @@
                                         <td colspan="10">
                                             <div class="empty-state">
                                                 <div class="empty-state-icon"><i class="fas fa-photo-video"></i></div>
-                                                <h5 class="empty-state-text text-white fw-bold">{{ admin_t('No media records found') }}</h5>
-                                                <p class="text-muted">{{ admin_t('Click "Fetch Media" to synchronize images from SavvyHost API.') }}</p>
+                                                <h5 class="empty-state-text text-white fw-bold">
+                                                    {{ admin_t('No media records found') }}</h5>
+                                                <p class="text-muted">
+                                                    {{ admin_t('Click "Fetch Media" to synchronize images from SavvyHost API.') }}
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>
@@ -795,19 +840,27 @@
             <div class="modal-content modal-content-dark">
                 <div class="modal-header border-bottom border-secondary border-opacity-25">
                     <h5 class="modal-title text-white fw-bold" id="modalTitle">{{ admin_t('Media Preview') }}</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
                     <img id="modalImage" src="" alt="" class="modal-preview-img mb-3">
                     <div class="text-start modal-details-box p-3">
                         <div class="row g-2 text-white">
-                            <div class="col-md-6"><strong>Filename:</strong> <span id="modalFilename" class="text-light ms-1">-</span></div>
-                            <div class="col-md-6"><strong>UUID:</strong> <span id="modalUuid" class="text-light ms-1">-</span></div>
-                            <div class="col-md-6"><strong>Category:</strong> <span id="modalCategory" class="text-light ms-1">-</span></div>
-                            <div class="col-md-6"><strong>Sub Category:</strong> <span id="modalSubCategory" class="text-light ms-1">-</span></div>
-                            <div class="col-md-6"><strong>Location:</strong> <span id="modalLocation" class="text-light ms-1">-</span></div>
-                            <div class="col-md-6"><strong>Size:</strong> <span id="modalSize" class="text-light ms-1">-</span></div>
-                            <div class="col-12"><strong>Alt Text:</strong> <span id="modalAltText" class="text-light ms-1">-</span></div>
+                            <div class="col-md-6"><strong>Filename:</strong> <span id="modalFilename"
+                                    class="text-light ms-1">-</span></div>
+                            <div class="col-md-6"><strong>UUID:</strong> <span id="modalUuid"
+                                    class="text-light ms-1">-</span></div>
+                            <div class="col-md-6"><strong>Category:</strong> <span id="modalCategory"
+                                    class="text-light ms-1">-</span></div>
+                            <div class="col-md-6"><strong>Sub Category:</strong> <span id="modalSubCategory"
+                                    class="text-light ms-1">-</span></div>
+                            <div class="col-md-6"><strong>Location:</strong> <span id="modalLocation"
+                                    class="text-light ms-1">-</span></div>
+                            <div class="col-md-6"><strong>Size:</strong> <span id="modalSize"
+                                    class="text-light ms-1">-</span></div>
+                            <div class="col-12"><strong>Alt Text:</strong> <span id="modalAltText"
+                                    class="text-light ms-1">-</span></div>
                             <div class="col-12"><strong>Tags:</strong> <span id="modalTags" class="ms-1">-</span></div>
                             <div class="col-12 text-break mt-2">
                                 <strong>Original URL:</strong>
@@ -821,7 +874,8 @@
                     </div>
                 </div>
                 <div class="modal-footer border-top border-secondary border-opacity-25">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ admin_t('Close') }}</button>
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{{ admin_t('Close') }}</button>
                     <button type="button" class="btn btn-warning" id="modalCopyBtn" onclick="copyUrlFromModal()">
                         <i class="fas fa-copy me-1"></i> {{ admin_t('Copy URL') }}
                     </button>
@@ -831,7 +885,8 @@
     </div>
 
     <!-- Sync Progress Modal -->
-    <div class="modal fade" id="syncProgressModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="syncProgressModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark text-light border border-secondary" style="border-radius: 16px;">
                 <div class="modal-header border-bottom border-secondary border-opacity-25">
@@ -847,30 +902,37 @@
                     </div>
 
                     {{-- Progress Bar --}}
-                    <div class="progress mb-4" style="height: 22px; background-color: rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden;">
-                        <div id="syncProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary fw-bold"
-                             role="progressbar" style="width: 0%; transition: width 0.3s ease; font-size: 13px;">
+                    <div class="progress mb-4"
+                        style="height: 22px; background-color: rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden;">
+                        <div id="syncProgressBar"
+                            class="progress-bar progress-bar-striped progress-bar-animated bg-primary fw-bold"
+                            role="progressbar" style="width: 0%; transition: width 0.3s ease; font-size: 13px;">
                             0%
                         </div>
                     </div>
 
                     {{-- Detailed Stats Card --}}
-                    <div class="p-3 rounded-3 border border-secondary border-opacity-50 text-start" style="background: rgba(0,0,0,0.35);">
+                    <div class="p-3 rounded-3 border border-secondary border-opacity-50 text-start"
+                        style="background: rgba(0,0,0,0.35);">
                         <div class="d-flex justify-content-between mb-2">
-                            <span class="text-white-50"><i class="fas fa-download text-success me-2"></i>Images downloaded locally:</span>
+                            <span class="text-white-50"><i class="fas fa-download text-success me-2"></i>Images downloaded
+                                locally:</span>
                             <span class="fw-bold text-success fs-6" id="syncDownloadedText">0</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span class="text-white-50"><i class="fas fa-images text-info me-2"></i>Total API Images:</span>
+                            <span class="text-white-50"><i class="fas fa-images text-info me-2"></i>Total API
+                                Images:</span>
                             <span class="fw-bold text-info fs-6" id="syncTotalText">0</span>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <span class="text-white-50"><i class="fas fa-tasks text-warning me-2"></i>Processed images:</span>
+                            <span class="text-white-50"><i class="fas fa-tasks text-warning me-2"></i>Processed
+                                images:</span>
                             <span class="fw-bold text-warning fs-6" id="syncProcessedText">0 / 0</span>
                         </div>
                     </div>
 
-                    <div class="text-muted small mt-3 d-flex align-items-center justify-content-center gap-2" id="syncStatusWrapper">
+                    <div class="text-muted small mt-3 d-flex align-items-center justify-content-center gap-2"
+                        id="syncStatusWrapper">
                         <div class="spinner-border spinner-border-sm text-primary" role="status" id="syncSpinner"></div>
                         <span id="syncStatusMsg">Starting and connecting to server...</span>
                     </div>
@@ -881,8 +943,8 @@
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script>
         let currentModalUrl = '';
 
@@ -921,12 +983,15 @@
                         cache: false,
                         success: function(data) {
                             if (data) {
-                                const percent = Math.min(100, Math.max(0, data.percentage || 0));
-                                $('#syncProgressBar').css('width', percent + '%').text(percent + '%');
+                                const percent = Math.min(100, Math.max(0, data
+                                    .percentage || 0));
+                                $('#syncProgressBar').css('width', percent + '%').text(
+                                    percent + '%');
                                 $('#syncPercentText').text(percent + '%');
                                 $('#syncDownloadedText').text(data.downloaded || 0);
                                 $('#syncTotalText').text(data.total || 0);
-                                $('#syncProcessedText').text((data.processed || 0) + ' / ' + (data.total || 0));
+                                $('#syncProcessedText').text((data.processed || 0) +
+                                    ' / ' + (data.total || 0));
                                 if (data.message) {
                                     $('#syncStatusMsg').text(data.message);
                                 }
@@ -952,13 +1017,15 @@
                         setTimeout(function() {
                             progressModal.hide();
                             btn.prop('disabled', false);
-                            $('#syncIcon').removeClass('fa-spinner fa-spin').addClass('fa-cloud-download-alt');
+                            $('#syncIcon').removeClass('fa-spinner fa-spin').addClass(
+                                'fa-cloud-download-alt');
 
                             if (window.Swal) {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Downloaded successfully!',
-                                    text: response.message || 'All images synchronized and downloaded successfully.',
+                                    text: response.message ||
+                                        'All images synchronized and downloaded successfully.',
                                     confirmButtonText: 'OK',
                                     background: '#1e1e2d',
                                     color: '#fff'
@@ -975,9 +1042,12 @@
                         clearInterval(pollInterval);
                         progressModal.hide();
                         btn.prop('disabled', false);
-                        $('#syncIcon').removeClass('fa-spinner fa-spin').addClass('fa-cloud-download-alt');
+                        $('#syncIcon').removeClass('fa-spinner fa-spin').addClass(
+                            'fa-cloud-download-alt');
 
-                        const msg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'An error occurred while downloading images.';
+                        const msg = xhr.responseJSON && xhr.responseJSON.message ? xhr
+                            .responseJSON.message :
+                            'An error occurred while downloading images.';
                         if (window.Swal) {
                             Swal.fire({
                                 icon: 'error',
@@ -1015,7 +1085,8 @@
             $('#modalAltText').text(item.alt_text || '-');
 
             if (item.tags && Array.isArray(item.tags) && item.tags.length > 0) {
-                $('#modalTags').html(item.tags.map(t => `<span class="badge bg-secondary bg-opacity-50 text-white me-1">${t}</span>`).join(''));
+                $('#modalTags').html(item.tags.map(t =>
+                    `<span class="badge bg-secondary bg-opacity-50 text-white me-1">${t}</span>`).join(''));
             } else {
                 $('#modalTags').text('-');
             }

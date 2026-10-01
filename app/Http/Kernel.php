@@ -24,7 +24,6 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\PreventMaintenanceExceptAdmin::class,
-
     ];
 
     /**
@@ -42,7 +41,6 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\LogVisitor::class,
             \App\Http\Middleware\SetLocale::class,
-            \App\Http\Middleware\MinifyHtml::class,
         ],
 
         'api' => [

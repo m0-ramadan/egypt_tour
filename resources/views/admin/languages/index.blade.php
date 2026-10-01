@@ -422,8 +422,8 @@
             <div class="filter-row">
                 <div class="search-box">
                     <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="form-control" placeholder="text"
-                        id="searchInput" value="{{ request('search') }}">
+                    <input type="text" class="form-control" placeholder="text" id="searchInput"
+                        value="{{ request('search') }}">
                 </div>
 
                 <div class="sort-dropdown">
@@ -561,7 +561,8 @@
                                         @endif
 
                                         <button type="button" class="btn btn-sm btn-danger delete-btn"
-                                            data-id="{{ $language->id }}" data-name="{{ $language->name ?? 'Language' }}">
+                                            data-id="{{ $language->id }}"
+                                            data-name="{{ $language->name ?? 'Language' }}">
                                             <i class="fas fa-trash me-1"></i>Delete
                                         </button>
                                     </div>
@@ -582,8 +583,8 @@
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script>
         $(document).ready(function() {
             let searchTimeout;

@@ -404,7 +404,8 @@
                 </button>
                 <form action="{{ route('admin.permissions.generate') }}" method="POST" class="d-flex gap-2">
                     @csrf
-                    <input type="text" name="module" class="form-control" placeholder="Module For Create His Permissions Name">
+                    <input type="text" name="module" class="form-control"
+                        placeholder="Module For Create His Permissions Name">
                     <button type="submit" class="btn btn-secondary">
                         <i class="fas fa-magic me-2"></i>Generate Permissions
                     </button>
@@ -506,8 +507,8 @@
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script>
         $(document).ready(function() {
             let searchTimeout;

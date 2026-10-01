@@ -531,7 +531,8 @@
 
                                         <div class="detail-item">
                                             <span class="detail-label">Verification:</span>
-                                            <span class="detail-value">{{ $isVerified ? 'Verified' : 'Not Verified' }}</span>
+                                            <span
+                                                class="detail-value">{{ $isVerified ? 'Verified' : 'Not Verified' }}</span>
                                         </div>
 
                                         <div class="detail-item">
@@ -574,8 +575,8 @@
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script>
         $(document).ready(function() {
             let searchTimeout;

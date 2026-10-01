@@ -121,7 +121,18 @@
         @yield('schema')
     @endif
 
-    <script src="{{ asset('website/js/theme-init.js') }}"></script>
+    <script>
+        (function() {
+            var storageKey = 'website-theme';
+            var theme = document.documentElement.getAttribute('data-theme') || 'light';
+            try {
+                var storedTheme = localStorage.getItem(storageKey);
+                if (storedTheme === 'dark' || storedTheme === 'light') theme = storedTheme;
+            } catch (e) {}
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.style.colorScheme = theme;
+        })();
+    </script>
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('favicon-48x48.png') }}">
@@ -138,20 +149,8 @@
 
     <link rel="preload" href="{{ asset('website/fonts/website/inter-latin-variable.woff2') }}" as="font"
         type="font/woff2" crossorigin>
-    @hasSection('home_style_bundle')
-        @vite('resources/css/website-home-critical.css')
-        <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}" media="print"
-            onload="this.media='all'">
-        <noscript>
-            <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}">
-        </noscript>
-    @else
-        @vite(['resources/css/tokens.css', 'resources/css/components.css', 'resources/css/website.css', 'resources/css/website-base.css', 'resources/css/website-header.css'])
-        @yield('css')
-        @vite('resources/css/website-after.css')
-        @vite('resources/css/website-theme.css')
-        @vite('resources/css/egypt-tour-pro-final.css')
-    @endif
+    @vite('resources/css/website.css')
+    @yield('css')
     @if (app()->getLocale() === 'ar')
         @vite('resources/css/website-rtl.css')
     @endif
@@ -291,11 +290,13 @@
                                     {{ __('Secure Payment - Use your debit card or credit card. Your transactions are protected by 3D Secure and SecureCode.') }}
                                 </div>
                                 <div class="feature-item" style="padding: 12px 0; text-align: center;">
-                                    <img loading="lazy" src="{{ asset('website/flags/cybersource.png') }}"
-                                        height="100" width="150" alt="{{ __('Cybersource Security') }}"
+                                    <img loading="lazy" decoding="async"
+                                        src="{{ asset('website/flags/cybersource-300.webp') }}"
+                                        height="85" width="150" alt="{{ __('Cybersource Security') }}"
                                         style="opacity: 0.8;">
-                                    <img loading="lazy" src="{{ asset('website/flags/mpgs.webp') }}" height="100"
-                                        width="150" alt="{{ __('Cybersource Security') }}" style="opacity: 0.8;">
+                                    <img loading="lazy" decoding="async" src="{{ asset('website/flags/mpgs-300.webp') }}"
+                                        height="79" width="150" alt="{{ __('Cybersource Security') }}"
+                                        style="opacity: 0.8;">
                                 </div>
                             </div>
                         </div>
