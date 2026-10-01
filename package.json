@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build:css": "purgecss --css public/website/css/new/bootstrap.min.css public/website/css/line-awesome.css public/website/css/new/style.css public/website/css/style_new.css --content 'resources/views/website/**/*.blade.php' 'resources/js/**/*.js' 'app/**/*.php' --output resources/css/generated --safelist active disabled fade show open scrolled rotated is-visible is-active collapsing modal-open was-validated is-valid is-invalid",
+        "build:css": "purgecss --css public/website/css/new/bootstrap.min.css public/website/css/line-awesome.css public/website/css/new/style.css public/website/css/style_new.css --content 'resources/views/website/**/*.blade.php' 'resources/js/**/*.js' 'app/**/*.php' --output resources/css/generated --safelist active disabled fade show open scrolled rotated is-visible is-active collapsing modal-open was-validated is-valid is-invalid && node -e \"const fs = require('fs'); const p = 'resources/css/generated/line-awesome.css'; if (fs.existsSync(p)) { let c = fs.readFileSync(p, 'utf8'); c = c.replace(/@font-face\\{[^}]*\\}/g, ''); fs.writeFileSync(p, c); }\"",
         "build": "npm run build:css && vite build && cp -r public/website/fonts public/build/fonts"
     },
     "devDependencies": {

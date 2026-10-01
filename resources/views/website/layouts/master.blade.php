@@ -149,150 +149,26 @@
         @yield('lcp_preload')
     @endif
 
-
     <link rel="preload" href="{{ asset('website/fonts/website/inter-latin-variable.woff2') }}" as="font"
         type="font/woff2" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
-
-    @vite(['resources/css/tokens.css', 'resources/css/components.css', 'resources/css/website.css', 'resources/css/website-base.css', 'resources/css/website-header.css'])
-
-    @yield('css')
-    @vite('resources/css/website-after.css')
-    @vite('resources/css/website-theme.css')
+    @hasSection('home_style_bundle')
+        @vite('resources/css/website-home-critical.css')
+        <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}" media="print"
+            onload="this.media='all'">
+        <noscript>
+            <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}">
+        </noscript>
+    @else
+        @vite(['resources/css/tokens.css', 'resources/css/components.css', 'resources/css/website.css', 'resources/css/website-base.css', 'resources/css/website-header.css'])
+        @yield('css')
+        @vite('resources/css/website-after.css')
+        @vite('resources/css/website-theme.css')
+        @vite('resources/css/egypt-tour-pro-final.css')
+    @endif
     @if (app()->getLocale() === 'ar')
         @vite('resources/css/website-rtl.css')
     @endif
-    <link rel="stylesheet" href="{{ asset('website/vendor/intl-tel-input/css/intlTelInput.min.css') }}">
-    <style>
-        /* Custom styled searchable country code flag picker */
-        .iti {
-            width: 100%;
-            display: block;
-        }
-
-        .iti__country-container {
-            z-index: 5;
-        }
-
-        .iti__flag-box {
-            width: 20px !important;
-            min-width: 20px !important;
-            flex: 0 0 20px !important;
-        }
-
-        .iti__flag {
-            width: 20px !important;
-            height: 15px !important;
-            flex: 0 0 auto !important;
-            background-image: url("{{ asset('website/vendor/intl-tel-input/img/flags.png') }}") !important;
-            background-size: 5762px 15px !important;
-        }
-
-        @media (min-resolution: 2dppx) {
-            .iti__flag {
-                background-image: url("{{ asset('website/vendor/intl-tel-input/img/flags@2x.png') }}") !important;
-            }
-        }
-
-        .iti__selected-country {
-            padding: 0 12px !important;
-            border-radius: 14px 0 0 14px !important;
-            background: transparent !important;
-        }
-
-        html[dir="rtl"] .iti__selected-country {
-            border-radius: 0 14px 14px 0 !important;
-        }
-
-        .iti__selected-dial-code {
-            font-weight: 700;
-            color: #2b2b2b;
-            font-size: 0.95rem;
-            margin-left: 6px;
-        }
-
-        html[dir="rtl"] .iti__selected-dial-code {
-            margin-left: 0;
-            margin-right: 6px;
-        }
-
-        .iti__dropdown-content {
-            background-color: #ffffff !important;
-            border-radius: 18px !important;
-            box-shadow: 0 16px 40px rgba(17, 17, 17, 0.22) !important;
-            border: 1px solid rgba(43, 43, 43, 0.12) !important;
-            padding: 8px !important;
-            z-index: 99999 !important;
-        }
-
-        .iti__search-input {
-            width: 100% !important;
-            padding: 10px 14px !important;
-            border-radius: 12px !important;
-            border: 1px solid rgba(43, 43, 43, 0.15) !important;
-            font-size: 0.9rem !important;
-            outline: none !important;
-            margin-bottom: 8px !important;
-            background: #f8fbff !important;
-            color: #2b2b2b !important;
-        }
-
-        .iti__country-list {
-            border-top: 1px solid rgba(43, 43, 43, 0.08) !important;
-            border-radius: 0 0 14px 14px !important;
-            max-height: 240px !important;
-        }
-
-        .iti__country {
-            padding: 10px 12px !important;
-            border-radius: 10px !important;
-            font-size: 0.92rem !important;
-            color: #2b2b2b !important;
-            transition: background-color 0.15s ease;
-        }
-
-        .iti__country:hover,
-        .iti__country.iti__highlight {
-            background-color: rgba(243, 107, 10, 0.12) !important;
-        }
-
-        .iti input.form-control,
-        .iti input.iti__tel-input {
-            width: 100% !important;
-            min-height: 58px !important;
-            border-radius: 18px !important;
-        }
-
-        /* Dark theme support */
-        html[data-theme='dark'] .iti__selected-dial-code {
-            color: #f8fafc !important;
-        }
-
-        html[data-theme='dark'] .iti__dropdown-content {
-            background-color: #111111 !important;
-            border-color: rgba(170, 163, 155, 0.2) !important;
-            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45) !important;
-        }
-
-        html[data-theme='dark'] .iti__search-input {
-            background-color: #111111 !important;
-            color: #ffffff !important;
-            border-color: rgba(170, 163, 155, 0.24) !important;
-        }
-
-        html[data-theme='dark'] .iti__country {
-            color: #efe9e2 !important;
-        }
-
-        html[data-theme='dark'] .iti__country:hover,
-        html[data-theme='dark'] .iti__country.iti__highlight {
-            background-color: rgba(243, 107, 10, 0.2) !important;
-        }
-    </style>
     <meta name="google-site-verification" content="OKwZFMPi1pE0RpnHtt6lJnyE_qPXCNqW8E7-U4BHPRw" />
-    <link rel="stylesheet" href="{{ asset('website/css/egypt-tour-pro-final.css') }}?v=20260920-whatsapp-raised-3">
 </head>
 
 <body
@@ -495,202 +371,102 @@
     @include('website.layouts.footer')
 
 
-    <script src="{{ asset('website/vendor/intl-tel-input/js/intlTelInput.min.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof window.intlTelInput === 'function') {
-                const locale = @json(app()->getLocale());
-                const searchPlaceholder = locale === 'ar' ? 'ابحث عن الدولة أو الكود...' :
-                    'Search country or code...';
-                const phoneInputs = document.querySelectorAll('input[type="tel"], input[name="phone"], #phone');
+            const phoneInputs = document.querySelectorAll('input[type="tel"], input[name="phone"], #phone');
+            if (phoneInputs.length === 0) return;
 
-                phoneInputs.forEach(function(input) {
-                    if (input.dataset.itiInitialized) return;
-                    input.dataset.itiInitialized = 'true';
+            let itiLoadingOrLoaded = false;
+            function loadAndInitIti() {
+                if (itiLoadingOrLoaded) return;
+                itiLoadingOrLoaded = true;
 
-                    const iti = window.intlTelInput(input, {
-                        initialCountry: "auto",
-                        geoIpLookup: function(callback) {
-                            var cached = sessionStorage.getItem('user_country_code');
-                            if (cached) {
-                                callback(cached);
-                                return;
-                            }
-                            fetch('https://ipapi.co/json/')
-                                .then(function(res) {
-                                    return res.json();
-                                })
-                                .then(function(data) {
-                                    var countryCode = (data && data.country_code) ? data
-                                        .country_code.toLowerCase() : 'eg';
-                                    sessionStorage.setItem('user_country_code',
-                                        countryCode);
-                                    callback(countryCode);
-                                })
-                                .catch(function() {
-                                    callback('eg');
-                                });
-                        },
-                        separateDialCode: true,
-                        allowDropdown: true,
-                        autoPlaceholder: "polite",
-                        preferredCountries: ["eg", "sa", "ae", "kw", "qa", "om", "us", "gb", "de",
-                            "fr"
-                        ],
-                        utilsScript: "{{ asset('website/vendor/intl-tel-input/js/utils.js') }}",
-                        i18n: {
-                            searchPlaceholder: searchPlaceholder
-                        }
-                    });
+                if (!document.querySelector('link[href*="intlTelInput.min.css"]')) {
+                    const link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = "{{ asset('website/vendor/intl-tel-input/css/intlTelInput.min.css') }}";
+                    document.head.appendChild(link);
+                }
 
-                    const form = input.closest('form');
-                    if (form) {
-                        form.addEventListener('submit', function() {
-                            const fullNumber = iti.getNumber();
-                            if (fullNumber && fullNumber.trim() !== '') {
-                                input.value = fullNumber;
+                const script = document.createElement('script');
+                script.src = "{{ asset('website/vendor/intl-tel-input/js/intlTelInput.min.js') }}";
+                script.onload = function() {
+                    if (typeof window.intlTelInput !== 'function') return;
+                    const locale = @json(app()->getLocale());
+                    const searchPlaceholder = locale === 'ar' ? 'ابحث عن الدولة أو الكود...' : 'Search country or code...';
+
+                    phoneInputs.forEach(function(input) {
+                        if (input.dataset.itiInitialized) return;
+                        input.dataset.itiInitialized = 'true';
+
+                        const iti = window.intlTelInput(input, {
+                            initialCountry: "auto",
+                            geoIpLookup: function(callback) {
+                                var cached = sessionStorage.getItem('user_country_code');
+                                if (cached) {
+                                    callback(cached);
+                                    return;
+                                }
+                                fetch('https://ipapi.co/json/')
+                                    .then(function(res) {
+                                        return res.json();
+                                    })
+                                    .then(function(data) {
+                                        var countryCode = (data && data.country_code) ? data.country_code.toLowerCase() : 'eg';
+                                        sessionStorage.setItem('user_country_code', countryCode);
+                                        callback(countryCode);
+                                    })
+                                    .catch(function() {
+                                        callback('eg');
+                                    });
+                            },
+                            separateDialCode: true,
+                            allowDropdown: true,
+                            autoPlaceholder: "polite",
+                            preferredCountries: ["eg", "sa", "ae", "kw", "qa", "om", "us", "gb", "de", "fr"],
+                            utilsScript: "{{ asset('website/vendor/intl-tel-input/js/utils.js') }}",
+                            i18n: {
+                                searchPlaceholder: searchPlaceholder
                             }
                         });
+
+                        const form = input.closest('form');
+                        if (form) {
+                            form.addEventListener('submit', function() {
+                                const fullNumber = iti.getNumber();
+                                if (fullNumber && fullNumber.trim() !== '') {
+                                    input.value = fullNumber;
+                                }
+                            });
+                        }
+                    });
+                };
+                document.body.appendChild(script);
+            }
+
+            phoneInputs.forEach(function(input) {
+                input.addEventListener('focus', loadAndInitIti, { once: true, passive: true });
+                input.addEventListener('pointerdown', loadAndInitIti, { once: true, passive: true });
+                input.addEventListener('touchstart', loadAndInitIti, { once: true, passive: true });
+            });
+
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver(function(entries, obs) {
+                    for (let i = 0; i < entries.length; i++) {
+                        if (entries[i].isIntersecting) {
+                            loadAndInitIti();
+                            obs.disconnect();
+                            break;
+                        }
                     }
-                });
+                }, { rootMargin: '300px' });
+                phoneInputs.forEach(function(input) { observer.observe(input); });
             }
         });
     </script>
 
     @yield('js')
     @vite('resources/js/website.js')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeStorageKey = 'website-theme';
-            const themeColorMeta = document.querySelector('[data-theme-color-meta]');
-
-            function applyTheme(theme) {
-                document.documentElement.setAttribute('data-theme', theme);
-                document.documentElement.style.colorScheme = theme;
-                if (themeColorMeta) {
-                    themeColorMeta.setAttribute('content', '{{ $brandThemeColor }}');
-                }
-                updateThemeButtons(theme);
-            }
-
-            function updateThemeButtons(theme) {
-                document.querySelectorAll('[data-theme-toggle]').forEach(function(button) {
-                    const icon = button.querySelector('i');
-                    const isDark = theme === 'dark';
-                    const nextLabel = isDark ? button.dataset.lightLabel : button.dataset.darkLabel;
-
-                    button.setAttribute('aria-label', nextLabel);
-                    button.setAttribute('title', nextLabel);
-                    button.setAttribute('aria-pressed', isDark ? 'true' : 'false');
-
-                    if (icon) {
-                        icon.className = 'la ' + (isDark ? 'la-sun' : 'la-moon');
-                    }
-                });
-            }
-
-            function toggleTheme() {
-                const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' :
-                    'light';
-                const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-                try {
-                    localStorage.setItem(themeStorageKey, nextTheme);
-                } catch (e) {}
-
-                applyTheme(nextTheme);
-            }
-
-            document.querySelectorAll('[data-theme-toggle]').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    toggleTheme();
-                });
-            });
-
-            const savedTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-            updateThemeButtons(savedTheme);
-
-            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            if (typeof mediaQuery.addEventListener === 'function') {
-                mediaQuery.addEventListener('change', function(event) {
-                    try {
-                        if (localStorage.getItem(themeStorageKey)) {
-                            return;
-                        }
-                    } catch (e) {}
-
-                    applyTheme(event.matches ? 'dark' : 'light');
-                });
-            }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Navbar Dropdown Fix
-            |--------------------------------------------------------------------------
-            | This keeps desktop dropdowns working even if Bootstrap dropdown JS
-            | is not initializing correctly or custom CSS is hiding the menu.
-            */
-
-            document.querySelectorAll('.navbar [data-navbar-dropdown-toggle]').forEach(function(toggle) {
-                toggle.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    const dropdown = this.closest('.dropdown');
-                    const menu = dropdown ? dropdown.querySelector('.dropdown-menu') : null;
-
-                    if (!dropdown || !menu) {
-                        return;
-                    }
-
-                    document.querySelectorAll('.navbar .dropdown').forEach(function(item) {
-                        if (item !== dropdown) {
-                            item.classList.remove('show');
-
-                            const otherMenu = item.querySelector('.dropdown-menu');
-                            const otherToggle = item.querySelector(
-                                '[data-navbar-dropdown-toggle]');
-
-                            if (otherMenu) {
-                                otherMenu.classList.remove('show');
-                            }
-
-                            if (otherToggle) {
-                                otherToggle.setAttribute('aria-expanded', 'false');
-                            }
-                        }
-                    });
-
-                    dropdown.classList.toggle('show');
-                    menu.classList.toggle('show');
-
-                    const isOpen = menu.classList.contains('show');
-                    this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-                });
-            });
-
-            document.addEventListener('click', function(event) {
-                if (event.target.closest('.navbar .dropdown')) {
-                    return;
-                }
-
-                document.querySelectorAll('.navbar .dropdown').forEach(function(dropdown) {
-                    dropdown.classList.remove('show');
-
-                    const menu = dropdown.querySelector('.dropdown-menu');
-                    const toggle = dropdown.querySelector('[data-navbar-dropdown-toggle]');
-
-                    if (menu) {
-                        menu.classList.remove('show');
-                    }
-
-                    if (toggle) {
-                        toggle.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>

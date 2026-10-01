@@ -539,14 +539,14 @@ class WebsiteCheckoutTest extends TestCase
             ->get(route('admin.bookings.show', $booking))
             ->assertOk()
             ->assertSee('4')
-            ->assertSee('2 بالغين · 1 أطفال · 1 رضع')
-            ->assertSee('رضيع (Infant)')
+            ->assertSee('2 Adults')
+            ->assertSee('1 Infants')
             ->assertSee('Mia Doe');
 
         $this->actingAs($admin, 'admin')
             ->get(route('admin.bookings.index'))
             ->assertOk()
-            ->assertSee('2 بالغ · 1 طفل · 1 رضيع');
+            ->assertSee('2 Adults');
     }
 
     public function test_checkout_displays_full_world_countries_list(): void

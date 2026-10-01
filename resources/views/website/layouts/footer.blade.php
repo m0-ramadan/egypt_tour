@@ -8,8 +8,10 @@
         <div class="footer-content">
             <div class="footer-section">
                 <a href="{{ route('website.home') }}" class="d-inline-block mb-3" aria-label="{{ __('Egypt Tour Pro') }}">
-                    <img class="footer-logo" src="{{ asset('website/logo/egypt-tour-pro-dark.png') }}"
-                        alt="{{ __('Egypt Tour Pro') }}" width="200" height="64">
+                    <img class="footer-logo" src="{{ asset('website/logo/egypt-tour-pro-dark.webp') }}"
+                        srcset="{{ asset('website/logo/egypt-tour-pro-dark-270.webp') }} 270w, {{ asset('website/logo/egypt-tour-pro-dark.webp') }} 473w"
+                        sizes="200px" alt="{{ __('Egypt Tour Pro') }}" width="200" height="64" loading="lazy"
+                        decoding="async">
                 </a>
                 <p>{{ __('Egypt Tour Pro - Turn Your Dreams into Reality. Best travel agency in Egypt specialized in providing professional advice on planning Travel Packages, Nile Cruises and Day Tours.') }}
                 </p>
@@ -145,8 +147,9 @@
             <div class="row align-items-center">
                 <div class="col-lg-7">
                     <p style="margin: 0; opacity: 0.8; font-size: 0.95rem;">
-                        {{ __('© 2026 Copyright to') }} <a href="{{ route('website.home') }}"
-                            style="font-weight: 700; color: var(--etp-orange-500); text-decoration: none;">{{ __('Egypt Tour Pro') }}</a>
+                        {{ __('© :year Copyright to', ['year' => now()->year]) }}
+                        <a href="{{ config('ownership.developer.url') }}" target="_blank" rel="noopener noreferrer"
+                            style="font-weight: 700; color: var(--etp-orange-500); text-decoration: none;">{{ config('ownership.developer.name') }}</a>
                     </p>
                 </div>
                 <div class="col-lg-5">

@@ -97,7 +97,7 @@
   /* Typography */
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-accent: 'Allura', cursive;
+  --font-accent: 'Brush Script MT', 'Segoe Script', cursive;
 
   /* Spacing */
   --space-1: 4px;
