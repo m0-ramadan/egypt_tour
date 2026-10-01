@@ -1,0 +1,16 @@
+/* Homepage route entry: shared shell plus homepage-only presentation. */
+@import "./tokens.css";
+@import "./components.css";
+@import "./website-base.css";
+@import "./website-header.css";
+@import "./website-after.css";
+@import "./egypt-tour-pro-final.css";
+@import "./website-home-critical.css";
+@import "./website-home-deferred.css";
+@import "./website-home-mobile.css";
+
+/* Keep the trust-card glyphs readable on their orange circles. */
+html[data-theme] body.website-theme-shell.home-reference-page .trust-icon,
+html[data-theme] body.website-theme-shell.home-reference-page .trust-icon i {
+    color: #fff !important;
+}

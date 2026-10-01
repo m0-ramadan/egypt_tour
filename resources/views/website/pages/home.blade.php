@@ -10,12 +10,7 @@
 @section('image', asset('website/logo/egypt-tour-pro-charcoal.png'))
 @section('preferred_theme', 'light')
 @section('body_class', 'home-reference-page')
-@section('css')
-    @vite('resources/css/website-home-critical.css')
-    @vite('resources/css/website-home-mobile.css')
-    <link rel="preload" as="style" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}"></noscript>
-@endsection
+@section('home_style_bundle', '1')
 
 @section('lcp_preload')
     <link rel="preload" as="image" type="image/webp"
@@ -115,6 +110,7 @@
                         </div>
                     </div>
 
+                    {{-- Nile Cruise showcase card disabled temporarily.
                     <div class="showcase-hero__visuals" id="showcase-tour">
                         <a href="{{ route('website.nile_cruises.index') }}" class="showcase-tour-card">
                             <div class="showcase-tour-card__image">
@@ -143,6 +139,7 @@
                             </div>
                         </a>
                     </div>
+                    --}}
                 </div>
             </div>
 

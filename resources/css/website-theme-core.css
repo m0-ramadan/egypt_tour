@@ -1,0 +1,383 @@
+:root {
+  --etp-black: #111111;
+  --etp-charcoal-950: #161616;
+  --etp-charcoal-900: #1c1c1c;
+  --etp-charcoal-850: #222222;
+  --etp-charcoal-800: #282828;
+  --etp-charcoal-700: #343434;
+  --etp-charcoal-600: #4a4743;
+  --etp-orange-700: #d95600;
+  --etp-orange-600: #eb6205;
+  --etp-orange-500: #f36b0a;
+  --etp-orange-400: #ff7a12;
+  --etp-orange-300: #ff9b4a;
+  --etp-cream: #fff7ed;
+  --etp-cream-2: #fff3e4;
+  --etp-ivory: #fffcf8;
+  --etp-white: #ffffff;
+  --etp-text: #222222;
+  --etp-text-secondary: #625e58;
+  --etp-text-muted: #827b73;
+  --etp-border: #ebe5de;
+  --etp-border-strong: #ded5ca;
+  --rich-gold: var(--etp-orange-500);
+  --warm-bronze: var(--etp-orange-600);
+  --bg-primary: var(--etp-white);
+  --bg-secondary: var(--etp-ivory);
+  --bg-tertiary: var(--etp-cream);
+  --text-primary: var(--etp-text);
+  --text-secondary: var(--etp-text-secondary);
+  --text-muted: var(--etp-text-muted);
+  --bs-primary: #f36b0a !important;
+  --bs-primary-rgb: 243, 107, 10 !important;
+  --bs-link-color: #d95600 !important;
+  --bs-link-hover-color: #b94700 !important;
+  --bs-body-color: #222222 !important;
+  --bs-body-bg: #ffffff !important;
+  --bs-border-color: #ebe5de !important;
+}
+
+html {
+  accent-color: #f36b0a;
+}
+
+body.website-theme-shell {
+  background: #fff !important;
+  color: #222 !important;
+}
+
+body.website-theme-shell a {
+  text-decoration-color: #f36b0a59;
+}
+
+body.website-theme-shell a:hover,
+body.website-theme-shell a:focus {
+  text-decoration-color: #f36b0a;
+}
+
+body.website-theme-shell .navbar {
+  background: #141414f7 !important;
+  border-bottom: 1px solid rgba(243, 107, 10, 0.24) !important;
+  box-shadow: 0 8px 28px #0000002e !important;
+  backdrop-filter: blur(18px) saturate(120%);
+}
+
+body.website-theme-shell .navbar .logo-dark,
+body.website-theme-shell .modern-mobile-menu .logo-dark {
+  display: block !important;
+}
+
+body.website-theme-shell .navbar .logo-light,
+body.website-theme-shell .modern-mobile-menu .logo-light {
+  display: none !important;
+}
+
+body.website-theme-shell .navbar .nav-link,
+body.website-theme-shell .navbar .dropdown-toggle,
+body.website-theme-shell .navbar .action-btn,
+body.website-theme-shell .navbar .language-toggle,
+body.website-theme-shell .mobile-toggle {
+  color: #fff !important;
+}
+
+body.website-theme-shell .navbar .nav-link:hover,
+body.website-theme-shell .navbar .nav-link:focus,
+body.website-theme-shell .navbar .nav-link.is-active,
+body.website-theme-shell .navbar .special-offer,
+body.website-theme-shell .navbar .special-offer:hover,
+body.website-theme-shell .navbar .special-offer.is-active {
+  color: #ff8a33 !important;
+}
+
+body.website-theme-shell .navbar .nav-link.is-active:after,
+body.website-theme-shell .navbar .nav-link:hover:after {
+  background: #f36b0a !important;
+}
+
+body.website-theme-shell .navbar .action-btn,
+body.website-theme-shell .navbar .language-toggle,
+body.website-theme-shell .mobile-action-btn,
+body.website-theme-shell .mobile-toggle {
+  background: #ffffff14 !important;
+  border-color: #ffffff24 !important;
+}
+
+body.website-theme-shell .navbar .action-btn:hover,
+body.website-theme-shell .navbar .language-toggle:hover,
+body.website-theme-shell .mobile-action-btn:hover,
+body.website-theme-shell .mobile-toggle:hover {
+  background: #f36b0a29 !important;
+  border-color: #f36b0a73 !important;
+  color: #ff9348 !important;
+}
+
+body.website-theme-shell .btn-tailor,
+body.website-theme-shell .mobile-enquiry-btn2 {
+  background: linear-gradient(135deg, #f36b0a, #ff861c) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: 0 10px 26px #f36b0a47 !important;
+}
+
+body.website-theme-shell .btn-tailor:hover,
+body.website-theme-shell .mobile-enquiry-btn2:hover {
+  background: #d95600 !important;
+  color: #fff !important;
+}
+
+body.website-theme-shell .dropdown-menu {
+  background: #fff !important;
+  color: #222 !important;
+  border: 1px solid #ebe5de !important;
+  box-shadow: 0 18px 45px #11111129 !important;
+}
+
+body.website-theme-shell .dropdown-item {
+  color: #2b2b2b !important;
+}
+
+body.website-theme-shell .dropdown-item:hover,
+body.website-theme-shell .dropdown-item:focus,
+body.website-theme-shell .dropdown-item.active {
+  color: #d95600 !important;
+  background: #fff3e4 !important;
+}
+
+body.website-theme-shell .dropdown-item i {
+  color: #f36b0a !important;
+}
+
+body.website-theme-shell .modern-mobile-menu,
+body.website-theme-shell .mobile-menu-header {
+  background: #171717 !important;
+  border-color: #f36b0a38 !important;
+}
+
+body.website-theme-shell .mobile-menu-content {
+  background: #1c1c1c !important;
+}
+
+body.website-theme-shell .mobile-nav-link,
+body.website-theme-shell .mobile-destinations-toggle,
+body.website-theme-shell .mobile-language-toggle,
+body.website-theme-shell .mobile-submenu-link,
+body.website-theme-shell .mobile-language-link,
+body.website-theme-shell .mobile-close-btn,
+body.website-theme-shell .mobile-action-card {
+  color: #fff !important;
+}
+
+body.website-theme-shell .mobile-nav-link:hover,
+body.website-theme-shell .mobile-nav-link.is-active,
+body.website-theme-shell .mobile-destinations-toggle:hover,
+body.website-theme-shell .mobile-destinations-toggle.is-active,
+body.website-theme-shell .mobile-language-toggle:hover,
+body.website-theme-shell .mobile-submenu-link:hover,
+body.website-theme-shell .mobile-language-link:hover,
+body.website-theme-shell .mobile-language-link.active {
+  background: #f36b0a24 !important;
+  color: #ff9348 !important;
+}
+
+body.website-theme-shell .mobile-destinations-submenu,
+body.website-theme-shell .mobile-language-submenu {
+  background: #222 !important;
+  border-color: #f36b0a2e !important;
+}
+
+body.website-theme-shell .hamburger span {
+  background: #fff !important;
+}
+
+body.website-theme-shell :where(input, textarea, select, .form-control, .form-select) {
+  background-color: #fff !important;
+  color: #222 !important;
+  border-color: #ded5ca !important;
+}
+
+body.website-theme-shell :where(input, textarea, select, .form-control, .form-select):focus {
+  border-color: #f36b0a !important;
+  box-shadow: 0 0 0 0.2rem #f36b0a26 !important;
+  outline-color: #f36b0a !important;
+}
+
+body.website-theme-shell :where(input, textarea)::placeholder {
+  color: #8a837b !important;
+}
+
+body.website-theme-shell .iti__selected-dial-code,
+body.website-theme-shell .iti__country-name,
+body.website-theme-shell .iti__dial-code,
+body.website-theme-shell .iti__search-input {
+  color: #2b2b2b !important;
+}
+
+body.website-theme-shell .iti__dropdown-content,
+body.website-theme-shell .iti__search-input,
+body.website-theme-shell .iti__country-list {
+  background: #fff !important;
+  border-color: #ded5ca !important;
+}
+
+body.website-theme-shell .iti__country:hover,
+body.website-theme-shell .iti__country.iti__highlight {
+  background: #fff3e4 !important;
+}
+
+body.website-theme-shell .footer {
+  background: #111 !important;
+  color: #ffffffd1 !important;
+  border-top: 1px solid rgba(243, 107, 10, 0.25) !important;
+}
+
+body.website-theme-shell .footer :where(p, li, span) {
+  color: #ffffffc2 !important;
+}
+
+body.website-theme-shell .footer a {
+  color: #ffffffd6 !important;
+}
+
+body.website-theme-shell .footer a:hover,
+body.website-theme-shell .footer a:focus,
+body.website-theme-shell .footer .footer-heading,
+body.website-theme-shell .footer .award-trophy,
+body.website-theme-shell .footer .award-badge,
+body.website-theme-shell .footer .stat-item i {
+  color: #ff8a33 !important;
+}
+
+body.website-theme-shell .footer .tripadvisor-award {
+  background: #1c1c1c !important;
+  border-color: #f36b0a40 !important;
+}
+
+body.website-theme-shell .footer .award-image {
+  background: #fff !important;
+  border-color: #f36b0a33 !important;
+}
+
+body.website-theme-shell .whatsapp-fixed,
+body.website-theme-shell .floating-whatsapp {
+  position: fixed !important;
+  right: 24px !important;
+  left: auto !important;
+  bottom: 84px !important;
+  z-index: 99999 !important;
+  background: #f36b0a !important;
+  border-color: #f36b0a !important;
+  color: #fff !important;
+}
+
+html[dir=rtl] body.website-theme-shell .whatsapp-fixed,
+html[dir=rtl] body.website-theme-shell .floating-whatsapp {
+  right: 24px !important;
+  left: auto !important;
+}
+
+body.website-theme-shell .communication-btn,
+body.website-theme-shell .whatsapp,
+body.website-theme-shell .viber {
+  background: #f36b0a !important;
+  border-color: #f36b0a !important;
+  color: #fff !important;
+}
+
+body.website-theme-shell .whatsapp-fixed:hover,
+body.website-theme-shell .floating-whatsapp:hover,
+body.website-theme-shell .communication-btn:hover,
+body.website-theme-shell .whatsapp:hover,
+body.website-theme-shell .viber:hover {
+  background: #d95600 !important;
+  border-color: #d95600 !important;
+  color: #fff !important;
+}
+
+html[data-theme=dark] {
+  color-scheme: dark;
+  --dark-bg: #111111 !important;
+  --dark-surface: #1c1c1c !important;
+  --dark-surface-2: #262626 !important;
+  --dark-surface-soft: #242424 !important;
+  --dark-surface-muted: #171717 !important;
+  --dark-border: rgba(255, 255, 255, 0.11) !important;
+  --cream-elegant: #111111 !important;
+  --pearl-luxury: #1c1c1c !important;
+  --light-sand: #242424 !important;
+  --charcoal-deep: #ffffff !important;
+  --warm-gray: #d1cbc4 !important;
+  --primary-navy: #ffffff !important;
+  --deep-teal: #ff8a33 !important;
+  --bg-primary: #111111 !important;
+  --bg-secondary: #171717 !important;
+  --bg-tertiary: #242424 !important;
+  --bg-surface: #1c1c1c !important;
+  --bg-surface-elevated: #262626 !important;
+  --bg-navy-panel: #111111 !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #d1cbc4 !important;
+  --text-muted: #aaa39b !important;
+  --text-inverse: #111111 !important;
+  --bs-body-color: #f8f8f8 !important;
+  --bs-body-bg: #111111 !important;
+  --bs-border-color: rgba(255, 255, 255, 0.11) !important;
+}
+
+html[data-theme=dark] body.website-theme-shell {
+  background: #111 !important;
+  color: #f8f8f8 !important;
+}
+
+html[data-theme=dark] body.website-theme-shell .dropdown-menu {
+  background: #1c1c1c !important;
+  color: #f8f8f8 !important;
+  border-color: #ffffff1c !important;
+  box-shadow: 0 14px 38px #0000005c !important;
+}
+
+html[data-theme=dark] body.website-theme-shell .dropdown-item {
+  color: #fff !important;
+}
+
+html[data-theme=dark] body.website-theme-shell .dropdown-item:hover,
+html[data-theme=dark] body.website-theme-shell .dropdown-item.active {
+  color: #ff9348 !important;
+  background: #f36b0a21 !important;
+}
+
+html[data-theme=dark] body.website-theme-shell :where(input, textarea, select, .form-control, .form-select) {
+  background: #171717 !important;
+  color: #fff !important;
+  border-color: #ffffff24 !important;
+}
+
+html[data-theme=dark] body.website-theme-shell .iti__dropdown-content,
+html[data-theme=dark] body.website-theme-shell .iti__search-input,
+html[data-theme=dark] body.website-theme-shell .iti__country-list {
+  background: #1c1c1c !important;
+  color: #fff !important;
+  border-color: #ffffff1f !important;
+}
+
+html[data-theme=dark] body.website-theme-shell .iti__selected-dial-code,
+html[data-theme=dark] body.website-theme-shell .iti__country-name,
+html[data-theme=dark] body.website-theme-shell .iti__dial-code,
+html[data-theme=dark] body.website-theme-shell .iti__search-input {
+  color: #fff !important;
+}
+
+body.website-theme-shell :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid #f36b0a !important;
+  outline-offset: 3px;
+}
+
+body.website-theme-shell ::selection {
+  background: #f36b0a;
+  color: #fff;
+}
+
+body.website-theme-shell input[type=checkbox],
+body.website-theme-shell input[type=radio],
+body.website-theme-shell input[type=range] {
+  accent-color: #f36b0a !important;
+}

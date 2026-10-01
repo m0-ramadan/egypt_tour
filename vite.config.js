@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/css/website.css',
                 'resources/css/website-base.css',
                 'resources/css/website-home.css',
+                'resources/css/website-home-entry.css',
                 'resources/css/website-home-mobile.css',
                 'resources/css/website-home-critical.css',
                 'resources/css/website-home-deferred.css',
