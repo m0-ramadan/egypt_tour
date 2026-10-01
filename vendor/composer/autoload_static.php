@@ -608,7 +608,7 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
         array (
             0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
         ),
-        'EzyCode\\Core\\' =>
+        'EzyCode\\Core\\' => 
         array (
             0 => __DIR__ . '/../..' . '/packages/ezycode/core/src',
         ),
