@@ -336,3 +336,54 @@ if (!function_exists('greeting')) {
         }
     }
 }
+
+if (!function_exists('img_srcset_data')) {
+    /**
+     * Generate AVIF + WebP srcset data for a card image URL.
+     *
+     * Given a URL like /storage/packages/abc.jpg, looks for pre-generated
+     * optimized variants (abc-420.avif, abc-640.avif, abc-768.avif, etc.)
+     * in the same directory.
+     *
+     * Returns an array:
+     *   ['avif' => '...avif srcset...', 'webp' => '...webp srcset...',
+     *    'has_variants' => true/false]
+     *
+     * @param string $url  URL returned by imageUrl() — starts with /
+     * @param int[]  $widths  widths to check, default [420, 640, 768]
+     * @return array{avif:string, webp:string, has_variants:bool}
+     */
+    function img_srcset_data(string $url, array $widths = [420, 640, 768]): array
+    {
+        if (!$url || str_starts_with($url, 'http')) {
+            return ['avif' => '', 'webp' => '', 'has_variants' => false];
+        }
+
+        $publicPath = public_path(ltrim($url, '/'));
+        $dir        = dirname($publicPath);
+        $stem       = pathinfo($publicPath, PATHINFO_FILENAME);
+        $baseUrl    = '/' . ltrim(dirname($url) . '/' , '/');
+
+        $avifParts = [];
+        $webpParts = [];
+
+        foreach ($widths as $w) {
+            $avifFile = $dir . '/' . $stem . '-' . $w . '.avif';
+            $webpFile = $dir . '/' . $stem . '-' . $w . '.webp';
+
+            if (file_exists($avifFile)) {
+                $avifParts[] = $baseUrl . $stem . '-' . $w . '.avif ' . $w . 'w';
+            }
+            if (file_exists($webpFile)) {
+                $webpParts[] = $baseUrl . $stem . '-' . $w . '.webp ' . $w . 'w';
+            }
+        }
+
+        return [
+            'avif'         => implode(', ', $avifParts),
+            'webp'         => implode(', ', $webpParts),
+            'has_variants' => !empty($avifParts) || !empty($webpParts),
+        ];
+    }
+}
+
