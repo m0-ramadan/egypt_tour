@@ -42,7 +42,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\LogVisitor::class,
             \App\Http\Middleware\SetLocale::class,
-
+            \App\Http\Middleware\MinifyHtml::class,
         ],
 
         'api' => [

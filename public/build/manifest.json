@@ -1,6 +1,6 @@
 {
-  "_modal-C4R929Oh.js": {
-    "file": "assets/modal-C4R929Oh.js",
+  "_modal-CTb_VS3l.js": {
+    "file": "assets/modal-CTb_VS3l.js",
     "name": "modal",
     "isDynamicEntry": true
   },
@@ -20,6 +20,136 @@
     "src": "resources/css/egypt-tour-pro-final.css",
     "isEntry": true
   },
+  "resources/css/pages/attractions-by-city.css": {
+    "file": "assets/attractions-by-city-DssG3215.css",
+    "src": "resources/css/pages/attractions-by-city.css",
+    "isEntry": true
+  },
+  "resources/css/pages/attractions-index.css": {
+    "file": "assets/attractions-index-BkhNzrZ8.css",
+    "src": "resources/css/pages/attractions-index.css",
+    "isEntry": true
+  },
+  "resources/css/pages/attractions-show.css": {
+    "file": "assets/attractions-show-D5dmYWw3.css",
+    "src": "resources/css/pages/attractions-show.css",
+    "isEntry": true
+  },
+  "resources/css/pages/blogs-index.css": {
+    "file": "assets/blogs-index-CNeG4fGM.css",
+    "src": "resources/css/pages/blogs-index.css",
+    "isEntry": true
+  },
+  "resources/css/pages/blogs-show.css": {
+    "file": "assets/blogs-show-eIj8YzAZ.css",
+    "src": "resources/css/pages/blogs-show.css",
+    "isEntry": true
+  },
+  "resources/css/pages/checkout-show.css": {
+    "file": "assets/checkout-show-CGFchHna.css",
+    "src": "resources/css/pages/checkout-show.css",
+    "isEntry": true
+  },
+  "resources/css/pages/checkout-status.css": {
+    "file": "assets/checkout-status-29z0bXXQ.css",
+    "src": "resources/css/pages/checkout-status.css",
+    "isEntry": true
+  },
+  "resources/css/pages/contact-us.css": {
+    "file": "assets/contact-us-LVxorh4R.css",
+    "src": "resources/css/pages/contact-us.css",
+    "isEntry": true
+  },
+  "resources/css/pages/day-tours-index.css": {
+    "file": "assets/day-tours-index-G4j87vyD.css",
+    "src": "resources/css/pages/day-tours-index.css",
+    "isEntry": true
+  },
+  "resources/css/pages/destinations-index.css": {
+    "file": "assets/destinations-index-D7RQM6o_.css",
+    "src": "resources/css/pages/destinations-index.css",
+    "isEntry": true
+  },
+  "resources/css/pages/destinations-show.css": {
+    "file": "assets/destinations-show-9gbgRn2f.css",
+    "src": "resources/css/pages/destinations-show.css",
+    "isEntry": true
+  },
+  "resources/css/pages/enquiry-form.css": {
+    "file": "assets/enquiry-form-6gsbvKcv.css",
+    "src": "resources/css/pages/enquiry-form.css",
+    "isEntry": true
+  },
+  "resources/css/pages/multi-country.css": {
+    "file": "assets/multi-country-BgLhPxz1.css",
+    "src": "resources/css/pages/multi-country.css",
+    "isEntry": true
+  },
+  "resources/css/pages/nile-cruise-details.css": {
+    "file": "assets/nile-cruise-details-Bn85nOI2.css",
+    "src": "resources/css/pages/nile-cruise-details.css",
+    "isEntry": true
+  },
+  "resources/css/pages/nile-cruise-pricing.css": {
+    "file": "assets/nile-cruise-pricing-sXQ_CtqR.css",
+    "src": "resources/css/pages/nile-cruise-pricing.css",
+    "isEntry": true
+  },
+  "resources/css/pages/nile-cruises-index.css": {
+    "file": "assets/nile-cruises-index-DDDGC7u8.css",
+    "src": "resources/css/pages/nile-cruises-index.css",
+    "isEntry": true
+  },
+  "resources/css/pages/nile-cruises-listing.css": {
+    "file": "assets/nile-cruises-listing-DzmRAOZs.css",
+    "src": "resources/css/pages/nile-cruises-listing.css",
+    "isEntry": true
+  },
+  "resources/css/pages/nile-cruises-luxor-aswan.css": {
+    "file": "assets/nile-cruises-luxor-aswan-BItyXYjX.css",
+    "src": "resources/css/pages/nile-cruises-luxor-aswan.css",
+    "isEntry": true
+  },
+  "resources/css/pages/offers.css": {
+    "file": "assets/offers-DvzEO6My.css",
+    "src": "resources/css/pages/offers.css",
+    "isEntry": true
+  },
+  "resources/css/pages/packages-index.css": {
+    "file": "assets/packages-index-YwddD8F4.css",
+    "src": "resources/css/pages/packages-index.css",
+    "isEntry": true
+  },
+  "resources/css/pages/packages-show.css": {
+    "file": "assets/packages-show-XEC_N7rp.css",
+    "src": "resources/css/pages/packages-show.css",
+    "isEntry": true
+  },
+  "resources/css/pages/search.css": {
+    "file": "assets/search-Bk2MNgnT.css",
+    "src": "resources/css/pages/search.css",
+    "isEntry": true
+  },
+  "resources/css/pages/static-pages-index.css": {
+    "file": "assets/static-pages-index-JTo1Tutg.css",
+    "src": "resources/css/pages/static-pages-index.css",
+    "isEntry": true
+  },
+  "resources/css/pages/tailor-made.css": {
+    "file": "assets/tailor-made-DJL2lU9t.css",
+    "src": "resources/css/pages/tailor-made.css",
+    "isEntry": true
+  },
+  "resources/css/pages/travel-packages-index.css": {
+    "file": "assets/travel-packages-index-CFwrvDsI.css",
+    "src": "resources/css/pages/travel-packages-index.css",
+    "isEntry": true
+  },
+  "resources/css/pages/travel-tips.css": {
+    "file": "assets/travel-tips-6tUqrZJp.css",
+    "src": "resources/css/pages/travel-tips.css",
+    "isEntry": true
+  },
   "resources/css/tokens.css": {
     "file": "assets/tokens-CJMUWu1N.css",
     "src": "resources/css/tokens.css",
@@ -31,7 +161,7 @@
     "isEntry": true
   },
   "resources/css/website-base.css": {
-    "file": "assets/website-base-CUqQ26ny.css",
+    "file": "assets/website-base-BNe-BgPm.css",
     "src": "resources/css/website-base.css",
     "isEntry": true
   },
@@ -41,7 +171,7 @@
     "isEntry": true
   },
   "resources/css/website-home-critical.css": {
-    "file": "assets/website-home-critical-Dc0gEQkt.css",
+    "file": "assets/website-home-critical-BCESnK29.css",
     "src": "resources/css/website-home-critical.css",
     "isEntry": true
   },
@@ -71,18 +201,84 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-DUr89oQr.js",
+    "file": "assets/app-Bv3vWTDP.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
   },
+  "resources/js/pages/blogs-index.js": {
+    "file": "assets/blogs-index-BmH-SN-y.js",
+    "name": "blogs-index",
+    "src": "resources/js/pages/blogs-index.js",
+    "isEntry": true
+  },
+  "resources/js/pages/blogs-show.js": {
+    "file": "assets/blogs-show-BXMwy6Nc.js",
+    "name": "blogs-show",
+    "src": "resources/js/pages/blogs-show.js",
+    "isEntry": true
+  },
+  "resources/js/pages/checkout-show.js": {
+    "file": "assets/checkout-show-C69mH07E.js",
+    "name": "checkout-show",
+    "src": "resources/js/pages/checkout-show.js",
+    "isEntry": true
+  },
+  "resources/js/pages/contact-us.js": {
+    "file": "assets/contact-us-BK4eZKnN.js",
+    "name": "contact-us",
+    "src": "resources/js/pages/contact-us.js",
+    "isEntry": true
+  },
+  "resources/js/pages/destinations-index.js": {
+    "file": "assets/destinations-index-BYsYDQjh.js",
+    "name": "destinations-index",
+    "src": "resources/js/pages/destinations-index.js",
+    "isEntry": true
+  },
+  "resources/js/pages/enquiry-form.js": {
+    "file": "assets/enquiry-form-CqKXV5Rf.js",
+    "name": "enquiry-form",
+    "src": "resources/js/pages/enquiry-form.js",
+    "isEntry": true
+  },
+  "resources/js/pages/nile-cruise-details.js": {
+    "file": "assets/nile-cruise-details-DdKnE4QC.js",
+    "name": "nile-cruise-details",
+    "src": "resources/js/pages/nile-cruise-details.js",
+    "isEntry": true
+  },
+  "resources/js/pages/packages-show.js": {
+    "file": "assets/packages-show-hfmVr-To.js",
+    "name": "packages-show",
+    "src": "resources/js/pages/packages-show.js",
+    "isEntry": true
+  },
+  "resources/js/pages/search.js": {
+    "file": "assets/search-DBelvXdq.js",
+    "name": "search",
+    "src": "resources/js/pages/search.js",
+    "isEntry": true
+  },
+  "resources/js/pages/tailor-made.js": {
+    "file": "assets/tailor-made-CCvbVJeJ.js",
+    "name": "tailor-made",
+    "src": "resources/js/pages/tailor-made.js",
+    "isEntry": true
+  },
+  "resources/js/pages/travel-tips.js": {
+    "file": "assets/travel-tips-BhiANeA9.js",
+    "name": "travel-tips",
+    "src": "resources/js/pages/travel-tips.js",
+    "isEntry": true
+  },
   "resources/js/website.js": {
-    "file": "assets/website-I3bijAxI.js",
+    "file": "assets/website-JOC5HViF.js",
     "name": "website",
     "src": "resources/js/website.js",
     "isEntry": true,
     "dynamicImports": [
-      "_modal-C4R929Oh.js"
+      "_modal-CTb_VS3l.js"
     ]
   }
 }
