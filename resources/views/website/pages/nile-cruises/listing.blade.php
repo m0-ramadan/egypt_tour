@@ -14,114 +14,12 @@
 @section('image', $heroImage)
 
 @section('css')
-    @vite('resources/css/website-home.css')
-    <style>
-        .nile-listing-hero {
-            position: relative;
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            margin-top: -85px;
-            padding: 175px 0 75px;
-            color: #fff;
-            background: linear-gradient(rgba(28, 28, 28, 0.78), rgba(43, 43, 43, 0.68)),
-                url('{{ $heroImage }}') center/cover no-repeat;
-            overflow: hidden;
-        }
-
-        .nile-listing-hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at top right, rgba(255, 210, 125, 0.18), transparent 35%);
-        }
-
-        .nile-listing-hero .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        .nile-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 18px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            backdrop-filter: blur(12px);
-            font-weight: 600;
-            margin-bottom: 18px;
-            color: var(--etp-orange-400, #FB923C);
-        }
-
-        .nile-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.2rem, 4.8vw, 3.8rem);
-            line-height: 1.12;
-            margin-bottom: 14px;
-            color: #fff;
-        }
-
-        .nile-subtitle {
-            max-width: 760px;
-            margin: 0 auto 26px;
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .search-box-wrapper {
-            max-width: 580px;
-            margin: 0 auto;
-        }
-
-        .search-box {
-            display: flex;
-            background: #fff;
-            border-radius: 999px;
-            padding: 6px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .search-box input {
-            border: none;
-            outline: none;
-            padding: 10px 20px;
-            flex-grow: 1;
-            border-radius: 999px;
-            font-size: 0.95rem;
-            color: #1c1c1c;
-        }
-
-        .search-box button {
-            border: none;
-            background: var(--etp-gradient-orange, linear-gradient(135deg, #F36B0A 0%, #FF8A3D 100%));
-            color: #fff;
-            padding: 10px 24px;
-            border-radius: 999px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .search-box button:hover {
-            background: linear-gradient(135deg, #FF8A3D 0%, #F36B0A 100%);
-        }
-
-        .breadcrumb-item a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-        }
-
-        .breadcrumb-item.active {
-            color: var(--etp-orange-400, #FB923C);
-        }
-    </style>
+    @vite('resources/css/pages/nile-cruises-listing.css')
 @endsection
 
 @section('content')
     <!-- Hero Banner -->
-    <section class="nile-listing-hero text-center">
+    <section class="nile-listing-hero text-center" style="--hero-bg: url('{{ $heroImage }}');">
         <div class="container">
             <nav aria-label="breadcrumb" class="d-flex justify-content-center mb-3">
                 <ol class="breadcrumb">

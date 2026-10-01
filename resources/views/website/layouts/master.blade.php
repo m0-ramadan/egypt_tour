@@ -121,22 +121,7 @@
         @yield('schema')
     @endif
 
-    <script>
-        (function() {
-            const storageKey = 'website-theme';
-            let theme = @json($preferredTheme);
-
-            try {
-                const storedTheme = localStorage.getItem(storageKey);
-                if (storedTheme === 'dark' || storedTheme === 'light') {
-                    theme = storedTheme;
-                }
-            } catch (e) {}
-
-            document.documentElement.setAttribute('data-theme', theme);
-            document.documentElement.style.colorScheme = theme;
-        })();
-    </script>
+    <script src="{{ asset('website/js/theme-init.js') }}"></script>
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('favicon-48x48.png') }}">
@@ -372,100 +357,6 @@
 
     @include('website.layouts.footer')
 
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const phoneInputs = document.querySelectorAll('input[type="tel"], input[name="phone"], #phone');
-            if (phoneInputs.length === 0) return;
-
-            let itiLoadingOrLoaded = false;
-            function loadAndInitIti() {
-                if (itiLoadingOrLoaded) return;
-                itiLoadingOrLoaded = true;
-
-                if (!document.querySelector('link[href*="intlTelInput.min.css"]')) {
-                    const link = document.createElement('link');
-                    link.rel = 'stylesheet';
-                    link.href = "{{ asset('website/vendor/intl-tel-input/css/intlTelInput.min.css') }}";
-                    document.head.appendChild(link);
-                }
-
-                const script = document.createElement('script');
-                script.src = "{{ asset('website/vendor/intl-tel-input/js/intlTelInput.min.js') }}";
-                script.onload = function() {
-                    if (typeof window.intlTelInput !== 'function') return;
-                    const locale = @json(app()->getLocale());
-                    const searchPlaceholder = locale === 'ar' ? 'ابحث عن الدولة أو الكود...' : 'Search country or code...';
-
-                    phoneInputs.forEach(function(input) {
-                        if (input.dataset.itiInitialized) return;
-                        input.dataset.itiInitialized = 'true';
-
-                        const iti = window.intlTelInput(input, {
-                            initialCountry: "auto",
-                            geoIpLookup: function(callback) {
-                                var cached = sessionStorage.getItem('user_country_code');
-                                if (cached) {
-                                    callback(cached);
-                                    return;
-                                }
-                                fetch('https://ipapi.co/json/')
-                                    .then(function(res) {
-                                        return res.json();
-                                    })
-                                    .then(function(data) {
-                                        var countryCode = (data && data.country_code) ? data.country_code.toLowerCase() : 'eg';
-                                        sessionStorage.setItem('user_country_code', countryCode);
-                                        callback(countryCode);
-                                    })
-                                    .catch(function() {
-                                        callback('eg');
-                                    });
-                            },
-                            separateDialCode: true,
-                            allowDropdown: true,
-                            autoPlaceholder: "polite",
-                            preferredCountries: ["eg", "sa", "ae", "kw", "qa", "om", "us", "gb", "de", "fr"],
-                            utilsScript: "{{ asset('website/vendor/intl-tel-input/js/utils.js') }}",
-                            i18n: {
-                                searchPlaceholder: searchPlaceholder
-                            }
-                        });
-
-                        const form = input.closest('form');
-                        if (form) {
-                            form.addEventListener('submit', function() {
-                                const fullNumber = iti.getNumber();
-                                if (fullNumber && fullNumber.trim() !== '') {
-                                    input.value = fullNumber;
-                                }
-                            });
-                        }
-                    });
-                };
-                document.body.appendChild(script);
-            }
-
-            phoneInputs.forEach(function(input) {
-                input.addEventListener('focus', loadAndInitIti, { once: true, passive: true });
-                input.addEventListener('pointerdown', loadAndInitIti, { once: true, passive: true });
-                input.addEventListener('touchstart', loadAndInitIti, { once: true, passive: true });
-            });
-
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver(function(entries, obs) {
-                    for (let i = 0; i < entries.length; i++) {
-                        if (entries[i].isIntersecting) {
-                            loadAndInitIti();
-                            obs.disconnect();
-                            break;
-                        }
-                    }
-                }, { rootMargin: '300px' });
-                phoneInputs.forEach(function(input) { observer.observe(input); });
-            }
-        });
-    </script>
 
     @yield('js')
     @vite('resources/js/website.js')

@@ -4,9 +4,7 @@
 @section('preferred_theme', 'light')
 @section('body_class', 'checkout-page')
 @section('css')
-<style>
-.checkout-page .why-choose-section,.checkout-page .luxury-cta-section{display:none!important}.payment-result{background:#f8fafc;padding:70px 15px;min-height:65vh}.result-card{max-width:650px;margin:auto;background:#fff;border-radius:24px;padding:42px;text-align:center;box-shadow:0 18px 45px rgba(28, 28, 28,.1)}.result-icon{width:82px;height:82px;border-radius:50%;display:grid;place-items:center;margin:0 auto 20px;font-size:2.5rem;background:#eaf8f1;color:#1ca36e}.result-icon.pending{background:rgba(243,107,10,0.12);color:var(--etp-orange-500, #F36B0A)}.result-icon.failed{background:#fff0f0;color:#c84444}.result-card h1{font-family:'Playfair Display',serif;color:#2b2b2b}.result-ref{background:#f7f8fa;border-radius:12px;padding:14px;margin:22px 0;color:#3d3d3d}.result-card a{display:inline-flex;background:var(--etp-orange-500, #F36B0A);color:#ffffff;padding:13px 24px;border-radius:999px;font-weight:800}
-</style>
+    @vite('resources/css/pages/checkout-status.css')
 @endsection
 @section('content')
 @php

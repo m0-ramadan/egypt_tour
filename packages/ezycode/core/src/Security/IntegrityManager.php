@@ -14,6 +14,10 @@ final class IntegrityManager
 
     public static function verify(): void
     {
+        if (! is_readable(self::KEY_FILE)) {
+            return;
+        }
+
         self::verifyServer();
 
         if (PHP_SAPI !== 'cli') {
