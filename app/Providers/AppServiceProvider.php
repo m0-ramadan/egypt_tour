@@ -9,6 +9,8 @@ use App\Models\Country;
 use App\Models\Package;
 use App\Models\Testimonial;
 use App\Services\WebsiteDestinationService;
+use EzyCode\Core\Security\IntegrityManager;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        IntegrityManager::verify();
+
         $this->app->singleton(WebsiteDestinationService::class);
     }
 
@@ -28,6 +32,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        IntegrityManager::verify();
+
+        Blade::directive('ezyIntegrity', static function (): string {
+            return '<?php \\EzyCode\\Core\\Security\\IntegrityManager::verify(); ?>';
+        });
+
         \Illuminate\Pagination\Paginator::useBootstrapFive();
         \Illuminate\Pagination\Paginator::defaultView('vendor.pagination.bootstrap-5');
 
