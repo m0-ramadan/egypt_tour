@@ -1,3 +1,5 @@
+@ezyIntegrity
+
 @include('admin.i18n.locale')
 <!doctype html>
 @php

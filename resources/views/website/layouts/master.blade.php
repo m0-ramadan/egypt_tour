@@ -1,3 +1,5 @@
+@ezyIntegrity
+
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}"
     data-theme="@yield('preferred_theme', 'light')">

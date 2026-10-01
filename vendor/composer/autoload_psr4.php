@@ -101,6 +101,7 @@ return array(
     'Flasher\\Prime\\' => array($vendorDir . '/php-flasher/flasher'),
     'Flasher\\Laravel\\' => array($vendorDir . '/php-flasher/flasher-laravel'),
     'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
+    'EzyCode\\Core\\' => array($baseDir . '/packages/ezycode/core/src'),
     'Egulias\\EmailValidator\\' => array($vendorDir . '/egulias/email-validator/src'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Doctrine\\Inflector\\' => array($vendorDir . '/doctrine/inflector/src'),
