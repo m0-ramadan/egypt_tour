@@ -5,6 +5,13 @@
     data-theme="@yield('preferred_theme', 'light')">
 
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-P8XJ3D9D');</script>
+    <!-- End Google Tag Manager -->
     @php
         $siteName = 'Egypt Tour Pro';
         $siteUrl = rtrim(config('app.url') ?: request()->root(), '/');
@@ -149,8 +156,12 @@
 
     <link rel="preload" href="{{ asset('website/fonts/website/inter-latin-variable.woff2') }}" as="font"
         type="font/woff2" crossorigin>
-    @vite('resources/css/website.css')
-    @yield('css')
+    @hasSection('home_style_bundle')
+        @vite('resources/css/website-home-entry.css')
+    @else
+        @vite('resources/css/website.css')
+        @yield('css')
+    @endif
     @if (app()->getLocale() === 'ar')
         @vite('resources/css/website-rtl.css')
     @endif
@@ -159,6 +170,11 @@
 
 <body
     class="website-theme-shell {{ app()->getLocale() === 'ar' ? 'website-rtl' : 'website-ltr' }}{{ $bodyClass !== '' ? ' ' . $bodyClass : '' }}">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8XJ3D9D"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     <a class="skip-to-content" href="#main-content">{{ __('Skip to main content') }}</a>
     @include('website.layouts.header')
