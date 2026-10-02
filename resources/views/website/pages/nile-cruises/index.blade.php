@@ -20,7 +20,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="nile-hero" style="--hero-bg: url(\'{{ $heroImage }}\');">
+    <section class="nile-hero" style="--hero-bg: url('{{ $heroImage }}');">
         <div class="container text-center">
             <div class="nile-badge">
                 <i class="la la-ship"></i> {{ $pageContent['badge'] }}

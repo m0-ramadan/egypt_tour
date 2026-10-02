@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <section class="static-page-hero" style="--hero-bg: url(\'{{ $heroImage }}\');">
+    <section class="static-page-hero" style="--hero-bg: url('{{ $heroImage }}');">
         <div class="container">
             <div class="static-page-hero-content">
                 <div class="static-page-badge">

@@ -23,7 +23,7 @@
 @endsection
 
 @section('content')
-    <section class="listing-hero" style="--hero-bg: url(\'{{ $heroImage }}\');">
+    <section class="listing-hero" style="--hero-bg: url('{{ $heroImage }}');">
         <div class="container">
             <div class="listing-hero-content">
                 <div class="listing-badge">

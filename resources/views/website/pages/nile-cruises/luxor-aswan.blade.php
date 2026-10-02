@@ -13,6 +13,13 @@
 
 @section('css')
     @vite('resources/css/pages/nile-cruises-luxor-aswan.css')
+    <style>
+        body.website-theme-shell .luxor-aswan-content .deal-price,
+        body.website-theme-shell .luxor-aswan-content .deal-price * {
+            color: #fff !important;
+            -webkit-text-fill-color: #fff !important;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -28,7 +35,7 @@
     </section>
 
     <!-- Categories Section -->
-    <section class="py-5 my-3">
+    <section class="luxor-aswan-content py-5 my-3">
         <div class="container">
             <div class="text-center max-w-3xl mx-auto mb-5">
                 <h2 class="h1 font-serif fw-bold text-dark mb-3" style="font-family: 'Playfair Display', serif;">
@@ -79,7 +86,7 @@
                         </div>
                     </div>
 
-                    <div class="row g-4">
+                    <div class="featured-cruises-grid row g-4">
                         @foreach ($featuredPackages as $pkg)
                             <div class="col-lg-4 col-md-6">
                                 <div class="deal-card">
@@ -93,7 +100,9 @@
                                         @endif
 
                                         @if (!empty($pkg['price']))
-                                            <div class="deal-price">{{ $pkg['price'] }}</div>
+                                            <div class="deal-price" style="color: #fff !important; -webkit-text-fill-color: #fff !important;">
+                                                {{ $pkg['price'] }}
+                                            </div>
                                         @endif
 
                                         <a href="{{ $pkg['url'] }}">

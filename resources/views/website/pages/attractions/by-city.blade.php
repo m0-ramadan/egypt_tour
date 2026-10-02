@@ -15,7 +15,7 @@
 
     <!-- Hero -->
     <section class="city-hero">
-        <div class="city-hero-bg" aria-hidden="true" style="--hero-bg: url(\'{{ $heroImage }}\');"></div>
+        <div class="city-hero-bg" aria-hidden="true" style="--hero-bg: url('{{ $heroImage }}');"></div>
         <div class="container">
             <div class="city-hero-content">
                 <span class="city-hero-badge">

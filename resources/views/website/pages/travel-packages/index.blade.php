@@ -32,7 +32,7 @@
     </section>
 
     <!-- Hero Section -->
-    <section class="packages-hero" style="--hero-bg: url(\'{{ $heroImage }}\');">
+    <section class="packages-hero" style="--hero-bg: url('{{ $heroImage }}');">
         <div class="container text-center">
             <div class="hero-badge-pill">
                 <i class="la la-suitcase"></i> {{ $pageContent['badge'] }}

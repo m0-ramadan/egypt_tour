@@ -258,7 +258,7 @@
                             @if (!empty($city->hero_image))
                                 <div class="current-image">
                                     <div class="current-image-title">Current Image</div>
-                                    <img src="{{ asset('storage/' . $city->hero_image) }}" alt="hero image">
+                                    <img src="{{ admin_image_url($city->hero_image) }}" alt="hero image">
                                 </div>
                             @endif
                             <div class="image-preview" id="heroPreview"></div>
@@ -271,7 +271,7 @@
                             @if (!empty($city->featured_image))
                                 <div class="current-image">
                                     <div class="current-image-title">Current Image</div>
-                                    <img src="{{ asset('storage/' . $city->featured_image) }}" alt="featured image">
+                                    <img src="{{ admin_image_url($city->featured_image) }}" alt="featured image">
                                 </div>
                             @endif
                             <div class="image-preview" id="featuredPreview"></div>
