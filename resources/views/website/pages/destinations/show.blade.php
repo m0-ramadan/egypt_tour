@@ -60,7 +60,7 @@
         </div>
     </section>
 
-    <section class="destination-hero" style="--hero-bg: url(\'{{ $heroImage }}\');">
+    <section class="destination-hero" style="--hero-bg: url('{{ $heroImage }}');">
         <div class="container">
             <div class="destination-hero-content">
                 <div class="hero-badge">

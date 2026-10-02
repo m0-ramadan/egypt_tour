@@ -61,7 +61,7 @@
     </section>
 
     <!-- Hero Banner -->
-    <section class="attraction-hero" style="--hero-bg: url(\'{{ $heroImage }}\');">
+    <section class="attraction-hero" style="--hero-bg: url('{{ $heroImage }}');">
         <div class="container">
             <div class="attraction-hero-content">
                 <div class="hero-badge">

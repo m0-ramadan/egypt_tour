@@ -16,7 +16,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="tips-hero" style="--hero-bg: url(\'{{ $heroImage }}\');">
+    <section class="tips-hero" style="--hero-bg: url('{{ $heroImage }}');">
         <div class="container">
             <div class="tips-hero-content">
                 <div class="tips-badge">

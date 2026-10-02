@@ -31,7 +31,7 @@
     </section>
 
     <!-- Hero Section -->
-    <section class="day-tour-hero">
+    <section class="day-tour-hero" style="--hero-bg: url('{{ $heroImage }}');">
         <div class="container text-center">
             <div class="hero-badge-pill">
                 <i class="la la-compass"></i> {{ $pageContent['badge'] }}

@@ -387,3 +387,102 @@ if (!function_exists('img_srcset_data')) {
     }
 }
 
+if (!function_exists('admin_image_url')) {
+    /**
+     * Resolve image URL for admin dashboard displays.
+     */
+    function admin_image_url(?string $path, string $fallback = '/website/photos/Dest/Egypt.jpg'): string
+    {
+        if (!$path) {
+            return asset($fallback);
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        $path = ltrim($path, '/');
+
+        if (str_starts_with($path, 'storage/')) {
+            return asset($path);
+        }
+
+        if (str_starts_with($path, 'website/') || str_starts_with($path, 'images/')) {
+            return asset($path);
+        }
+
+        return asset('storage/' . $path);
+    }
+}
+
+if (!function_exists('generate_image_variants')) {
+    /**
+     * Generate WebP and AVIF variants (420w, 640w, 768w) for an uploaded storage image.
+     *
+     * @param string $path relative path in storage/app/public (e.g. 'cities/abc.jpg')
+     * @param int[] $widths
+     */
+    function generate_image_variants(string $path, array $widths = [420, 640, 768]): void
+    {
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return;
+        }
+
+        $cleanPath = ltrim(str_replace('storage/', '', $path), '/');
+        $fullPath = storage_path('app/public/' . $cleanPath);
+
+        if (!file_exists($fullPath)) {
+            $fullPath = public_path($path);
+            if (!file_exists($fullPath)) {
+                return;
+            }
+        }
+
+        $dir = dirname($fullPath);
+        $ext = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
+        $stem = pathinfo($fullPath, PATHINFO_FILENAME);
+
+        $srcImg = match ($ext) {
+            'jpeg', 'jpg' => @imagecreatefromjpeg($fullPath),
+            'png' => @imagecreatefrompng($fullPath),
+            'webp' => @imagecreatefromwebp($fullPath),
+            default => null,
+        };
+
+        if (!$srcImg) {
+            return;
+        }
+
+        $origW = imagesx($srcImg);
+        $origH = imagesy($srcImg);
+
+        foreach ($widths as $w) {
+            $targetW = min($w, $origW);
+            $targetH = (int) round($origH * $targetW / $origW);
+
+            $resized = imagecreatetruecolor($targetW, $targetH);
+            if (in_array($ext, ['png', 'webp'])) {
+                imagealphablending($resized, false);
+                imagesavealpha($resized, true);
+            }
+
+            imagecopyresampled($resized, $srcImg, 0, 0, 0, 0, $targetW, $targetH, $origW, $origH);
+
+            $webpFile = $dir . '/' . $stem . '-' . $targetW . '.webp';
+            if (function_exists('imagewebp')) {
+                @imagewebp($resized, $webpFile, 82);
+            }
+
+            $avifFile = $dir . '/' . $stem . '-' . $targetW . '.avif';
+            if (function_exists('imageavif')) {
+                @imageavif($resized, $avifFile, 75);
+            }
+
+            imagedestroy($resized);
+        }
+
+        imagedestroy($srcImg);
+    }
+}
+
+
