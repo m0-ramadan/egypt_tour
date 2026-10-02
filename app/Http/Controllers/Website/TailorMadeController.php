@@ -152,6 +152,14 @@ class TailorMadeController extends BaseWebsiteController
             'Children' => $validated['children'] ?? 0,
             'Infants' => $validated['infants'] ?? 0,
             'Accommodation' => $validated['acommodation'] ?? 'N/A',
+            'End Date' => $validated['end_date'] ?? 'N/A',
+            'Budget Minimum' => $validated['budget_min'] ?? 'N/A',
+            'Budget Maximum' => $validated['budget_max'] ?? 'N/A',
+            'Occasion' => $validated['occasion'] ?? 'N/A',
+            'Interests' => $validated['interests'] ?? [],
+            'Dietary Requirements' => $validated['dietary'] ?? 'N/A',
+            'Mobility Requirements' => $validated['mobility'] ?? 'N/A',
+            'Special Requests' => $validated['comment'] ?? 'N/A',
             'Summary Details' => $summary,
         ]);
 
