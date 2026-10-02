@@ -21,3 +21,74 @@ html[data-theme] body.website-theme-shell.home-reference-page .trust-icon i {
     display: none !important;
     border: 0 !important;
 }
+
+/* Hero features desktop / tablet layout (4 items in 1 row) */
+@media (min-width: 768px) {
+    .home-reference-page .showcase-hero__features {
+        width: 100% !important;
+        max-width: 1180px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: nowrap !important;
+        gap: 15px 24px !important;
+    }
+
+    .home-reference-page .showcase-hero__feature {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 0 !important;
+        padding-inline-end: 24px !important;
+        border-inline-end: 1px solid rgba(255, 255, 255, 0.35) !important;
+    }
+
+    .home-reference-page .showcase-hero__feature:last-child {
+        border-inline-end: 0 !important;
+        padding-inline-end: 0 !important;
+    }
+
+    .home-reference-page .showcase-hero__feature span {
+        max-width: none !important;
+        white-space: nowrap !important;
+    }
+}
+
+/* Hero features mobile layout (2x2 grid) */
+@media (max-width: 767px) {
+    .home-reference-page .showcase-hero__features {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 16px 12px !important;
+        width: 100% !important;
+        margin-top: 24px !important;
+    }
+
+    .home-reference-page .showcase-hero__feature {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 0 !important;
+        padding-inline-end: 10px !important;
+        border-inline-end: 1px solid rgba(255, 255, 255, 0.35) !important;
+        min-height: 44px !important;
+    }
+
+    .home-reference-page .showcase-hero__feature:nth-child(2n) {
+        border-inline-end: 0 !important;
+        padding-inline-end: 0 !important;
+    }
+
+    .home-reference-page .showcase-hero__feature i {
+        font-size: 1.6rem !important;
+        flex: 0 0 auto !important;
+    }
+
+    .home-reference-page .showcase-hero__feature span {
+        font-size: clamp(0.66rem, 2.7vw, 0.78rem) !important;
+        max-width: none !important;
+        white-space: nowrap !important;
+    }
+}
+
+
