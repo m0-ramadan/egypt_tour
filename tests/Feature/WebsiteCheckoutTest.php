@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Mail\BookingNotificationMail;
 use App\Models\Admin;
 use App\Models\Booking;
 use App\Models\NileCruiseCabin;
@@ -17,6 +18,7 @@ use App\Services\PackageBookingService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
@@ -159,6 +161,7 @@ class WebsiteCheckoutTest extends TestCase
 
     public function test_checkout_recalculates_total_and_creates_travelers_before_paymob_redirect(): void
     {
+        Mail::fake();
         $this->configurePaymob();
         $package = $this->package(['adult_price' => 100, 'child_price' => 50]);
         $package = $this->package(['package_type' => 'day_tour', 'adult_price' => 100, 'child_price' => 50]);
@@ -197,6 +200,13 @@ class WebsiteCheckoutTest extends TestCase
         $this->assertSame(3, $booking->travelers()->count());
         $this->assertSame('250.00', (string) $booking->items()->sole()->total_amount);
         $this->assertDatabaseHas('payments', ['booking_id' => $booking->id, 'amount' => 250]);
+        Mail::assertSent(BookingNotificationMail::class, function (BookingNotificationMail $mail): bool {
+            return $mail->hasTo((string) config('mail.booking_recipient'))
+                && $mail->details['booking_number'] !== ''
+                && $mail->details['sections']['Customer details']['Email'] === 'lead@example.test'
+                && str_contains($mail->details['sections']['Travelers']['Traveler names'], 'Lead Guest')
+                && $mail->details['sections']['Price and payment']['Total'] === 'USD 250.00';
+        });
     }
 
     public function test_nile_cruise_rejects_more_cabins_than_inventory(): void
