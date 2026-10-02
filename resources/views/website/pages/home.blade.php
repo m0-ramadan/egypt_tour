@@ -53,7 +53,6 @@
                     loading="eager" decoding="async">
             </picture>
             <div class="showcase-hero__flight" aria-hidden="true">
-                <span class="showcase-hero__flight-path"></span>
                 <i class="la la-plane"></i>
             </div>
             <div class="showcase-hero__signature" aria-hidden="true">
@@ -111,6 +110,7 @@
                         </div>
                     </div>
 
+                    {{--
                     <div class="showcase-hero__visuals" id="showcase-tour">
                         <a href="{{ route('website.nile_cruises.index') }}" class="showcase-tour-card">
                             <div class="showcase-tour-card__image">
@@ -139,13 +139,14 @@
                             </div>
                         </a>
                     </div>
+                    --}}
                 </div>
             </div>
 
             <svg class="showcase-hero__wave" viewBox="0 0 2170 82" preserveAspectRatio="none" aria-hidden="true">
                 <path class="showcase-hero__wave-fill"
-                    d="M0,18 C205,88 455,40 720,56 C1120,82 1540,88 2170,8 L2170,85 L0,85 Z"></path>
-                <path class="showcase-hero__wave-line" d="M0,18 C205,88 455,40 720,56 C1120,82 1540,88 2170,8"></path>
+                    d="M0,8 L2170,8 L2170,85 L0,85 Z"></path>
+                <path class="showcase-hero__wave-line" d="M0,8 L2170,8"></path>
             </svg>
         </section>
 
@@ -237,6 +238,10 @@
                     <div class="deal-card reveal-up">
                         <div class="card-image">
                             <div class="badge-top">{{ __('Day Tours') }}</div>
+                            <div class="destination-watermark-logo">
+                                <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
+                                    alt="Egypt Tour Pro" width="239" height="96" loading="lazy" decoding="async">
+                            </div>
 
                             <a href="{{ route('website.day_tours.index') }}" aria-label="{{ __('Egypt Day Tours') }}">
                                 <picture>
@@ -276,6 +281,10 @@
                     <div class="deal-card reveal-up">
                         <div class="card-image">
                             <div class="badge-top">{{ __('Tour Packages') }}</div>
+                            <div class="destination-watermark-logo">
+                                <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
+                                    alt="Egypt Tour Pro" width="239" height="96" loading="lazy" decoding="async">
+                            </div>
 
                             <a href="{{ route('website.travel_packages.index') }}"
                                 aria-label="{{ __('Egypt Tour Packages') }}">
@@ -317,11 +326,15 @@
                     <div class="deal-card reveal-up">
                         <div class="card-image">
                             <div class="badge-top">{{ __('Nile Cruises') }}</div>
+                            <div class="destination-watermark-logo">
+                                <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
+                                    alt="Egypt Tour Pro" width="239" height="96" loading="lazy" decoding="async">
+                            </div>
 
                             <a href="{{ route('website.nile_cruises.index') }}" aria-label="{{ __('Egypt Nile Cruise') }}">
                                 <picture>
-                                    <source type="image/avif" srcset="{{ asset('website/photos/experiences/nile-cruises-480.avif') }} 480w, {{ asset('website/photos/experiences/nile-cruises-768.avif') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.avif') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
-                                    <source type="image/webp" srcset="{{ asset('website/photos/experiences/nile-cruises-480.webp') }} 480w, {{ asset('website/photos/experiences/nile-cruises-768.webp') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.webp') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                    <source type="image/avif" srcset="{{ asset('website/photos/experiences/nile-cruises-420.avif') }} 420w, {{ asset('website/photos/experiences/nile-cruises-480.avif') }} 480w, {{ asset('website/photos/experiences/nile-cruises-768.avif') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.avif') }} 1024w" sizes="(max-width: 575px) calc(100vw - 30px), (max-width: 991px) calc(50vw - 24px), 420px">
+                                    <source type="image/webp" srcset="{{ asset('website/photos/experiences/nile-cruises-420.webp') }} 420w, {{ asset('website/photos/experiences/nile-cruises-480.webp') }} 480w, {{ asset('website/photos/experiences/nile-cruises-768.webp') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.webp') }} 1024w" sizes="(max-width: 575px) calc(100vw - 30px), (max-width: 991px) calc(50vw - 24px), 420px">
                                     <img src="{{ asset('website/photos/experiences/nile-cruises.jpg') }}"
                                         alt="{{ __('Egypt Nile Cruise') }}" width="800" height="500" loading="lazy"
                                         decoding="async"
