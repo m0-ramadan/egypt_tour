@@ -445,7 +445,7 @@
                                     @endif
 
                                     @if (!empty($package['price']))
-                                        <div class="deal-price">{{ $package['price'] }}</div>
+                                        <div class="deal-price" style="color: #ffffff !important;">{{ $package['price'] }}</div>
                                     @endif
 
                                     <a href="{{ $package['url'] }}" aria-label="{{ $package['title'] }}">
