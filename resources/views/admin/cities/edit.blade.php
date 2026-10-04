@@ -117,11 +117,29 @@
                     @method('PUT')
 
                     @php
-                        $rawName = $city->getRawOriginal('name') ?? $city->name;
-                        $rawShortDesc = $city->getRawOriginal('short_description') ?? $city->short_description;
-                        $rawDesc = $city->getRawOriginal('description') ?? $city->description;
-                        $rawSeoTitle = $city->getRawOriginal('seo_title') ?? $city->seo_title;
-                        $rawSeoDesc = $city->getRawOriginal('seo_description') ?? $city->seo_description;
+                        $getTrans = function ($field) use ($city) {
+                            $trans = method_exists($city, 'getTranslations') ? $city->getTranslations($field) : [];
+                            if (empty($trans)) {
+                                $raw = $city->getRawOriginal($field) ?? ($city->{$field} ?? null);
+                                if (is_string($raw)) {
+                                    $decoded = json_decode($raw, true);
+                                    if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                                        return $decoded;
+                                    }
+                                    return ['en' => $raw];
+                                }
+                                if (is_array($raw)) {
+                                    return $raw;
+                                }
+                            }
+                            return $trans;
+                        };
+
+                        $nameTrans = $getTrans('name');
+                        $shortDescTrans = $getTrans('short_description');
+                        $descTrans = $getTrans('description');
+                        $seoTitleTrans = $getTrans('seo_title');
+                        $seoDescTrans = $getTrans('seo_description');
                     @endphp
 
                     @include('admin.components.lang-tabs', [
@@ -132,31 +150,11 @@
                     <div class="tab-content mb-4" id="langTabContent">
                         @foreach (['en' => ['name' => 'English', 'dir' => 'ltr'], 'ar' => ['name' => 'Arabic', 'dir' => 'rtl'], 'fr' => ['name' => 'French', 'dir' => 'ltr'], 'de' => ['name' => 'German', 'dir' => 'ltr']] as $code => $info)
                             @php
-                                $valName = is_array($rawName)
-                                    ? $rawName[$code] ?? ''
-                                    : ($code === 'en'
-                                        ? (string) $rawName
-                                        : '');
-                                $valShortDesc = is_array($rawShortDesc)
-                                    ? $rawShortDesc[$code] ?? ''
-                                    : ($code === 'en'
-                                        ? (string) $rawShortDesc
-                                        : '');
-                                $valDesc = is_array($rawDesc)
-                                    ? $rawDesc[$code] ?? ''
-                                    : ($code === 'en'
-                                        ? (string) $rawDesc
-                                        : '');
-                                $valSeoTitle = is_array($rawSeoTitle)
-                                    ? $rawSeoTitle[$code] ?? ''
-                                    : ($code === 'en'
-                                        ? (string) $rawSeoTitle
-                                        : '');
-                                $valSeoDesc = is_array($rawSeoDesc)
-                                    ? $rawSeoDesc[$code] ?? ''
-                                    : ($code === 'en'
-                                        ? (string) $rawSeoDesc
-                                        : '');
+                                $valName = $nameTrans[$code] ?? '';
+                                $valShortDesc = $shortDescTrans[$code] ?? '';
+                                $valDesc = $descTrans[$code] ?? '';
+                                $valSeoTitle = $seoTitleTrans[$code] ?? '';
+                                $valSeoDesc = $seoDescTrans[$code] ?? '';
                             @endphp
                             <div class="tab-pane fade {{ $code === 'en' ? 'show active' : '' }}"
                                 id="tab-pane-{{ $code }}" role="tabpanel">

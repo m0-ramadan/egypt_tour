@@ -12,14 +12,7 @@
 @section('image', $heroImage)
 
 @section('css')
-    @vite('resources/css/pages/nile-cruises-luxor-aswan.css')
-    <style>
-        body.website-theme-shell .luxor-aswan-content .deal-price,
-        body.website-theme-shell .luxor-aswan-content .deal-price * {
-            color: #fff !important;
-            -webkit-text-fill-color: #fff !important;
-        }
-    </style>
+    @vite(['resources/css/pages/nile-cruises-luxor-aswan.css', 'resources/css/pages/packages-index.css'])
 @endsection
 
 @section('content')
@@ -89,63 +82,84 @@
                     <div class="featured-cruises-grid row g-4">
                         @foreach ($featuredPackages as $pkg)
                             <div class="col-lg-4 col-md-6">
-                                <div class="deal-card">
-                                    <div class="card-image">
-                                        @if (!empty($pkg['is_ultra_luxury']))
-                                            <div class="badge-top">{{ __('Ultra Luxury') }}</div>
+                                <article class="journey-card">
+                                    <div class="journey-image">
+                                        <div class="journey-type">{{ $pkg['type_label'] ?? __('Nile Cruise') }}</div>
+
+                                        @if (!empty($pkg['badge']))
+                                            <div class="journey-badge">{{ $pkg['badge'] }}</div>
+                                        @elseif (!empty($pkg['is_ultra_luxury']))
+                                            <div class="journey-badge">{{ __('Ultra Luxury') }}</div>
                                         @elseif (!empty($pkg['is_best_seller']))
-                                            <div class="badge-top">{{ __('Best Seller') }}</div>
-                                        @elseif (!empty($pkg['badge']))
-                                            <div class="badge-top">{{ $pkg['badge'] }}</div>
+                                            <div class="journey-badge">{{ __('Best Seller') }}</div>
                                         @endif
 
-                                        @if (!empty($pkg['price']))
-                                            <div class="deal-price" style="color: #fff !important; -webkit-text-fill-color: #fff !important;">
-                                                {{ $pkg['price'] }}
-                                            </div>
-                                        @endif
+                                        <div class="destination-watermark-logo" style="position: absolute; top: 12px; left: 12px; z-index: 3; pointer-events: none; opacity: 0.85;">
+                                            <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
+                                                alt="Egypt Tour Pro" width="120" height="48" style="height: 28px; width: auto;" loading="lazy" decoding="async">
+                                        </div>
 
                                         <a href="{{ $pkg['url'] }}">
                                             <img src="{{ $pkg['image'] }}" alt="{{ $pkg['title'] }}" width="800"
                                                 height="500" loading="lazy" decoding="async">
                                         </a>
+
+                                        @if (!empty($pkg['price']))
+                                            <div class="journey-price">{{ $pkg['price'] }}</div>
+                                        @endif
                                     </div>
 
-                                    <div class="card-body">
-                                        <h3 class="deal-title">
+                                    <div class="journey-body">
+                                        @if (!empty($pkg['country']))
+                                            <div class="journey-country">{{ $pkg['country'] }}</div>
+                                        @elseif (!empty($pkg['route_text']))
+                                            <div class="journey-country"><i class="la la-map-marker me-1"></i>{{ $pkg['route_text'] }}</div>
+                                        @endif
+
+                                        <h3 class="journey-title">
                                             <a href="{{ $pkg['url'] }}">{{ $pkg['title'] }}</a>
                                         </h3>
 
-                                        <div class="deal-meta">
+                                        <div class="journey-meta">
                                             @if (!empty($pkg['duration']))
                                                 <span><i class="la la-clock"></i> {{ $pkg['duration'] }}</span>
                                             @endif
                                             @if (!empty($pkg['tour_type']))
                                                 <span><i class="la la-users"></i> {{ $pkg['tour_type'] }}</span>
                                             @endif
-                                            @if (!empty($pkg['route_text']))
-                                                <span><i class="la la-map-marker"></i> {{ $pkg['route_text'] }}</span>
-                                            @endif
                                         </div>
 
-                                        @if (!empty($pkg['description']))
-                                            <p class="deal-description">{{ $pkg['description'] }}</p>
+                                        @if (!empty($pkg['schedule']))
+                                            <div class="journey-schedule">
+                                                <i class="la la-calendar-alt"></i>
+                                                <span>{{ $pkg['schedule'] }}</span>
+                                            </div>
                                         @endif
 
-                                        @if (!empty($pkg['tags']))
-                                            <div class="tag-list">
+                                        @if (!empty($pkg['description']))
+                                            <p class="journey-description">{{ $pkg['description'] }}</p>
+                                        @endif
+
+                                        @if (!empty($pkg['highlights']))
+                                            <div class="journey-highlights">
+                                                @foreach ($pkg['highlights'] as $highlight)
+                                                    <span>{{ $highlight }}</span>
+                                                @endforeach
+                                            </div>
+                                        @elseif (!empty($pkg['tags']))
+                                            <div class="journey-highlights">
                                                 @foreach ($pkg['tags'] as $tag)
-                                                    <span class="feature-tag">{{ $tag }}</span>
+                                                    <span>{{ $tag }}</span>
                                                 @endforeach
                                             </div>
                                         @endif
 
-                                        <a href="{{ $pkg['url'] }}" class="gold-btn deal-btn">
+                                        <a href="{{ $pkg['url'] }}" class="journey-btn">
                                             {{ $pkg['button_text'] ?? __('Explore Journey') }}
                                             <i class="la la-arrow-right"></i>
                                         </a>
                                     </div>
-                                </div>
+                                </article>
                             </div>
                         @endforeach
                     </div>

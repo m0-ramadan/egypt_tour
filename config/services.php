@@ -78,6 +78,6 @@ return [
     ],
 
     'ai_translation' => [
-        'enabled' => filter_var(env('AI_TRANSLATION_ENABLED', false), FILTER_VALIDATE_BOOLEAN),
+        'enabled' => filter_var(env('AI_TRANSLATION_ENABLED', env('TRANSLATION_AI_ENABLED', true)), FILTER_VALIDATE_BOOLEAN),
     ],
 ];

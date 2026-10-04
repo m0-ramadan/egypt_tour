@@ -133,7 +133,15 @@
                     <div class="col-md-4">
                         <div class="info-box">
                             <div class="info-label">Package</div>
-                            <div class="info-value">{{ $inquiry->package->title ?? '-' }}</div>
+                            <div class="info-value">
+                                @if($inquiry->package)
+                                    <a href="{{ route('admin.packages.edit', $inquiry->package) }}" class="text-white text-decoration-underline">
+                                        {{ $inquiry->package->name ?: adminTrans($inquiry->package->title) }}
+                                    </a>
+                                @else
+                                    -
+                                @endif
+                            </div>
                         </div>
                     </div>
 

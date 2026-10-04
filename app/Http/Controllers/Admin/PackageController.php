@@ -566,7 +566,13 @@ class PackageController extends Controller
 
     public function translateWithAI(Request $request)
     {
-        return response()->json(['message' => 'Connect translation service here.']);
+        $fields = $this->translatedFields;
+        $data = $request->only($fields);
+        if (empty($data)) {
+            $data = $request->all();
+        }
+        $translated = app(\App\Services\TranslationService::class)->translateFields($data, array_keys($data));
+        return response()->json($translated);
     }
 
     private function validatePackage(Request $request): array
@@ -1105,7 +1111,7 @@ class PackageController extends Controller
 
         $currentGallery = collect($package?->gallery_images ?? [])->values();
         $removedGalleryIndices = collect($request->input('remove_gallery_indices', []))
-            ->map(fn ($index) => (int) $index)
+            ->map(fn($index) => (int) $index)
             ->unique();
 
         if ($package && $removedGalleryIndices->isNotEmpty()) {
@@ -1122,7 +1128,7 @@ class PackageController extends Controller
             $data['gallery_images'] = $this->uploadMultipleFiles($request->file('gallery_images'), 'packages/gallery');
         } elseif ($package && $removedGalleryIndices->isNotEmpty()) {
             $data['gallery_images'] = $currentGallery
-                ->reject(fn ($image, $index) => $removedGalleryIndices->contains($index))
+                ->reject(fn($image, $index) => $removedGalleryIndices->contains($index))
                 ->values()
                 ->all();
         } elseif ($package) {

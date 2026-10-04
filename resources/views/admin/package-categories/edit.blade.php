@@ -74,6 +74,17 @@
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, .15);
         }
+
+        /* Keep the language content panels aligned with the dashboard dark theme. */
+        #langTabContent .language-content-card {
+            background-color: var(--dark-card) !important;
+            color: #fff !important;
+        }
+
+        #langTabContent .language-content-card .card-header,
+        #langTabContent .language-content-card .card-body {
+            background-color: transparent !important;
+        }
     </style>
 @endsection
 
@@ -115,10 +126,28 @@
                     @method('PUT')
 
                     @php
-                        $rawName = $category->getRawOriginal('name') ?? $category->name;
-                        $rawDesc = $category->getRawOriginal('description') ?? $category->description;
-                        $rawSeoTitle = $category->getRawOriginal('seo_title') ?? $category->seo_title;
-                        $rawSeoDesc = $category->getRawOriginal('seo_description') ?? $category->seo_description;
+                        $getTrans = function ($field) use ($category) {
+                            $trans = method_exists($category, 'getTranslations') ? $category->getTranslations($field) : [];
+                            if (empty($trans)) {
+                                $raw = $category->getRawOriginal($field) ?? ($category->{$field} ?? null);
+                                if (is_string($raw)) {
+                                    $decoded = json_decode($raw, true);
+                                    if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                                        return $decoded;
+                                    }
+                                    return ['en' => $raw];
+                                }
+                                if (is_array($raw)) {
+                                    return $raw;
+                                }
+                            }
+                            return $trans;
+                        };
+
+                        $nameTrans = $getTrans('name');
+                        $descTrans = $getTrans('description');
+                        $seoTitleTrans = $getTrans('seo_title');
+                        $seoDescTrans = $getTrans('seo_description');
                     @endphp
 
                     @include('admin.components.lang-tabs', [
@@ -129,30 +158,14 @@
                     <div class="tab-content mb-4" id="langTabContent">
                         @foreach (['en' => ['name' => 'English', 'dir' => 'ltr'], 'ar' => ['name' => 'Arabic', 'dir' => 'rtl'], 'fr' => ['name' => 'French', 'dir' => 'ltr'], 'de' => ['name' => 'German', 'dir' => 'ltr']] as $code => $info)
                             @php
-                                $valName = is_array($rawName)
-                                    ? $rawName[$code] ?? ''
-                                    : ($code === 'en'
-                                        ? (string) $rawName
-                                        : '');
-                                $valDesc = is_array($rawDesc)
-                                    ? $rawDesc[$code] ?? ''
-                                    : ($code === 'en'
-                                        ? (string) $rawDesc
-                                        : '');
-                                $valSeoTitle = is_array($rawSeoTitle)
-                                    ? $rawSeoTitle[$code] ?? ''
-                                    : ($code === 'en'
-                                        ? (string) $rawSeoTitle
-                                        : '');
-                                $valSeoDesc = is_array($rawSeoDesc)
-                                    ? $rawSeoDesc[$code] ?? ''
-                                    : ($code === 'en'
-                                        ? (string) $rawSeoDesc
-                                        : '');
+                                $valName = $nameTrans[$code] ?? '';
+                                $valDesc = $descTrans[$code] ?? '';
+                                $valSeoTitle = $seoTitleTrans[$code] ?? '';
+                                $valSeoDesc = $seoDescTrans[$code] ?? '';
                             @endphp
                             <div class="tab-pane fade {{ $code === 'en' ? 'show active' : '' }}"
                                 id="tab-pane-{{ $code }}" role="tabpanel">
-                                <div class="card bg-dark text-white border-secondary mb-3">
+                                <div class="card language-content-card text-white border-secondary mb-3">
                                     <div class="card-header border-secondary">
                                         <h6 class="mb-0 text-white"><i class="fas fa-edit me-2"></i>Content
                                             ({{ $info['name'] }})</h6>
