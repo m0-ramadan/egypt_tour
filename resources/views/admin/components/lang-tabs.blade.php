@@ -11,7 +11,15 @@
 
     if ($model) {
         foreach (['name', 'title', 'description', 'short_description', 'seo_title', 'seo_description'] as $attr) {
-            $val = $model->getRawOriginal($attr) ?? ($model->{$attr} ?? null);
+            $val = method_exists($model, 'getTranslations')
+                ? $model->getTranslations($attr)
+                : ($model->getRawOriginal($attr) ?? ($model->{$attr} ?? null));
+            if (is_string($val)) {
+                $decoded = json_decode($val, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                    $val = $decoded;
+                }
+            }
             if (is_array($val)) {
                 foreach (array_keys($val) as $loc) {
                     if (isset($locales[$loc]) && !in_array($loc, $activeLocales, true)) {

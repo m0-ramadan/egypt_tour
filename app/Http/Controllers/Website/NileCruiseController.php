@@ -262,7 +262,7 @@ class NileCruiseController extends BaseWebsiteController
     protected function formatPackage(Package $package): array
     {
         $package->loadMissing(['currency', 'highlights', 'tags', 'prices']);
-        $card = $this->packageCard($package);
+        $card = $this->packageListingCard($package);
         $card['button_text'] = __('Explore Journey');
         return $card;
     }
