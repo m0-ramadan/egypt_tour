@@ -12,35 +12,34 @@
 @section('body_class', 'home-reference-page')
 @section('home_style_bundle', '1')
 
-@section('lcp_preload')
-    <link rel="preload" as="image" type="image/webp"
-        href="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }}"
-        imagesrcset="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }} 480w, {{ asset('website/photos/optimized/home-pyramids-mobile-640.webp') }} 640w, {{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }} 744w"
-        imagesizes="100vw"
-        media="(max-width: 767px)"
-        fetchpriority="high">
-    <link rel="preload" as="image" type="image/webp"
-        href="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }}"
-        imagesrcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
-        imagesizes="100vw" media="(min-width: 768px)" fetchpriority="high">
-
-@endsection
-
 @php
     $isRtl = app()->getLocale() === 'ar';
+    $customHeroHome = \App\Models\Setting::where('key', 'hero_image_home')->value('value');
+    $heroHomeBg = $customHeroHome
+        ? asset($customHeroHome)
+        : asset('website/photos/optimized/home-pyramids-desktop-1280.webp');
 @endphp
+
+@section('lcp_preload')
+    @if ($customHeroHome)
+        <link rel="preload" as="image" href="{{ $heroHomeBg }}" fetchpriority="high">
+    @else
+        <link rel="preload" as="image" type="image/webp"
+            href="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }}"
+            imagesrcset="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }} 480w, {{ asset('website/photos/optimized/home-pyramids-mobile-640.webp') }} 640w, {{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }} 744w"
+            imagesizes="100vw" media="(max-width: 767px)" fetchpriority="high">
+        <link rel="preload" as="image" type="image/webp"
+            href="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }}"
+            imagesrcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
+            imagesizes="100vw" media="(min-width: 768px)" fetchpriority="high">
+    @endif
+@endsection
 
 @section('content')
     <div class="tour-page">
 
         <section class="showcase-hero" id="home" data-critical-fold>
             <picture class="showcase-hero__media" aria-hidden="true">
-                @php
-                    $customHeroHome = \App\Models\Setting::where('key', 'hero_image_home')->value('value');
-                    $heroHomeBg = $customHeroHome
-                        ? asset($customHeroHome)
-                        : asset('website/photos/optimized/home-pyramids-desktop-1280.webp');
-                @endphp
                 @if (!$customHeroHome)
                     <source media="(max-width: 767px)" type="image/webp"
                         srcset="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }} 480w, {{ asset('website/photos/optimized/home-pyramids-mobile-640.webp') }} 640w, {{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }} 744w"
@@ -239,8 +238,8 @@
                         <div class="card-image">
                             <div class="badge-top">{{ __('Day Tours') }}</div>
                             <div class="destination-watermark-logo">
-                                <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
-                                    alt="Egypt Tour Pro" width="239" height="96" loading="lazy" decoding="async">
+                                <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
+                                    alt="Egypt Tour Pro" width="96" height="39" loading="lazy" decoding="async">
                             </div>
 
                             <a href="{{ route('website.day_tours.index') }}" aria-label="{{ __('Egypt Day Tours') }}">
@@ -282,8 +281,8 @@
                         <div class="card-image">
                             <div class="badge-top">{{ __('Tour Packages') }}</div>
                             <div class="destination-watermark-logo">
-                                <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
-                                    alt="Egypt Tour Pro" width="239" height="96" loading="lazy" decoding="async">
+                                <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
+                                    alt="Egypt Tour Pro" width="96" height="39" loading="lazy" decoding="async">
                             </div>
 
                             <a href="{{ route('website.travel_packages.index') }}"
@@ -327,8 +326,8 @@
                         <div class="card-image">
                             <div class="badge-top">{{ __('Nile Cruises') }}</div>
                             <div class="destination-watermark-logo">
-                                <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
-                                    alt="Egypt Tour Pro" width="239" height="96" loading="lazy" decoding="async">
+                                <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
+                                    alt="Egypt Tour Pro" width="96" height="39" loading="lazy" decoding="async">
                             </div>
 
                             <a href="{{ route('website.nile_cruises.index') }}" aria-label="{{ __('Egypt Nile Cruise') }}">
@@ -557,8 +556,8 @@
                             <div class="card-image">
                                 <div class="badge-top">{{ $destination['country'] ?: __('Destination') }}</div>
                                 <div class="destination-watermark-logo">
-                                    <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
-                                        alt="Egypt Tour Pro" width="239" height="96" loading="lazy" decoding="async">
+                                    <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
+                                        alt="Egypt Tour Pro" width="96" height="39" loading="lazy" decoding="async">
                                 </div>
                                 <a href="{{ $destination['url'] }}">
                                     <img src="{{ $destination['image'] }}" alt="{{ $destination['title'] }}"
@@ -617,8 +616,8 @@
                         <div class="article-card reveal-up">
                             <div class="card-image">
                                 <div class="destination-watermark-logo">
-                                    <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
-                                        alt="Egypt Tour Pro" width="239" height="96" loading="lazy" decoding="async">
+                                    <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
+                                        alt="Egypt Tour Pro" width="96" height="39" loading="lazy" decoding="async">
                                 </div>
                                 <a href="{{ $article['url'] }}">
                                     <img src="{{ $article['image'] }}" alt="{{ $article['title'] }}" width="800"

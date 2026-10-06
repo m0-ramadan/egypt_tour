@@ -95,8 +95,8 @@
                                         @endif
 
                                         <div class="destination-watermark-logo" style="position: absolute; top: 12px; left: 12px; z-index: 3; pointer-events: none; opacity: 0.85;">
-                                            <img src="{{ asset('website/logo/egypt-tour-pro-light-240.webp') }}"
-                                                alt="Egypt Tour Pro" width="120" height="48" style="height: 28px; width: auto;" loading="lazy" decoding="async">
+                                            <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
+                                                alt="Egypt Tour Pro" width="96" height="39" style="height: 28px; width: auto;" loading="lazy" decoding="async">
                                         </div>
 
                                         <a href="{{ $pkg['url'] }}">
