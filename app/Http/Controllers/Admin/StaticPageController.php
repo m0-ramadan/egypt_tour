@@ -68,7 +68,7 @@ class StaticPageController extends Controller
         }
 
         if ($request->hasFile('featured_image')) {
-            $data['featured_image'] = $request->file('featured_image')->store('pages', 'public');
+            $data['featured_image'] = app(\App\Services\WebpImageService::class)->store($request->file('featured_image'), 'pages');
         }
 
         $data['is_home'] = $request->boolean('is_home');
@@ -137,7 +137,7 @@ class StaticPageController extends Controller
             }
 
             // رفع الجديدة
-            $path = $request->file('featured_image')->store('pages', 'public');
+            $path = app(\App\Services\WebpImageService::class)->store($request->file('featured_image'), 'pages');
 
             $data['featured_image'] = $path;
         }

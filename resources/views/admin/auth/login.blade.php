@@ -16,10 +16,10 @@
             <!-- Left side illustration -->
             <div class="d-none d-lg-flex col-lg-7 align-items-center p-0" style="max-height: 950px;">
                 <div class="auth-cover-bg auth-cover-bg-color d-flex justify-content-center align-items-center w-100 h-100">
-                    <img src="{{ asset('dashboard/assets/img/illustrations/auth-login-illustration-light.png') }}"
+                    <img src="{{ asset('dashboard/assets/img/illustrations/auth-login-illustration-light.webp') }}"
                         alt="Cover Sign In" class="img-fluid auth-illustration">
 
-                    <img src="{{ asset('dashboard/assets/img/illustrations/bg-shape-image-light.png') }}" alt="Background System"
+                    <img src="{{ asset('dashboard/assets/img/illustrations/bg-shape-image-light.webp') }}" alt="Background System"
                         class="platform-bg">
                 </div>
             </div>
@@ -32,7 +32,7 @@
                     <!-- Logo -->
                     <div class="app-brand mb-4 d-flex justify-content-center align-items-center">
                         <a href="{{ url('/') }}" class="app-brand-link">
-                            <img src="{{ asset('website/logo/egypt-tour-pro.png') }}"
+                            <img src="{{ asset('website/logo/egypt-tour-pro.webp') }}"
                                 style="max-height: 85px; width: auto; max-width: 280px; object-fit: contain;"
                                 alt="Logo {{ env('APP_NAME') }}">
                         </a>

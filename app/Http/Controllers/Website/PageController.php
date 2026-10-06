@@ -172,20 +172,20 @@ class PageController extends BaseWebsiteController
                 : $package->gallery_images[0];
         }
 
-        return $this->imageUrl($package->featured_image ?: $galleryImage, 'website/photos/ship-7.jpg');
+        return $this->imageUrl($package->featured_image ?: $galleryImage, 'website/photos/ship-7.webp');
     }
 
     private function resolveMultiCountryHeroImage(?string $categoryImage, ?string $packageImage): string
     {
         if ($categoryImage) {
-            return $this->imageUrl($categoryImage, 'website/photos/ship-7.jpg');
+            return $this->imageUrl($categoryImage, 'website/photos/ship-7.webp');
         }
 
         if ($packageImage) {
             return $packageImage;
         }
 
-        return asset('website/photos/ship-7.jpg');
+        return asset('website/photos/ship-7.webp');
     }
 
     private function renderStaticPage(Page $page): View

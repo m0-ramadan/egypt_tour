@@ -82,8 +82,11 @@ class NileCruisePackageService
             if ($socialImagePath) {
                 Storage::disk('public')->delete($socialImagePath);
             }
-            $socialImagePath = $request->file('nile_cruise.social_image')
-                ->store("packages/{$package->id}/nile-cruise/seo", 'public');
+            $socialImagePath = app(\App\Services\WebpImageService::class)
+                ->store(
+                    $request->file('nile_cruise.social_image'),
+                    "packages/{$package->id}/nile-cruise/seo"
+                );
         }
 
         NileCruiseDetail::updateOrCreate(
@@ -281,8 +284,11 @@ class NileCruisePackageService
                     Storage::disk('public')->delete($imagePath);
                 }
 
-                $imagePath = $request->file("nile_cruise.cabins.{$index}.image")
-                    ->store("packages/{$package->id}/nile-cruise/cabins", 'public');
+                $imagePath = app(\App\Services\WebpImageService::class)
+                    ->store(
+                        $request->file("nile_cruise.cabins.{$index}.image"),
+                        "packages/{$package->id}/nile-cruise/cabins"
+                    );
             }
 
             if ($imagePath) {

@@ -26,7 +26,7 @@
     @php
         $siteName = 'Egypt Tour Pro';
         $siteUrl = rtrim(config('app.url') ?: request()->root(), '/');
-        $logoUrl = asset('website/logo/egypt-tour-pro-charcoal.png');
+        $logoUrl = asset('website/logo/egypt-tour-pro-charcoal.webp');
         $brandThemeColor = '#1C1C1C';
         $defaultTitle = 'Egypt Tour Pro | Luxury Egypt Tours, Nile Cruises & Handcrafted Journeys';
         $defaultDescription =

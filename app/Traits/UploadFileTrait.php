@@ -10,10 +10,8 @@ trait UploadFileTrait
 {
     public function uploadImage(string $folder, UploadedFile $image): string
     {
-        $extension = $image->getClientOriginalExtension();
-        $fileName = time() . '-' . Str::random(10) . '.' . $extension;
-
-        return $image->storeAs('images/' . trim($folder, '/'), $fileName, 'public');
+        return app(\App\Services\WebpImageService::class)
+            ->store($image, 'images/' . trim($folder, '/'));
     }
 
     public function uploadFile(string $folder, UploadedFile $file): string

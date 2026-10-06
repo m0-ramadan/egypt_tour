@@ -36,7 +36,7 @@
                 width="200"
                 height="64"
                 decoding="async"
-                onerror="this.onerror=null;this.src='{{ asset('website/logo/egypt-tour-pro-dark.png') }}';">
+                onerror="this.onerror=null;this.src='{{ asset('website/logo/egypt-tour-pro-dark.webp') }}';">
         </a>
 
         <!-- Mobile Actions -->
@@ -207,7 +207,7 @@
                 height="46"
                 loading="lazy"
                 decoding="async"
-                onerror="this.onerror=null;this.src='{{ asset('website/logo/egypt-tour-pro-dark.png') }}';">
+                onerror="this.onerror=null;this.src='{{ asset('website/logo/egypt-tour-pro-dark.webp') }}';">
         </div>
         <button type="button" class="mobile-close-btn" data-mobile-menu-toggle aria-label="{{ __('Close Menu') }}">
             <i class="la la-times"></i>

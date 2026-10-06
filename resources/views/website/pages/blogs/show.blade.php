@@ -60,7 +60,7 @@
                 'name' => 'Egypt Tour Pro',
                 'logo' => [
                     '@type' => 'ImageObject',
-                    'url' => asset('website/logo/egypt-tour-pro-charcoal.png'),
+                    'url' => asset('website/logo/egypt-tour-pro-charcoal.webp'),
                 ],
             ],
             'mainEntityOfPage' => request()->fullUrl(),

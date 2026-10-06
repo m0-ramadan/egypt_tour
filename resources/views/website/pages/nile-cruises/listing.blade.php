@@ -5,7 +5,7 @@
         isset($category) && $category->banner_url
             ? $category->banner_url
             : ($type->banner_url ?:
-            asset('website/images/nile-cruises/luxor-aswan.jpg'));
+            asset('website/images/nile-cruises/luxor-aswan.webp'));
 @endphp
 
 @section('title', $pageContent['title'] . ' - Egypt Tour Pro')
