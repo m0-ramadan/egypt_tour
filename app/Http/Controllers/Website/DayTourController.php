@@ -14,7 +14,7 @@ class DayTourController extends BaseWebsiteController
      */
     public function index(Request $request): View
     {
-        $heroImage = asset('website/images/day-tours/cairo-day-tours.jpg');
+        $heroImage = asset('website/images/day-tours/cairo-day-tours.webp');
 
         $pageContent = [
             'badge' => __('Egypt Excursions & Sightseeing'),
@@ -84,7 +84,7 @@ class DayTourController extends BaseWebsiteController
                 'city_slug' => 'dahab',
                 'title' => __('Dahab Day Tours'),
                 'badge' => __('Bohemian Charm'),
-                'image' => 'website/images/day-tours/dahab-day-tours.jpg',
+                'image' => 'website/images/day-tours/dahab-day-tours.webp',
                 'desc' => __('Are you looking for Dahab Day Tours! Choose from a wide range of day tours to visit the world-famous Blue Hole, Three Pools, Colored Canyon, Saint Catherine, and day trips to Petra.'),
                 'url' => route('website.day_tours.destination', ['destination' => 'dahab']),
             ],

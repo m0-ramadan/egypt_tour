@@ -1673,7 +1673,8 @@ class PackageController extends Controller
 
     private function uploadFile($file, string $path): string
     {
-        return 'storage/' . $file->store($path, 'public');
+        return 'storage/' . app(\App\Services\WebpImageService::class)
+            ->store($file, $path);
     }
 
     private function uploadMultipleFiles(array $files, string $path): array

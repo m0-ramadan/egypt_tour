@@ -209,9 +209,13 @@ class BannerItemController extends Controller
      */
     private function uploadImage($image, $folder)
     {
-        $filename = Str::random(20) . '.' . $image->getClientOriginalExtension();
-        $path = $image->storeAs($folder, $filename, 'public');
-        
-        return $path;
+        return app(\App\Services\WebpImageService::class)
+            ->store(
+                $image,
+                $folder,
+                'public',
+                82,
+                Str::random(20)
+            );
     }
 }

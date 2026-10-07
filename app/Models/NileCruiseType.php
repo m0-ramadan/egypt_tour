@@ -86,9 +86,9 @@ class NileCruiseType extends Model
         }
 
         return match ($this->slug) {
-            'dahabiya-nile-cruise' => asset('website/images/nile-cruises/dahabiya.jpg'),
-            'lake-nasser-cruise' => asset('website/images/nile-cruises/lake-nasser.jpg'),
-            default => asset('website/images/nile-cruises/luxor-aswan.jpg'),
+            'dahabiya-nile-cruise' => asset('website/images/nile-cruises/dahabiya.webp'),
+            'lake-nasser-cruise' => asset('website/images/nile-cruises/lake-nasser.webp'),
+            default => asset('website/images/nile-cruises/luxor-aswan.webp'),
         };
     }
 

@@ -108,17 +108,23 @@ class ExternalTourImageDownloader
                     continue;
                 }
 
-                $extension = self::MIME_EXTENSIONS[$contentType];
                 $hash = substr(sha1($url), 0, 8);
                 $index = count($savedPaths);
 
                 $filename = $index === 0
-                    ? "featured-{$hash}.{$extension}"
-                    : "gallery-{$index}-{$hash}.{$extension}";
+                    ? "featured-{$hash}"
+                    : "gallery-{$index}-{$hash}";
 
-                $relativePath = "{$packageDir}/{$filename}";
+                $relativePath = app(\App\Services\WebpImageService::class)
+                    ->storeContents(
+                        $body,
+                        $contentType,
+                        $packageDir,
+                        $disk,
+                        82,
+                        $filename
+                    );
 
-                Storage::disk($disk)->put($relativePath, $body);
                 $savedPaths[] = $relativePath;
             } catch (\Throwable $e) {
                 Log::warning('External tour image download failed', [

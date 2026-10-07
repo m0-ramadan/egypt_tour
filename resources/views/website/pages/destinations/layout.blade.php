@@ -129,7 +129,7 @@
                             {{ __('Secure Payment - Use your debit card or credit card. Your transactions are protected by 3D Secure and SecureCode.') }}
                         </div>
                         <div class="feature-item" style="padding: 12px 0; text-align: center;">
-                            <img loading="lazy" src="/flags/cybersource.png" height="100" width="150"
+                            <img loading="lazy" src="{{ asset('website/flags/cybersource.webp') }}" height="100" width="150"
                                 alt="{{ __('Cybersource Security') }}" style="opacity: 0.8;">
                             <img loading="lazy" src="/flags/mpgs.webp" height="100" width="150"
                                 alt="{{ __('Cybersource Security') }}" style="opacity: 0.8;">

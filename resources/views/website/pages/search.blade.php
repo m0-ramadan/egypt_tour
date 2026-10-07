@@ -6,7 +6,7 @@
 @section('keywords', 'search Egypt tours, Egypt Tour Pro search, find Nile cruises, Egypt package search')
 @section('canonical', route('website.search.index'))
 @section('robots', 'noindex, follow')
-@section('image', asset('website/logo/egypt-tour-pro-charcoal.png'))
+@section('image', asset('website/logo/egypt-tour-pro-charcoal.webp'))
 
 @section('css')
     @vite('resources/css/pages/search.css')

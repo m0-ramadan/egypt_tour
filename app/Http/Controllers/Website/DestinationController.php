@@ -249,9 +249,9 @@ class DestinationController extends BaseWebsiteController
             ->values()
             ->all();
 
-        $dayTourImage = file_exists(public_path("website/images/day-tours/{$destination->slug}-day-tours.jpg"))
-            ? "website/images/day-tours/{$destination->slug}-day-tours.jpg"
-            : 'website/images/day-tours/cairo-day-tours.jpg';
+        $dayTourImage = file_exists(public_path("website/images/day-tours/{$destination->slug}-day-tours.webp"))
+            ? "website/images/day-tours/{$destination->slug}-day-tours.webp"
+            : 'website/images/day-tours/cairo-day-tours.webp';
 
         $typeCards = collect([
             [
@@ -271,7 +271,7 @@ class DestinationController extends BaseWebsiteController
                 'label' => __('Nile Cruises'),
                 'badge' => __('Luxury River Voyages'),
                 'count' => (int) ($typeCounts['nile_cruise'] ?? 0),
-                'image' => 'website/images/nile-cruises/luxor-aswan.jpg',
+                'image' => 'website/images/nile-cruises/luxor-aswan.webp',
                 'description' => __('Sail along the timeless Nile between Luxor and Aswan aboard premier 5-star cruise ships and authentic Dahabiyas.'),
                 'btn_text' => __('Discover Nile Cruises'),
                 'url' => route('website.nile_cruises.index'),
@@ -282,7 +282,7 @@ class DestinationController extends BaseWebsiteController
                 'label' => __('Travel Packages'),
                 'badge' => __('Curated Vacations'),
                 'count' => (int) ($typeCounts['travel_package'] ?? 0),
-                'image' => 'website/images/travel-packages/7-days-egypt-vacation.jpg',
+                'image' => 'website/images/travel-packages/7-days-egypt-vacation.webp',
                 'description' => __('All-inclusive multi-day vacation packages combining :city, ancient pharaonic wonders, Nile cruises, and Red Sea tranquility.', ['city' => $destination->display_name]),
                 'btn_text' => __('Browse Travel Packages'),
                 'url' => route('website.travel_packages.index'),

@@ -563,7 +563,7 @@ class Package extends Model
             if ($this->nileCruiseType?->image_url) {
                 return $this->nileCruiseType->image_url;
             }
-            return '/website/images/nile-cruises/luxor-aswan.jpg';
+            return '/website/images/nile-cruises/luxor-aswan.webp';
         }
 
         return '/website/photos/home2.webp';

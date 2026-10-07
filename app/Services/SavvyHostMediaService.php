@@ -197,17 +197,19 @@ class SavvyHostMediaService
         try {
             // Check main image
             if (!$media->local_path || !Storage::disk('public')->exists($media->local_path)) {
-                $ext = pathinfo(parse_url($downloadUrl, PHP_URL_PATH), PATHINFO_EXTENSION);
-                if (empty($ext) || strlen($ext) > 5) {
-                    $ext = 'jpg';
-                }
-
-                $cleanFilename = $media->uuid . '.' . strtolower($ext);
-                $localPath = 'savvy_media/' . $cleanFilename;
-
                 $response = Http::timeout(30)->get($downloadUrl);
+
                 if ($response->successful()) {
-                    Storage::disk('public')->put($localPath, $response->body());
+                    $localPath = app(\App\Services\WebpImageService::class)
+                        ->storeContents(
+                            $response->body(),
+                            $response->header('Content-Type'),
+                            'savvy_media',
+                            'public',
+                            82,
+                            (string) $media->uuid
+                        );
+
                     $media->local_path = $localPath;
                     $downloadedMain = true;
                 }
@@ -217,17 +219,20 @@ class SavvyHostMediaService
 
             // Check thumbnail image if present
             if ($media->thumbnail_url && (!$media->local_thumbnail_path || !Storage::disk('public')->exists($media->local_thumbnail_path))) {
-                $thumbExt = pathinfo(parse_url($media->thumbnail_url, PHP_URL_PATH), PATHINFO_EXTENSION);
-                if (empty($thumbExt) || strlen($thumbExt) > 5) {
-                    $thumbExt = 'jpg';
-                }
+                $thumbResponse = Http::timeout(20)
+                    ->get($media->thumbnail_url);
 
-                $thumbFilename = 'thumbs/' . $media->uuid . '_thumb.' . strtolower($thumbExt);
-                $localThumbPath = 'savvy_media/' . $thumbFilename;
-
-                $thumbResponse = Http::timeout(20)->get($media->thumbnail_url);
                 if ($thumbResponse->successful()) {
-                    Storage::disk('public')->put($localThumbPath, $thumbResponse->body());
+                    $localThumbPath = app(\App\Services\WebpImageService::class)
+                        ->storeContents(
+                            $thumbResponse->body(),
+                            $thumbResponse->header('Content-Type'),
+                            'savvy_media/thumbs',
+                            'public',
+                            82,
+                            (string) $media->uuid . '_thumb'
+                        );
+
                     $media->local_thumbnail_path = $localThumbPath;
                 }
             }

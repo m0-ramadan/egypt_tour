@@ -391,7 +391,7 @@ if (!function_exists('admin_image_url')) {
     /**
      * Resolve image URL for admin dashboard displays.
      */
-    function admin_image_url(?string $path, string $fallback = '/website/photos/Dest/Egypt.jpg'): string
+    function admin_image_url(?string $path, string $fallback = '/website/photos/Dest/Egypt.webp'): string
     {
         if (!$path) {
             return asset($fallback);
