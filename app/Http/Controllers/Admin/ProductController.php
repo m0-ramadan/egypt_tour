@@ -368,7 +368,7 @@ class ProductController extends Controller
             // =============================================================
 
             if ($request->hasFile('image')) {
-                $path = $request->file('image')->store('products', 'public');
+                $path = app(\App\Services\WebpImageService::class)->store($request->file('image'), 'products');
                 $product->update(['image_path' => $path]);
 
                 $product->images()->create([
@@ -444,7 +444,7 @@ class ProductController extends Controller
                 $order = 1; // الصور الإضافية تبدأ من 1
 
                 foreach ($request->file('additional_images') as $image) {
-                    $path = $image->store('products/additional', 'public');
+                    $path = app(\App\Services\WebpImageService::class)->store($image, 'products/additional');
 
                     $product->images()->create([
                         'path' => $path,
@@ -804,7 +804,7 @@ class ProductController extends Controller
                     $img->delete();
                 });
 
-                $path = $request->file('image')->store('products', 'public');
+                $path = app(\App\Services\WebpImageService::class)->store($request->file('image'), 'products');
                 $product->update(['image' => $path]);
 
                 $product->images()->create([
@@ -883,7 +883,7 @@ class ProductController extends Controller
                 $order = $product->images()->where('type', 'additional')->max('order') ?? 0;
 
                 foreach ($request->file('additional_images') as $image) {
-                    $path = $image->store('products/additional', 'public');
+                    $path = app(\App\Services\WebpImageService::class)->store($image, 'products/additional');
 
                     $product->images()->create([
                         'path' => $path,
@@ -1109,7 +1109,7 @@ class ProductController extends Controller
             });
 
             // Save new image
-            $imagePath = $request->file('image')->store('products', 'public');
+            $imagePath = app(\App\Services\WebpImageService::class)->store($request->file('image'), 'products');
 
             // Create new image record
             $image = new \App\Models\Image();
@@ -2112,7 +2112,7 @@ class ProductController extends Controller
 
             // حفظ الصورة الرئيسية
             if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('products', 'public');
+                $imagePath = app(\App\Services\WebpImageService::class)->store($request->file('image'), 'products');
                 $product->image = $imagePath;
             }
 
@@ -2177,7 +2177,7 @@ class ProductController extends Controller
             // حفظ الصور الإضافية
             if ($request->hasFile('additional_images')) {
                 foreach ($request->file('additional_images') as $image) {
-                    $imagePath = $image->store('products/additional', 'public');
+                    $imagePath = app(\App\Services\WebpImageService::class)->store($image, 'products/additional');
 
                     $productImage = new Image();
                     $productImage->product_id = $product->id;

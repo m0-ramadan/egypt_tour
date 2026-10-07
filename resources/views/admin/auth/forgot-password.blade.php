@@ -20,7 +20,7 @@
                     <img src="{{ asset('dashboard/assets/img/illustrations/forgot-password-illustration-light.png') }}"
                         alt="Cover Restore Word Password" class="img-fluid auth-illustration">
 
-                    <img src="{{ asset('dashboard/assets/img/illustrations/bg-shape-image-light.png') }}" alt="Background System"
+                    <img src="{{ asset('dashboard/assets/img/illustrations/bg-shape-image-light.webp') }}" alt="Background System"
                         class="platform-bg">
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     <!-- Logo -->
                     <div class="app-brand mb-4 text-center">
                         <a href="{{ url('/') }}" class="app-brand-link justify-content-center">
-                            <img src="{{ asset('website/logo/egypt-tour-pro.png') }}"
+                            <img src="{{ asset('website/logo/egypt-tour-pro.webp') }}"
                                 style="max-height: 85px; width: auto; max-width: 280px; object-fit: contain;"
                                 alt="Logo {{ env('APP_NAME') }}">
                         </a>

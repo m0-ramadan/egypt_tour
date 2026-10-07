@@ -29,8 +29,26 @@ class SettingController extends Controller
         foreach ($request->except(['_token', '_method']) as $key => $value) {
             if ($request->hasFile($key)) {
                 $file = $request->file($key);
-                $filename = time() . '_' . $key . '.' . $file->getClientOriginalExtension();
-                $path = $file->storeAs('settings', $filename, 'public');
+                $mime = strtolower((string) $file->getMimeType());
+
+                if (in_array($mime, [
+                    'image/jpeg',
+                    'image/png',
+                    'image/webp',
+                ], true)) {
+                    $path = app(\App\Services\WebpImageService::class)
+                        ->store(
+                            $file,
+                            'settings',
+                            'public',
+                            82,
+                            time() . '_' . $key
+                        );
+                } else {
+                    $filename = time() . '_' . $key . '.' . $file->getClientOriginalExtension();
+                    $path = $file->storeAs('settings', $filename, 'public');
+                }
+
                 $value = 'storage/' . $path;
             }
 

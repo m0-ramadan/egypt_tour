@@ -39,7 +39,7 @@ class WebsiteDestinationService
                         return [
                             'title' => $city->display_name,
                             'description' => Str::limit(strip_tags($description), 190),
-                            'image' => $this->imageUrl($city->featured_image ?: $city->hero_image, 'website/photos/Dest/Egypt.jpg'),
+                            'image' => $this->imageUrl($city->featured_image ?: $city->hero_image, 'website/photos/Dest/Egypt.webp'),
                             'url' => route('website.destinations.show', $city->slug, false),
                             'country' => $city->country?->display_name ?? '',
                             'sites_count' => $city->attractions_count,

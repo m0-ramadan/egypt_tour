@@ -488,11 +488,11 @@ class CategoryController extends Controller
         }
 
         // إنشاء اسم فريد
-        $filename = Str::uuid() . '.webp';
-        $path = $directory . '/' . $filename;
+        $path = app(\App\Services\WebpImageService::class)
+            ->store($file, $directory, 'public', 82, (string) Str::uuid());
 
         // حفظ الصورة
-        Storage::disk('public')->put($path, file_get_contents($file));
+        // Image is already converted and stored by WebpImageService.
 
         // تحسين الصورة
         try {

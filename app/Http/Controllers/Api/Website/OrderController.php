@@ -65,7 +65,7 @@ class OrderController extends Controller
             $imagePath = null;
 
             if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('orders', 'public');
+                $imagePath = app(\App\Services\WebpImageService::class)->store($request->file('image'), 'orders');
             }
 
             if ($request->filled('coupon_code')) {

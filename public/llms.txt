@@ -1,0 +1,10 @@
+# Egypt Tour Pro
+
+> Egypt Tour Pro is an Egypt travel website covering tours, travel packages, Nile cruises, destinations, and travel experiences.
+
+## Main pages
+
+- [Home](https://egypttourpro.com/)
+- [Travel Packages](https://egypttourpro.com/travel-packages)
+- [Nile Cruises](https://egypttourpro.com/nile-cruises)
+- [Destinations](https://egypttourpro.com/destinations)

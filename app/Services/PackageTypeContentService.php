@@ -77,8 +77,11 @@ class PackageTypeContentService
             if ($ogImagePath) {
                 Storage::disk('public')->delete($ogImagePath);
             }
-            $ogImagePath = $request->file('experience.og_image')
-                ->store("packages/{$package->id}/seo", 'public');
+            $ogImagePath = app(\App\Services\WebpImageService::class)
+                ->store(
+                    $request->file('experience.og_image'),
+                    "packages/{$package->id}/seo"
+                );
         }
 
         $departureTimes = $package->package_type === 'day_tour'

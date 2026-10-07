@@ -225,7 +225,7 @@ abstract class BaseWebsiteController extends Controller
             if ($package->relationLoaded('nileCruiseType') && $package->nileCruiseType?->image_url) {
                 return $package->nileCruiseType->image_url;
             }
-            return asset('website/images/nile-cruises/luxor-aswan.jpg');
+            return asset('website/images/nile-cruises/luxor-aswan.webp');
         }
 
         return $fallback ?: asset('website/photos/home2.webp');

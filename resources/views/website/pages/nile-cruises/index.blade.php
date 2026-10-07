@@ -4,7 +4,7 @@
     $customHeroCruises = \App\Models\Setting::where('key', 'hero_image_cruises')->value('value');
     $heroImage = $customHeroCruises
         ? asset($customHeroCruises)
-        : asset('website/images/nile-cruises/hero-nile-cruises.jpg');
+        : asset('website/images/nile-cruises/hero-nile-cruises.webp');
 @endphp
 
 @section('title', $pageContent['title'] . ' - Egypt Tour Pro')

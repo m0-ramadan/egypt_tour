@@ -80,7 +80,7 @@
                         <div class="package-duration-card">
                             <div class="package-img-wrap">
                                 <img src="{{ asset($card['image']) }}" alt="{{ $card['title'] }}" loading="lazy"
-                                    onerror="this.onerror=null;this.src='{{ asset('website/photos/Dest/Egypt.jpg') }}';">
+                                    onerror="this.onerror=null;this.src='{{ asset('website/photos/Dest/Egypt.webp') }}';">
                                 <div class="package-badge-tag">
                                     <i class="la la-clock"></i> {{ $card['badge'] }}
                                 </div>
@@ -127,7 +127,7 @@
                         <div class="package-duration-card">
                             <div class="package-img-wrap">
                                 <img src="{{ asset($card['image']) }}" alt="{{ $card['title'] }}" loading="lazy"
-                                    onerror="this.onerror=null;this.src='{{ asset('website/photos/Dest/Egypt.jpg') }}';">
+                                    onerror="this.onerror=null;this.src='{{ asset('website/photos/Dest/Egypt.webp') }}';">
                                 <div class="package-badge-tag">
                                     <i class="la la-star"></i> {{ $card['badge'] }}
                                 </div>

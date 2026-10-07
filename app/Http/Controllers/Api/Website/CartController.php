@@ -199,7 +199,7 @@ class CartController extends Controller
         $this->authorizeCartItem($cartItem);
 
         return DB::transaction(function () use ($request, $cartItem) {
-            $imagePath = $request->file('image')->store('cart_items', 'public');
+            $imagePath = app(\App\Services\WebpImageService::class)->store($request->file('image'), 'cart_items');
             $cartItem->update(['image_design' => $imagePath]);
 
             return $this->success(new CartItemResource($cartItem), 'تم رفع الصورة بنجاح');

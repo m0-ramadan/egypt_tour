@@ -88,11 +88,11 @@ class NileCruiseCategory extends Model
         }
 
         return match ($this->slug) {
-            'standard-nile-cruises' => asset('website/images/nile-cruises/standard.jpg'),
-            'deluxe-nile-cruises' => asset('website/images/nile-cruises/deluxe.jpg'),
-            'ultra-deluxe-nile-cruises' => asset('website/images/nile-cruises/ultra-deluxe.jpg'),
-            'luxury-nile-cruises' => asset('website/images/nile-cruises/luxury.jpg'),
-            default => asset('website/images/nile-cruises/standard.jpg'),
+            'standard-nile-cruises' => asset('website/images/nile-cruises/standard.webp'),
+            'deluxe-nile-cruises' => asset('website/images/nile-cruises/deluxe.webp'),
+            'ultra-deluxe-nile-cruises' => asset('website/images/nile-cruises/ultra-deluxe.webp'),
+            'luxury-nile-cruises' => asset('website/images/nile-cruises/luxury.webp'),
+            default => asset('website/images/nile-cruises/standard.webp'),
         };
     }
 

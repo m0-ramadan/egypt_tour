@@ -164,7 +164,7 @@
                     <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
                         <span style="font-size: 0.9rem; opacity: 0.8;">{{ __('We Accept') }}</span>
                         <img loading="lazy" width="55" height="20"
-                            src="{{ request()->root() }}/website/photos/cards.png" alt="{{ __('Payment Methods') }}"
+                            src="{{ request()->root() }}/website/photos/cards.webp" alt="{{ __('Payment Methods') }}"
                             style="opacity: 0.9;">
                     </div>
                 </div>

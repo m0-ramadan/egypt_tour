@@ -7,7 +7,7 @@
 @section('keywords',
     'Egypt Tour Pro, luxury Egypt tours, Nile cruises, Egypt holidays, Cairo tours, Luxor tours, Aswan
     tours, tailor made travel')
-@section('image', asset('website/logo/egypt-tour-pro-charcoal.png'))
+@section('image', asset('website/logo/egypt-tour-pro-charcoal.webp'))
 @section('preferred_theme', 'light')
 @section('body_class', 'home-reference-page')
 @section('home_style_bundle', '1')
@@ -204,7 +204,7 @@
                 </div>
 
                 <div class="tripadvisor-row">
-                    @foreach (['Travellers-Choice-2019-.png', 'Travellers-Choice-2020.png', 'Travellers-Choice-2021.png', 'Travellers-Choice-2025.png', 'Travellers-Choice-2022.png', 'Travellers-Choice-2023.png', 'Travellers-Choice-2024-.png'] as $award)
+                    @foreach (['Travellers-Choice-2019-.webp', 'Travellers-Choice-2020.webp', 'Travellers-Choice-2021.webp', 'Travellers-Choice-2025.webp', 'Travellers-Choice-2022.webp', 'Travellers-Choice-2023.webp', 'Travellers-Choice-2024-.webp'] as $award)
                         <div class="certificate-card reveal-up">
                             <picture>
                                 <source type="image/avif"
@@ -246,10 +246,10 @@
                                 <picture>
                                     <source type="image/avif" srcset="{{ asset('website/photos/experiences/day-tours-480.avif') }} 480w, {{ asset('website/photos/experiences/day-tours-768.avif') }} 768w, {{ asset('website/photos/experiences/day-tours-1024.avif') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
                                     <source type="image/webp" srcset="{{ asset('website/photos/experiences/day-tours-480.webp') }} 480w, {{ asset('website/photos/experiences/day-tours-768.webp') }} 768w, {{ asset('website/photos/experiences/day-tours-1024.webp') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
-                                    <img src="{{ asset('website/photos/experiences/day-tours.jpg') }}"
+                                    <img src="{{ asset('website/photos/experiences/day-tours.webp') }}"
                                         alt="{{ __('Egypt Day Tours') }}" width="800" height="500" loading="lazy"
                                         decoding="async"
-                                        onerror="this.onerror=null;this.src='{{ asset('website/images/day-tours/cairo-day-tours.jpg') }}';">
+                                        onerror="this.onerror=null;this.src='{{ asset('website/images/day-tours/cairo-day-tours.webp') }}';">
                                 </picture>
                             </a>
                         </div>
@@ -290,10 +290,10 @@
                                 <picture>
                                     <source type="image/avif" srcset="{{ asset('website/photos/experiences/travel-packages-480.avif') }} 480w, {{ asset('website/photos/experiences/travel-packages-768.avif') }} 768w, {{ asset('website/photos/experiences/travel-packages-1024.avif') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
                                     <source type="image/webp" srcset="{{ asset('website/photos/experiences/travel-packages-480.webp') }} 480w, {{ asset('website/photos/experiences/travel-packages-768.webp') }} 768w, {{ asset('website/photos/experiences/travel-packages-1024.webp') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
-                                    <img src="{{ asset('website/photos/experiences/travel-packages.jpg') }}"
+                                    <img src="{{ asset('website/photos/experiences/travel-packages.webp') }}"
                                         alt="{{ __('Egypt Tour Packages') }}" width="800" height="500" loading="lazy"
                                         decoding="async"
-                                        onerror="this.onerror=null;this.src='{{ asset('website/images/travel-packages/7-days-egypt-vacation.jpg') }}';">
+                                        onerror="this.onerror=null;this.src='{{ asset('website/images/travel-packages/7-days-egypt-vacation.webp') }}';">
                                 </picture>
                             </a>
                         </div>
@@ -332,12 +332,12 @@
 
                             <a href="{{ route('website.nile_cruises.index') }}" aria-label="{{ __('Egypt Nile Cruise') }}">
                                 <picture>
-                                    <source type="image/avif" srcset="{{ asset('website/photos/experiences/nile-cruises-420.avif') }} 420w, {{ asset('website/photos/experiences/nile-cruises-480.avif') }} 480w, {{ asset('website/photos/experiences/nile-cruises-768.avif') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.avif') }} 1024w" sizes="(max-width: 575px) calc(100vw - 30px), (max-width: 991px) calc(50vw - 24px), 420px">
-                                    <source type="image/webp" srcset="{{ asset('website/photos/experiences/nile-cruises-420.webp') }} 420w, {{ asset('website/photos/experiences/nile-cruises-480.webp') }} 480w, {{ asset('website/photos/experiences/nile-cruises-768.webp') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.webp') }} 1024w" sizes="(max-width: 575px) calc(100vw - 30px), (max-width: 991px) calc(50vw - 24px), 420px">
-                                    <img src="{{ asset('website/photos/experiences/nile-cruises.jpg') }}"
+                                    <source type="image/avif" srcset="{{ asset('website/photos/experiences/nile-cruises-420.avif') }} 420w, {{ asset('website/photos/experiences/nile-cruises-480.avif') }} 480w, {{ asset('website/photos/experiences/nile-cruises-672.avif') }} 672w, {{ asset('website/photos/experiences/nile-cruises-768-v2.avif') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.avif') }} 1024w" sizes="(max-width: 575px) calc(100vw - 30px), (max-width: 991px) calc(50vw - 24px), 420px">
+                                    <source type="image/webp" srcset="{{ asset('website/photos/experiences/nile-cruises-420.webp') }} 420w, {{ asset('website/photos/experiences/nile-cruises-480.webp') }} 480w, {{ asset('website/photos/experiences/nile-cruises-672.webp') }} 672w, {{ asset('website/photos/experiences/nile-cruises-768.webp') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.webp') }} 1024w" sizes="(max-width: 575px) calc(100vw - 30px), (max-width: 991px) calc(50vw - 24px), 420px">
+                                    <img src="{{ asset('website/photos/experiences/nile-cruises.webp') }}"
                                         alt="{{ __('Egypt Nile Cruise') }}" width="800" height="500" loading="lazy"
                                         decoding="async"
-                                        onerror="this.onerror=null;this.src='{{ asset('website/images/nile-cruises/luxor-aswan.jpg') }}';">
+                                        onerror="this.onerror=null;this.src='{{ asset('website/images/nile-cruises/luxor-aswan.webp') }}';">
                                 </picture>
                             </a>
                         </div>

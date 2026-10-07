@@ -92,11 +92,11 @@ class CityController extends Controller
         ]);
 
         if ($request->hasFile('hero_image')) {
-            $data['hero_image'] = $request->file('hero_image')->store('cities', 'public');
+            $data['hero_image'] = app(\App\Services\WebpImageService::class)->store($request->file('hero_image'), 'cities');
         }
 
         if ($request->hasFile('featured_image')) {
-            $data['featured_image'] = $request->file('featured_image')->store('cities', 'public');
+            $data['featured_image'] = app(\App\Services\WebpImageService::class)->store($request->file('featured_image'), 'cities');
         }
 
         if (empty($data['slug']) && !empty($data['name'])) {
@@ -176,7 +176,7 @@ class CityController extends Controller
                 Storage::disk('public')->delete($city->hero_image);
             }
 
-            $data['hero_image'] = $request->file('hero_image')->store('cities', 'public');
+            $data['hero_image'] = app(\App\Services\WebpImageService::class)->store($request->file('hero_image'), 'cities');
         }
 
         if ($request->hasFile('featured_image')) {
@@ -184,7 +184,7 @@ class CityController extends Controller
                 Storage::disk('public')->delete($city->featured_image);
             }
 
-            $data['featured_image'] = $request->file('featured_image')->store('cities', 'public');
+            $data['featured_image'] = app(\App\Services\WebpImageService::class)->store($request->file('featured_image'), 'cities');
         }
 
         if (empty($data['slug']) && !empty($data['name'])) {
