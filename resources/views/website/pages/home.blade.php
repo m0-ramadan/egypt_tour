@@ -74,11 +74,9 @@
                             </span>
                         </h1>
 
-                        @unless ($isMobileHome)
-                            <p class="showcase-hero__subtitle">
-                                {{ __('Discover breathtaking destinations, Nile cruises, cultural treasures, and unforgettable experiences across Egypt. Let us turn your travel dreams into reality.') }}
-                            </p>
-                        @endunless
+                        <p class="showcase-hero__subtitle">
+                            {{ __('Discover breathtaking destinations, Nile cruises, cultural treasures, and unforgettable experiences across Egypt. Let us turn your travel dreams into reality.') }}
+                        </p>
 
                         <div class="showcase-hero__actions">
                             <a href="#featured-packages" class="showcase-hero__primary-btn">
