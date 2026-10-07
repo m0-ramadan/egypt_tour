@@ -6,8 +6,44 @@
 
 <head>
     <!-- Google Tag Manager -->
-    <script>
-        (function(w, d, s, l, i) {
+    @if (request()->routeIs('website.home'))
+        <script>
+            (function(w, d, s, l, i) {
+                var loaded = false;
+
+                function loadTagManager() {
+                    if (loaded) return;
+                    loaded = true;
+
+                    w[l] = w[l] || [];
+                    w[l].push({
+                        'gtm.start': new Date().getTime(),
+                        event: 'gtm.js'
+                    });
+
+                    var f = d.getElementsByTagName(s)[0];
+                    var j = d.createElement(s);
+                    var dl = l != 'dataLayer' ? '&l=' + l : '';
+                    j.async = true;
+                    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                    f.parentNode.insertBefore(j, f);
+                }
+
+                ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(function(eventName) {
+                    w.addEventListener(eventName, loadTagManager, {
+                        once: true,
+                        passive: true
+                    });
+                });
+
+                // Preserve analytics for visitors who do not interact while
+                // keeping third-party work outside the critical render path.
+                w.setTimeout(loadTagManager, 10000);
+            })(window, document, 'script', 'dataLayer', 'GTM-P8XJ3D9D');
+        </script>
+    @else
+        <script>
+            (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
                 'gtm.start': new Date().getTime(),
@@ -20,8 +56,9 @@
             j.src =
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-P8XJ3D9D');
-    </script>
+            })(window, document, 'script', 'dataLayer', 'GTM-P8XJ3D9D');
+        </script>
+    @endif
     <!-- End Google Tag Manager -->
     @php
         $siteName = 'Egypt Tour Pro';

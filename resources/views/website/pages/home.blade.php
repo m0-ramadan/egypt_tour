@@ -606,8 +606,9 @@
             </div>
         </section>
 
-        <section class="section-pad">
-            <div class="container">
+        @if ($showHomeArticles)
+            <section class="section-pad">
+                <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">
                         <i class="la la-newspaper"></i>
@@ -663,8 +664,9 @@
                         <i class="la la-arrow-right"></i>
                     </a>
                 </div>
-            </div>
-        </section>
+                </div>
+            </section>
+        @endif
 
         <section class="section-pad light-section">
             <div class="container">

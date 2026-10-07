@@ -32,7 +32,7 @@ class HomeController extends BaseWebsiteController
         $packageTagLimit = $isMobileHome ? 2 : 4;
 
         $cacheVersion = (int) Cache::get('website.home.version', 1);
-        $cacheKey = 'website.home.v5.' . app()->getLocale() . '.' . $profile . '.' . $cacheVersion;
+        $cacheKey = 'website.home.v6.' . app()->getLocale() . '.' . $profile . '.' . $cacheVersion;
 
         $data = Cache::remember($cacheKey, now()->addHour(), function () use (
             $websiteDestinationService,
@@ -65,28 +65,31 @@ class HomeController extends BaseWebsiteController
                 $destinationDescriptionLimit
             );
 
-            $latestArticles = Article::query()
-                ->where('is_active', true)
-                ->where(function ($query) {
-                    $query->whereNull('published_at')->orWhere('published_at', '<=', now());
-                })
-                ->orderByDesc('is_featured')
-                ->latest('published_at')
-                ->latest('id')
-                ->limit(3)
-                ->get()
-                ->map(function (Article $article) use ($articleDescriptionLimit) {
-                    return [
-                        'title' => $this->translated($article->getRawOriginal('title') ?? $article->title),
-                        'excerpt' => $this->shortText(
-                            $article->getRawOriginal('excerpt') ?: $article->getRawOriginal('content'),
-                            $articleDescriptionLimit
-                        ),
-                        'image' => $this->imageUrl('storage/' . $article->featured_image, 'website/photos/home2.webp'),
-                        'url' => route('website.blogs.show', $article->slug),
-                        'date' => optional($article->published_at ?: $article->created_at)->format('M d, Y'),
-                    ];
-                });
+            $latestArticles = collect();
+            if (!$isMobileHome) {
+                $latestArticles = Article::query()
+                    ->where('is_active', true)
+                    ->where(function ($query) {
+                        $query->whereNull('published_at')->orWhere('published_at', '<=', now());
+                    })
+                    ->orderByDesc('is_featured')
+                    ->latest('published_at')
+                    ->latest('id')
+                    ->limit(3)
+                    ->get()
+                    ->map(function (Article $article) use ($articleDescriptionLimit) {
+                        return [
+                            'title' => $this->translated($article->getRawOriginal('title') ?? $article->title),
+                            'excerpt' => $this->shortText(
+                                $article->getRawOriginal('excerpt') ?: $article->getRawOriginal('content'),
+                                $articleDescriptionLimit
+                            ),
+                            'image' => $this->imageUrl('storage/' . $article->featured_image, 'website/photos/home2.webp'),
+                            'url' => route('website.blogs.show', $article->slug),
+                            'date' => optional($article->published_at ?: $article->created_at)->format('M d, Y'),
+                        ];
+                    });
+            }
 
             $testimonials = Testimonial::query()
                 ->where(function ($query) {
@@ -133,6 +136,7 @@ class HomeController extends BaseWebsiteController
         });
 
         $data['isMobileHome'] = $isMobileHome;
+        $data['showHomeArticles'] = !$isMobileHome;
         $data['showHomeNewsletter'] = !$isMobileHome;
 
         return view('website.pages.home', $data);
