@@ -125,7 +125,7 @@ class TripController extends BaseWebsiteController
         };
         $rawCanonicalUrl = trim((string) ($package->canonical_url ?? ''));
 
-        if ($rawCanonicalUrl === '' || trim($rawCanonicalUrl, '/') === trim((string) $package->slug, '/')) {
+        if ($rawCanonicalUrl === '' || trim($rawCanonicalUrl, '/') === trim((string) $package->slug, '/') || Str::contains($rawCanonicalUrl, ' ')) {
             $canonicalUrl = $this->packageRoute($package);
         } elseif (Str::startsWith($rawCanonicalUrl, ['http://', 'https://'])) {
             $canonicalUrl = $rawCanonicalUrl;

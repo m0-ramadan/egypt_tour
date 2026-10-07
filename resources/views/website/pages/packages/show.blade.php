@@ -3,7 +3,15 @@
 @php
     $ncSeoDetail = $package->package_type === 'nile_cruise' ? $package->nileCruiseDetail : null;
     $sharedSocialPath = $package->og_image_path ?: $ncSeoDetail?->social_image_path ?? null;
-    $socialImage = $sharedSocialPath ? asset('storage/' . ltrim($sharedSocialPath, '/')) : $heroImage;
+    if ($sharedSocialPath) {
+        $socialImage = asset('storage/' . ltrim($sharedSocialPath, '/'));
+    } elseif (!empty($heroImage)) {
+        $socialImage = \Illuminate\Support\Str::startsWith($heroImage, ['http://', 'https://'])
+            ? $heroImage
+            : asset(ltrim($heroImage, '/'));
+    } else {
+        $socialImage = asset('website/photos/home2.webp');
+    }
     $metaKeywordList = collect((array) ($package->meta_keywords ?: $ncSeoDetail?->meta_keywords ?? []))
         ->push($package->focus_keyword ?: $ncSeoDetail?->focus_keyword ?? null)
         ->filter()

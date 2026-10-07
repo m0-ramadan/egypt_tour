@@ -5,6 +5,161 @@
     data-theme="@yield('preferred_theme', 'light')">
 
 <head>
+    @php
+        $siteName = 'Egypt Tour Pro';
+        $siteUrl = rtrim(config('app.url') ?: request()->root(), '/');
+        if (request()->isSecure() || request()->header('x-forwarded-proto') === 'https' || \Illuminate\Support\Str::contains(request()->getHost(), 'egypttourpro.com')) {
+            $siteUrl = preg_replace('/^http:\/\//i', 'https://', $siteUrl);
+        }
+        $logoUrl = asset('website/logo/egypt-tour-pro-charcoal.webp');
+        if (\Illuminate\Support\Str::startsWith($siteUrl, 'https://') && \Illuminate\Support\Str::startsWith($logoUrl, 'http://')) {
+            $logoUrl = 'https://' . \Illuminate\Support\Str::after($logoUrl, 'http://');
+        }
+        $brandThemeColor = '#1C1C1C';
+        $defaultTitle = 'Egypt Tour Pro | Luxury Egypt Tours, Nile Cruises & Handcrafted Journeys';
+        $defaultDescription =
+            'Experience ancient Egypt with Egypt Tour Pro. Handcrafted private tours, luxury 5-star Nile cruises, and bespoke itineraries led by expert local Egyptologists.';
+        $defaultKeywords =
+            'Egypt Tour Pro, Egypt tours, luxury Egypt tours, Nile cruises, Egypt travel packages, Cairo tours, Luxor tours, Aswan tours, tailor made Egypt holidays, private Egypt guide';
+        $rawTitle = trim($__env->yieldContent('title'));
+        $rawDescription = trim(preg_replace('/\s+/', ' ', strip_tags($__env->yieldContent('description'))));
+        $rawKeywords = trim(preg_replace('/\s+/', ' ', strip_tags($__env->yieldContent('keywords'))));
+        $rawCanonical = trim($__env->yieldContent('canonical'));
+        $rawRobots = trim($__env->yieldContent('robots'));
+        $rawOgType = trim($__env->yieldContent('og_type'));
+        $rawImage = trim($__env->yieldContent('image'));
+        $rawOgTitle = trim($__env->yieldContent('og_title'));
+        $rawOgDescription = trim(preg_replace('/\s+/', ' ', strip_tags($__env->yieldContent('og_description'))));
+        $rawTwitterCard = trim($__env->yieldContent('twitter_card'));
+        $rawTwitterTitle = trim($__env->yieldContent('twitter_title'));
+        $rawTwitterDescription = trim(
+            preg_replace('/\s+/', ' ', strip_tags($__env->yieldContent('twitter_description'))),
+        );
+        $rawTwitterImage = trim($__env->yieldContent('twitter_image'));
+
+        $toAbsoluteUrl = static function (?string $url) use ($siteUrl): string {
+            $url = trim((string) $url);
+            if ($url === '') {
+                return '';
+            }
+            if (!\Illuminate\Support\Str::startsWith($url, ['http://', 'https://'])) {
+                $url = $siteUrl . '/' . ltrim($url, '/');
+            }
+            if (\Illuminate\Support\Str::startsWith($siteUrl, 'https://') && \Illuminate\Support\Str::startsWith($url, 'http://')) {
+                $url = 'https://' . \Illuminate\Support\Str::after($url, 'http://');
+            }
+            return $url;
+        };
+
+        $pageTitle = $rawTitle !== '' ? $rawTitle : $defaultTitle;
+        $pageDescription =
+            $rawDescription !== '' ? \Illuminate\Support\Str::limit($rawDescription, 170, '...') : $defaultDescription;
+        $pageKeywords = $rawKeywords !== '' ? $rawKeywords : $defaultKeywords;
+        $pageCanonical = $toAbsoluteUrl($rawCanonical !== '' ? $rawCanonical : url()->current());
+        $pageImage = $toAbsoluteUrl($rawImage !== '' ? $rawImage : $logoUrl);
+        $pageOgTitle = $rawOgTitle !== '' ? $rawOgTitle : $pageTitle;
+        $pageOgDescription =
+            $rawOgDescription !== '' ? \Illuminate\Support\Str::limit($rawOgDescription, 200, '...') : $pageDescription;
+        $pageRobots = $rawRobots !== '' ? $rawRobots : 'index, follow, max-image-preview:large';
+        $pageOgType =
+            $rawOgType !== '' ? $rawOgType : (request()->routeIs('website.blogs.show*') ? 'article' : 'website');
+        $twitterCard = $rawTwitterCard !== '' ? $rawTwitterCard : 'summary_large_image';
+        $twitterTitle = $rawTwitterTitle !== '' ? $rawTwitterTitle : $pageOgTitle;
+        $twitterDescription =
+            $rawTwitterDescription !== ''
+                ? \Illuminate\Support\Str::limit($rawTwitterDescription, 200, '...')
+                : $pageOgDescription;
+        $twitterImage = $toAbsoluteUrl($rawTwitterImage !== '' ? $rawTwitterImage : $pageImage);
+        $ogLocale = app()->getLocale() === 'ar' ? 'ar_AR' : 'en_US';
+        $alternateLocale = app()->getLocale() === 'ar' ? 'en_US' : 'ar_AR';
+
+        $imagePathOnly = parse_url($pageImage, PHP_URL_PATH) ?? '';
+        $imageExtension = strtolower(pathinfo($imagePathOnly, PATHINFO_EXTENSION));
+        $imageMimeType = match ($imageExtension) {
+            'webp' => 'image/webp',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+            'svg' => 'image/svg+xml',
+            default => 'image/jpeg',
+        };
+        $imageWidth = 1200;
+        $imageHeight = 630;
+        $localImagePath = public_path(ltrim($imagePathOnly, '/'));
+        if (file_exists($localImagePath) && is_file($localImagePath)) {
+            $imageInfo = @getimagesize($localImagePath);
+            if ($imageInfo && !empty($imageInfo[0]) && !empty($imageInfo[1])) {
+                $imageWidth = (int) $imageInfo[0];
+                $imageHeight = (int) $imageInfo[1];
+                if (!empty($imageInfo['mime'])) {
+                    $imageMimeType = (string) $imageInfo['mime'];
+                }
+            }
+        }
+
+        $preferredThemeValue = trim($__env->yieldContent('preferred_theme', 'light'));
+        $preferredTheme = in_array($preferredThemeValue, ['light', 'dark'], true) ? $preferredThemeValue : 'light';
+        $bodyClass = trim($__env->yieldContent('body_class'));
+        $organizationSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'TravelAgency',
+            'name' => $siteName,
+            'url' => $siteUrl,
+            'logo' => $logoUrl,
+            'telephone' => '+20 106 221 7720',
+            'email' => 'info@egypttourpro.com',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'addressLocality' => 'Luxor',
+                'addressCountry' => 'EG',
+            ],
+        ];
+        $websiteSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebSite',
+            'name' => $siteName,
+            'url' => $siteUrl,
+            'inLanguage' => app()->getLocale(),
+            'potentialAction' => [
+                '@type' => 'SearchAction',
+                'target' => route('website.search.index') . '?keyword={search_term_string}',
+                'query-input' => 'required name=search_term_string',
+            ],
+        ];
+    @endphp
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="{{ $brandThemeColor }}" data-theme-color-meta>
+    <title>{{ $pageTitle }}</title>
+    <link rel="canonical" href="{{ $pageCanonical }}">
+    <meta name="robots" content="{{ $pageRobots }}">
+    <meta name="author" content="{{ $siteName }}">
+    <meta name="application-name" content="{{ $siteName }}">
+    <meta name="keywords" content="{{ $pageKeywords }}">
+    <meta name="description" content="{{ $pageDescription }}">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="{{ $pageOgType }}">
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:locale" content="{{ $ogLocale }}">
+    <meta property="og:locale:alternate" content="{{ $alternateLocale }}">
+    <meta property="og:title" content="{{ $pageOgTitle }}">
+    <meta property="og:description" content="{{ $pageOgDescription }}">
+    <meta property="og:url" content="{{ $pageCanonical }}">
+    <meta property="og:image" content="{{ $pageImage }}">
+    <meta property="og:image:secure_url" content="{{ $pageImage }}">
+    <meta property="og:image:type" content="{{ $imageMimeType }}">
+    <meta property="og:image:width" content="{{ $imageWidth }}">
+    <meta property="og:image:height" content="{{ $imageHeight }}">
+    <meta property="og:image:alt" content="{{ $pageOgTitle }}">
+    <link rel="image_src" href="{{ $pageImage }}">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="{{ $twitterCard }}">
+    <meta name="twitter:title" content="{{ $twitterTitle }}">
+    <meta name="twitter:description" content="{{ $twitterDescription }}">
+    <meta name="twitter:image" content="{{ $twitterImage }}">
+
     <!-- Google Tag Manager -->
     @if (request()->routeIs('website.home'))
         <script>
@@ -60,106 +215,6 @@
         </script>
     @endif
     <!-- End Google Tag Manager -->
-    @php
-        $siteName = 'Egypt Tour Pro';
-        $siteUrl = rtrim(config('app.url') ?: request()->root(), '/');
-        $logoUrl = asset('website/logo/egypt-tour-pro-charcoal.webp');
-        $brandThemeColor = '#1C1C1C';
-        $defaultTitle = 'Egypt Tour Pro | Luxury Egypt Tours, Nile Cruises & Handcrafted Journeys';
-        $defaultDescription =
-            'Experience ancient Egypt with Egypt Tour Pro. Handcrafted private tours, luxury 5-star Nile cruises, and bespoke itineraries led by expert local Egyptologists.';
-        $defaultKeywords =
-            'Egypt Tour Pro, Egypt tours, luxury Egypt tours, Nile cruises, Egypt travel packages, Cairo tours, Luxor tours, Aswan tours, tailor made Egypt holidays, private Egypt guide';
-        $rawTitle = trim($__env->yieldContent('title'));
-        $rawDescription = trim(preg_replace('/\s+/', ' ', strip_tags($__env->yieldContent('description'))));
-        $rawKeywords = trim(preg_replace('/\s+/', ' ', strip_tags($__env->yieldContent('keywords'))));
-        $rawCanonical = trim($__env->yieldContent('canonical'));
-        $rawRobots = trim($__env->yieldContent('robots'));
-        $rawOgType = trim($__env->yieldContent('og_type'));
-        $rawImage = trim($__env->yieldContent('image'));
-        $rawOgTitle = trim($__env->yieldContent('og_title'));
-        $rawOgDescription = trim(preg_replace('/\s+/', ' ', strip_tags($__env->yieldContent('og_description'))));
-        $rawTwitterCard = trim($__env->yieldContent('twitter_card'));
-        $rawTwitterTitle = trim($__env->yieldContent('twitter_title'));
-        $rawTwitterDescription = trim(
-            preg_replace('/\s+/', ' ', strip_tags($__env->yieldContent('twitter_description'))),
-        );
-        $rawTwitterImage = trim($__env->yieldContent('twitter_image'));
-        $pageTitle = $rawTitle !== '' ? $rawTitle : $defaultTitle;
-        $pageDescription =
-            $rawDescription !== '' ? \Illuminate\Support\Str::limit($rawDescription, 170, '...') : $defaultDescription;
-        $pageKeywords = $rawKeywords !== '' ? $rawKeywords : $defaultKeywords;
-        $pageCanonical = $rawCanonical !== '' ? $rawCanonical : url()->current();
-        $pageImage = $rawImage !== '' ? $rawImage : $logoUrl;
-        $pageOgTitle = $rawOgTitle !== '' ? $rawOgTitle : $pageTitle;
-        $pageOgDescription =
-            $rawOgDescription !== '' ? \Illuminate\Support\Str::limit($rawOgDescription, 200, '...') : $pageDescription;
-        $pageRobots = $rawRobots !== '' ? $rawRobots : 'index, follow, max-image-preview:large';
-        $pageOgType =
-            $rawOgType !== '' ? $rawOgType : (request()->routeIs('website.blogs.show*') ? 'article' : 'website');
-        $twitterCard = $rawTwitterCard !== '' ? $rawTwitterCard : 'summary_large_image';
-        $twitterTitle = $rawTwitterTitle !== '' ? $rawTwitterTitle : $pageOgTitle;
-        $twitterDescription =
-            $rawTwitterDescription !== ''
-                ? \Illuminate\Support\Str::limit($rawTwitterDescription, 200, '...')
-                : $pageOgDescription;
-        $twitterImage = $rawTwitterImage !== '' ? $rawTwitterImage : $pageImage;
-        $ogLocale = app()->getLocale() === 'ar' ? 'ar_AR' : 'en_US';
-        $alternateLocale = app()->getLocale() === 'ar' ? 'en_US' : 'ar_AR';
-        $preferredThemeValue = trim($__env->yieldContent('preferred_theme', 'light'));
-        $preferredTheme = in_array($preferredThemeValue, ['light', 'dark'], true) ? $preferredThemeValue : 'light';
-        $bodyClass = trim($__env->yieldContent('body_class'));
-        $organizationSchema = [
-            '@context' => 'https://schema.org',
-            '@type' => 'TravelAgency',
-            'name' => $siteName,
-            'url' => $siteUrl,
-            'logo' => $logoUrl,
-            'telephone' => '+20 106 221 7720',
-            'email' => 'info@egypttourpro.com',
-            'address' => [
-                '@type' => 'PostalAddress',
-                'addressLocality' => 'Luxor',
-                'addressCountry' => 'EG',
-            ],
-        ];
-        $websiteSchema = [
-            '@context' => 'https://schema.org',
-            '@type' => 'WebSite',
-            'name' => $siteName,
-            'url' => $siteUrl,
-            'inLanguage' => app()->getLocale(),
-            'potentialAction' => [
-                '@type' => 'SearchAction',
-                'target' => route('website.search.index') . '?keyword={search_term_string}',
-                'query-input' => 'required name=search_term_string',
-            ],
-        ];
-    @endphp
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="theme-color" content="{{ $brandThemeColor }}" data-theme-color-meta>
-    <title>{{ $pageTitle }}</title>
-    <link rel="canonical" href="{{ $pageCanonical }}">
-    <meta name="robots" content="{{ $pageRobots }}">
-    <meta name="author" content="{{ $siteName }}">
-    <meta name="application-name" content="{{ $siteName }}">
-    <meta name="keywords" content="{{ $pageKeywords }}">
-    <meta name="description" content="{{ $pageDescription }}">
-    <meta property="og:type" content="{{ $pageOgType }}">
-    <meta property="og:site_name" content="{{ $siteName }}">
-    <meta property="og:locale" content="{{ $ogLocale }}">
-    <meta property="og:locale:alternate" content="{{ $alternateLocale }}">
-    <meta property="og:title" content="{{ $pageOgTitle }}">
-    <meta property="og:description" content="{{ $pageOgDescription }}">
-    <meta property="og:image" content="{{ $pageImage }}">
-    <meta property="og:image:alt" content="{{ $pageTitle }}">
-    <meta property="og:url" content="{{ $pageCanonical }}">
-    <meta name="twitter:card" content="{{ $twitterCard }}">
-    <meta name="twitter:title" content="{{ $twitterTitle }}">
-    <meta name="twitter:description" content="{{ $twitterDescription }}">
-    <meta name="twitter:image" content="{{ $twitterImage }}">
     @hasSection('published_time')
         <meta property="article:published_time" content="@yield('published_time')">
     @endif
