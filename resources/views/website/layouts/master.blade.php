@@ -164,11 +164,11 @@
     @hasSection('lcp_preload')
         @yield('lcp_preload')
     @endif
-<link rel="preload" href="{{ asset('website/fonts/website/inter-latin-variable.woff2') }}" as="font"
-        type="font/woff2" crossorigin>
     @hasSection('home_style_bundle')
         @vite('resources/css/website-home-entry.css')
     @else
+        <link rel="preload" href="{{ asset('website/fonts/website/inter-latin-variable.woff2') }}" as="font"
+            type="font/woff2" crossorigin>
         @vite('resources/css/website.css')
         @yield('css')
     @endif
