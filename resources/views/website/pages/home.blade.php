@@ -48,7 +48,7 @@
                         sizes="100vw">
                 @endif
                 <img src="{{ $heroHomeBg }}" alt="{{ __('The Great Sphinx and Pyramids of Giza in Egypt') }}"
-                    width="1677" height="938" fetchpriority="high" loading="eager" decoding="async"
+                    width="1677" height="938" fetchpriority="high" loading="eager" decoding="sync"
                     elementtiming="home-hero-image">
             </picture>
             <div class="showcase-hero__flight" aria-hidden="true">
