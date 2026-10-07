@@ -129,6 +129,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    @hasSection('lcp_preload')
+        @yield('lcp_preload')
+    @endif
+    <link rel="preload" href="{{ asset('website/fonts/website/la-solid-subset.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ asset('website/fonts/website/la-regular-subset.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ asset('website/fonts/website/la-brands-subset.woff2') }}" as="font" type="font/woff2" crossorigin>
     <meta name="theme-color" content="{{ $brandThemeColor }}" data-theme-color-meta>
     <title>{{ $pageTitle }}</title>
     <link rel="canonical" href="{{ $pageCanonical }}">
@@ -253,9 +259,6 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
 
-    @hasSection('lcp_preload')
-        @yield('lcp_preload')
-    @endif
     @hasSection('home_style_bundle')
         @vite('resources/css/website-home-entry.css')
         <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}" media="none" onload="this.media='all'">

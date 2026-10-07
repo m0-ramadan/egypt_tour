@@ -14,23 +14,31 @@
 
 @php
     $isRtl = app()->getLocale() === 'ar';
-    $heroHomeBg = $customHeroHome
-        ? asset($customHeroHome)
+    $defaultHeroBg = ($isMobileHome ?? false)
+        ? asset('website/photos/optimized/home-pyramids-mobile-744.webp')
         : asset('website/photos/optimized/home-pyramids-desktop-1280.webp');
+    $heroHomeBg = $customHeroHome ? asset($customHeroHome) : $defaultHeroBg;
+    $heroWidth = ($isMobileHome ?? false) ? 744 : 1677;
+    $heroHeight = ($isMobileHome ?? false) ? 1000 : 938;
 @endphp
 
 @section('lcp_preload')
     @if ($customHeroHome)
         <link rel="preload" as="image" href="{{ $heroHomeBg }}" fetchpriority="high">
-    @else
+    @elseif ($isMobileHome ?? false)
         <link rel="preload" as="image" type="image/webp"
             href="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }}"
             imagesrcset="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }} 480w, {{ asset('website/photos/optimized/home-pyramids-mobile-640.webp') }} 640w, {{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }} 744w"
-            imagesizes="100vw" media="(max-width: 767px)" fetchpriority="high">
+            imagesizes="100vw" fetchpriority="high">
+    @else
         <link rel="preload" as="image" type="image/webp"
             href="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }}"
             imagesrcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
             imagesizes="100vw" media="(min-width: 768px)" fetchpriority="high">
+        <link rel="preload" as="image" type="image/webp"
+            href="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }}"
+            imagesrcset="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }} 480w, {{ asset('website/photos/optimized/home-pyramids-mobile-640.webp') }} 640w, {{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }} 744w"
+            imagesizes="100vw" media="(max-width: 767px)" fetchpriority="high">
     @endif
 @endsection
 
@@ -48,7 +56,7 @@
                         sizes="100vw">
                 @endif
                 <img src="{{ $heroHomeBg }}" alt="{{ __('The Great Sphinx and Pyramids of Giza in Egypt') }}"
-                    width="1677" height="938" fetchpriority="high" loading="eager" decoding="sync"
+                    width="{{ $heroWidth }}" height="{{ $heroHeight }}" fetchpriority="high" loading="eager" decoding="sync"
                     elementtiming="home-hero-image">
             </picture>
             <div class="showcase-hero__flight" aria-hidden="true">
