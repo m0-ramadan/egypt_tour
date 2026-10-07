@@ -12,10 +12,10 @@ class WebsiteDestinationService
 {
     protected static array $homeDestinationsCache = [];
 
-    public function homeDestinations(int $limit = 6): Collection
+    public function homeDestinations(int $limit = 6, int $descriptionLimit = 190): Collection
     {
         $version = (int) Cache::get('website.home.version', 1);
-        $cacheKey = app()->getLocale() . ':' . $limit . ':' . $version;
+        $cacheKey = app()->getLocale() . ':' . $limit . ':' . $descriptionLimit . ':' . $version;
 
         if (array_key_exists($cacheKey, self::$homeDestinationsCache)) {
             return self::$homeDestinationsCache[$cacheKey];
@@ -24,7 +24,7 @@ class WebsiteDestinationService
         return self::$homeDestinationsCache[$cacheKey] = Cache::remember(
             'website.destinations.home.' . $cacheKey,
             now()->addHour(),
-            function () use ($limit) {
+            function () use ($limit, $descriptionLimit) {
                 return City::query()
                     ->with('country')
                     ->withCount(['attractions', 'packages'])
@@ -33,12 +33,12 @@ class WebsiteDestinationService
                     ->orderBy('sort_order')
                     ->limit($limit)
                     ->get()
-                    ->map(function (City $city) {
+                    ->map(function (City $city) use ($descriptionLimit) {
                         $description = $city->display_short_description ?: $city->display_description;
 
                         return [
                             'title' => $city->display_name,
-                            'description' => Str::limit(strip_tags($description), 190),
+                            'description' => Str::limit(strip_tags($description), $descriptionLimit),
                             'image' => $this->imageUrl($city->featured_image ?: $city->hero_image, 'website/photos/Dest/Egypt.webp'),
                             'url' => route('website.destinations.show', $city->slug, false),
                             'country' => $city->country?->display_name ?? '',

@@ -231,14 +231,14 @@ abstract class BaseWebsiteController extends Controller
         return $fallback ?: asset('website/photos/home2.webp');
     }
 
-    protected function packageCard(Package $package): array
+    protected function packageCard(Package $package, int $descriptionLimit = 190, int $tagLimit = 4): array
     {
         $highlights = $package->relationLoaded('highlights')
-            ? $this->localizedTagNames($package->highlights, 4)
+            ? $this->localizedTagNames($package->highlights, $tagLimit)
             : [];
 
         if (empty($highlights) && $package->relationLoaded('tags')) {
-            $highlights = $this->localizedTagNames($package->tags, 4);
+            $highlights = $this->localizedTagNames($package->tags, $tagLimit);
         }
 
         return [
@@ -246,7 +246,10 @@ abstract class BaseWebsiteController extends Controller
             'slug' => $package->slug,
             'title' => $this->translated($package->getRawOriginal('title') ?? $package->title),
             'subtitle' => $this->translated($package->getRawOriginal('subtitle') ?? $package->subtitle),
-            'description' => $this->shortText($package->getRawOriginal('short_description') ?: $package->getRawOriginal('description'), 190),
+            'description' => $this->shortText(
+                $package->getRawOriginal('short_description') ?: $package->getRawOriginal('description'),
+                $descriptionLimit
+            ),
             'image' => $this->getPackageImage($package),
             'price' => $this->packagePrice($package),
             'duration' => $this->packageDuration($package),

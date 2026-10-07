@@ -48,7 +48,7 @@
                         sizes="100vw">
                 @endif
                 <img src="{{ $heroHomeBg }}" alt="{{ __('The Great Sphinx and Pyramids of Giza in Egypt') }}"
-                    width="1677" height="938" fetchpriority="high" loading="eager" decoding="sync"
+                    width="1677" height="938" fetchpriority="high" loading="eager" decoding="async"
                     elementtiming="home-hero-image">
             </picture>
             <div class="showcase-hero__flight" aria-hidden="true">
@@ -74,9 +74,11 @@
                             </span>
                         </h1>
 
-                        <p class="showcase-hero__subtitle">
-                            {{ __('Discover breathtaking destinations, Nile cruises, cultural treasures, and unforgettable experiences across Egypt. Let us turn your travel dreams into reality.') }}
-                        </p>
+                        @unless ($isMobileHome)
+                            <p class="showcase-hero__subtitle">
+                                {{ __('Discover breathtaking destinations, Nile cruises, cultural treasures, and unforgettable experiences across Egypt. Let us turn your travel dreams into reality.') }}
+                            </p>
+                        @endunless
 
                         <div class="showcase-hero__actions">
                             <a href="#featured-packages" class="showcase-hero__primary-btn">
@@ -156,33 +158,41 @@
                         <article class="trust-item reveal-up">
                             <div class="trust-icon"><i class="la la-trophy"></i></div>
                             <h2 class="trust-title">{{ __('Award-Winning Service') }}</h2>
-                            <p class="trust-description">
-                                {{ __('Recognized excellence & top guest reviews.') }}
-                            </p>
+                            @unless ($isMobileHome)
+                                <p class="trust-description">
+                                    {{ __('Recognized excellence & top guest reviews.') }}
+                                </p>
+                            @endunless
                             <span class="trust-line" aria-hidden="true"></span>
                         </article>
                         <article class="trust-item reveal-up">
                             <div class="trust-icon"><i class="la la-certificate"></i></div>
                             <h2 class="trust-title">{{ __('Licensed & Certified') }}</h2>
-                            <p class="trust-description">
-                                {{ __('Officially licensed tourism professionals.') }}
-                            </p>
+                            @unless ($isMobileHome)
+                                <p class="trust-description">
+                                    {{ __('Officially licensed tourism professionals.') }}
+                                </p>
+                            @endunless
                             <span class="trust-line" aria-hidden="true"></span>
                         </article>
                         <article class="trust-item reveal-up">
                             <div class="trust-icon"><i class="la la-clock"></i></div>
                             <h2 class="trust-title">{{ __('24/7 Travel Support') }}</h2>
-                            <p class="trust-description">
-                                {{ __('24/7 personal support across Egypt.') }}
-                            </p>
+                            @unless ($isMobileHome)
+                                <p class="trust-description">
+                                    {{ __('24/7 personal support across Egypt.') }}
+                                </p>
+                            @endunless
                             <span class="trust-line" aria-hidden="true"></span>
                         </article>
                         <article class="trust-item reveal-up">
                             <div class="trust-icon"><i class="la la-lock"></i></div>
                             <h2 class="trust-title">{{ __('Secure Payment') }}</h2>
-                            <p class="trust-description">
-                                {{ __('Protected by 3D Secure & encryption.') }}
-                            </p>
+                            @unless ($isMobileHome)
+                                <p class="trust-description">
+                                    {{ __('Protected by 3D Secure & encryption.') }}
+                                </p>
+                            @endunless
                             <span class="trust-line" aria-hidden="true"></span>
                         </article>
                     </div>
@@ -266,7 +276,7 @@
                             </div>
 
                             <p class="deal-description">
-                                {{ __('Discover Egypt\'s iconic landmarks and ancient marvels on private guided day trips. From the Giza Pyramids to Luxor\'s temples and Red Sea shores, experience unforgettable day adventures.') }}
+                                {{ $categoryDescriptions['day_tours'] }}
                             </p>
 
                             <a href="{{ route('website.day_tours.index') }}" class="gold-btn deal-btn mt-auto">
@@ -311,7 +321,7 @@
                             </div>
 
                             <p class="deal-description">
-                                {{ __('Multi-day curated journeys combining ancient wonders, luxury hotel stays, desert adventures, and bespoke cultural itineraries with seamless transfers and dedicated support.') }}
+                                {{ $categoryDescriptions['travel_packages'] }}
                             </p>
 
                             <a href="{{ route('website.travel_packages.index') }}" class="gold-btn deal-btn mt-auto">
@@ -354,7 +364,7 @@
                             </div>
 
                             <p class="deal-description">
-                                {{ __('Sail timeless waters between Luxor and Aswan aboard five-star ships, boutique Dahabiyas, and Lake Nasser floating palaces with world-class dining and guided temple visits.') }}
+                                {{ $categoryDescriptions['nile_cruises'] }}
                             </p>
 
                             <a href="{{ route('website.nile_cruises.index') }}" class="gold-btn deal-btn mt-auto">
