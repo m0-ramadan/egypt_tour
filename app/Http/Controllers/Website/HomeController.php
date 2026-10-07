@@ -4,27 +4,46 @@ namespace App\Http\Controllers\Website;
 
 use App\Models\Article;
 use App\Models\Package;
+use App\Models\Setting;
 use App\Models\Testimonial;
 use App\Services\WebsiteDestinationService;
 use Illuminate\Support\Facades\Cache;
+use Jenssegers\Agent\Agent;
 
 class HomeController extends BaseWebsiteController
 {
     public function index(WebsiteDestinationService $websiteDestinationService)
     {
-        $cacheVersion = (int) Cache::get('website.home.version', 1);
-        $cacheKey = 'website.home.v2.' . app()->getLocale() . '.' . $cacheVersion;
+        $agent = new Agent();
+        $agent->setUserAgent((string) request()->userAgent());
 
-        $data = Cache::remember($cacheKey, now()->addHour(), function () use ($websiteDestinationService) {
+        // Build a genuinely smaller response for phones. Keeping the device
+        // profile in the cache key prevents a desktop response leaking into
+        // the mobile cache (and vice versa).
+        $isMobileHome = $agent->isMobile() && !$agent->isTablet();
+        $profile = $isMobileHome ? 'mobile' : 'desktop';
+        $packageLimit = $isMobileHome ? 3 : 6;
+        $destinationLimit = $isMobileHome ? 3 : 6;
+        $testimonialLimit = $isMobileHome ? 2 : 6;
+
+        $cacheVersion = (int) Cache::get('website.home.version', 1);
+        $cacheKey = 'website.home.v3.' . app()->getLocale() . '.' . $profile . '.' . $cacheVersion;
+
+        $data = Cache::remember($cacheKey, now()->addHour(), function () use (
+            $websiteDestinationService,
+            $packageLimit,
+            $destinationLimit,
+            $testimonialLimit
+        ) {
             $packages = Package::query()
                 ->with(['currency', 'highlights', 'tags', 'prices'])
                 ->where('is_active', true)
                 ->displayOrder()
-                ->limit(6)
+                ->limit($packageLimit)
                 ->get();
 
             $featuredPackages = $packages->map(fn(Package $package) => $this->packageCard($package));
-            $destinations = $websiteDestinationService->homeDestinations();
+            $destinations = $websiteDestinationService->homeDestinations($destinationLimit);
 
             $latestArticles = Article::query()
                 ->where('is_active', true)
@@ -53,7 +72,7 @@ class HomeController extends BaseWebsiteController
                 ->orderByDesc('is_featured')
                 ->orderBy('sort_order')
                 ->latest('id')
-                ->limit(6)
+                ->limit($testimonialLimit)
                 ->get()
                 ->map(function (Testimonial $testimonial) {
                     $name = $testimonial->customer_name ?: 'Guest';
@@ -69,8 +88,13 @@ class HomeController extends BaseWebsiteController
                     ];
                 });
 
-            return compact('featuredPackages', 'destinations', 'latestArticles', 'testimonials');
+            $customHeroHome = Setting::query()->where('key', 'hero_image_home')->value('value');
+
+            return compact('featuredPackages', 'destinations', 'latestArticles', 'testimonials', 'customHeroHome');
         });
+
+        $data['isMobileHome'] = $isMobileHome;
+        $data['showHomeNewsletter'] = !$isMobileHome;
 
         return view('website.pages.home', $data);
     }

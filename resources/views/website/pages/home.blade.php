@@ -14,7 +14,6 @@
 
 @php
     $isRtl = app()->getLocale() === 'ar';
-    $customHeroHome = \App\Models\Setting::where('key', 'hero_image_home')->value('value');
     $heroHomeBg = $customHeroHome
         ? asset($customHeroHome)
         : asset('website/photos/optimized/home-pyramids-desktop-1280.webp');
@@ -39,7 +38,7 @@
     <div class="tour-page">
 
         <section class="showcase-hero" id="home" data-critical-fold>
-            <picture class="showcase-hero__media" aria-hidden="true">
+            <picture class="showcase-hero__media">
                 @if (!$customHeroHome)
                     <source media="(max-width: 767px)" type="image/webp"
                         srcset="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }} 480w, {{ asset('website/photos/optimized/home-pyramids-mobile-640.webp') }} 640w, {{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }} 744w"
@@ -48,8 +47,9 @@
                         srcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
                         sizes="100vw">
                 @endif
-                <img src="{{ $heroHomeBg }}" alt="" width="1677" height="938" fetchpriority="high"
-                    loading="eager" decoding="async">
+                <img src="{{ $heroHomeBg }}" alt="{{ __('The Great Sphinx and Pyramids of Giza in Egypt') }}"
+                    width="1677" height="938" fetchpriority="high" loading="eager" decoding="sync"
+                    elementtiming="home-hero-image">
             </picture>
             <div class="showcase-hero__flight" aria-hidden="true">
                 <i class="la la-plane"></i>
@@ -734,32 +734,34 @@
             </div>
         </section>
 
-        <section class="section-pad cream-section">
-            <div class="container">
-                <div class="newsletter-box reveal-up">
-                    <div class="section-kicker">
-                        <i class="la la-envelope"></i>
-                        {{ __('Newsletter') }}
+        @if ($showHomeNewsletter)
+            <section class="section-pad cream-section">
+                <div class="container">
+                    <div class="newsletter-box reveal-up">
+                        <div class="section-kicker">
+                            <i class="la la-envelope"></i>
+                            {{ __('Newsletter') }}
+                        </div>
+
+                        <h2 class="section-title">{{ __('Get Our Latest Travel Deals') }}</h2>
+
+                        <p class="section-subtitle">
+                            {{ __('Subscribe to receive updates, new packages, seasonal offers, and useful Egypt travel tips.') }}
+                        </p>
+
+                        <form action="{{ route('website.newsletter.store') }}" method="POST" class="newsletter-form">
+                            @csrf
+                            <input type="email" name="email" placeholder="{{ __('Enter your email address') }}"
+                                required>
+                            <button type="submit" class="gold-btn">
+                                {{ __('Subscribe') }}
+                                <i class="la la-paper-plane"></i>
+                            </button>
+                        </form>
                     </div>
-
-                    <h2 class="section-title">{{ __('Get Our Latest Travel Deals') }}</h2>
-
-                    <p class="section-subtitle">
-                        {{ __('Subscribe to receive updates, new packages, seasonal offers, and useful Egypt travel tips.') }}
-                    </p>
-
-                    <form action="{{ route('website.newsletter.store') }}" method="POST" class="newsletter-form">
-                        @csrf
-                        <input type="email" name="email" placeholder="{{ __('Enter your email address') }}"
-                            required>
-                        <button type="submit" class="gold-btn">
-                            {{ __('Subscribe') }}
-                            <i class="la la-paper-plane"></i>
-                        </button>
-                    </form>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
         <div class="modal fade" id="quoteModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
