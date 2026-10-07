@@ -258,6 +258,10 @@
     @endif
     @hasSection('home_style_bundle')
         @vite('resources/css/website-home-entry.css')
+        <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}" media="none" onload="this.media='all'">
+        <noscript>
+            <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}">
+        </noscript>
     @else
         <link rel="preload" href="{{ asset('website/fonts/website/inter-latin-variable.woff2') }}" as="font"
             type="font/woff2" crossorigin>
