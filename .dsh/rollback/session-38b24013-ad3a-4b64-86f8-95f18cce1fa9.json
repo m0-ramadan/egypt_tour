@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "sessionId": "session-38b24013-ad3a-4b64-86f8-95f18cce1fa9",
+  "cwd": "/home/mohamed/Videos/dashboard/Ahmed_m/egypt_tour",
+  "checkpoints": [
+    {
+      "turn": 2,
+      "commit": "545f62acb1b566ff3e0be8998bdd6de4aad03c01",
+      "parent": "31a817015c797783fcac751e24a7922c7fc705a1",
+      "time": 1791462193425,
+      "untracked": [
+        "public/build/assets/website-CaeBKFSj.js",
+        "public/build/assets/website-home-deferred-DYF6x6g_.css",
+        "public/build/assets/website-home-entry-CM3nzR96.css",
+        "public/website/js/home-section-layout.js",
+        "resources/css/generated/home-bootstrap.css",
+        "resources/css/generated/home-style.css"
+      ],
+      "truncated": false
+    }
+  ],
+  "rolls": [],
+  "updatedAt": 1791462194989
+}

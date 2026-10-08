@@ -1,6 +1,6 @@
+/* Mobile Home Overrides */
 @media (max-width: 767px) {
     .trust-section {
-        content-visibility: auto;
-        contain-intrinsic-size: 400px;
+        margin-top: 0 !important;
     }
 }

@@ -2,9 +2,11 @@
 
 @section('title', __('Home - Egypt Tour Pro'))
 @section('description',
-    __('Luxury Egypt tours, Nile cruises, private day trips, and tailor-made travel experiences curated by Egypt Tour Pro across Cairo, Luxor, Aswan, and beyond.'))
+    __('Luxury Egypt tours, Nile cruises, private day trips, and tailor-made travel experiences
+    curated by Egypt Tour Pro across Cairo, Luxor, Aswan, and beyond.'))
 @section('keywords',
-    'Egypt Tour Pro, luxury Egypt tours, Nile cruises, Egypt holidays, Cairo tours, Luxor tours, Aswan tours, tailor made travel')
+    'Egypt Tour Pro, luxury Egypt tours, Nile cruises, Egypt holidays, Cairo tours, Luxor tours, Aswan
+    tours, tailor made travel')
 @section('image', asset('website/logo/egypt-tour-pro-charcoal.webp'))
 @section('preferred_theme', 'light')
 @section('body_class', 'home-reference-page')
@@ -12,68 +14,50 @@
 
 @php
     $isRtl = app()->getLocale() === 'ar';
-    $defaultHeroBg =
-        $isMobileHome ?? false
-            ? asset('website/photos/optimized/home-hero-mobile-brand-744.avif')
-            : asset('website/photos/optimized/home-pyramids-desktop-1280.webp');
-    $heroHomeBg = $customHeroHome ? asset($customHeroHome) : $defaultHeroBg;
-    $heroWidth = $isMobileHome ?? false ? 744 : 1280;
-    $heroHeight = $isMobileHome ?? false ? 1000 : 720;
+    $heroHomeBg = $customHeroHome
+        ? asset($customHeroHome)
+        : asset('website/photos/optimized/home-pyramids-desktop-1280.webp');
 @endphp
 
 @section('lcp_preload')
     @if ($customHeroHome)
         <link rel="preload" as="image" href="{{ $heroHomeBg }}" fetchpriority="high">
-    @elseif ($isMobileHome ?? false)
-        <link rel="preload" as="image" type="image/avif"
-            href="{{ asset('website/photos/optimized/home-hero-mobile-brand-744.avif') }}"
-            fetchpriority="high">
     @else
+        <link rel="preload" as="image" type="image/webp"
+            href="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }}"
+            imagesrcset="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }} 480w, {{ asset('website/photos/optimized/home-pyramids-mobile-640.webp') }} 640w, {{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }} 744w"
+            imagesizes="100vw" media="(max-width: 767px)" fetchpriority="high">
         <link rel="preload" as="image" type="image/webp"
             href="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }}"
             imagesrcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
             imagesizes="100vw" media="(min-width: 768px)" fetchpriority="high">
-        <link rel="preload" as="image" type="image/avif"
-            href="{{ asset('website/photos/optimized/home-hero-mobile-brand-744.avif') }}"
-            media="(max-width: 767px)" fetchpriority="high">
     @endif
-@endsection
-
-@section('js')
-    <script src="{{ asset('website/js/home-section-layout.js') }}" defer></script>
 @endsection
 
 @section('content')
     <div class="tour-page">
 
-        {{-- 1. Hero Section --}}
         <section class="showcase-hero" id="home" data-critical-fold>
             <picture class="showcase-hero__media">
                 @if (!$customHeroHome)
-                    @if ($isMobileHome ?? false)
-                        <source type="image/avif" srcset="{{ asset('website/photos/optimized/home-hero-mobile-brand-744.avif') }}">
-                    @else
-                        <source media="(max-width: 767px)" type="image/avif"
-                            srcset="{{ asset('website/photos/optimized/home-hero-mobile-brand-744.avif') }}">
-                        <source type="image/webp"
-                            srcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
-                            sizes="100vw">
-                    @endif
+                    <source media="(max-width: 767px)" type="image/webp"
+                        srcset="{{ asset('website/photos/optimized/home-pyramids-mobile-480.webp') }} 480w, {{ asset('website/photos/optimized/home-pyramids-mobile-640.webp') }} 640w, {{ asset('website/photos/optimized/home-pyramids-mobile-744.webp') }} 744w"
+                        sizes="100vw">
+                    <source type="image/webp"
+                        srcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
+                        sizes="100vw">
                 @endif
                 <img src="{{ $heroHomeBg }}" alt="{{ __('The Great Sphinx and Pyramids of Giza in Egypt') }}"
-                    width="{{ $heroWidth }}" height="{{ $heroHeight }}" fetchpriority="high" loading="eager"
-                    decoding="sync" elementtiming="home-hero-image">
+                    width="1677" height="938" fetchpriority="high" loading="eager" decoding="sync"
+                    elementtiming="home-hero-image">
             </picture>
-
-            @unless ($isMobileHome ?? false)
-                <div class="showcase-hero__flight" aria-hidden="true">
-                    <i class="la la-plane"></i>
-                </div>
-                <div class="showcase-hero__signature" aria-hidden="true">
-                    <span>Egypt</span>
-                    <small>{{ __('More Than a Destination') }}</small>
-                </div>
-            @endunless
+            <div class="showcase-hero__flight" aria-hidden="true">
+                <i class="la la-plane"></i>
+            </div>
+            <div class="showcase-hero__signature" aria-hidden="true">
+                <span>Egypt</span>
+                <small>{{ __('More Than a Destination') }}</small>
+            </div>
 
             <div class="container showcase-hero__container">
                 <div class="showcase-hero__grid">
@@ -95,7 +79,7 @@
                         </p>
 
                         <div class="showcase-hero__actions">
-                            <a href="#deals" class="showcase-hero__primary-btn">
+                            <a href="#featured-packages" class="showcase-hero__primary-btn">
                                 <i class="la la-long-arrow-right"></i>
                                 {{ __('Browse Tours') }}
                             </a>
@@ -105,45 +89,74 @@
                             </a>
                         </div>
 
-                        @unless ($isMobileHome ?? false)
-                            <div class="showcase-hero__features">
-                                <div class="showcase-hero__feature">
-                                    <i class="la la-map-marker"></i>
-                                    <span>{{ __('Handpicked Destinations') }}</span>
+                        <div class="showcase-hero__features">
+                            <div class="showcase-hero__feature">
+                                <i class="la la-map-marker"></i>
+                                <span>{{ __('Handpicked Destinations') }}</span>
+                            </div>
+                            <div class="showcase-hero__feature">
+                                <i class="la la-gem"></i>
+                                <span>{{ __('Best Price Guarantee') }}</span>
+                            </div>
+                            <div class="showcase-hero__feature">
+                                <i class="la la-users"></i>
+                                <span>{{ __('Local Experts & Support') }}</span>
+                            </div>
+                            <div class="showcase-hero__feature">
+                                <i class="la la-shield-alt"></i>
+                                <span>{{ __('Safe & Reliable Travel') }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{--
+                    <div class="showcase-hero__visuals" id="showcase-tour">
+                        <a href="{{ route('website.nile_cruises.index') }}" class="showcase-tour-card">
+                            <div class="showcase-tour-card__image">
+                                <img src="{{ asset('website/photos/optimized/home-nile-cruise-900.webp') }}"
+                                    alt="{{ __('Luxury Nile cruise at sunset') }}" width="900" height="473"
+                                    loading="lazy" decoding="async">
+                                <span class="showcase-tour-card__category">
+                                    <i class="la la-map-marker"></i>{{ __('Nile Cruise') }}
+                                </span>
+                            </div>
+                            <div class="showcase-tour-card__body">
+                                <div class="showcase-tour-card__heading">
+                                    <h2>{{ __('Nile Cruise Experience') }}</h2>
+                                    <span class="showcase-tour-card__rating">
+                                        <strong aria-label="{{ __('Five stars') }}">★★★★★</strong>
+                                        <small>{{ __('(128 reviews)') }}</small>
+                                    </span>
                                 </div>
-                                <div class="showcase-hero__feature">
-                                    <i class="la la-gem"></i>
-                                    <span>{{ __('Best Price Guarantee') }}</span>
-                                </div>
-                                <div class="showcase-hero__feature">
-                                    <i class="la la-users"></i>
-                                    <span>{{ __('Local Experts & Support') }}</span>
-                                </div>
-                                <div class="showcase-hero__feature">
-                                    <i class="la la-shield-alt"></i>
-                                    <span>{{ __('Safe & Reliable Travel') }}</span>
+                                <p>{{ __('Sail the timeless Nile, visit iconic temples, and enjoy unforgettable views.') }}
+                                </p>
+                                <div class="showcase-tour-card__meta">
+                                    <span><i class="la la-clock"></i>{{ __('4 Days') }}</span>
+                                    <span><i class="la la-user-friends"></i>{{ __('From $499') }}</span>
+                                    <b><i class="la la-long-arrow-right"></i></b>
                                 </div>
                             </div>
-                        @endunless
+                        </a>
                     </div>
+                    --}}
                 </div>
             </div>
 
             <svg class="showcase-hero__wave" viewBox="0 0 2170 82" preserveAspectRatio="none" aria-hidden="true">
-                <path class="showcase-hero__wave-fill" d="M0,8 L2170,8 L2170,85 L0,85 Z"></path>
+                <path class="showcase-hero__wave-fill"
+                    d="M0,8 L2170,8 L2170,85 L0,85 Z"></path>
                 <path class="showcase-hero__wave-line" d="M0,8 L2170,8"></path>
             </svg>
         </section>
 
-        {{-- 2. Trust Bar Section --}}
-        <section class="trust-section" id="trust-bar">
+        <section class="trust-section">
             <div class="container">
                 <div class="trust-box">
                     <div class="trust-content">
                         <article class="trust-item reveal-up">
                             <div class="trust-icon"><i class="la la-trophy"></i></div>
                             <h2 class="trust-title">{{ __('Award-Winning Service') }}</h2>
-                            @unless ($isMobileHome ?? false)
+                            @unless ($isMobileHome)
                                 <p class="trust-description">
                                     {{ __('Recognized excellence & top guest reviews.') }}
                                 </p>
@@ -153,7 +166,7 @@
                         <article class="trust-item reveal-up">
                             <div class="trust-icon"><i class="la la-certificate"></i></div>
                             <h2 class="trust-title">{{ __('Licensed & Certified') }}</h2>
-                            @unless ($isMobileHome ?? false)
+                            @unless ($isMobileHome)
                                 <p class="trust-description">
                                     {{ __('Officially licensed tourism professionals.') }}
                                 </p>
@@ -163,7 +176,7 @@
                         <article class="trust-item reveal-up">
                             <div class="trust-icon"><i class="la la-clock"></i></div>
                             <h2 class="trust-title">{{ __('24/7 Travel Support') }}</h2>
-                            @unless ($isMobileHome ?? false)
+                            @unless ($isMobileHome)
                                 <p class="trust-description">
                                     {{ __('24/7 personal support across Egypt.') }}
                                 </p>
@@ -173,7 +186,7 @@
                         <article class="trust-item reveal-up">
                             <div class="trust-icon"><i class="la la-lock"></i></div>
                             <h2 class="trust-title">{{ __('Secure Payment') }}</h2>
-                            @unless ($isMobileHome ?? false)
+                            @unless ($isMobileHome)
                                 <p class="trust-description">
                                     {{ __('Protected by 3D Secure & encryption.') }}
                                 </p>
@@ -185,8 +198,36 @@
             </div>
         </section>
 
-        {{-- 3. Signature Egypt Experiences (Categories) --}}
-        <section id="deals" class="section-pad cream-section" data-home-lazy-section>
+        {{-- <section class="section-pad light-section">
+            <div class="container">
+                <div class="section-heading reveal-up">
+                    <div class="section-kicker">
+                        <i class="la la-tripadvisor"></i>
+                        {{ __('Trusted Excellence') }}
+                    </div>
+                    <h2 class="section-title">{{ __('TripAdvisor Hall of Fame') }}</h2>
+                    <p class="section-subtitle">
+                        {{ __('Consistently recognized for excellence in travel experiences and unforgettable journeys across Egypt.') }}
+                    </p>
+                </div>
+
+                <div class="tripadvisor-row">
+                    @foreach (['Travellers-Choice-2019-.webp', 'Travellers-Choice-2020.webp', 'Travellers-Choice-2021.webp', 'Travellers-Choice-2025.webp', 'Travellers-Choice-2022.webp', 'Travellers-Choice-2023.webp', 'Travellers-Choice-2024-.webp'] as $award)
+                        <div class="certificate-card reveal-up">
+                            <picture>
+                                <source type="image/avif"
+                                    srcset="{{ asset('website/photos/optimized/' . pathinfo($award, PATHINFO_FILENAME) . '.avif') }}">
+                                <img loading="lazy" decoding="async"
+                                    src="{{ asset('website/photos/optimized/' . pathinfo($award, PATHINFO_FILENAME) . '.webp') }}"
+                                    alt="{{ __('TripAdvisor Award') }}" class="certificate-img" width="176"
+                                    height="176">
+                            </picture>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section> --}}
+        <section id="deals" class="section-pad cream-section">
             <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">
@@ -205,31 +246,19 @@
                         <div class="card-image">
                             <div class="badge-top">{{ __('Day Tours') }}</div>
                             <div class="destination-watermark-logo">
-                                <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}" alt="Egypt Tour Pro"
-                                    width="96" height="39" loading="lazy" decoding="async">
+                                <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
+                                    alt="Egypt Tour Pro" width="96" height="39" loading="lazy" decoding="async">
                             </div>
 
                             <a href="{{ route('website.day_tours.index') }}" aria-label="{{ __('Egypt Day Tours') }}">
-                                @if ($isMobileHome ?? false)
-                                    <img src="{{ asset('website/photos/experiences/day-tours-mobile.webp') }}"
-                                        alt="{{ __('Egypt Day Tours') }}" width="360" height="240" loading="lazy"
-                                        decoding="async">
-                                @else
-                                    <picture>
-                                        <source media="(max-width: 767px)" type="image/webp"
-                                            srcset="{{ asset('website/photos/experiences/day-tours-mobile.webp') }}">
-                                        <source type="image/avif"
-                                            srcset="{{ asset('website/photos/experiences/day-tours-480.avif') }} 480w, {{ asset('website/photos/experiences/day-tours-768.avif') }} 768w, {{ asset('website/photos/experiences/day-tours-1024.avif') }} 1024w"
-                                            sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
-                                        <source type="image/webp"
-                                            srcset="{{ asset('website/photos/experiences/day-tours-480.webp') }} 480w, {{ asset('website/photos/experiences/day-tours-768.webp') }} 768w, {{ asset('website/photos/experiences/day-tours-1024.webp') }} 1024w"
-                                            sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
-                                        <img src="{{ asset('website/photos/experiences/day-tours.webp') }}"
-                                            alt="{{ __('Egypt Day Tours') }}" width="800" height="500" loading="lazy"
-                                            decoding="async"
-                                            onerror="this.onerror=null;this.src='{{ asset('website/images/day-tours/cairo-day-tours.webp') }}';">
-                                    </picture>
-                                @endif
+                                <picture>
+                                    <source type="image/avif" srcset="{{ asset('website/photos/experiences/day-tours-480.avif') }} 480w, {{ asset('website/photos/experiences/day-tours-768.avif') }} 768w, {{ asset('website/photos/experiences/day-tours-1024.avif') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                    <source type="image/webp" srcset="{{ asset('website/photos/experiences/day-tours-480.webp') }} 480w, {{ asset('website/photos/experiences/day-tours-768.webp') }} 768w, {{ asset('website/photos/experiences/day-tours-1024.webp') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                    <img src="{{ asset('website/photos/experiences/day-tours.webp') }}"
+                                        alt="{{ __('Egypt Day Tours') }}" width="800" height="500" loading="lazy"
+                                        decoding="async"
+                                        onerror="this.onerror=null;this.src='{{ asset('website/images/day-tours/cairo-day-tours.webp') }}';">
+                                </picture>
                             </a>
                         </div>
 
@@ -260,38 +289,27 @@
                         <div class="card-image">
                             <div class="badge-top">{{ __('Tour Packages') }}</div>
                             <div class="destination-watermark-logo">
-                                <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}" alt="Egypt Tour Pro"
-                                    width="96" height="39" loading="lazy" decoding="async">
+                                <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
+                                    alt="Egypt Tour Pro" width="96" height="39" loading="lazy" decoding="async">
                             </div>
 
                             <a href="{{ route('website.travel_packages.index') }}"
                                 aria-label="{{ __('Egypt Tour Packages') }}">
-                                @if ($isMobileHome ?? false)
-                                    <img src="{{ asset('website/photos/experiences/travel-packages-mobile.webp') }}"
-                                        alt="{{ __('Egypt Tour Packages') }}" width="360" height="240" loading="lazy"
-                                        decoding="async">
-                                @else
-                                    <picture>
-                                        <source media="(max-width: 767px)" type="image/webp"
-                                            srcset="{{ asset('website/photos/experiences/travel-packages-mobile.webp') }}">
-                                        <source type="image/avif"
-                                            srcset="{{ asset('website/photos/experiences/travel-packages-480.avif') }} 480w, {{ asset('website/photos/experiences/travel-packages-768.avif') }} 768w, {{ asset('website/photos/experiences/travel-packages-1024.avif') }} 1024w"
-                                            sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
-                                        <source type="image/webp"
-                                            srcset="{{ asset('website/photos/experiences/travel-packages-480.webp') }} 480w, {{ asset('website/photos/experiences/travel-packages-768.webp') }} 768w, {{ asset('website/photos/experiences/travel-packages-1024.webp') }} 1024w"
-                                            sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
-                                        <img src="{{ asset('website/photos/experiences/travel-packages.webp') }}"
-                                            alt="{{ __('Egypt Tour Packages') }}" width="800" height="500"
-                                            loading="lazy" decoding="async"
-                                            onerror="this.onerror=null;this.src='{{ asset('website/images/travel-packages/7-days-egypt-vacation.webp') }}';">
-                                    </picture>
-                                @endif
+                                <picture>
+                                    <source type="image/avif" srcset="{{ asset('website/photos/experiences/travel-packages-480.avif') }} 480w, {{ asset('website/photos/experiences/travel-packages-768.avif') }} 768w, {{ asset('website/photos/experiences/travel-packages-1024.avif') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                    <source type="image/webp" srcset="{{ asset('website/photos/experiences/travel-packages-480.webp') }} 480w, {{ asset('website/photos/experiences/travel-packages-768.webp') }} 768w, {{ asset('website/photos/experiences/travel-packages-1024.webp') }} 1024w" sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw">
+                                    <img src="{{ asset('website/photos/experiences/travel-packages.webp') }}"
+                                        alt="{{ __('Egypt Tour Packages') }}" width="800" height="500" loading="lazy"
+                                        decoding="async"
+                                        onerror="this.onerror=null;this.src='{{ asset('website/images/travel-packages/7-days-egypt-vacation.webp') }}';">
+                                </picture>
                             </a>
                         </div>
 
                         <div class="card-body">
                             <h3 class="deal-title">
-                                <a href="{{ route('website.travel_packages.index') }}">{{ __('Egypt Tour Packages') }}</a>
+                                <a
+                                    href="{{ route('website.travel_packages.index') }}">{{ __('Egypt Tour Packages') }}</a>
                             </h3>
 
                             <div class="deal-meta">
@@ -316,32 +334,19 @@
                         <div class="card-image">
                             <div class="badge-top">{{ __('Nile Cruises') }}</div>
                             <div class="destination-watermark-logo">
-                                <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}" alt="Egypt Tour Pro"
-                                    width="96" height="39" loading="lazy" decoding="async">
+                                <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
+                                    alt="Egypt Tour Pro" width="96" height="39" loading="lazy" decoding="async">
                             </div>
 
-                            <a href="{{ route('website.nile_cruises.index') }}"
-                                aria-label="{{ __('Egypt Nile Cruise') }}">
-                                @if ($isMobileHome ?? false)
-                                    <img src="{{ asset('website/photos/experiences/nile-cruises-mobile.webp') }}"
-                                        alt="{{ __('Egypt Nile Cruise') }}" width="360" height="240" loading="lazy"
-                                        decoding="async">
-                                @else
-                                    <picture>
-                                        <source media="(max-width: 767px)" type="image/webp"
-                                            srcset="{{ asset('website/photos/experiences/nile-cruises-mobile.webp') }}">
-                                        <source type="image/avif"
-                                            srcset="{{ asset('website/photos/experiences/nile-cruises-420.avif') }} 420w, {{ asset('website/photos/experiences/nile-cruises-480.avif') }} 480w, {{ asset('website/photos/experiences/nile-cruises-672.avif') }} 672w, {{ asset('website/photos/experiences/nile-cruises-768-v2.avif') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.avif') }} 1024w"
-                                            sizes="(max-width: 575px) calc(100vw - 30px), (max-width: 991px) calc(50vw - 24px), 420px">
-                                        <source type="image/webp"
-                                            srcset="{{ asset('website/photos/experiences/nile-cruises-420.webp') }} 420w, {{ asset('website/photos/experiences/nile-cruises-480.webp') }} 480w, {{ asset('website/photos/experiences/nile-cruises-672.webp') }} 672w, {{ asset('website/photos/experiences/nile-cruises-768.webp') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.webp') }} 1024w"
-                                            sizes="(max-width: 575px) calc(100vw - 30px), (max-width: 991px) calc(50vw - 24px), 420px">
-                                        <img src="{{ asset('website/photos/experiences/nile-cruises.webp') }}"
-                                            alt="{{ __('Egypt Nile Cruise') }}" width="800" height="500"
-                                            loading="lazy" decoding="async"
-                                            onerror="this.onerror=null;this.src='{{ asset('website/images/nile-cruises/luxor-aswan.webp') }}';">
-                                    </picture>
-                                @endif
+                            <a href="{{ route('website.nile_cruises.index') }}" aria-label="{{ __('Egypt Nile Cruise') }}">
+                                <picture>
+                                    <source type="image/avif" srcset="{{ asset('website/photos/experiences/nile-cruises-420.avif') }} 420w, {{ asset('website/photos/experiences/nile-cruises-480.avif') }} 480w, {{ asset('website/photos/experiences/nile-cruises-672.avif') }} 672w, {{ asset('website/photos/experiences/nile-cruises-768-v2.avif') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.avif') }} 1024w" sizes="(max-width: 575px) calc(100vw - 30px), (max-width: 991px) calc(50vw - 24px), 420px">
+                                    <source type="image/webp" srcset="{{ asset('website/photos/experiences/nile-cruises-420.webp') }} 420w, {{ asset('website/photos/experiences/nile-cruises-480.webp') }} 480w, {{ asset('website/photos/experiences/nile-cruises-672.webp') }} 672w, {{ asset('website/photos/experiences/nile-cruises-768.webp') }} 768w, {{ asset('website/photos/experiences/nile-cruises-1024.webp') }} 1024w" sizes="(max-width: 575px) calc(100vw - 30px), (max-width: 991px) calc(50vw - 24px), 420px">
+                                    <img src="{{ asset('website/photos/experiences/nile-cruises.webp') }}"
+                                        alt="{{ __('Egypt Nile Cruise') }}" width="800" height="500" loading="lazy"
+                                        decoding="async"
+                                        onerror="this.onerror=null;this.src='{{ asset('website/images/nile-cruises/luxor-aswan.webp') }}';">
+                                </picture>
                             </a>
                         </div>
 
@@ -369,9 +374,7 @@
                 </div>
             </div>
         </section>
-
-        {{-- 4. Why Choose Us Section --}}
-        <section class="section-pad" id="why-choose-us" data-home-lazy-section>
+        <section class="section-pad">
             <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">
@@ -420,9 +423,10 @@
             </div>
         </section>
 
-        {{-- 5. Featured Tours & Packages --}}
+
+
         @if ($featuredPackages->isNotEmpty())
-            <section class="section-pad" id="featured-packages" data-home-lazy-section>
+            <section class="section-pad" id="featured-packages">
                 <div class="container">
                     <div class="section-heading reveal-up">
                         <div class="section-kicker">
@@ -448,7 +452,7 @@
                                     @endif
 
                                     @if (!empty($package['price']))
-                                        <div class="deal-price">{{ $package['price'] }}</div>
+                                        <div class="deal-price" style="color: #ffffff !important;">{{ $package['price'] }}</div>
                                     @endif
 
                                     <a href="{{ $package['url'] }}" aria-label="{{ $package['title'] }}">
@@ -506,8 +510,7 @@
             </section>
         @endif
 
-        {{-- 6. Custom Itinerary Planner Banner --}}
-        <section class="quote-section" id="quote" data-home-lazy-section>
+        <section class="quote-section" id="quote">
             <div class="container">
                 <div class="quote-card reveal-up">
                     <h2 class="quote-title">{{ __('Need Help Planning Your Trip?') }}</h2>
@@ -534,7 +537,7 @@
                         </div>
                     </div>
 
-                    <button type="button" class="gold-btn" data-bs-toggle="modal" data-bs-target="#quoteModal">
+                    <button class="gold-btn" data-bs-toggle="modal" data-bs-target="#quoteModal">
                         <i class="la la-paper-plane"></i>
                         {{ __('Get Custom Quote') }}
                     </button>
@@ -542,8 +545,7 @@
             </div>
         </section>
 
-        {{-- 7. Destinations Section --}}
-        <section class="section-pad light-section" id="destinations" data-home-lazy-section>
+        <section class="section-pad light-section">
             <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">
@@ -563,8 +565,7 @@
                                 <div class="badge-top">{{ $destination['country'] ?: __('Destination') }}</div>
                                 <div class="destination-watermark-logo">
                                     <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
-                                        alt="Egypt Tour Pro" width="96" height="39" loading="lazy"
-                                        decoding="async">
+                                        alt="Egypt Tour Pro" width="96" height="39" loading="lazy" decoding="async">
                                 </div>
                                 <a href="{{ $destination['url'] }}">
                                     <img src="{{ $destination['image'] }}" alt="{{ $destination['title'] }}"
@@ -605,8 +606,69 @@
             </div>
         </section>
 
-        {{-- 8. Testimonials Section --}}
-        <section class="section-pad light-section" id="testimonials" data-home-lazy-section>
+        @if ($showHomeArticles)
+            <section class="section-pad">
+                <div class="container">
+                <div class="section-heading reveal-up">
+                    <div class="section-kicker">
+                        <i class="la la-newspaper"></i>
+                        {{ __('Travel Guides') }}
+                    </div>
+                    <h2 class="section-title">{{ __('Latest Egypt Travel Stories') }}</h2>
+                    <p class="section-subtitle">
+                        {{ __('Useful tips, destination insights, and inspiring stories for planning your Egypt journey.') }}
+                    </p>
+                </div>
+
+                <div class="articles-grid">
+                    @forelse ($latestArticles as $article)
+                        <div class="article-card reveal-up">
+                            <div class="card-image">
+                                <div class="destination-watermark-logo">
+                                    <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
+                                        alt="Egypt Tour Pro" width="96" height="39" loading="lazy" decoding="async">
+                                </div>
+                                <a href="{{ $article['url'] }}">
+                                    <img src="{{ $article['image'] }}" alt="{{ $article['title'] }}" width="800"
+                                        height="500" loading="lazy" decoding="async">
+                                </a>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="article-date">
+                                    <i class="la la-calendar"></i>
+                                    {{ $article['date'] }}
+                                </div>
+
+                                <h3 class="article-title">
+                                    <a href="{{ $article['url'] }}">{{ $article['title'] }}</a>
+                                </h3>
+
+                                <p class="article-excerpt">{{ $article['excerpt'] }}</p>
+
+                                <a href="{{ $article['url'] }}" class="gold-btn">
+                                    {{ __('Read More') }}
+                                    <span class="visually-hidden">: {{ $article['title'] }}</span>
+                                    <i class="la la-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="empty-state">{{ __('No active articles found.') }}</div>
+                    @endforelse
+                </div>
+
+                <div class="text-center mt-5 reveal-up">
+                    <a href="{{ route('website.blogs.index') }}" class="gold-btn btn-lg">
+                        {{ __('View All Articles') }}
+                        <i class="la la-arrow-right"></i>
+                    </a>
+                </div>
+                </div>
+            </section>
+        @endif
+
+        <section class="section-pad light-section">
             <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">
@@ -674,7 +736,7 @@
                 <div class="testimonials-dots" id="testimonialsDots"></div>
 
                 <div class="text-center mt-4 reveal-up">
-                    <a href="https://www.tripadvisor.com" target="_blank" rel="noopener noreferrer" class="gold-btn">
+                    <a href="#" target="_blank" class="gold-btn">
                         <i class="la la-external-link"></i>
                         {{ __('Read All Reviews on TripAdvisor') }}
                     </a>
@@ -682,73 +744,8 @@
             </div>
         </section>
 
-        {{-- 9. Latest Travel Stories (Desktop Only) --}}
-        @if ($showHomeArticles)
-            <section class="section-pad" id="travel-guides">
-                <div class="container">
-                    <div class="section-heading reveal-up">
-                        <div class="section-kicker">
-                            <i class="la la-newspaper"></i>
-                            {{ __('Travel Guides') }}
-                        </div>
-                        <h2 class="section-title">{{ __('Latest Egypt Travel Stories') }}</h2>
-                        <p class="section-subtitle">
-                            {{ __('Useful tips, destination insights, and inspiring stories for planning your Egypt journey.') }}
-                        </p>
-                    </div>
-
-                    <div class="articles-grid">
-                        @forelse ($latestArticles as $article)
-                            <div class="article-card reveal-up">
-                                <div class="card-image">
-                                    <div class="destination-watermark-logo">
-                                        <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
-                                            alt="Egypt Tour Pro" width="96" height="39" loading="lazy"
-                                            decoding="async">
-                                    </div>
-                                    <a href="{{ $article['url'] }}">
-                                        <img src="{{ $article['image'] }}" alt="{{ $article['title'] }}"
-                                            width="800" height="500" loading="lazy" decoding="async">
-                                    </a>
-                                </div>
-
-                                <div class="card-body">
-                                    <div class="article-date">
-                                        <i class="la la-calendar"></i>
-                                        {{ $article['date'] }}
-                                    </div>
-
-                                    <h3 class="article-title">
-                                        <a href="{{ $article['url'] }}">{{ $article['title'] }}</a>
-                                    </h3>
-
-                                    <p class="article-excerpt">{{ $article['excerpt'] }}</p>
-
-                                    <a href="{{ $article['url'] }}" class="gold-btn">
-                                        {{ __('Read More') }}
-                                        <span class="visually-hidden">: {{ $article['title'] }}</span>
-                                        <i class="la la-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        @empty
-                            <div class="empty-state">{{ __('No active articles found.') }}</div>
-                        @endforelse
-                    </div>
-
-                    <div class="text-center mt-5 reveal-up">
-                        <a href="{{ route('website.blogs.index') }}" class="gold-btn btn-lg">
-                            {{ __('View All Articles') }}
-                            <i class="la la-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </section>
-        @endif
-
-        {{-- 10. Newsletter Section (Desktop Only) --}}
         @if ($showHomeNewsletter)
-            <section class="section-pad cream-section" id="newsletter">
+            <section class="section-pad cream-section">
                 <div class="container">
                     <div class="newsletter-box reveal-up">
                         <div class="section-kicker">
@@ -776,7 +773,6 @@
             </section>
         @endif
 
-        {{-- 11. Custom Quote Modal --}}
         <div class="modal fade" id="quoteModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
@@ -807,16 +803,17 @@
                                         placeholder="{{ __('Phone / WhatsApp') }}">
                                 </div>
 
-                                <div class="col-md-6">
+
+                                <div class="col-md-4">
                                     <input class="form-control" type="date" name="travel_date">
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <input class="form-control" type="number" min="1" name="adults"
                                         placeholder="{{ __('Adults') }}">
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <input class="form-control" type="number" min="0" name="children"
                                         placeholder="{{ __('Children') }}">
                                 </div>
