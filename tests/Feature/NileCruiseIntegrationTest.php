@@ -202,6 +202,43 @@ class NileCruiseIntegrationTest extends TestCase
             ->assertSee('Lake Nasser Cruise');
     }
 
+    public function test_lake_nasser_listing_does_not_include_explicit_luxor_aswan_cruises(): void
+    {
+        $luxorAswanType = NileCruiseType::where('slug', 'luxor-aswan-nile-cruises')->firstOrFail();
+        $lakeNasserType = NileCruiseType::where('slug', 'lake-nasser-cruise')->firstOrFail();
+
+        Package::create([
+            'title' => ['en' => 'Luxor to Aswan Cruise with Abu Simbel'],
+            'slug' => 'luxor-aswan-cruise-with-abu-simbel',
+            'package_type' => 'nile_cruise',
+            'nile_cruise_type_id' => $luxorAswanType->id,
+            'is_active' => true,
+        ]);
+
+        Package::create([
+            'title' => ['en' => 'Lake Nasser Cruise'],
+            'slug' => 'lake-nasser-cruise-test',
+            'package_type' => 'nile_cruise',
+            'nile_cruise_type_id' => $lakeNasserType->id,
+            'is_active' => true,
+        ]);
+
+        Package::create([
+            'title' => ['en' => 'Legacy Lake Nasser Voyage'],
+            'slug' => 'legacy-lake-nasser-voyage',
+            'package_type' => 'nile_cruise',
+            'nile_cruise_type_id' => null,
+            'is_active' => true,
+        ]);
+
+        $response = $this->get(route('website.nile_cruises.type', 'lake-nasser-cruise'));
+
+        $response->assertOk()
+            ->assertSee('Lake Nasser Cruise')
+            ->assertSee('Legacy Lake Nasser Voyage')
+            ->assertDontSee('Luxor to Aswan Cruise with Abu Simbel');
+    }
+
     public function test_sitemap_includes_nile_cruise_urls(): void
     {
         $response = $this->get(route('website.sitemap'));

@@ -109,7 +109,12 @@ class NileCruiseController extends BaseWebsiteController
             ->where(function ($q) use ($type) {
                 $q->where('nile_cruise_type_id', $type->id)
                   ->orWhere(function ($sub) use ($type) {
-                      $sub->where('package_type', 'nile_cruise');
+                      // Title/slug matching is only a fallback for legacy cruises
+                      // that have not been classified yet. Never let it override an
+                      // explicit type (for example a Luxor–Aswan cruise mentioning
+                      // Abu Simbel must not appear under Lake Nasser).
+                      $sub->where('package_type', 'nile_cruise')
+                          ->whereNull('nile_cruise_type_id');
                       if ($type->slug === 'dahabiya-nile-cruise') {
                           $sub->where(function ($w) {
                               $w->where('title', 'like', '%dahabiya%')
@@ -126,11 +131,8 @@ class NileCruiseController extends BaseWebsiteController
                                 ->orWhere('title', 'like', '%nasser%')
                                 ->orWhere('title', 'like', '%ناصر%')
                                 ->orWhere('title', 'like', '%بحيرة ناصر%')
-                                ->orWhere('title', 'like', '%abu simbel%')
-                                ->orWhere('title', 'like', '%أبو سمبل%')
                                 ->orWhere('slug', 'like', '%nasser%')
-                                ->orWhere('slug', 'like', '%lake-nasser%')
-                                ->orWhere('slug', 'like', '%abu-simbel%');
+                                ->orWhere('slug', 'like', '%lake-nasser%');
                           });
                       }
                   });
@@ -157,7 +159,8 @@ class NileCruiseController extends BaseWebsiteController
                 ->where(function ($q) use ($type) {
                     $q->where('nile_cruise_type_id', $type->id)
                       ->orWhere(function ($sub) use ($type) {
-                          $sub->where('package_type', 'nile_cruise');
+                          $sub->where('package_type', 'nile_cruise')
+                              ->whereNull('nile_cruise_type_id');
                           if ($type->slug === 'dahabiya-nile-cruise') {
                               $sub->where(fn($w) => $w->where('title', 'like', '%dahabiya%')->orWhere('title', 'like', '%دهبية%')->orWhere('slug', 'like', '%dahabiya%'));
                           } elseif ($type->slug === 'lake-nasser-cruise') {

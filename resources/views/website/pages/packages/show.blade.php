@@ -192,9 +192,9 @@
                             <i class="la la-calendar-check"></i> {{ __('Book Now') }}
                         </a>
                     @endif
-                    <a href="#reserve" class="gold-btn d-none d-lg-inline-flex"><i class="la la-envelope"></i>
+                    <a href="#reserve" class="gold-btn hero-enquiry-desktop d-none d-lg-inline-flex"><i class="la la-envelope"></i>
                         {{ $hasBookablePrice ? __('Enquire Now') : __('Submit Enquiry') }}</a>
-                    <a href="#" class="gold-btn d-inline-flex d-lg-none" data-bs-toggle="modal"
+                    <a href="#" class="gold-btn hero-enquiry-mobile d-inline-flex d-lg-none" data-bs-toggle="modal"
                         data-bs-target="#simpleEnquiryModal">
                         <i class="la la-envelope"></i> {{ $hasBookablePrice ? __('Enquire Now') : __('Submit Enquiry') }}
                     </a>
