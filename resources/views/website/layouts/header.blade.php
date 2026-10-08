@@ -59,10 +59,7 @@
                  aria-label="{{ __('Viber') }}" class="mobile-action-btn viber communication-btn">
                  <i class="lab la-viber"></i>
              </a> --}}
-            <a href="https://wa.me/201062217720" target="_blank" rel="noopener noreferrer"
-                aria-label="{{ __('WhatsApp') }}" class="mobile-action-btn whatsapp communication-btn">
-                <i class="lab la-whatsapp"></i>
-            </a>
+            {{-- WhatsApp button is handled by the fixed floating button --}}
         </div>
 
         <!-- Mobile Toggle Button -->

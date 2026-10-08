@@ -260,19 +260,50 @@ body.website-theme-shell .footer .award-image {
 body.website-theme-shell .whatsapp-fixed,
 body.website-theme-shell .floating-whatsapp {
   position: fixed !important;
-  right: 24px !important;
+  right: 20px !important;
   left: auto !important;
-  bottom: 84px !important;
-  z-index: 99999 !important;
-  background: #f36b0a !important;
-  border-color: #f36b0a !important;
+  bottom: 24px !important;
+  width: 58px !important;
+  height: 58px !important;
+  border-radius: 50% !important;
+  background: #25d366 !important;
+  background: linear-gradient(135deg, #25d366, #128c7e) !important;
+  border: none !important;
   color: #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45) !important;
+  z-index: 99999 !important;
+  text-decoration: none !important;
+  overflow: hidden !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+body.website-theme-shell .whatsapp-fixed i,
+body.website-theme-shell .floating-whatsapp i {
+  font-size: 30px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 html[dir=rtl] body.website-theme-shell .whatsapp-fixed,
 html[dir=rtl] body.website-theme-shell .floating-whatsapp {
-  right: 24px !important;
-  left: auto !important;
+  right: auto !important;
+  left: 20px !important;
+}
+
+body.website-theme-shell .whatsapp-fixed:hover,
+body.website-theme-shell .floating-whatsapp:hover {
+  transform: scale(1.1) translateY(-3px) !important;
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6) !important;
+  background: linear-gradient(135deg, #25d366, #128c7e) !important;
+  color: #fff !important;
 }
 
 body.website-theme-shell .communication-btn,
@@ -283,8 +314,6 @@ body.website-theme-shell .viber {
   color: #fff !important;
 }
 
-body.website-theme-shell .whatsapp-fixed:hover,
-body.website-theme-shell .floating-whatsapp:hover,
 body.website-theme-shell .communication-btn:hover,
 body.website-theme-shell .whatsapp:hover,
 body.website-theme-shell .viber:hover {
