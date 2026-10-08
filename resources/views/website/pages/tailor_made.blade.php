@@ -109,7 +109,21 @@
                                             @enderror
                                         </div>
 
-
+                                        <div class="form-group">
+                                            <label class="form-label">{{ __('Country of Residence') }}</label>
+                                            <select class="form-control form-select @error('nationality') error @enderror"
+                                                name="nationality">
+                                                <option value="">{{ __('Select your country') }}</option>
+                                                @foreach ($countries ?? [] as $country)
+                                                    <option value="{{ $country }}" @selected(old('nationality') === $country)>
+                                                        {{ __($country) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('nationality')
+                                                <div class="field-error">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 

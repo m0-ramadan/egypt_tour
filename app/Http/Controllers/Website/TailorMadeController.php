@@ -63,6 +63,7 @@ class TailorMadeController extends BaseWebsiteController
             ],
             'occasionOptions' => $this->occasionOptions(),
             'interestOptions' => $this->interestOptions(),
+            'countries' => \App\Support\CountryList::all(),
         ]);
     }
 
@@ -73,6 +74,7 @@ class TailorMadeController extends BaseWebsiteController
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:50'],
             'nationality' => ['nullable', 'string', 'max:120'],
+            'country_of_residence' => ['nullable', 'string', 'max:120'],
             'start_date' => ['nullable', 'date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
             'days' => ['nullable', 'integer', 'min:1', 'max:60'],
@@ -99,6 +101,7 @@ class TailorMadeController extends BaseWebsiteController
             return back()->with('success', __('Your travel request has been sent successfully. We will contact you shortly.'));
         }
 
+        $country = $validated['nationality'] ?? $validated['country_of_residence'] ?? null;
         $summary = $this->buildInquiryMessage($validated);
 
         $inquiry = Inquiry::create([
@@ -106,7 +109,7 @@ class TailorMadeController extends BaseWebsiteController
             'full_name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'] ?? null,
-            'country_name' => $validated['nationality'] ?? null,
+            'country_name' => $country,
             'travel_date' => $validated['start_date'] ?? null,
             'budget' => $this->extractBudgetValue($validated['budget_max'] ?? null)
                 ?? $this->extractBudgetValue($validated['budget_min'] ?? null),
@@ -122,7 +125,7 @@ class TailorMadeController extends BaseWebsiteController
             'full_name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'] ?? null,
-            'country_of_residence' => $validated['nationality'] ?? null,
+            'country_of_residence' => $country,
             'start_date' => $validated['start_date'] ?? null,
             'end_date' => $validated['end_date'] ?? null,
             'trip_duration' => $validated['days'] ?? null,
@@ -145,7 +148,7 @@ class TailorMadeController extends BaseWebsiteController
             'Name' => $validated['name'],
             'Email' => $validated['email'],
             'Phone' => $validated['phone'] ?? 'N/A',
-            'Nationality' => $validated['nationality'] ?? 'N/A',
+            'Nationality' => $country ?? 'N/A',
             'Start Date' => $validated['start_date'] ?? 'N/A',
             'Duration' => ($validated['days'] ?? 'N/A') . ' days',
             'Adults' => $validated['adults'] ?? 1,
@@ -183,7 +186,7 @@ class TailorMadeController extends BaseWebsiteController
             'Name: ' . $validated['name'],
             'Email: ' . $validated['email'],
             'Phone: ' . ($validated['phone'] ?? '-'),
-            'Country of residence: ' . ($validated['nationality'] ?? '-'),
+            'Country of residence: ' . ($validated['nationality'] ?? $validated['country_of_residence'] ?? '-'),
             'Travel dates: ' . $this->formatTravelDates($validated['start_date'] ?? null, $validated['end_date'] ?? null),
             'Trip duration: ' . (($validated['days'] ?? null) ? $validated['days'] . ' days' : '-'),
             'Accommodation: ' . ($accommodation ?? '-'),
