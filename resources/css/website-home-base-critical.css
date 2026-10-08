@@ -95,6 +95,12 @@ img, svg {
     display: none;
 }
 
+/* Bootstrap owns the open state, but the closed state must exist in the
+ * critical bundle so a menu can never flash open while scripts/CSS settle. */
+.navbar .dropdown-menu:not(.show) {
+    display: none;
+}
+
 @media (min-width: 992px) {
     .d-lg-none { display: none !important; }
     .d-lg-block { display: block !important; }
