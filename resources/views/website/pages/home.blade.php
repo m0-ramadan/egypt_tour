@@ -455,9 +455,25 @@
                                         <div class="deal-price" style="color: #ffffff !important;">{{ $package['price'] }}</div>
                                     @endif
 
+                                    @php
+                                        $packageImage = $package['image'];
+                                        $packageImage768 = preg_replace('/\\.webp$/i', '-768.webp', $packageImage);
+                                        $packageImagePath = parse_url($packageImage768, PHP_URL_PATH);
+                                        $hasPackage768 = $packageImagePath
+                                            && is_file(public_path(ltrim($packageImagePath, '/')));
+                                    @endphp
+
                                     <a href="{{ $package['url'] }}" aria-label="{{ $package['title'] }}">
-                                        <img src="{{ $package['image'] }}" alt="{{ $package['title'] }}"
-                                            width="800" height="500" loading="lazy" decoding="async">
+                                        <picture>
+                                            @if ($hasPackage768)
+                                                <source media="(max-width: 767px)"
+                                                    srcset="{{ $packageImage768 }}">
+                                            @endif
+                                            <img src="{{ $packageImage }}"
+                                                alt="{{ $package['title'] }}"
+                                                width="800" height="500"
+                                                loading="lazy" decoding="async">
+                                        </picture>
                                     </a>
                                 </div>
 
@@ -567,9 +583,24 @@
                                     <img src="{{ asset('website/logo/egypt-tour-pro-light-96.webp') }}"
                                         alt="Egypt Tour Pro" width="96" height="39" loading="lazy" decoding="async">
                                 </div>
+                                @php
+                                    $destinationImage = $destination['image'];
+                                    $destinationImage768 = preg_replace('/\\.webp$/i', '-768.webp', $destinationImage);
+                                    $destinationImagePath = parse_url($destinationImage768, PHP_URL_PATH);
+                                    $hasDestination768 = $destinationImagePath
+                                        && is_file(public_path(ltrim($destinationImagePath, '/')));
+                                @endphp
+
                                 <a href="{{ $destination['url'] }}">
-                                    <img src="{{ $destination['image'] }}" alt="{{ $destination['title'] }}"
-                                        width="800" height="500" loading="lazy" decoding="async">
+                                    <img
+                                        src="{{ $destinationImage }}"
+                                        @if ($hasDestination768)
+                                            srcset="{{ $destinationImage768 }} 768w, {{ $destinationImage }} 1264w"
+                                            sizes="(max-width: 767px) calc(100vw - 30px), (max-width: 1199px) calc(50vw - 24px), 400px"
+                                        @endif
+                                        alt="{{ $destination['title'] }}"
+                                        width="800" height="500"
+                                        loading="lazy" decoding="async">
                                 </a>
                             </div>
 
