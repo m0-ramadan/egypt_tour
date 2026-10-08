@@ -270,7 +270,7 @@
                                     <i class="lab la-instagram"></i>
                                 </a>
 
-                                <a href="https://www.tripadvisor.com/" target="_blank" class="social-link">
+                                <a href="https://www.tripadvisor.com/Attraction_Review-g294205-d34060381-Reviews-Egypt_Tour_Pro-Luxor_Nile_River_Valley.html" target="_blank" class="social-link">
                                     <i class="la la-tripadvisor"></i>
                                 </a>
                             </div>

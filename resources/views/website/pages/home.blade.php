@@ -1,6 +1,6 @@
 @extends('website.layouts.master')
 
-@section('title', __('Home - Egypt Tour Pro'))
+@section('title', __('Egypt Tours & Nile Cruises | Private Egypt Tours | Egypt Tour Pro'))
 @section('description',
     __('Luxury Egypt tours, Nile cruises, private day trips, and tailor-made travel experiences curated by Egypt Tour Pro across Cairo, Luxor, Aswan, and beyond.'))
 @section('keywords',
@@ -202,6 +202,12 @@
                     </p>
                 </div>
 
+                @php
+                    $dtCat = $homeCategories['day_tour'] ?? null;
+                    $tpCat = $homeCategories['travel_package'] ?? null;
+                    $ncCat = $homeCategories['nile_cruise'] ?? null;
+                @endphp
+
                 <div class="cards-grid">
                     {{-- Category 1: Day Tours --}}
                     <div class="deal-card reveal-up">
@@ -212,8 +218,12 @@
                                     width="96" height="39" loading="lazy" decoding="async">
                             </div>
 
-                            <a href="{{ route('website.day_tours.index') }}" aria-label="{{ __('Egypt Day Tours') }}">
-                                @if ($isMobileHome ?? false)
+                            <a href="{{ route('website.day_tours.index') }}" aria-label="{{ $dtCat?->display_name ?: __('Egypt Day Tours') }}">
+                                @if ($dtCat && $dtCat->hasCustomImage())
+                                    <img src="{{ $dtCat->image_url }}" alt="{{ $dtCat->display_name ?: __('Egypt Day Tours') }}"
+                                        width="800" height="500" loading="lazy" decoding="async"
+                                        onerror="this.onerror=null;this.src='{{ asset('website/photos/experiences/day-tours.webp') }}';">
+                                @elseif ($isMobileHome ?? false)
                                     <img src="{{ asset('website/photos/experiences/day-tours-mobile.webp') }}"
                                         alt="{{ __('Egypt Day Tours') }}" width="360" height="240" loading="lazy"
                                         decoding="async">
@@ -238,7 +248,7 @@
 
                         <div class="card-body">
                             <h3 class="deal-title">
-                                <a href="{{ route('website.day_tours.index') }}">{{ __('Egypt Day Tours') }}</a>
+                                <a href="{{ route('website.day_tours.index') }}">{{ $dtCat?->display_name ?: __('Egypt Day Tours') }}</a>
                             </h3>
 
                             <div class="deal-meta">
@@ -248,7 +258,7 @@
                             </div>
 
                             <p class="deal-description">
-                                {{ $categoryDescriptions['day_tours'] }}
+                                {{ $dtCat?->display_description ?: $categoryDescriptions['day_tours'] }}
                             </p>
 
                             <a href="{{ route('website.day_tours.index') }}" class="gold-btn deal-btn mt-auto">
@@ -268,8 +278,12 @@
                             </div>
 
                             <a href="{{ route('website.travel_packages.index') }}"
-                                aria-label="{{ __('Egypt Tour Packages') }}">
-                                @if ($isMobileHome ?? false)
+                                aria-label="{{ $tpCat?->display_name ?: __('Egypt Tour Packages') }}">
+                                @if ($tpCat && $tpCat->hasCustomImage())
+                                    <img src="{{ $tpCat->image_url }}" alt="{{ $tpCat->display_name ?: __('Egypt Tour Packages') }}"
+                                        width="800" height="500" loading="lazy" decoding="async"
+                                        onerror="this.onerror=null;this.src='{{ asset('website/photos/experiences/travel-packages.webp') }}';">
+                                @elseif ($isMobileHome ?? false)
                                     <img src="{{ asset('website/photos/experiences/travel-packages-mobile.webp') }}"
                                         alt="{{ __('Egypt Tour Packages') }}" width="360" height="240" loading="lazy"
                                         decoding="async">
@@ -294,7 +308,7 @@
 
                         <div class="card-body">
                             <h3 class="deal-title">
-                                <a href="{{ route('website.travel_packages.index') }}">{{ __('Egypt Tour Packages') }}</a>
+                                <a href="{{ route('website.travel_packages.index') }}">{{ $tpCat?->display_name ?: __('Egypt Tour Packages') }}</a>
                             </h3>
 
                             <div class="deal-meta">
@@ -304,7 +318,7 @@
                             </div>
 
                             <p class="deal-description">
-                                {{ $categoryDescriptions['travel_packages'] }}
+                                {{ $tpCat?->display_description ?: $categoryDescriptions['travel_packages'] }}
                             </p>
 
                             <a href="{{ route('website.travel_packages.index') }}" class="gold-btn deal-btn mt-auto">
@@ -324,8 +338,12 @@
                             </div>
 
                             <a href="{{ route('website.nile_cruises.index') }}"
-                                aria-label="{{ __('Egypt Nile Cruise') }}">
-                                @if ($isMobileHome ?? false)
+                                aria-label="{{ $ncCat?->display_name ?: __('Egypt Nile Cruise') }}">
+                                @if ($ncCat && $ncCat->hasCustomImage())
+                                    <img src="{{ $ncCat->image_url }}" alt="{{ $ncCat->display_name ?: __('Egypt Nile Cruise') }}"
+                                        width="800" height="500" loading="lazy" decoding="async"
+                                        onerror="this.onerror=null;this.src='{{ asset('website/photos/experiences/nile-cruises.webp') }}';">
+                                @elseif ($isMobileHome ?? false)
                                     <img src="{{ asset('website/photos/experiences/nile-cruises-mobile.webp') }}"
                                         alt="{{ __('Egypt Nile Cruise') }}" width="360" height="240" loading="lazy"
                                         decoding="async">
@@ -350,7 +368,7 @@
 
                         <div class="card-body">
                             <h3 class="deal-title">
-                                <a href="{{ route('website.nile_cruises.index') }}">{{ __('Egypt Nile Cruise') }}</a>
+                                <a href="{{ route('website.nile_cruises.index') }}">{{ $ncCat?->display_name ?: __('Egypt Nile Cruise') }}</a>
                             </h3>
 
                             <div class="deal-meta">
@@ -360,7 +378,7 @@
                             </div>
 
                             <p class="deal-description">
-                                {{ $categoryDescriptions['nile_cruises'] }}
+                                {{ $ncCat?->display_description ?: $categoryDescriptions['nile_cruises'] }}
                             </p>
 
                             <a href="{{ route('website.nile_cruises.index') }}" class="gold-btn deal-btn mt-auto">
@@ -683,7 +701,7 @@
                 <div class="testimonials-dots" id="testimonialsDots"></div>
 
                 <div class="text-center mt-4 reveal-up">
-                    <a href="https://www.tripadvisor.com" target="_blank" rel="noopener noreferrer" class="gold-btn">
+                    <a href="https://www.tripadvisor.com/Attraction_Review-g294205-d34060381-Reviews-Egypt_Tour_Pro-Luxor_Nile_River_Valley.html" target="_blank" rel="noopener noreferrer" class="gold-btn">
                         <i class="la la-external-link"></i>
                         {{ __('Read All Reviews on TripAdvisor') }}
                     </a>

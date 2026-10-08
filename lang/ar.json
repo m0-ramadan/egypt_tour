@@ -1,6 +1,6 @@
 {
     "Nile Cruises": "رحلات النيل",
-    "Nile Cruise": "رحلات نيلية",
+    "Nile Cruise": "رحلة نيلية",
     "Most Popular Egypt Tours & Cruises": "أشهر الرحلات والجولات في مصر",
     "View All Packages & Tours": "عرض جميع الباقات والرحلات",
     "-- Select Branch --": "-- اختر الفرع --",
@@ -336,6 +336,7 @@
     "hero preview": "معاينة صورة الهيرو",
     "Home": "الرئيسية",
     "Home - Egypt Tour Pro": "الرئيسية - إيجيبت تور برو",
+    "Egypt Tours & Nile Cruises | Private Egypt Tours | Egypt Tour Pro": "رحلات مصر وكروز النيل | جولات خاصة في مصر | إيجيبت تور برو",
     "Home - Etro Tours": "الرئيسية - إيجيبت تور برو",
     "Honeymoon": "شهر العسل",
     "Hours": "ساعات",
@@ -438,7 +439,6 @@
     "New Path": "المسار الجديد",
     "Newsletter": "النشرة البريدية",
     "Next": "التالي",
-    "Nile Cruise": "رحلة نيلية",
     "Nile River Cruise": "رحلة نيلية",
     "No active articles found.": "لا توجد مقالات نشطة.",
     "No active destinations found. Add active cities from the admin panel.": "لا توجد وجهات نشطة. أضف مدنًا نشطة من لوحة الإدارة.",
@@ -2386,5 +2386,7 @@
     "(128 reviews)": "(128 تقييمًا)",
     "Sail the timeless Nile, visit iconic temples, and enjoy unforgettable views.": "أبحر في النيل الخالد، وزُر المعابد الشهيرة، واستمتع بإطلالات لا تُنسى.",
     "4 Days": "4 أيام",
-    "From $499": "ابتداءً من 499 دولارًا"
+    "From $499": "ابتداءً من 499 دولارًا",
+    "Copyright © :year Egypt Tour Pro. All rights reserved.": "حقوق النشر © :year Egypt Tour Pro. جميع الحقوق محفوظة.",
+    "Made by": "صنع بواسطة"
 }

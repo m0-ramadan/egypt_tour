@@ -258,22 +258,24 @@ body.website-theme-shell .footer .award-image {
 }
 
 body.website-theme-shell .whatsapp-fixed,
-body.website-theme-shell .floating-whatsapp {
+body.website-theme-shell .floating-whatsapp,
+.whatsapp-fixed,
+.floating-whatsapp {
   position: fixed !important;
-  right: 20px !important;
+  right: 24px !important;
   left: auto !important;
-  bottom: 24px !important;
+  bottom: 84px !important;
   width: 58px !important;
   height: 58px !important;
   border-radius: 50% !important;
-  background: #25d366 !important;
-  background: linear-gradient(135deg, #25d366, #128c7e) !important;
+  background: #f36b0a !important;
+  background: linear-gradient(135deg, #f36b0a, #ff861c) !important;
   border: none !important;
   color: #fff !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45) !important;
+  box-shadow: 0 8px 25px rgba(243, 107, 10, 0.45) !important;
   z-index: 99999 !important;
   text-decoration: none !important;
   overflow: hidden !important;
@@ -281,8 +283,10 @@ body.website-theme-shell .floating-whatsapp {
 }
 
 body.website-theme-shell .whatsapp-fixed i,
-body.website-theme-shell .floating-whatsapp i {
-  font-size: 30px !important;
+body.website-theme-shell .floating-whatsapp i,
+.whatsapp-fixed i,
+.floating-whatsapp i {
+  font-size: 32px !important;
   line-height: 1 !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -293,16 +297,21 @@ body.website-theme-shell .floating-whatsapp i {
 }
 
 html[dir=rtl] body.website-theme-shell .whatsapp-fixed,
-html[dir=rtl] body.website-theme-shell .floating-whatsapp {
+html[dir=rtl] body.website-theme-shell .floating-whatsapp,
+html[dir=rtl] .whatsapp-fixed,
+html[dir=rtl] .floating-whatsapp {
   right: auto !important;
-  left: 20px !important;
+  left: 24px !important;
 }
 
 body.website-theme-shell .whatsapp-fixed:hover,
-body.website-theme-shell .floating-whatsapp:hover {
-  transform: scale(1.1) translateY(-3px) !important;
-  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6) !important;
-  background: linear-gradient(135deg, #25d366, #128c7e) !important;
+body.website-theme-shell .floating-whatsapp:hover,
+.whatsapp-fixed:hover,
+.floating-whatsapp:hover {
+  transform: scale(1.08) translateY(-3px) !important;
+  box-shadow: 0 12px 28px rgba(243, 107, 10, 0.6) !important;
+  background: #d95600 !important;
+  background: linear-gradient(135deg, #d95600, #f36b0a) !important;
   color: #fff !important;
 }
 

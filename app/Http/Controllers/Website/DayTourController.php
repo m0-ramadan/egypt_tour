@@ -95,8 +95,15 @@ class DayTourController extends BaseWebsiteController
             ->withCount(['packages' => fn($q) => $q->where('is_active', true)->whereIn('package_type', ['day_tour', 'shore_excursion'])])
             ->pluck('packages_count', 'slug');
 
+        $dayTourSlugs = collect($destinationCards)->map(fn($c) => [$c['city_slug'], $c['city_slug'] . '-tours'])->flatten()->all();
+        $dbDayCategories = \App\Models\PackageCategory::whereIn('slug', $dayTourSlugs)->get()->keyBy('slug');
+
         foreach ($destinationCards as &$card) {
             $card['count'] = (int) ($cityCounts[$card['city_slug']] ?? 0);
+            $catModel = $dbDayCategories->get($card['city_slug'] . '-tours') ?? $dbDayCategories->get($card['city_slug']);
+            if ($catModel && $catModel->hasCustomImage()) {
+                $card['image'] = $catModel->image_url;
+            }
         }
         unset($card);
 

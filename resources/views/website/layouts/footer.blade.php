@@ -81,16 +81,18 @@
                         <span class="award-badge">2026</span>
                     </div>
                     <div class="award-image-container">
-
-                        <img loading="lazy" decoding="async" width="320" height="320"
-                            src="{{ asset('website/photos/google-reviews-badge-320.webp') }}"
-                            alt="{{ __('Google Reviews Rating') }}" class="award-image"
-                            style="border-radius: 12px; max-width: 160px; margin: 0 auto; display: block;">
+                        <a href="https://www.tripadvisor.com/Attraction_Review-g294205-d34060381-Reviews-Egypt_Tour_Pro-Luxor_Nile_River_Valley.html"
+                            target="_blank" rel="noopener noreferrer" aria-label="{{ __('Tripadvisor 2026 Travelers\' Choice Award') }}">
+                            <img loading="lazy" decoding="async" width="140" height="143"
+                                src="{{ asset('website/photos/tripadvisor/TA2026-320.webp') }}"
+                                alt="{{ __('Tripadvisor 2026 Travelers\' Choice Award') }}" class="award-image"
+                                style="border-radius: 14px; max-width: 140px; margin: 0 auto; display: block; background: #ffffff; padding: 10px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);">
+                        </a>
                         <div class="award-glow"></div>
                     </div>
                     <div class="award-content">
                         <h3 class="award-title">
-                            <a href="#" target="_blank" rel="noopener noreferrer">
+                            <a href="https://www.tripadvisor.com/Attraction_Review-g294205-d34060381-Reviews-Egypt_Tour_Pro-Luxor_Nile_River_Valley.html" target="_blank" rel="noopener noreferrer">
                                 {{ __('Travelers\' Choice Award') }}
                             </a>
                         </h3>
@@ -140,7 +142,7 @@
                                     rel="noopener noreferrer" aria-label="{{ __('Instagram') }}"
                                     style="color: #fff; font-size: 1.5rem; transition: all 0.3s ease;"><i
                                         class="lab la-instagram"></i></a></li>
-                            <li><a href="https://www.tripadvisor.com/" target="_blank" rel="noopener noreferrer"
+                            <li><a href="https://www.tripadvisor.com/Attraction_Review-g294205-d34060381-Reviews-Egypt_Tour_Pro-Luxor_Nile_River_Valley.html" target="_blank" rel="noopener noreferrer"
                                     aria-label="{{ __('TripAdvisor') }}"
                                     style="color: #fff; font-size: 1.5rem; transition: all 0.3s ease;"><i
                                         class="la la-tripadvisor"></i></a></li>
@@ -154,10 +156,12 @@
             style="border-top: 1px solid rgba(243, 107, 10, 0.16); padding-top: 25px; margin-top: 25px;">
             <div class="row align-items-center">
                 <div class="col-lg-7">
-                    <p style="margin: 0; opacity: 0.8; font-size: 0.95rem;">
-                        {{ __('© :year Copyright to', ['year' => now()->year]) }}
-                        <a href="{{ config('ownership.developer.url') }}" target="_blank" rel="noopener noreferrer"
-                            style="font-weight: 700; color: var(--etp-orange-500); text-decoration: none;">{{ config('ownership.developer.name') }}</a>
+                    <p style="margin: 0; opacity: 0.85; font-size: 0.95rem;">
+                        {{ __('Copyright © :year Egypt Tour Pro. All rights reserved.', ['year' => now()->year]) }}
+                        <span style="margin: 0 8px; opacity: 0.5;">|</span>
+                        <span>{{ __('Made by') }}</span>
+                        <a href="{{ config('ownership.developer.url', 'https://ezycode.dev/') }}" target="_blank" rel="noopener noreferrer"
+                            style="font-weight: 700; color: var(--etp-orange-500); text-decoration: none;">{{ config('ownership.developer.name', 'EZYCODE') }}</a>
                     </p>
                 </div>
                 <div class="col-lg-5">

@@ -109,6 +109,33 @@ class PackageCategory extends Model
         return $this->translatedValue('seo_description');
     }
 
+    public function scopeMain($query)
+    {
+        return $query->whereNull('parent_id');
+    }
+
+    public function scopeSubcategories($query)
+    {
+        return $query->whereNotNull('parent_id');
+    }
+
+    public function hasCustomImage(): bool
+    {
+        if (empty($this->image)) {
+            return false;
+        }
+
+        if (str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://')) {
+            return true;
+        }
+
+        $clean = ltrim(preg_replace('#^storage/#', '', $this->image), '/');
+
+        return file_exists(public_path('storage/' . $clean))
+            || file_exists(public_path($this->image))
+            || \Illuminate\Support\Facades\Storage::disk('public')->exists($clean);
+    }
+
     public function getImageUrlAttribute(): string
     {
         if ($this->image) {
@@ -118,12 +145,23 @@ class PackageCategory extends Model
             if (str_starts_with($this->image, 'storage/')) {
                 return asset($this->image);
             }
-            if (file_exists(public_path('storage/' . $this->image))) {
-                return asset('storage/' . $this->image);
+            $clean = ltrim($this->image, '/');
+            if (file_exists(public_path('storage/' . $clean)) || \Illuminate\Support\Facades\Storage::disk('public')->exists($clean)) {
+                return asset('storage/' . $clean);
             }
-            return asset($this->image);
+            if (file_exists(public_path($clean))) {
+                return asset($clean);
+            }
+            return asset('storage/' . $clean);
         }
 
-        return asset('website/photos/home2.webp');
+        return match ($this->category_type) {
+            'day_tour' => asset('website/photos/experiences/day-tours.webp'),
+            'travel_package' => asset('website/photos/experiences/travel-packages.webp'),
+            'nile_cruise' => asset('website/photos/experiences/nile-cruises.webp'),
+            'shore_excursion' => asset('website/photos/experiences/day-tours.webp'),
+            default => asset('website/photos/home2.webp'),
+        };
     }
 }
+

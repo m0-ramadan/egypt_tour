@@ -125,13 +125,25 @@ class HomeController extends BaseWebsiteController
                 'nile_cruises' => $this->shortText(__('Sail timeless waters between Luxor and Aswan aboard five-star ships, boutique Dahabiyas, and Lake Nasser floating palaces with world-class dining and guided temple visits.'), $categoryDescriptionLimit),
             ];
 
+            $mainCategoriesQuery = \App\Models\PackageCategory::query()
+                ->where('is_active', true)
+                ->whereNull('parent_id')
+                ->get();
+
+            $homeCategories = [
+                'day_tour' => $mainCategoriesQuery->firstWhere('category_type', 'day_tour'),
+                'travel_package' => $mainCategoriesQuery->firstWhere('category_type', 'travel_package'),
+                'nile_cruise' => $mainCategoriesQuery->firstWhere('category_type', 'nile_cruise'),
+            ];
+
             return compact(
                 'featuredPackages',
                 'destinations',
                 'latestArticles',
                 'testimonials',
                 'customHeroHome',
-                'categoryDescriptions'
+                'categoryDescriptions',
+                'homeCategories'
             );
         });
 
