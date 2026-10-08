@@ -39,6 +39,10 @@
     @endif
 @endsection
 
+@section('js')
+    <script src="{{ asset('website/js/home-section-layout.js') }}" defer></script>
+@endsection
+
 @section('content')
     <div class="tour-page">
 
@@ -182,7 +186,7 @@
         </section>
 
         {{-- 3. Signature Egypt Experiences (Categories) --}}
-        <section id="deals" class="section-pad cream-section">
+        <section id="deals" class="section-pad cream-section" data-home-lazy-section>
             <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">
@@ -367,7 +371,7 @@
         </section>
 
         {{-- 4. Why Choose Us Section --}}
-        <section class="section-pad" id="why-choose-us">
+        <section class="section-pad" id="why-choose-us" data-home-lazy-section>
             <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">
@@ -418,7 +422,7 @@
 
         {{-- 5. Featured Tours & Packages --}}
         @if ($featuredPackages->isNotEmpty())
-            <section class="section-pad" id="featured-packages">
+            <section class="section-pad" id="featured-packages" data-home-lazy-section>
                 <div class="container">
                     <div class="section-heading reveal-up">
                         <div class="section-kicker">
@@ -503,7 +507,7 @@
         @endif
 
         {{-- 6. Custom Itinerary Planner Banner --}}
-        <section class="quote-section" id="quote">
+        <section class="quote-section" id="quote" data-home-lazy-section>
             <div class="container">
                 <div class="quote-card reveal-up">
                     <h2 class="quote-title">{{ __('Need Help Planning Your Trip?') }}</h2>
@@ -539,7 +543,7 @@
         </section>
 
         {{-- 7. Destinations Section --}}
-        <section class="section-pad light-section" id="destinations">
+        <section class="section-pad light-section" id="destinations" data-home-lazy-section>
             <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">
@@ -602,7 +606,7 @@
         </section>
 
         {{-- 8. Testimonials Section --}}
-        <section class="section-pad light-section" id="testimonials">
+        <section class="section-pad light-section" id="testimonials" data-home-lazy-section>
             <div class="container">
                 <div class="section-heading reveal-up">
                     <div class="section-kicker">

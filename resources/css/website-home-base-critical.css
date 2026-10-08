@@ -103,6 +103,26 @@ img, svg {
     .navbar-expand-lg .navbar-collapse { display: flex !important; flex-basis: auto; }
 }
 
+/* Mobile deep sections reserve their measured geometry without laying out
+ * hundreds of off-screen descendants during the critical loading window. */
+@media (max-width: 767px) {
+    .home-reference-page [data-home-lazy-section]:not(.is-layout-visible) {
+        content-visibility: hidden;
+        contain: layout style paint;
+    }
+
+    .home-reference-page [data-home-lazy-section].is-layout-visible {
+        content-visibility: auto;
+    }
+
+    .home-reference-page #deals { contain-intrinsic-size: auto 2113px; }
+    .home-reference-page #why-choose-us { contain-intrinsic-size: auto 869px; }
+    .home-reference-page #featured-packages { contain-intrinsic-size: auto 2186px; }
+    .home-reference-page #quote { contain-intrinsic-size: auto 890px; }
+    .home-reference-page #destinations { contain-intrinsic-size: auto 1934px; }
+    .home-reference-page #testimonials { contain-intrinsic-size: auto 907px; }
+}
+
 /* Line Awesome Font-Face definitions. Icon rules are imported by the entry
  * bundle before all declarations so browsers do not discard the import. */
 @font-face {
