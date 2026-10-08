@@ -1,0 +1,139 @@
+/* Critical Base Reboot & Layout Primitives for Homepage Above-The-Fold */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body, "Inter", system-ui, -apple-system, sans-serif);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+img, svg {
+    vertical-align: middle;
+    max-width: 100%;
+}
+
+/* Responsive Container */
+.container, .container-fluid {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 0.75rem;
+}
+
+@media (min-width: 576px) { .container { max-width: 540px; } }
+@media (min-width: 768px) { .container { max-width: 720px; } }
+@media (min-width: 992px) { .container { max-width: 960px; } }
+@media (min-width: 1200px) { .container { max-width: 1140px; } }
+@media (min-width: 1400px) { .container { max-width: 1320px; } }
+
+/* Critical Utility Classes for Above-the-fold Header & Hero */
+.d-none { display: none !important; }
+.d-flex { display: flex !important; }
+.align-items-center { align-items: center !important; }
+.justify-content-between { justify-content: space-between !important; }
+.w-100 { width: 100% !important; }
+.mx-auto { margin-inline: auto !important; }
+
+/* Navbar Layout primitives */
+.navbar, .navbar > .container, .navbar-nav, .navbar-actions {
+    display: flex;
+    align-items: center;
+}
+
+/* Match the deferred navigation geometry before its stylesheet activates.
+ * Without this, the navbar starts in normal flow and later becomes fixed,
+ * moving the entire homepage upward after the first paint. */
+.navbar {
+    position: fixed;
+    inset: 0 0 auto;
+    width: 100%;
+    z-index: 1001;
+}
+
+.navbar > .container {
+    justify-content: space-between;
+}
+
+/* Bootstrap adds this when the deferred base bundle activates. Reserve it in
+ * the first paint so the mobile action group keeps the same x-position. */
+.navbar-brand {
+    margin-right: 1rem;
+}
+
+.navbar-nav {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.collapse:not(.show) {
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .d-lg-none { display: none !important; }
+    .d-lg-block { display: block !important; }
+    .d-lg-flex { display: flex !important; }
+    .navbar-expand-lg { flex-wrap: nowrap; justify-content: flex-start; }
+    .navbar-expand-lg .navbar-collapse { display: flex !important; flex-basis: auto; }
+}
+
+/* Line Awesome Font-Face definitions. Icon rules are imported by the entry
+ * bundle before all declarations so browsers do not discard the import. */
+@font-face {
+    font-family: 'Line Awesome Brands';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/website/fonts/website/la-brands-subset.woff2) format("woff2");
+}
+
+@font-face {
+    font-family: 'Line Awesome Free';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/website/fonts/website/la-regular-subset.woff2) format("woff2");
+}
+
+@font-face {
+    font-family: 'Line Awesome Free';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url(/website/fonts/website/la-solid-subset.woff2) format("woff2");
+}
+
+.is-navigation-card {
+    cursor: pointer;
+}
+
+.is-navigation-card:focus-visible {
+    outline: 3px solid var(--etp-orange-500, #f36b0a);
+    outline-offset: 4px;
+}
