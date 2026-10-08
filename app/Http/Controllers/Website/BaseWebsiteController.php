@@ -241,6 +241,9 @@ abstract class BaseWebsiteController extends Controller
             $highlights = $this->localizedTagNames($package->tags, $tagLimit);
         }
 
+        $image = $this->getPackageImage($package);
+        $responsiveImage = $this->homePackageResponsiveImage($image);
+
         return [
             'id' => $package->id,
             'slug' => $package->slug,
@@ -250,7 +253,8 @@ abstract class BaseWebsiteController extends Controller
                 $package->getRawOriginal('short_description') ?: $package->getRawOriginal('description'),
                 $descriptionLimit
             ),
-            'image' => $this->getPackageImage($package),
+            'image' => $image,
+            'image_avif_srcset' => $responsiveImage['srcset'],
             'price' => $this->packagePrice($package),
             'duration' => $this->packageDuration($package),
             'tour_type' => $this->packageTourTypeLabel($package),
@@ -260,6 +264,27 @@ abstract class BaseWebsiteController extends Controller
             'is_featured' => (bool) $package->is_featured,
             'url' => $this->packageRoute($package),
             'tags' => $highlights,
+        ];
+    }
+
+    private function homePackageResponsiveImage(string $image): array
+    {
+        $path = parse_url($image, PHP_URL_PATH) ?: '';
+        $filename = pathinfo($path, PATHINFO_FILENAME);
+        if ($filename === '') {
+            return ['srcset' => null];
+        }
+
+        $relativeDirectory = 'website/photos/packages-responsive';
+        $small = $relativeDirectory . '/' . $filename . '-480.avif';
+        $large = $relativeDirectory . '/' . $filename . '-800.avif';
+
+        if (!is_file(public_path($small)) || !is_file(public_path($large))) {
+            return ['srcset' => null];
+        }
+
+        return [
+            'srcset' => asset($small) . ' 480w, ' . asset($large) . ' 800w',
         ];
     }
 

@@ -455,8 +455,14 @@
                                     @endif
 
                                     <a href="{{ $package['url'] }}" aria-label="{{ $package['title'] }}">
-                                        <img src="{{ $package['image'] }}" alt="{{ $package['title'] }}"
-                                            width="800" height="500" loading="lazy" decoding="async">
+                                        <picture>
+                                            @if (!empty($package['image_avif_srcset']))
+                                                <source type="image/avif" srcset="{{ $package['image_avif_srcset'] }}"
+                                                    sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) 50vw, 33vw">
+                                            @endif
+                                            <img src="{{ $package['image'] }}" alt="{{ $package['title'] }}"
+                                                width="800" height="500" loading="lazy" decoding="async">
+                                        </picture>
                                     </a>
                                 </div>
 
