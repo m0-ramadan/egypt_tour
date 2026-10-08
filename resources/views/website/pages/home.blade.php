@@ -55,7 +55,7 @@
                     @else
                         <source media="(max-width: 767px)" type="image/avif"
                             srcset="{{ asset('website/photos/optimized/home-hero-mobile-brand-744.avif') }}">
-                        <source type="image/webp"
+                        <source media="(min-width: 768px)" type="image/webp"
                             srcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
                             sizes="100vw">
                     @endif
