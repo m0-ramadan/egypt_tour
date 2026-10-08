@@ -129,12 +129,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @hasSection('lcp_preload')
-        @yield('lcp_preload')
-    @endif
-    <link rel="preload" href="{{ asset('website/fonts/website/la-solid-subset.woff2') }}" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="{{ asset('website/fonts/website/la-regular-subset.woff2') }}" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="{{ asset('website/fonts/website/la-brands-subset.woff2') }}" as="font" type="font/woff2" crossorigin>
     <meta name="theme-color" content="{{ $brandThemeColor }}" data-theme-color-meta>
     <title>{{ $pageTitle }}</title>
     <link rel="canonical" href="{{ $pageCanonical }}">
@@ -166,7 +160,6 @@
     <meta name="twitter:description" content="{{ $twitterDescription }}">
     <meta name="twitter:image" content="{{ $twitterImage }}">
 
-    {{-- Temporarily commented out Google Tag Manager for testing
     <!-- Google Tag Manager -->
     @if (request()->routeIs('website.home'))
         <script>
@@ -222,7 +215,6 @@
         </script>
     @endif
     <!-- End Google Tag Manager -->
-    --}}
     @hasSection('published_time')
         <meta property="article:published_time" content="@yield('published_time')">
     @endif
@@ -261,12 +253,11 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
 
+    @hasSection('lcp_preload')
+        @yield('lcp_preload')
+    @endif
     @hasSection('home_style_bundle')
         @vite('resources/css/website-home-entry.css')
-        <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}" media="none" onload="this.media='all'">
-        <noscript>
-            <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}">
-        </noscript>
     @else
         <link rel="preload" href="{{ asset('website/fonts/website/inter-latin-variable.woff2') }}" as="font"
             type="font/woff2" crossorigin>
@@ -282,12 +273,10 @@
 <body
     class="website-theme-shell {{ app()->getLocale() === 'ar' ? 'website-rtl' : 'website-ltr' }}{{ $bodyClass !== '' ? ' ' . $bodyClass : '' }}">
 
-    {{-- Temporarily commented out Google Tag Manager (noscript) for testing
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8XJ3D9D" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    --}}
 
     <a class="skip-to-content" href="#main-content">{{ __('Skip to main content') }}</a>
     @include('website.layouts.header')
