@@ -2,7 +2,8 @@
 
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}"
-    data-theme="@yield('preferred_theme', 'light')">
+    data-theme="@yield('preferred_theme', 'light')"
+    class="{{ $__env->hasSection('home_style_bundle') ? 'home-css-pending' : '' }}">
 
 <head>
     @php
@@ -262,11 +263,17 @@
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
 
     @hasSection('home_style_bundle')
+        <style>
+            /* Never expose an intermediate homepage layout during a hard reload.
+             * The class is removed by the final stylesheet's load event below. */
+            html.home-css-pending body { visibility: hidden; }
+            html.home-css-pending { background: #111; }
+            .navbar .dropdown-menu:not(.show) { display: none; }
+        </style>
         @vite('resources/css/website-home-entry.css')
-        <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}" media="none" onload="this.media='all'">
-        <noscript>
-            <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}">
-        </noscript>
+        <link rel="stylesheet" href="{{ Vite::asset('resources/css/website-home-deferred.css') }}"
+            onload="document.documentElement.classList.remove('home-css-pending')">
+        <noscript><style>html.home-css-pending body { visibility: visible; }</style></noscript>
     @else
         <link rel="preload" href="{{ asset('website/fonts/website/inter-latin-variable.woff2') }}" as="font"
             type="font/woff2" crossorigin>

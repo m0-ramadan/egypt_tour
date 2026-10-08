@@ -32,7 +32,7 @@ class HomeController extends BaseWebsiteController
         $packageTagLimit = $isMobileHome ? 2 : 4;
 
         $cacheVersion = (int) Cache::get('website.home.version', 1);
-        $cacheKey = 'website.home.v6.' . app()->getLocale() . '.' . $profile . '.' . $cacheVersion;
+        $cacheKey = 'website.home.v7.' . app()->getLocale() . '.' . $profile . '.' . $cacheVersion;
 
         $data = Cache::remember($cacheKey, now()->addHour(), function () use (
             $websiteDestinationService,

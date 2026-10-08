@@ -15,7 +15,7 @@
     $defaultHeroBg =
         $isMobileHome ?? false
             ? asset('website/photos/optimized/home-hero-mobile-brand-744.avif')
-            : asset('website/photos/optimized/home-pyramids-desktop-1280.webp');
+            : asset('website/photos/optimized/home-pyramids-desktop-1280.avif');
     $heroHomeBg = $customHeroHome ? asset($customHeroHome) : $defaultHeroBg;
     $heroWidth = $isMobileHome ?? false ? 744 : 1280;
     $heroHeight = $isMobileHome ?? false ? 1000 : 720;
@@ -29,9 +29,9 @@
             href="{{ asset('website/photos/optimized/home-hero-mobile-brand-744.avif') }}"
             fetchpriority="high">
     @else
-        <link rel="preload" as="image" type="image/webp"
-            href="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }}"
-            imagesrcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
+        <link rel="preload" as="image" type="image/avif"
+            href="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.avif') }}"
+            imagesrcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.avif') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.avif') }} 1677w"
             imagesizes="100vw" media="(min-width: 768px)" fetchpriority="high">
         <link rel="preload" as="image" type="image/avif"
             href="{{ asset('website/photos/optimized/home-hero-mobile-brand-744.avif') }}"
@@ -55,7 +55,10 @@
                     @else
                         <source media="(max-width: 767px)" type="image/avif"
                             srcset="{{ asset('website/photos/optimized/home-hero-mobile-brand-744.avif') }}">
-                        <source type="image/webp"
+                        <source media="(min-width: 768px)" type="image/avif"
+                            srcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.avif') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.avif') }} 1677w"
+                            sizes="100vw">
+                        <source media="(min-width: 768px)" type="image/webp"
                             srcset="{{ asset('website/photos/optimized/home-pyramids-desktop-1280.webp') }} 1280w, {{ asset('website/photos/optimized/home-pyramids-desktop-1677.webp') }} 1677w"
                             sizes="100vw">
                     @endif
@@ -452,8 +455,14 @@
                                     @endif
 
                                     <a href="{{ $package['url'] }}" aria-label="{{ $package['title'] }}">
-                                        <img src="{{ $package['image'] }}" alt="{{ $package['title'] }}"
-                                            width="800" height="500" loading="lazy" decoding="async">
+                                        <picture>
+                                            @if (!empty($package['image_avif_srcset']))
+                                                <source type="image/avif" srcset="{{ $package['image_avif_srcset'] }}"
+                                                    sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1199px) 50vw, 33vw">
+                                            @endif
+                                            <img src="{{ $package['image'] }}" alt="{{ $package['title'] }}"
+                                                width="800" height="500" loading="lazy" decoding="async">
+                                        </picture>
                                     </a>
                                 </div>
 
