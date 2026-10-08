@@ -39,18 +39,35 @@ class PackageCategoriesSeeder extends Seeder
 
         $mainCategoryModels = [];
         foreach ($mainCategories as $type => $data) {
-            $mainCategoryModels[$type] = PackageCategory::updateOrCreate(
-                ['slug' => $data['slug']],
-                [
+            $existing = PackageCategory::where('category_type', $data['category_type'])
+                ->whereNull('parent_id')
+                ->first()
+                ?? PackageCategory::where('slug', $data['slug'])->first();
+
+            if ($existing) {
+                $existing->update([
                     'parent_id' => null,
                     'name' => $data['name'],
+                    'slug' => $data['slug'],
                     'category_type' => $data['category_type'],
                     'description' => $data['description'],
                     'icon' => $data['icon'],
                     'is_active' => true,
                     'sort_order' => $data['sort_order'],
-                ]
-            );
+                ]);
+                $mainCategoryModels[$type] = $existing;
+            } else {
+                $mainCategoryModels[$type] = PackageCategory::create([
+                    'parent_id' => null,
+                    'name' => $data['name'],
+                    'slug' => $data['slug'],
+                    'category_type' => $data['category_type'],
+                    'description' => $data['description'],
+                    'icon' => $data['icon'],
+                    'is_active' => true,
+                    'sort_order' => $data['sort_order'],
+                ]);
+            }
         }
 
         // 2. Subcategories for Day Tours

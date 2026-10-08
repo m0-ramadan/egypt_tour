@@ -75,7 +75,7 @@ class PackageCategoryController extends Controller
         $data['sort_order'] = $data['sort_order'] ?? 0;
 
         PackageCategory::create($data);
-        \Illuminate\Support\Facades\Cache::flush();
+        $this->clearCategoryCache();
 
         return $this->success('admin.package-categories.index', 'Package category created successfully.');
     }
@@ -83,9 +83,7 @@ class PackageCategoryController extends Controller
     public function toggleStatus(PackageCategory $packageCategory): RedirectResponse
     {
         $packageCategory->update(['is_active' => !(bool) $packageCategory->is_active]);
-        \Illuminate\Support\Facades\Cache::forget('active_package_categories');
-        \Illuminate\Support\Facades\Cache::forget('website_categories');
-        \Illuminate\Support\Facades\Cache::flush();
+        $this->clearCategoryCache();
 
         return back()->with('success', 'Category status updated successfully.');
     }
@@ -149,6 +147,8 @@ class PackageCategoryController extends Controller
             $this->deletePublicFile($oldImage);
         }
 
+        $this->clearCategoryCache();
+
         return $this->success('admin.package-categories.index', 'تم تحديث تصنيف الباقات بنجاح.');
     }
 
@@ -166,8 +166,18 @@ class PackageCategoryController extends Controller
         });
 
         $this->deletePublicFile($image);
+        $this->clearCategoryCache();
 
         return $this->success('admin.package-categories.index', 'تم حذف التصنيف بنجاح دون حذف الباقات المرتبطة.');
+    }
+
+    private function clearCategoryCache(): void
+    {
+        \Illuminate\Support\Facades\Cache::forget('active_package_categories');
+        \Illuminate\Support\Facades\Cache::forget('website_categories');
+        \Illuminate\Support\Facades\Cache::forget('website_all_package_categories');
+        \Illuminate\Support\Facades\Cache::increment('website.home.version');
+        \Illuminate\Support\Facades\Cache::flush();
     }
 
     private function validatedData(Request $request, ?PackageCategory $category = null): array

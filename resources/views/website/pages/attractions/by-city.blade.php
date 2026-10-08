@@ -80,7 +80,7 @@
                 <div class="text-center py-5">
                     <i class="la la-map-marker" style="font-size:48px;color:var(--color-primary,#c8860a);opacity:0.4;"></i>
                     <p class="mt-3 text-muted">{{ __('No attractions found for this city yet.') }}</p>
-                    <a href="{{ route('website.attractions.index') }}" class="btn btn-outline-primary mt-2">
+                    <a href="{{ route('website.attractions.index') }}" class="gold-btn mt-2">
                         {{ __('Browse all cities') }}
                     </a>
                 </div>

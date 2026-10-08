@@ -2,7 +2,8 @@
 
 @section('title', $pageContent['title'] . ' - Egypt Tour Pro')
 @section('description', $pageContent['subtitle'])
-@section('keywords', 'Egypt Day Tours, Cairo Excursions, Luxor Day Tours, Aswan Day Tours, Hurghada Excursions, Sharm El
+@section('keywords',
+    'Egypt Day Tours, Cairo Excursions, Luxor Day Tours, Aswan Day Tours, Hurghada Excursions, Sharm El
     Sheikh Tours, Marsa Alam Tours, Dahab Tours')
 @section('image', $heroImage)
 
@@ -78,7 +79,8 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="excursion-card">
                             <div class="excursion-img-wrap">
-                                <img src="{{ asset($card['image']) }}" alt="{{ $card['title'] }}" loading="lazy"
+                                <img src="{{ str_starts_with($card['image'], 'http://') || str_starts_with($card['image'], 'https://') ? $card['image'] : asset($card['image']) }}"
+                                    alt="{{ $card['title'] }}" loading="lazy"
                                     onerror="this.onerror=null;this.src='{{ asset('website/photos/home2.webp') }}';">
                                 <div class="excursion-badge">
                                     <i class="la la-map-marker"></i> {{ $card['badge'] }}
@@ -109,7 +111,7 @@
         <div class="container py-3">
             <div class="text-center mb-5">
                 <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3"
-                    style="background: rgba(6, 27, 62, 0.08); color: #0B2554; font-weight: 700; font-size: 0.85rem;">
+                    style="background: rgba(243, 107, 10, 0.15); color: #F36B0A; font-weight: 700; font-size: 0.85rem;">
                     <i class="la la-star"></i> {{ __('Unmatched Quality') }}
                 </div>
                 <h2 class="h1 fw-bold text-dark mb-2" style="font-family: 'Playfair Display', serif;">

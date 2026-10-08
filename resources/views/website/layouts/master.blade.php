@@ -17,7 +17,7 @@
             $logoUrl = 'https://' . \Illuminate\Support\Str::after($logoUrl, 'http://');
         }
         $brandThemeColor = '#1C1C1C';
-        $defaultTitle = 'Egypt Tour Pro | Luxury Egypt Tours, Nile Cruises & Handcrafted Journeys';
+        $defaultTitle = 'Egypt Tours & Nile Cruises | Private Egypt Tours | Egypt Tour Pro';
         $defaultDescription =
             'Experience ancient Egypt with Egypt Tour Pro. Handcrafted private tours, luxury 5-star Nile cruises, and bespoke itineraries led by expert local Egyptologists.';
         $defaultKeywords =
@@ -52,7 +52,7 @@
             return $url;
         };
 
-        $pageTitle = $rawTitle !== '' ? $rawTitle : $defaultTitle;
+        $pageTitle = html_entity_decode($rawTitle !== '' ? $rawTitle : $defaultTitle, ENT_QUOTES, 'UTF-8');
         $pageDescription =
             $rawDescription !== '' ? \Illuminate\Support\Str::limit($rawDescription, 170, '...') : $defaultDescription;
         $pageKeywords = $rawKeywords !== '' ? $rawKeywords : $defaultKeywords;

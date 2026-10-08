@@ -283,7 +283,7 @@
                             <label class="form-label">Image</label>
                             @if ($category->image)
                                 <div class="d-flex align-items-center gap-3 mb-2">
-                                    <img src="{{ asset('storage/' . $category->image) }}"
+                                    <img src="{{ $category->image_url }}"
                                         alt="{{ adminTrans($category->name) }}" class="current-image">
                                     <div class="form-check">
                                         <input type="hidden" name="remove_image" value="0">

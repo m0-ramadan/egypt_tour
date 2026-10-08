@@ -293,9 +293,19 @@
                 @forelse($categories as $category)
                     <div class="item-card">
                         <div class="item-header">
-                            <div>
-                                <h6 class="mb-1">{{ adminTrans($category->name) ?: 'Untitled' }}</h6>
-                                <small class="text-light opacity-75">{{ $category->slug ?? '-' }}</small>
+                            <div class="d-flex align-items-center gap-3">
+                                @if ($category->hasCustomImage())
+                                    <img src="{{ $category->image_url }}" alt="{{ adminTrans($category->name) }}"
+                                        style="width: 52px; height: 52px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);">
+                                @else
+                                    <div style="width: 52px; height: 52px; border-radius: 8px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; border: 1px dashed rgba(255,255,255,0.2);">
+                                        <i class="ti ti-photo text-muted" style="font-size: 1.4rem;"></i>
+                                    </div>
+                                @endif
+                                <div>
+                                    <h6 class="mb-1">{{ adminTrans($category->name) ?: 'Untitled' }}</h6>
+                                    <small class="text-light opacity-75">{{ $category->slug ?? '-' }}</small>
+                                </div>
                             </div>
 
                             <div class="d-flex gap-2 flex-wrap">

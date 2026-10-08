@@ -177,7 +177,7 @@
                     </div>
                     <h3 class="h4 fw-bold text-dark mb-2">{{ $pageContent['empty_title'] }}</h3>
                     <p class="text-muted max-w-lg mx-auto mb-4">{{ $pageContent['empty_text'] }}</p>
-                    <a href="{{ route('website.tailor_made.index') }}" class="btn btn-primary rounded-pill px-4 py-2">
+                    <a href="{{ route('website.tailor_made.index') }}" class="gold-btn rounded-pill px-4 py-2">
                         <i class="la la-magic"></i> {{ __('Customize a Cruise Package') }}
                     </a>
                 </div>
