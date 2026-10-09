@@ -131,9 +131,12 @@ class HomeController extends BaseWebsiteController
                 ->get();
 
             $homeCategories = [
-                'day_tour' => $mainCategoriesQuery->firstWhere('category_type', 'day_tour'),
-                'travel_package' => $mainCategoriesQuery->firstWhere('category_type', 'travel_package'),
-                'nile_cruise' => $mainCategoriesQuery->firstWhere('category_type', 'nile_cruise'),
+                'travel_package' => \App\Models\PackageCategory::where('slug', 'tour-packages')->first()
+                    ?? $mainCategoriesQuery->firstWhere('category_type', 'travel_package'),
+                'day_tour' => \App\Models\PackageCategory::where('slug', 'day-tours')->first()
+                    ?? $mainCategoriesQuery->firstWhere('category_type', 'day_tour'),
+                'nile_cruise' => \App\Models\PackageCategory::where('slug', 'nile-cruises')->first()
+                    ?? $mainCategoriesQuery->firstWhere('category_type', 'nile_cruise'),
             ];
 
             return compact(

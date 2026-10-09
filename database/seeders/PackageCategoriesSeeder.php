@@ -11,20 +11,20 @@ class PackageCategoriesSeeder extends Seeder
     {
         // 1. Main Categories
         $mainCategories = [
-            'day_tour' => [
-                'name' => ['en' => 'Day Tours', 'ar' => 'رحلات اليوم الواحد'],
-                'slug' => 'day-tours',
-                'category_type' => 'day_tour',
-                'description' => ['en' => 'Day trips and excursions across Egypt cities', 'ar' => 'جولات ورحلات يومية في مختلف مدن مصر'],
-                'icon' => 'ti ti-sun',
-                'sort_order' => 1,
-            ],
             'travel_package' => [
-                'name' => ['en' => 'Tour Packages', 'ar' => 'برامج سياحية'],
+                'name' => ['en' => 'Egypt tour packages', 'ar' => 'باقات السفر في مصر'],
                 'slug' => 'tour-packages',
                 'category_type' => 'travel_package',
                 'description' => ['en' => 'Multi-day vacation packages across Egypt', 'ar' => 'برامج وباقات سياحية متكاملة لعدة أيام'],
                 'icon' => 'ti ti-briefcase',
+                'sort_order' => 1,
+            ],
+            'day_tour' => [
+                'name' => ['en' => 'Egypt day tours', 'ar' => 'جولات اليوم الواحد في مصر'],
+                'slug' => 'day-tours',
+                'category_type' => 'day_tour',
+                'description' => ['en' => 'Day trips and excursions across Egypt cities', 'ar' => 'جولات ورحلات يومية في مختلف مدن مصر'],
+                'icon' => 'ti ti-sun',
                 'sort_order' => 2,
             ],
             'nile_cruise' => [
