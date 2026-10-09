@@ -158,10 +158,6 @@
                 <div class="col-lg-7">
                     <p style="margin: 0; opacity: 0.85; font-size: 0.95rem;">
                         {{ __('Copyright © :year Egypt Tour Pro. All rights reserved.', ['year' => now()->year]) }}
-                        <span style="margin: 0 8px; opacity: 0.5;">|</span>
-                        <span>{{ __('Made by') }}</span>
-                        <a href="{{ config('ownership.developer.url', 'https://ezycode.dev/') }}" target="_blank" rel="noopener noreferrer"
-                            style="font-weight: 700; color: var(--etp-orange-500); text-decoration: none;">{{ config('ownership.developer.name', 'EZYCODE') }}</a>
                     </p>
                 </div>
                 <div class="col-lg-5">

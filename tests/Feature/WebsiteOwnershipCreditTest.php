@@ -2,16 +2,20 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class WebsiteOwnershipCreditTest extends TestCase
 {
-    public function test_public_footer_contains_the_canonical_ezycode_credit(): void
+    use RefreshDatabase;
+
+    public function test_public_footer_contains_copyright_without_ezycode_credit(): void
     {
         $this->get(route('website.home'))
             ->assertOk()
-            ->assertSee('Copyright to')
-            ->assertSee('EZYCODE')
-            ->assertSee('href="https://ezycode.dev/"', false);
+            ->assertSee('Copyright')
+            ->assertSee('Egypt Tour Pro')
+            ->assertDontSee('EZYCODE')
+            ->assertDontSee('https://ezycode.dev/');
     }
 }
