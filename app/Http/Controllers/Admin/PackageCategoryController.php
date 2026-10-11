@@ -208,7 +208,7 @@ class PackageCategoryController extends Controller
             'description' => ['nullable'],
             'category_type' => ['required', Rule::in(array_keys(PackageCategory::TYPES))],
             'icon' => ['nullable', 'string', 'max:255'],
-            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:10240'],
             'remove_image' => ['nullable', 'boolean'],
             'min_days' => ['nullable', 'integer', 'min:0'],
             'max_days' => $maxDaysRules,

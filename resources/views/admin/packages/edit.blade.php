@@ -2240,7 +2240,7 @@
                                                 @endif
                                             </div>
                                             <p class="field-hint mt-2">
-                                                {{ admin_t('Selecting new images replaces current gallery upon saving. Leave empty to keep current images.') }}
+                                                {{ admin_t('You can add new images to the gallery or click the trash icon on any existing image to remove it.') }}
                                             </p>
                                         </div>
                                     </div>
@@ -3612,9 +3612,11 @@
             </div>
         </div>
     </div>
+    @include('admin.packages.partials.upload-progress-modal')
 @endsection
 
 @section('js')
+    <script src="{{ asset('admin/js/package-upload-progress.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('packageWizardForm');
@@ -4270,38 +4272,46 @@
                 if (!galleryPreview) return;
                 galleryPreview.innerHTML = '';
 
-                if (!galleryFiles.length) {
-                    if (savedGalleryUrls.length) {
-                        savedGalleryUrls.forEach((url, index) => {
-                            if (!removedGalleryIndices.has(index)) appendSavedPreview(galleryPreview, url,
-                                texts.galleryPreview, index);
-                        });
-                        if (removedGalleryIndices.size < savedGalleryUrls.length) return;
-                    }
-                    galleryPreview.innerHTML =
-                        `<div class="empty-state" id="galleryEmptyState">${texts.noGallery}</div>`;
-                    return;
+                let hasAny = false;
+
+                // 1. Render remaining saved gallery images
+                if (savedGalleryUrls.length) {
+                    savedGalleryUrls.forEach((url, index) => {
+                        if (!removedGalleryIndices.has(index)) {
+                            appendSavedPreview(galleryPreview, url, texts.galleryPreview, index);
+                            hasAny = true;
+                        }
+                    });
                 }
 
-                galleryFiles.forEach((file, index) => {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        const card = document.createElement('div');
-                        card.className = 'preview-card';
-                        card.innerHTML = `
-                            <img src="${event.target.result}" alt="">
-                            <div class="preview-card-footer">
-                                <span data-file-name></span>
-                                <button type="button" class="preview-remove" data-gallery-index="${index}">
-                                    <i class="ti ti-x"></i>
-                                </button>
-                            </div>
-                        `;
-                        card.querySelector('[data-file-name]').textContent = file.name;
-                        galleryPreview.appendChild(card);
-                    };
-                    reader.readAsDataURL(file);
-                });
+                // 2. Render newly selected gallery files
+                if (galleryFiles.length) {
+                    galleryFiles.forEach((file, index) => {
+                        hasAny = true;
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const card = document.createElement('div');
+                            card.className = 'preview-card';
+                            card.innerHTML = `
+                                <img src="${event.target.result}" alt="">
+                                <div class="preview-card-footer">
+                                    <span data-file-name></span>
+                                    <button type="button" class="preview-remove" data-gallery-index="${index}" aria-label="${texts.remove}">
+                                        <i class="ti ti-x"></i>
+                                    </button>
+                                </div>
+                            `;
+                            card.querySelector('[data-file-name]').textContent = file.name;
+                            galleryPreview.appendChild(card);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+
+                if (!hasAny) {
+                    galleryPreview.innerHTML =
+                        `<div class="empty-state" id="galleryEmptyState">${texts.noGallery}</div>`;
+                }
             }
 
             function ensureEmptyState(wrapperSelector, itemSelector, emptyId, emptyText) {
@@ -4876,7 +4886,9 @@
             });
 
             galleryInput?.addEventListener('change', function() {
-                galleryFiles = Array.from(this.files ? this.files : []);
+                const newFiles = Array.from(this.files ? this.files : []);
+                galleryFiles = galleryFiles.concat(newFiles);
+                syncGalleryInput();
                 renderGalleryPreview();
                 updateSummary();
             });
@@ -5015,34 +5027,89 @@
                 }
             });
 
-            form?.addEventListener('submit', function(event) {
-                let firstInvalidStep = null;
-                for (let s = 1; s <= totalSteps; s++) {
-                    if (!validateStep(s)) {
-                        if (!firstInvalidStep) firstInvalidStep = s;
+            if (window.initPackageUploadProgress) {
+                window.initPackageUploadProgress({
+                    formId: 'packageWizardForm',
+                    draftKey: draftKey,
+                    validateAllSteps: function() {
+                        let firstInvalidStep = null;
+                        for (let s = 1; s <= totalSteps; s++) {
+                            if (!validateStep(s)) {
+                                if (!firstInvalidStep) firstInvalidStep = s;
+                            }
+                        }
+
+                        if (firstInvalidStep !== null) {
+                            showStep(firstInvalidStep);
+                            focusFirstInvalid(firstInvalidStep);
+                            notify(texts.requiredMessage + ` (${stepTitles[firstInvalidStep - 1] || ''})`, 'error');
+                            return firstInvalidStep;
+                        }
+
+                        isSubmitting = true;
+                        return null;
+                    },
+                    onValidationError: function(errors, message) {
+                        isSubmitting = false;
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML =
+                                `<span class="btn-icon-text"><i class="ti ti-device-floppy"></i><span>Save & Update Package</span></span>`;
+                        }
+
+                        let targetStep = null;
+                        const errorKeys = Object.keys(errors || {});
+                        if (errorKeys.length) {
+                            const errorFieldStepMap = @json($errorFieldStepMap);
+                            for (let key of errorKeys) {
+                                for (let [prefix, stepNum] of Object.entries(errorFieldStepMap)) {
+                                    if (key === prefix || key.startsWith(prefix + '.')) {
+                                        if (targetStep === null || stepNum < targetStep) {
+                                            targetStep = stepNum;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (targetStep !== null) {
+                            showStep(targetStep);
+                            focusFirstInvalid(targetStep);
+                        }
+
+                        const firstErrorMsg = message || (errorKeys.length ? errors[errorKeys[0]][0] : texts.requiredMessage);
+                        notify(firstErrorMsg, 'error');
                     }
-                }
+                });
+            } else {
+                form?.addEventListener('submit', function(event) {
+                    let firstInvalidStep = null;
+                    for (let s = 1; s <= totalSteps; s++) {
+                        if (!validateStep(s)) {
+                            if (!firstInvalidStep) firstInvalidStep = s;
+                        }
+                    }
 
-                if (firstInvalidStep !== null) {
-                    event.preventDefault();
-                    showStep(firstInvalidStep);
-                    focusFirstInvalid(firstInvalidStep);
-                    notify(texts.requiredMessage + ` (${stepTitles[firstInvalidStep - 1] || ''})`, 'error');
-                    return;
-                }
+                    if (firstInvalidStep !== null) {
+                        event.preventDefault();
+                        showStep(firstInvalidStep);
+                        focusFirstInvalid(firstInvalidStep);
+                        notify(texts.requiredMessage + ` (${stepTitles[firstInvalidStep - 1] || ''})`, 'error');
+                        return;
+                    }
 
-                isSubmitting = true;
-                if (submitBtn) {
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML =
-                        `<span class="btn-icon-text"><span class="spinner-border spinner-border-sm"></span><span>${texts.saving}</span></span>`;
-                }
-                try {
-                    localStorage.removeItem(draftKey);
-                } catch (error) {
-                    /* Storage may be unavailable. */
-                }
-            });
+                    isSubmitting = true;
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML =
+                            `<span class="btn-icon-text"><span class="spinner-border spinner-border-sm"></span><span>${texts.saving}</span></span>`;
+                    }
+                    try {
+                        localStorage.removeItem(draftKey);
+                    } catch (error) {}
+                });
+            }
 
             window.addEventListener('beforeunload', function(event) {
                 if (!isDirty || isSubmitting) {

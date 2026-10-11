@@ -591,8 +591,7 @@
                     </div>
                 </div>
 
-                @if (isset($package->prices) && $package->prices->count())
-                    @if ($package->package_type === 'day_tour' && !empty($package->group_pricing_tiers))
+                @if ($package->package_type === 'day_tour' && !empty($package->group_pricing_tiers))
                         <div class="mt-4">
                             <h4 class="mb-3 text-white">{{ admin_t('Group-Size Pricing Tiers') }}</h4>
                             <div class="table-responsive">
@@ -613,12 +612,12 @@
                                                 $pLabel =
                                                     $tMin && $tMax
                                                         ? ($tMin == $tMax
-                                                            ? "$tMin Pax"
-                                                            : "$tMin–$tMax Pax")
+                                                            ? "{$tMin} Pax"
+                                                            : "{$tMin} - {$tMax} Pax")
                                                         : ($tMin
-                                                            ? "$tMin+ Pax"
+                                                            ? "{$tMin}+ Pax"
                                                             : ($tMax
-                                                                ? "Up to $tMax Pax"
+                                                                ? "Up to {$tMax} Pax"
                                                                 : '-'));
                                             @endphp
                                             <tr>

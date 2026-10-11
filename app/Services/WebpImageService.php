@@ -279,12 +279,52 @@ class WebpImageService
             ! is_file($destination) ||
             filesize($destination) === 0
         ) {
+            // Fallback to PHP GD if CLI conversion failed
+            if ($this->convertWithGd($source, $destination, $mime, $quality)) {
+                return;
+            }
+
             @unlink($destination);
 
             throw new RuntimeException(
                 'WebP conversion failed: ' .
                 implode("\n", $output)
             );
+        }
+    }
+
+    private function convertWithGd(string $source, string $destination, string $mime, int $quality): bool
+    {
+        if (! function_exists('imagewebp')) {
+            return false;
+        }
+
+        try {
+            $image = match ($mime) {
+                'image/jpeg' => @imagecreatefromjpeg($source),
+                'image/png' => @imagecreatefrompng($source),
+                'image/gif' => @imagecreatefromgif($source),
+                'image/webp' => @imagecreatefromwebp($source),
+                'image/avif' => function_exists('imagecreatefromavif') ? @imagecreatefromavif($source) : false,
+                default => false,
+            };
+
+            if (! $image) {
+                return false;
+            }
+
+            if (in_array($mime, ['image/png', 'image/gif'], true)) {
+                imagepalettetotruecolor($image);
+                imagealphablending($image, true);
+                imagesavealpha($image, true);
+            }
+
+            $result = imagewebp($image, $destination, $quality);
+            imagedestroy($image);
+
+            return $result && is_file($destination) && filesize($destination) > 0;
+        } catch (\Throwable $e) {
+            return false;
         }
     }
 

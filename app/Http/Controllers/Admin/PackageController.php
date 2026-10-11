@@ -16,6 +16,7 @@ use App\Traits\ApiResponseTrait;
 use App\Traits\HandlesTranslatedFields;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -100,7 +101,7 @@ class PackageController extends Controller
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): Response
     {
         $validated = $this->validatePackage($request);
 
@@ -126,7 +127,7 @@ class PackageController extends Controller
 
         $this->clearCache();
 
-        return redirect()->route('admin.packages.index')->with('success', 'Package created successfully.');
+        return $this->success('admin.packages.index', 'Package created successfully.');
     }
 
     private function packageMediaData(Package $package): array
@@ -230,7 +231,7 @@ class PackageController extends Controller
         ]));
     }
 
-    public function update(Request $request, Package $package): RedirectResponse
+    public function update(Request $request, Package $package): Response
     {
         $validated = $this->validatePackage($request);
 
@@ -650,10 +651,10 @@ class PackageController extends Controller
             'is_ultra_luxury' => ['nullable', 'boolean'],
             'is_active' => ['nullable', 'boolean'],
 
-            'featured_image' => ['nullable', 'image', 'max:5120'],
+            'featured_image' => ['nullable', 'image', 'max:10240'],
             'remove_featured_image' => ['nullable', 'boolean'],
             'gallery_images' => ['nullable', 'array'],
-            'gallery_images.*' => ['nullable', 'image', 'max:5120'],
+            'gallery_images.*' => ['nullable', 'image', 'max:10240'],
             'remove_gallery_indices' => ['nullable', 'array'],
             'remove_gallery_indices.*' => ['integer', 'min:0'],
 
@@ -1033,7 +1034,9 @@ class PackageController extends Controller
                 $data['category_id'] = $category->id;
             }
         }
-        if ($selectedAttraction) {
+        if ($data['package_type'] === 'travel_package') {
+            $data['destination_id'] = null;
+        } elseif ($selectedAttraction) {
             $data['destination_id'] = $selectedAttraction->id;
         }
 
@@ -1124,13 +1127,17 @@ class PackageController extends Controller
             }
         }
 
+        $remainingExistingGallery = $currentGallery
+            ->reject(fn($image, $index) => $removedGalleryIndices->contains($index))
+            ->values();
+
         if ($request->hasFile('gallery_images')) {
-            $data['gallery_images'] = $this->uploadMultipleFiles($request->file('gallery_images'), 'packages/gallery');
+            $newGallery = $this->uploadMultipleFiles($request->file('gallery_images'), 'packages/gallery');
+            $data['gallery_images'] = $package
+                ? $remainingExistingGallery->concat($newGallery)->values()->all()
+                : $newGallery;
         } elseif ($package && $removedGalleryIndices->isNotEmpty()) {
-            $data['gallery_images'] = $currentGallery
-                ->reject(fn($image, $index) => $removedGalleryIndices->contains($index))
-                ->values()
-                ->all();
+            $data['gallery_images'] = $remainingExistingGallery->all();
         } elseif ($package) {
             unset($data['gallery_images']);
         }

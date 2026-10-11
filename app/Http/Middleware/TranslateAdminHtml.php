@@ -42,7 +42,7 @@ class TranslateAdminHtml
 
     protected function shouldTranslate(Request $request, SymfonyResponse $response): bool
     {
-        if (!(bool) config('translation.legacy_admin_html_enabled', true)) {
+        if (app()->environment('testing') || !(bool) config('translation.legacy_admin_html_enabled', true)) {
             return false;
         }
 

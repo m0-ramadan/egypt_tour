@@ -3431,9 +3431,11 @@
             </div>
         </div>
     </div>
+    @include('admin.packages.partials.upload-progress-modal')
 @endsection
 
 @section('js')
+    <script src="{{ asset('admin/js/package-upload-progress.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('packageWizardForm');
@@ -4660,7 +4662,9 @@
             });
 
             galleryInput?.addEventListener('change', function() {
-                galleryFiles = Array.from(this.files ? this.files : []);
+                const newFiles = Array.from(this.files ? this.files : []);
+                galleryFiles = galleryFiles.concat(newFiles);
+                syncGalleryInput();
                 renderGalleryPreview();
                 updateSummary();
             });
@@ -4769,30 +4773,87 @@
                 }
             });
 
-            form?.addEventListener('submit', function(event) {
-                let firstInvalidStep = null;
-                for (let s = 1; s <= totalSteps; s++) {
-                    if (!validateStep(s)) {
-                        if (!firstInvalidStep) firstInvalidStep = s;
+            if (window.initPackageUploadProgress) {
+                window.initPackageUploadProgress({
+                    formId: 'packageWizardForm',
+                    draftKey: draftKey,
+                    validateAllSteps: function() {
+                        let firstInvalidStep = null;
+                        for (let s = 1; s <= totalSteps; s++) {
+                            if (!validateStep(s)) {
+                                if (!firstInvalidStep) firstInvalidStep = s;
+                            }
+                        }
+
+                        if (firstInvalidStep !== null) {
+                            showStep(firstInvalidStep);
+                            focusFirstInvalid(firstInvalidStep);
+                            notify(texts.requiredMessage + ` (${stepTitles[firstInvalidStep - 1] || ''})`, 'error');
+                            return firstInvalidStep;
+                        }
+
+                        isSubmitting = true;
+                        return null;
+                    },
+                    onValidationError: function(errors, message) {
+                        isSubmitting = false;
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML =
+                                `<span class="btn-icon-text"><i class="ti ti-device-floppy"></i><span>Save & Publish Package</span></span>`;
+                        }
+
+                        let targetStep = null;
+                        const errorKeys = Object.keys(errors || {});
+                        if (errorKeys.length) {
+                            const errorFieldStepMap = @json($errorFieldStepMap);
+                            for (let key of errorKeys) {
+                                for (let [prefix, stepNum] of Object.entries(errorFieldStepMap)) {
+                                    if (key === prefix || key.startsWith(prefix + '.')) {
+                                        if (targetStep === null || stepNum < targetStep) {
+                                            targetStep = stepNum;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (targetStep !== null) {
+                            showStep(targetStep);
+                            focusFirstInvalid(targetStep);
+                        }
+
+                        const firstErrorMsg = message || (errorKeys.length ? errors[errorKeys[0]][0] : texts.requiredMessage);
+                        notify(firstErrorMsg, 'error');
                     }
-                }
+                });
+            } else {
+                form?.addEventListener('submit', function(event) {
+                    let firstInvalidStep = null;
+                    for (let s = 1; s <= totalSteps; s++) {
+                        if (!validateStep(s)) {
+                            if (!firstInvalidStep) firstInvalidStep = s;
+                        }
+                    }
 
-                if (firstInvalidStep !== null) {
-                    event.preventDefault();
-                    showStep(firstInvalidStep);
-                    focusFirstInvalid(firstInvalidStep);
-                    notify(texts.requiredMessage + ` (${stepTitles[firstInvalidStep - 1] || ''})`, 'error');
-                    return;
-                }
+                    if (firstInvalidStep !== null) {
+                        event.preventDefault();
+                        showStep(firstInvalidStep);
+                        focusFirstInvalid(firstInvalidStep);
+                        notify(texts.requiredMessage + ` (${stepTitles[firstInvalidStep - 1] || ''})`, 'error');
+                        return;
+                    }
 
-                isSubmitting = true;
-                if (submitBtn) {
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML =
-                        `<span class="btn-icon-text"><span class="spinner-border spinner-border-sm"></span><span>${texts.saving}</span></span>`;
-                }
-                localStorage.removeItem(draftKey);
-            });
+                    isSubmitting = true;
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML =
+                            `<span class="btn-icon-text"><span class="spinner-border spinner-border-sm"></span><span>${texts.saving}</span></span>`;
+                    }
+                    localStorage.removeItem(draftKey);
+                });
+            }
 
             window.addEventListener('beforeunload', function(event) {
                 if (!isDirty || isSubmitting) {

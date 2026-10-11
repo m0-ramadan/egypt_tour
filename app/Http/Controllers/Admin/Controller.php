@@ -19,8 +19,18 @@ abstract class Controller extends BaseController
         return max(1, min((int) $request->integer('per_page', $default), 100));
     }
 
-    protected function success(string $route, string $message): RedirectResponse
+    protected function success(string $route, string $message, array $parameters = []): \Symfony\Component\HttpFoundation\Response
     {
-        return redirect()->route($route)->with('success', $message);
+        if (request()->expectsJson() || request()->ajax()) {
+            session()->flash('success', $message);
+
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'redirect' => route($route, $parameters),
+            ]);
+        }
+
+        return redirect()->route($route, $parameters)->with('success', $message);
     }
 }
