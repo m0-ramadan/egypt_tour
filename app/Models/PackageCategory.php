@@ -89,6 +89,19 @@ class PackageCategory extends Model
         return $this->morphMany(SeoMeta::class, 'model', 'model_type', 'model_id');
     }
 
+    public function getNameAttribute($value)
+    {
+        if (is_string($value)) {
+            $decoded = json_decode($value, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                return $decoded;
+            }
+            return $value;
+        }
+
+        return $value;
+    }
+
     public function getDisplayNameAttribute(): string
     {
         return $this->translatedValue('name');

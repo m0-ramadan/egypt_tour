@@ -14,6 +14,18 @@ trait HasTranslatableAttributes
 
         $value = $this->getAttribute($field);
 
+        if (is_null($value) && method_exists($this, 'getRawOriginal')) {
+            $raw = $this->getRawOriginal($field);
+            if (!empty($raw) && is_string($raw)) {
+                $decoded = json_decode($raw, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                    $value = $decoded;
+                } else {
+                    $value = $raw;
+                }
+            }
+        }
+
         if (is_string($value)) {
             $decoded = json_decode($value, true);
             if (json_last_error() === JSON_ERROR_NONE) {

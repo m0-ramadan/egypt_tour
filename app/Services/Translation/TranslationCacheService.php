@@ -67,23 +67,49 @@ class TranslationCacheService
         }
 
         try {
-            DB::table('ai_translation_caches')->updateOrInsert(
+            DB::table('ai_translation_caches')->upsert(
                 [
-                    'source_hash' => $unit->contentHash,
-                    'source_language' => strtolower($unit->sourceLanguage),
-                    'target_language' => strtolower($unit->targetLanguage),
+                    [
+                        'source_hash' => $unit->contentHash,
+                        'source_language' => strtolower($unit->sourceLanguage),
+                        'target_language' => strtolower($unit->targetLanguage),
+                        'source_text' => $unit->sourceText,
+                        'translated_text' => $result->translatedText,
+                        'provider' => $result->provider,
+                        'model' => $result->model,
+                        'updated_at' => now(),
+                        'created_at' => now(),
+                    ],
                 ],
-                [
-                    'source_text' => $unit->sourceText,
-                    'translated_text' => $result->translatedText,
-                    'provider' => $result->provider,
-                    'model' => $result->model,
-                    'updated_at' => now(),
-                    'created_at' => now(),
-                ]
+                ['source_hash', 'source_language', 'target_language'],
+                ['source_text', 'translated_text', 'provider', 'model', 'updated_at']
             );
         } catch (\Throwable $e) {
-            Log::warning('Failed to store the durable AI translation cache.', ['exception' => $e::class]);
+            // If another concurrent request wrote the cache row, safely ensure it's in memory/cache
+            try {
+                $existing = DB::table('ai_translation_caches')
+                    ->where('source_hash', $unit->contentHash)
+                    ->where('source_language', strtolower($unit->sourceLanguage))
+                    ->where('target_language', strtolower($unit->targetLanguage))
+                    ->first();
+
+                if ($existing) {
+                    Cache::put(
+                        $this->cacheKey($unit),
+                        $existing->translated_text,
+                        (int) config('translation.cache_ttl', 2592000)
+                    );
+                    return;
+                }
+            } catch (\Throwable) {
+                // Ignore fallback lookup error
+            }
+
+            Log::warning('Failed to store the durable AI translation cache.', [
+                'exception' => $e::class,
+                'message' => $e->getMessage(),
+                'source_hash' => $unit->contentHash,
+            ]);
         }
     }
 

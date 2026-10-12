@@ -33,4 +33,16 @@ abstract class Controller extends BaseController
 
         return redirect()->route($route, $parameters)->with('success', $message);
     }
+
+    protected function errorResponse(string $message, int $status = 400, array $extra = []): \Symfony\Component\HttpFoundation\Response
+    {
+        if (request()->expectsJson() || request()->ajax()) {
+            return response()->json(array_merge([
+                'success' => false,
+                'message' => $message,
+            ], $extra), $status);
+        }
+
+        return back()->withInput()->with('error', $message);
+    }
 }

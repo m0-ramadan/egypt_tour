@@ -19,9 +19,15 @@ class AiTranslationServiceTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Cache::flush();
+        config(['translation.ai_enabled' => true]);
+    }
+
     public function test_multiple_strings_are_sent_in_one_batch_request(): void
     {
-        Cache::flush();
         config([
             'translation.ai_enabled' => true,
             'translation.provider' => 'gemini',

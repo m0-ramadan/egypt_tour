@@ -1813,6 +1813,7 @@
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="lock_version" value="{{ $package->updated_at?->timestamp }}">
 
                     <div class="wizard-panel" data-step-panel="1">
                         <div class="wizard-panel-header">

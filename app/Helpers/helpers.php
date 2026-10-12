@@ -337,6 +337,108 @@ if (!function_exists('greeting')) {
     }
 }
 
+if (!function_exists('admin_t')) {
+    /**
+     * Translate admin dashboard strings with fallback support.
+     *
+     * @param string|null $key
+     * @param array $replace
+     * @param string|null $locale
+     * @return string
+     */
+    function admin_t(?string $key, array $replace = [], ?string $locale = null): string
+    {
+        if ($key === null || $key === '') {
+            return '';
+        }
+
+        $locale = $locale ?: app()->getLocale();
+
+        static $fallbacks = [
+            'ar' => [
+                'Jan' => 'يناير',
+                'Feb' => 'فبراير',
+                'Mar' => 'مارس',
+                'Apr' => 'أبريل',
+                'May' => 'مايو',
+                'Jun' => 'يونيو',
+                'Jul' => 'يوليو',
+                'Aug' => 'أغسطس',
+                'Sep' => 'سبتمبر',
+                'Oct' => 'أكتوبر',
+                'Nov' => 'نوفمبر',
+                'Dec' => 'ديسمبر',
+                'January' => 'يناير',
+                'February' => 'فبراير',
+                'March' => 'مارس',
+                'April' => 'أبريل',
+                'June' => 'يونيو',
+                'July' => 'يوليو',
+                'August' => 'أغسطس',
+                'September' => 'سبتمبر',
+                'October' => 'أكتوبر',
+                'November' => 'نوفمبر',
+                'December' => 'ديسمبر',
+                'Dashboard' => 'لوحة التحكم',
+                'Visitor Analytics' => 'تحليلات الزوار',
+                'Refresh Data' => 'تحديث البيانات',
+                'Mobile Phones' => 'الهواتف المحمولة',
+                'Desktop Computers' => 'أجهزة الكمبيوتر',
+                'Tablets' => 'الأجهزة اللوحية',
+                'Bots & Crawlers' => 'محركات البحث والبوتات',
+                'Filter' => 'تصفية',
+                'Reset Filter' => 'إعادة ضبط',
+                'Showing' => 'عرض',
+                'of' => 'من',
+                'visitors' => 'زائر',
+                'Unknown' => 'غير معروف',
+                'Package updated successfully.' => 'تم تحديث الرحلة بنجاح.',
+                'Package created successfully.' => 'تم إنشاء الرحلة بنجاح.',
+                'Package deleted successfully.' => 'تم حذف الرحلة بنجاح.',
+                'Save & Update Package' => 'حفظ وتحديث الرحلة',
+                'Save & Publish Package' => 'حفظ ونشر الرحلة',
+            ],
+            'en' => [
+                'Jan' => 'Jan',
+                'Feb' => 'Feb',
+                'Mar' => 'Mar',
+                'Apr' => 'Apr',
+                'May' => 'May',
+                'Jun' => 'Jun',
+                'Jul' => 'Jul',
+                'Aug' => 'Aug',
+                'Sep' => 'Sep',
+                'Oct' => 'Oct',
+                'Nov' => 'Nov',
+                'Dec' => 'Dec',
+            ],
+        ];
+
+        $translated = __($key, $replace, $locale);
+        if ($translated !== $key && is_string($translated)) {
+            return $translated;
+        }
+
+        if (isset($fallbacks[$locale][$key])) {
+            $val = $fallbacks[$locale][$key];
+            if (!empty($replace)) {
+                foreach ($replace as $k => $v) {
+                    $val = str_replace([':' . $k, '{' . $k . '}'], (string) $v, $val);
+                }
+            }
+            return $val;
+        }
+
+        if (!empty($replace)) {
+            foreach ($replace as $k => $v) {
+                $key = str_replace([':' . $k, '{' . $k . '}'], (string) $v, $key);
+            }
+        }
+
+        return $key;
+    }
+}
+
 if (!function_exists('img_srcset_data')) {
     /**
      * Generate AVIF + WebP srcset data for a card image URL.

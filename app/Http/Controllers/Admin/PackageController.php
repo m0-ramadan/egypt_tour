@@ -17,7 +17,9 @@ use App\Traits\HandlesTranslatedFields;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -103,31 +105,89 @@ class PackageController extends Controller
 
     public function store(Request $request): Response
     {
+        $correlationId = (string) Str::uuid();
+        $startTime = microtime(true);
+        $adminId = auth('admin')->id() ?: 'guest';
+        $storeLock = Cache::lock("package_store_admin_{$adminId}", 10);
+
+        if (!$storeLock->get()) {
+            return $this->errorResponse(
+                'A package is currently being created. Please wait a moment to prevent duplicate submissions.',
+                429,
+                ['code' => 'DUPLICATE_SUBMISSION', 'correlation_id' => $correlationId]
+            );
+        }
+
         $validated = $this->validatePackage($request);
+        $newUploadedFiles = [];
+        $pendingDeletions = [];
 
-        DB::transaction(function () use ($request, $validated) {
-            $packageData = $this->preparePackageData($request, $validated);
+        try {
+            // 1. Prepare data, translations, and images OUTSIDE the database transaction
+            $packageData = $this->preparePackageData($request, $validated, null, $newUploadedFiles, $pendingDeletions);
 
-            $this->reserveSortPosition((int) ($packageData['sort_order'] ?? 0));
+            // 2. Pre-translate itinerary and inclusions outside transaction
+            $this->pretranslateRelations($request);
 
-            $package = Package::create($packageData);
+            // 3. Execute database transaction with bounded concurrency retries
+            $package = $this->executeTransactionWithRetry(function () use ($request, $packageData) {
+                $this->reserveSortPosition((int) ($packageData['sort_order'] ?? 0));
 
-            if ($request->has('facilities')) {
-                $this->syncFacilities($package, $request);
+                $pkg = Package::create($packageData);
+
+                if ($request->has('facilities')) {
+                    $this->syncFacilities($pkg, $request);
+                }
+                $this->syncPackageAttractions($pkg, $request);
+                $this->syncItineraries($pkg, $request);
+                $this->syncInclusions($pkg, $request);
+                $this->syncPrices($pkg, $request);
+                $this->syncPackageCities($pkg, $request);
+                app(PackageTypeContentService::class)->syncFromRequest($pkg, $request);
+                app(NileCruisePackageService::class)->syncFromRequest($pkg, $request);
+                app(\App\Services\PackagePricingService::class)->recalculate($pkg);
+
+                return $pkg;
+            }, 3);
+
+            // 4. Post-commit cleanup & scoped cache invalidation
+            $this->deletePendingFiles($pendingDeletions);
+            $this->clearCache($package);
+
+            Log::info('Package created successfully', [
+                'correlation_id' => $correlationId,
+                'package_id' => $package->id,
+                'duration_ms' => round((microtime(true) - $startTime) * 1000, 2),
+            ]);
+
+            return $this->success('admin.packages.index', 'Package created successfully.');
+        } catch (\Throwable $e) {
+            // Safe cleanup of uncommitted newly uploaded files
+            $this->cleanupUploadedFiles($newUploadedFiles);
+
+            Log::error('Package creation failed', [
+                'correlation_id' => $correlationId,
+                'duration_ms' => round((microtime(true) - $startTime) * 1000, 2),
+                'exception' => $e::class,
+                'message' => $e->getMessage(),
+            ]);
+
+            if ($this->isRecoverableConcurrencyError($e)) {
+                return $this->errorResponse(
+                    'A database lock conflict occurred while creating the package. Please try again.',
+                    409,
+                    ['retryable' => true, 'correlation_id' => $correlationId]
+                );
             }
-            $this->syncPackageAttractions($package, $request);
-            $this->syncItineraries($package, $request);
-            $this->syncInclusions($package, $request);
-            $this->syncPrices($package, $request);
-            $this->syncPackageCities($package, $request);
-            app(PackageTypeContentService::class)->syncFromRequest($package, $request);
-            app(NileCruisePackageService::class)->syncFromRequest($package, $request);
-            app(\App\Services\PackagePricingService::class)->recalculate($package);
-        });
 
-        $this->clearCache();
-
-        return $this->success('admin.packages.index', 'Package created successfully.');
+            return $this->errorResponse(
+                "An error occurred while creating the package. Please check inputs and try again. (Reference: {$correlationId})",
+                500,
+                ['correlation_id' => $correlationId]
+            );
+        } finally {
+            $storeLock->release();
+        }
     }
 
     private function packageMediaData(Package $package): array
@@ -233,34 +293,119 @@ class PackageController extends Controller
 
     public function update(Request $request, Package $package): Response
     {
+        $correlationId = (string) Str::uuid();
+        $startTime = microtime(true);
+
+        // 1. Optimistic locking check against stale forms
+        if ($request->filled('lock_version')) {
+            $submittedVersion = (int) $request->input('lock_version');
+            if ($package->updated_at && $package->updated_at->timestamp > $submittedVersion) {
+                return $this->errorResponse(
+                    'This package was modified by another administrator while you were editing it. Please refresh the page to view the latest version.',
+                    409,
+                    ['conflict' => true, 'stale_data' => true, 'code' => 'STALE_RECORD', 'correlation_id' => $correlationId]
+                );
+            }
+        }
+
+        // 2. Scoped atomic lock per package to prevent concurrent overlapping saves
+        $packageLock = Cache::lock("package_save_{$package->id}", 15);
+        $acquired = false;
+        try {
+            $acquired = $packageLock->block(2);
+        } catch (\Illuminate\Contracts\Cache\LockTimeoutException) {
+            $acquired = false;
+        } catch (\Throwable) {
+            // If atomic lock driver fails or unsupported, proceed with database row-level locking
+            $acquired = true;
+        }
+
+        if (!$acquired) {
+            return $this->errorResponse(
+                'Another save operation is currently in progress for this package. Please wait a moment and try again.',
+                423,
+                ['locked' => true, 'code' => 'CONCURRENT_SAVE', 'correlation_id' => $correlationId]
+            );
+        }
+
         $validated = $this->validatePackage($request);
+        $newUploadedFiles = [];
+        $pendingDeletions = [];
 
-        DB::transaction(function () use ($request, $validated, $package) {
-            $packageData = $this->preparePackageData($request, $validated, $package);
+        try {
+            // 3. Prepare data, translations, and images OUTSIDE the database transaction
+            $packageData = $this->preparePackageData($request, $validated, $package, $newUploadedFiles, $pendingDeletions);
 
-            $newSortOrder = (int) ($packageData['sort_order'] ?? 0);
-            if ($newSortOrder !== (int) ($package->sort_order ?? 0)) {
-                $this->reserveSortPosition($newSortOrder, $package->id);
+            // 4. Pre-translate itinerary and inclusions outside transaction
+            $this->pretranslateRelations($request);
+
+            // 5. Execute database transaction with bounded concurrency retries and row lock
+            $packageId = $package->id;
+            $this->executeTransactionWithRetry(function () use ($request, $packageData, $packageId) {
+                $pkg = Package::where('id', $packageId)->lockForUpdate()->firstOrFail();
+
+                $newSortOrder = (int) ($packageData['sort_order'] ?? 0);
+                if ($newSortOrder !== (int) ($pkg->sort_order ?? 0)) {
+                    $this->reserveSortPosition($newSortOrder, $pkg->id);
+                }
+
+                $pkg->update($packageData);
+
+                if ($request->has('facilities')) {
+                    $this->syncFacilities($pkg, $request);
+                }
+                $this->syncPackageAttractions($pkg, $request);
+                $this->syncItineraries($pkg, $request);
+                $this->syncInclusions($pkg, $request);
+                $this->syncPrices($pkg, $request);
+                $this->syncPackageCities($pkg, $request);
+                app(PackageTypeContentService::class)->syncFromRequest($pkg, $request);
+                app(NileCruisePackageService::class)->syncFromRequest($pkg, $request);
+                app(\App\Services\PackagePricingService::class)->recalculate($pkg);
+            }, 3);
+
+            // 6. Post-commit cleanup of old replaced/removed files & scoped cache invalidation
+            $this->deletePendingFiles($pendingDeletions);
+            $package->refresh();
+            $this->clearCache($package);
+
+            Log::info('Package updated successfully', [
+                'correlation_id' => $correlationId,
+                'package_id' => $package->id,
+                'duration_ms' => round((microtime(true) - $startTime) * 1000, 2),
+            ]);
+
+            return $this->success('admin.packages.index', 'Package updated successfully.');
+        } catch (\Throwable $e) {
+            // Safe cleanup of uncommitted newly uploaded files
+            $this->cleanupUploadedFiles($newUploadedFiles);
+
+            Log::error('Package update failed', [
+                'correlation_id' => $correlationId,
+                'package_id' => $package->id,
+                'duration_ms' => round((microtime(true) - $startTime) * 1000, 2),
+                'exception' => $e::class,
+                'message' => $e->getMessage(),
+            ]);
+
+            if ($this->isRecoverableConcurrencyError($e)) {
+                return $this->errorResponse(
+                    'A temporary database lock conflict occurred while updating this package. Please try again.',
+                    409,
+                    ['retryable' => true, 'correlation_id' => $correlationId]
+                );
             }
 
-            $package->update($packageData);
-
-            if ($request->has('facilities')) {
-                $this->syncFacilities($package, $request);
-            }
-            $this->syncPackageAttractions($package, $request);
-            $this->syncItineraries($package, $request);
-            $this->syncInclusions($package, $request);
-            $this->syncPrices($package, $request);
-            $this->syncPackageCities($package, $request);
-            app(PackageTypeContentService::class)->syncFromRequest($package, $request);
-            app(NileCruisePackageService::class)->syncFromRequest($package, $request);
-            app(\App\Services\PackagePricingService::class)->recalculate($package);
-        });
-
-        $this->clearCache();
-
-        return $this->success('admin.packages.index', 'Package updated successfully.');
+            return $this->errorResponse(
+                "An error occurred while updating the package. (Reference: {$correlationId})",
+                500,
+                ['correlation_id' => $correlationId]
+            );
+        } finally {
+            try {
+                $packageLock->release();
+            } catch (\Throwable) {}
+        }
     }
 
     public function destroy(Package $package): RedirectResponse
@@ -384,17 +529,27 @@ class PackageController extends Controller
             ->with('success', 'Package created successfully using AI.');
     }
 
-    private function clearCache(): void
+    private function clearCache(?Package $package = null): void
     {
-        \Illuminate\Support\Facades\Cache::forget('website.home.version');
-        \Illuminate\Support\Facades\Cache::increment('website.home.version');
-        \Illuminate\Support\Facades\Cache::flush();
+        try {
+            Cache::forever('website.home.version', (int) Cache::get('website.home.version', 1) + 1);
+
+            if ($package) {
+                Cache::forget("package.{$package->id}");
+                Cache::forget("package.slug.{$package->slug}");
+                if ($package->category_id) {
+                    Cache::forget("category.{$package->category_id}.packages");
+                }
+            }
+        } catch (\Throwable $e) {
+            Log::warning('Failed to invalidate package cache after save.', ['error' => $e->getMessage()]);
+        }
     }
 
     public function toggleStatus(Package $package): RedirectResponse
     {
         $package->update(['is_active' => !(bool) $package->is_active]);
-        $this->clearCache();
+        $this->clearCache($package);
 
         return back()->with('success', 'Package status updated successfully.');
     }
@@ -402,7 +557,7 @@ class PackageController extends Controller
     public function toggleFeatured(Package $package): RedirectResponse
     {
         $package->update(['is_featured' => !(bool) $package->is_featured]);
-        $this->clearCache();
+        $this->clearCache($package);
 
         return back()->with('success', 'Package feature status updated successfully.');
     }
@@ -421,7 +576,7 @@ class PackageController extends Controller
                 $package->update(['sort_order' => $newSortOrder]);
             }
         });
-        $this->clearCache();
+        $this->clearCache($package);
 
         return back()->with('success', 'Package sort order updated successfully.');
     }
@@ -429,6 +584,15 @@ class PackageController extends Controller
     private function reserveSortPosition(int $position, ?int $ignorePackageId = null): void
     {
         if ($position < 1) {
+            return;
+        }
+
+        $hasCollision = Package::query()
+            ->when($ignorePackageId, fn($query) => $query->where('id', '!=', $ignorePackageId))
+            ->where('sort_order', $position)
+            ->exists();
+
+        if (!$hasCollision) {
             return;
         }
 
@@ -981,8 +1145,13 @@ class PackageController extends Controller
         return $validator->validate();
     }
 
-    private function preparePackageData(Request $request, array $validated, ?Package $package = null): array
-    {
+    private function preparePackageData(
+        Request $request,
+        array $validated,
+        ?Package $package = null,
+        array &$newUploadedFiles = [],
+        array &$pendingDeletions = []
+    ): array {
         $data = collect($validated)->except([
             'featured_image',
             'remove_featured_image',
@@ -1099,13 +1268,24 @@ class PackageController extends Controller
         $data['difficulty_level'] = !empty($data['difficulty_level']) ? $data['difficulty_level'] : $package?->difficulty_level;
 
         if ($request->hasFile('featured_image')) {
-            $data['featured_image'] = $this->uploadFile($request->file('featured_image'), 'packages');
+            $newFeatured = $this->uploadFile($request->file('featured_image'), 'packages');
+            $newUploadedFiles[] = $newFeatured;
+            $data['featured_image'] = $newFeatured;
+
+            if ($package && $package->featured_image) {
+                $oldPath = is_array($package->featured_image)
+                    ? ($package->featured_image['path'] ?? $package->featured_image['url'] ?? null)
+                    : $package->featured_image;
+                if (is_string($oldPath) && !preg_match('~^https?://~i', $oldPath)) {
+                    $pendingDeletions[] = $oldPath;
+                }
+            }
         } elseif ($package && $request->boolean('remove_featured_image')) {
             $featuredPath = is_array($package->featured_image)
                 ? ($package->featured_image['path'] ?? $package->featured_image['url'] ?? null)
                 : $package->featured_image;
             if (is_string($featuredPath) && !preg_match('~^https?://~i', $featuredPath)) {
-                Storage::disk('public')->delete(preg_replace('~^/?storage/~', '', $featuredPath));
+                $pendingDeletions[] = $featuredPath;
             }
             $data['featured_image'] = null;
         } elseif ($package) {
@@ -1122,7 +1302,7 @@ class PackageController extends Controller
                 $image = $currentGallery->get($index);
                 $path = is_array($image) ? ($image['path'] ?? $image['url'] ?? null) : $image;
                 if (is_string($path) && !preg_match('~^https?://~i', $path)) {
-                    Storage::disk('public')->delete(preg_replace('~^/?storage/~', '', $path));
+                    $pendingDeletions[] = $path;
                 }
             }
         }
@@ -1133,6 +1313,9 @@ class PackageController extends Controller
 
         if ($request->hasFile('gallery_images')) {
             $newGallery = $this->uploadMultipleFiles($request->file('gallery_images'), 'packages/gallery');
+            foreach ($newGallery as $uploadedPath) {
+                $newUploadedFiles[] = $uploadedPath;
+            }
             $data['gallery_images'] = $package
                 ? $remainingExistingGallery->concat($newGallery)->values()->all()
                 : $newGallery;
@@ -1724,5 +1907,132 @@ class PackageController extends Controller
         }
 
         return '';
+    }
+
+    private function cleanupUploadedFiles(array $files): void
+    {
+        foreach ($files as $file) {
+            if (!is_string($file) || trim($file) === '') {
+                continue;
+            }
+            $cleanPath = preg_replace('~^/?storage/~', '', $file);
+            try {
+                Storage::disk('public')->delete($cleanPath);
+            } catch (\Throwable) {
+                // Ignore errors during failure cleanup
+            }
+        }
+    }
+
+    private function deletePendingFiles(array $files): void
+    {
+        foreach ($files as $file) {
+            if (!is_string($file) || trim($file) === '' || preg_match('~^https?://~i', $file)) {
+                continue;
+            }
+            $cleanPath = preg_replace('~^/?storage/~', '', $file);
+            try {
+                Storage::disk('public')->delete($cleanPath);
+            } catch (\Throwable $e) {
+                Log::warning('Failed to delete obsolete package image after commit.', [
+                    'path' => $file,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+    }
+
+    private function pretranslateRelations(Request $request): void
+    {
+        $translationService = app(TranslationService::class);
+
+        foreach ((array) $request->input('itinerary', []) as $day) {
+            $rawTitle = $day['title'] ?? null;
+            $rawDesc = $day['description'] ?? null;
+            if (!blank($rawTitle)) {
+                $translationService->translateTextToAllLanguages($rawTitle);
+            }
+            if (!blank($rawDesc)) {
+                $translationService->translateTextToAllLanguages($rawDesc);
+            }
+        }
+
+        foreach (['included', 'excluded'] as $key) {
+            foreach ((array) $request->input($key, []) as $item) {
+                $rawTitle = is_array($item) ? ($item['title'] ?? $item['content'] ?? $item) : $item;
+                if (is_array($rawTitle)) {
+                    $translationService->translateTextToAllLanguages($rawTitle);
+                } elseif (!blank($rawTitle) && $rawTitle !== 'Array') {
+                    $translationService->translateTextToAllLanguages((string) $rawTitle);
+                }
+            }
+        }
+
+        foreach ((array) $request->input('highlights', []) as $hl) {
+            $t = is_array($hl) ? ($hl['title'] ?? '') : $hl;
+            if (!blank($t)) {
+                $translationService->translateTextToAllLanguages((string) $t);
+            }
+        }
+
+        foreach ((array) $request->input('experience.addons', []) as $addon) {
+            $t = $addon['title'] ?? '';
+            $d = $addon['description'] ?? '';
+            if (!blank($t)) {
+                $translationService->translateTextToAllLanguages((string) $t);
+            }
+            if (!blank($d)) {
+                $translationService->translateTextToAllLanguages((string) $d);
+            }
+        }
+    }
+
+    /**
+     * Execute database transaction with bounded retries for transient concurrency errors.
+     */
+    protected function executeTransactionWithRetry(\Closure $callback, int $maxAttempts = 3): mixed
+    {
+        $attempt = 0;
+
+        while (true) {
+            $attempt++;
+
+            try {
+                return DB::transaction($callback, 1);
+            } catch (\Throwable $e) {
+                $isConcurrencyError = $this->isRecoverableConcurrencyError($e);
+
+                if ($attempt >= $maxAttempts || !$isConcurrencyError) {
+                    throw $e;
+                }
+
+                // Exponential backoff with jitter (50ms, 150ms...)
+                $baseBackoffUs = $attempt * 50000;
+                $jitterUs = random_int(5000, 25000);
+                usleep($baseBackoffUs + $jitterUs);
+            }
+        }
+    }
+
+    protected function isRecoverableConcurrencyError(\Throwable $e): bool
+    {
+        if ($e instanceof \Illuminate\Database\DeadlockException) {
+            return true;
+        }
+
+        if ($e instanceof \PDOException) {
+            $code = (string) $e->getCode();
+            if ($code === '40001' || $code === 'HY000') {
+                $msg = $e->getMessage();
+                if (str_contains($msg, '1205') || str_contains($msg, '1213') || str_contains($msg, 'Lock wait timeout') || str_contains($msg, 'Deadlock')) {
+                    return true;
+                }
+            }
+        }
+
+        $msg = $e->getMessage();
+        return str_contains($msg, 'Lock wait timeout exceeded')
+            || str_contains($msg, 'Deadlock found when trying to get lock')
+            || str_contains($msg, 'database is locked');
     }
 }

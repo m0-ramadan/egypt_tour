@@ -43,8 +43,37 @@
             errorTitle: isArabic ? 'حدث خطأ أثناء الحفظ' : 'An error occurred while saving',
             networkError: isArabic ? 'فشل الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت والمحاولة مجدداً.' : 'Connection to server failed. Please check your internet and try again.',
             sessionExpired: isArabic ? 'انتهت جلستك، يرجى إعادة تحميل الصفحة وتسجيل الدخول مجدداً.' : 'Your session has expired. Please reload the page and try again.',
-            serverError: isArabic ? 'حدث خطأ في الخادم أثناء معالجة الصور أو البيانات.' : 'A server error occurred while processing images or data.'
+            serverError: isArabic ? 'حدث خطأ في الخادم أثناء معالجة الصور أو البيانات.' : 'A server error occurred while processing images or data.',
+            conflictTitle: isArabic ? 'تعارض في التعديل' : 'Update Conflict Detected',
+            conflictMessage: isArabic ? 'قام مستخدم آخر بتعديل هذه الرحلة أثناء عملك عليها. لتجنب الكتابة فوق التعديلات، يرجى تحديث الصفحة.' : 'Another user has modified this package since you opened it. To avoid overwriting changes, please reload the page.',
+            lockTitle: isArabic ? 'العملية قيد التنفيذ' : 'Operation In Progress',
+            lockMessage: isArabic ? 'يتم حفظ هذه الرحلة حالياً بواسطة عملية أخرى. يرجى الانتظار لحظة والمحاولة مجدداً.' : 'This package is currently being saved by another process. Please wait a moment and try again.',
+            rateLimitTitle: isArabic ? 'طلبات متكررة' : 'Too Many Requests',
+            rateLimitMessage: isArabic ? 'تم إرسال عدد كبير من الطلبات. يرجى الانتظار بضع ثوانٍ والمحاولة مرة أخرى.' : 'Too many requests have been sent. Please wait a few seconds and try again.',
+            reloadPage: isArabic ? 'تحديث الصفحة' : 'Reload Page',
+            cancel: isArabic ? 'إلغاء' : 'Cancel',
+            tryAgain: isArabic ? 'إعادة المحاولة' : 'Try Again'
         };
+
+        let isSubmitting = false;
+
+        function getAllSubmitButtons() {
+            return form.querySelectorAll('button[type="submit"], input[type="submit"], #submitWizardBtn');
+        }
+
+        function disableSubmitControls() {
+            getAllSubmitButtons().forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('disabled');
+            });
+        }
+
+        function enableSubmitControls() {
+            getAllSubmitButtons().forEach(btn => {
+                btn.disabled = false;
+                btn.classList.remove('disabled');
+            });
+        }
 
         function showOverlay() {
             if (!overlay) return;
@@ -100,11 +129,19 @@
 
         // Attach AJAX submission to the form
         form.addEventListener('submit', function(e) {
+            if (isSubmitting) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+
             // First check if validateStep or client validation is defined in page
             if (typeof options.validateAllSteps === 'function') {
                 const firstInvalidStep = options.validateAllSteps();
                 if (firstInvalidStep !== null) {
                     // Let the parent validation handle error highlight and stop
+                    isSubmitting = false;
+                    enableSubmitControls();
                     return;
                 }
             }
@@ -112,9 +149,8 @@
             e.preventDefault();
             e.stopPropagation();
 
-            const submitBtn = document.getElementById('submitWizardBtn');
-            if (submitBtn) submitBtn.disabled = true;
-
+            isSubmitting = true;
+            disableSubmitControls();
             showOverlay();
 
             const formData = new FormData(form);
@@ -153,7 +189,8 @@
                     markSuccess(targetUrl, response.message);
                 } else if (xhr.status === 422) {
                     hideOverlay();
-                    if (submitBtn) submitBtn.disabled = false;
+                    isSubmitting = false;
+                    enableSubmitControls();
 
                     let errorData = {};
                     try {
@@ -174,14 +211,90 @@
                             alert(firstMsg);
                         }
                     }
-                } else if (xhr.status === 419) {
+                } else if (xhr.status === 409) {
+                    // Stale data / Optimistic Concurrency Conflict
                     hideOverlay();
-                    if (submitBtn) submitBtn.disabled = false;
+                    isSubmitting = false;
+                    enableSubmitControls();
+
+                    let conflictData = {};
+                    try {
+                        conflictData = JSON.parse(xhr.responseText);
+                    } catch (err) {}
+
+                    const conflictMsg = conflictData.message || i18n.conflictMessage;
+                    if (window.Swal) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: i18n.conflictTitle,
+                            text: conflictMsg,
+                            showCancelButton: true,
+                            confirmButtonText: i18n.reloadPage,
+                            cancelButtonText: i18n.cancel
+                        }).then(function(result) {
+                            if (result.isConfirmed) {
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        if (confirm(conflictMsg + '\n\n' + (isArabic ? 'هل تريد تحديث الصفحة الآن؟' : 'Do you want to reload the page now?'))) {
+                            window.location.reload();
+                        }
+                    }
+                } else if (xhr.status === 423) {
+                    // Resource Locked by concurrent transaction
+                    hideOverlay();
+                    isSubmitting = false;
+                    enableSubmitControls();
+
+                    let lockData = {};
+                    try {
+                        lockData = JSON.parse(xhr.responseText);
+                    } catch (err) {}
+
+                    const lockMsg = lockData.message || i18n.lockMessage;
+                    if (window.Swal) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: i18n.lockTitle,
+                            text: lockMsg,
+                            confirmButtonText: i18n.tryAgain
+                        });
+                    } else {
+                        alert(lockMsg);
+                    }
+                } else if (xhr.status === 429) {
+                    // Rate Limited
+                    hideOverlay();
+                    isSubmitting = false;
+                    enableSubmitControls();
+
+                    let rateLimitData = {};
+                    try {
+                        rateLimitData = JSON.parse(xhr.responseText);
+                    } catch (err) {}
+
+                    const rlMsg = rateLimitData.message || i18n.rateLimitMessage;
+                    if (window.Swal) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: i18n.rateLimitTitle,
+                            text: rlMsg,
+                            confirmButtonText: i18n.tryAgain
+                        });
+                    } else {
+                        alert(rlMsg);
+                    }
+                } else if (xhr.status === 419) {
+                    // CSRF / Session Timeout
+                    hideOverlay();
+                    isSubmitting = false;
+                    enableSubmitControls();
                     if (window.Swal) {
                         Swal.fire({
                             icon: 'warning',
                             title: i18n.sessionExpired,
-                            confirmButtonText: isArabic ? 'تحديث الصفحة' : 'Reload Page'
+                            confirmButtonText: i18n.reloadPage
                         }).then(function() {
                             window.location.reload();
                         });
@@ -191,28 +304,34 @@
                     }
                 } else {
                     hideOverlay();
-                    if (submitBtn) submitBtn.disabled = false;
+                    isSubmitting = false;
+                    enableSubmitControls();
+
                     let msg = i18n.serverError;
+                    let ref = null;
                     try {
                         const parsed = JSON.parse(xhr.responseText);
                         if (parsed.message) msg = parsed.message;
+                        if (parsed.error_reference) ref = parsed.error_reference;
                     } catch (err) {}
 
+                    const displayMsg = ref ? `${msg}\n(Reference: ${ref})` : msg;
                     if (window.Swal) {
                         Swal.fire({
                             icon: 'error',
                             title: i18n.errorTitle,
-                            text: msg
+                            text: displayMsg
                         });
                     } else {
-                        alert(msg);
+                        alert(displayMsg);
                     }
                 }
             };
 
             xhr.onerror = function() {
                 hideOverlay();
-                if (submitBtn) submitBtn.disabled = false;
+                isSubmitting = false;
+                enableSubmitControls();
                 if (window.Swal) {
                     Swal.fire({
                         icon: 'error',

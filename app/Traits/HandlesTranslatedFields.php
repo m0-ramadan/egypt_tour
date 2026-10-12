@@ -20,15 +20,36 @@ trait HandlesTranslatedFields
             return $query;
         }
 
-        $locales = $this->translationLocales();
+        $locales = array_values(array_unique(array_filter(array_merge(
+            $this->translationLocales(),
+            ['en', 'ar', 'de', 'fr', config('app.locale', 'en')]
+        ))));
 
-        return $query->where(function ($q) use ($fields, $locales, $term) {
+        $grammar = $query->getQuery()->getGrammar();
+        $driver = $query->getConnection()->getDriverName();
+        $likePattern = '%' . $term . '%';
+
+        return $query->where(function ($q) use ($fields, $locales, $grammar, $driver, $likePattern) {
             foreach ($fields as $field) {
+                $wrappedField = $grammar->wrap($field);
+
                 foreach ($locales as $locale) {
-                    $q->orWhere($field . '->' . $locale, 'like', '%' . $term . '%');
+                    // Safe conditional extraction: only run JSON extraction if JSON_VALID is true
+                    if ($driver === 'sqlite') {
+                        $q->orWhereRaw("CASE WHEN json_valid({$wrappedField}) THEN json_extract({$wrappedField}, ?) ELSE NULL END LIKE ?", [
+                            '$.' . $locale,
+                            $likePattern,
+                        ]);
+                    } else {
+                        $q->orWhereRaw("CASE WHEN JSON_VALID({$wrappedField}) THEN JSON_UNQUOTE(JSON_EXTRACT({$wrappedField}, ?)) ELSE NULL END LIKE ?", [
+                            '$.' . $locale,
+                            $likePattern,
+                        ]);
+                    }
                 }
 
-                $q->orWhere($field, 'like', '%' . $term . '%');
+                // Also match plain text or raw string columns directly
+                $q->orWhere($field, 'like', $likePattern);
             }
         });
     }
