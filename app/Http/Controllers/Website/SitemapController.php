@@ -49,7 +49,8 @@ class SitemapController extends BaseWebsiteController
             $this->makeUrl(route('website.home'), null, 'daily', '1.0'),
             $this->makeUrl(route('website.offers'), null, 'daily', '0.9'),
             $this->makeUrl(route('website.multi_country'), null, 'weekly', '0.8'),
-            $this->makeUrl(route('website.services'), null, 'monthly', '0.6'),
+            // /services is an alias of /tour-packages (canonical), so it is not
+            // listed here to avoid duplicate entries in Search Console.
             $this->makeUrl(route('website.contact.index'), null, 'monthly', '0.6'),
             $this->makeUrl(route('website.destinations.index'), null, 'weekly', '0.8'),
             $this->makeUrl(route('website.blogs.index'), null, 'weekly', '0.8'),

@@ -62,9 +62,11 @@ class PackageController extends BaseWebsiteController
         );
     }
 
-    public function duration(Request $request, int $days): View
+    public function duration(Request $request, int $days)
     {
-        abort_unless($days >= 1 && $days <= 30, 404);
+        if ($days < 1 || $days > 30) {
+            return app(LegacyRedirectController::class)->handle($request);
+        }
 
         $request->merge(['duration' => $days]);
 
@@ -150,17 +152,8 @@ class PackageController extends BaseWebsiteController
             $country = null;
         }
 
-        if ($request->routeIs('website.trips.show')) {
-            $package = Package::query()
-                ->where('slug', $slug)
-                ->where('is_active', true)
-                ->first(['slug', 'package_type']);
-
-            if (in_array($package?->package_type, ['travel_package', 'nile_cruise', 'day_tour', 'shore_excursion'], true)) {
-                return redirect($this->packageRoute($package), 301);
-            }
-        }
-
+        // Rendered in place (HTTP 200) — TripController points rel=canonical
+        // at the type-specific URL, so no redirect is required.
         return app(\App\Http\Controllers\Website\TripController::class)->show($slug);
     }
 
@@ -181,22 +174,30 @@ class PackageController extends BaseWebsiteController
 
     public function showNileCruise(string $slug)
     {
-        Package::query()
+        $package = Package::query()
             ->where('slug', $slug)
             ->where('package_type', 'nile_cruise')
             ->where('is_active', true)
-            ->firstOrFail(['id']);
+            ->first(['id']);
+
+        if (! $package) {
+            return app(LegacyRedirectController::class)->handle(request());
+        }
 
         return app(\App\Http\Controllers\Website\TripController::class)->show($slug);
     }
 
     public function showDayTour(string $slug)
     {
-        Package::query()
+        $package = Package::query()
             ->where('slug', $slug)
             ->whereIn('package_type', ['day_tour', 'shore_excursion'])
             ->where('is_active', true)
-            ->firstOrFail(['id']);
+            ->first(['id']);
+
+        if (! $package) {
+            return app(LegacyRedirectController::class)->handle(request());
+        }
 
         return app(\App\Http\Controllers\Website\TripController::class)->show($slug);
     }

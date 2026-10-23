@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /lang/
+Allow: /
+
+Sitemap: https://egypttourpro.com/sitemap.xml

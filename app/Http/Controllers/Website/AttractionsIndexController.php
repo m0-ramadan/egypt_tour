@@ -65,11 +65,15 @@ class AttractionsIndexController extends BaseWebsiteController
         return view('website.pages.attractions.index', compact('cities', 'featuredAttractions'));
     }
 
-    public function byCity(Request $request, string $citySlug): View
+    public function byCity(Request $request, string $citySlug)
     {
         $city = City::where('slug', $citySlug)
             ->where('is_active', true)
-            ->firstOrFail();
+            ->first();
+
+        if (! $city) {
+            return app(LegacyRedirectController::class)->handle($request);
+        }
 
         $attractions = Attraction::query()
             ->where('is_active', true)

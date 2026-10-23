@@ -82,12 +82,8 @@ class BlogController extends Controller
             return app(\App\Http\Controllers\Website\LegacyRedirectController::class)->handle(request());
         }
 
-        if (! request()->routeIs('website.blogs.show')) {
-            return redirect()->route('website.blogs.show', [
-                'slug' => $article->slug,
-            ], 301);
-        }
-
+        // Articles are rendered in place (HTTP 200) even on legacy paths;
+        // the layout exposes the canonical /blog/{slug} URL.
         $article->increment('views_count');
 
         $relatedArticles = Article::query()
@@ -129,7 +125,11 @@ class BlogController extends Controller
     {
         $category = ArticleCategory::query()
             ->where('slug', $slug)
-            ->firstOrFail();
+            ->first();
+
+        if (! $category) {
+            return app(LegacyRedirectController::class)->handle(request());
+        }
 
         $articles = Article::query()
             ->with(['category', 'author'])

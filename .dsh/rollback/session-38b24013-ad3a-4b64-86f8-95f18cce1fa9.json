@@ -2,6 +2,7 @@
   "version": 2,
   "sessionId": "session-38b24013-ad3a-4b64-86f8-95f18cce1fa9",
   "cwd": "/home/mohamed/Videos/dashboard/Ahmed_m/egypt_tour",
+  "updatedAt": 1792761093842,
   "checkpoints": [
     {
       "turn": 2,
@@ -17,8 +18,76 @@
         "resources/css/generated/home-style.css"
       ],
       "truncated": false
+    },
+    {
+      "turn": 3,
+      "commit": "5e9c5312d21f21ae62e5b63065f9c7c9d0dd6eec",
+      "parent": "545f62acb1b566ff3e0be8998bdd6de4aad03c01",
+      "time": 1792681911546,
+      "untracked": [],
+      "truncated": false,
+      "after": {
+        "commit": "a374ed95dab5b2935d717f4b556c9734b07f44fc",
+        "time": 1792683689794
+      }
+    },
+    {
+      "turn": 4,
+      "commit": "a374ed95dab5b2935d717f4b556c9734b07f44fc",
+      "parent": "a374ed95dab5b2935d717f4b556c9734b07f44fc",
+      "time": 1792683689797,
+      "untracked": [
+        "app/Http/Middleware/StripLocalePrefix.php",
+        "tests/Feature/WebsiteLegacyUrlsTest.php"
+      ],
+      "truncated": false,
+      "after": {
+        "commit": "43498c4471787e8eb0d7fe4a2ee7a9e1a8b82896",
+        "time": 1792684206260
+      }
+    },
+    {
+      "turn": 5,
+      "commit": "43498c4471787e8eb0d7fe4a2ee7a9e1a8b82896",
+      "parent": "43498c4471787e8eb0d7fe4a2ee7a9e1a8b82896",
+      "time": 1792684253990,
+      "untracked": [
+        "app/Http/Middleware/StripLocalePrefix.php",
+        "tests/Feature/WebsiteLegacyUrlsTest.php"
+      ],
+      "truncated": false
+    },
+    {
+      "turn": 6,
+      "commit": "2b5b2cbca8be0b31531757de6f2b0a0af9eda8be",
+      "parent": "43498c4471787e8eb0d7fe4a2ee7a9e1a8b82896",
+      "time": 1792760506477,
+      "untracked": [
+        "app/Http/Middleware/StripLocalePrefix.php",
+        "tests/Feature/WebsiteLegacyUrlsTest.php"
+      ],
+      "truncated": false,
+      "after": {
+        "commit": "5d322d046dee1612380750fc4845893b0c985e66",
+        "time": 1792760758206
+      }
+    },
+    {
+      "turn": 7,
+      "commit": "5d322d046dee1612380750fc4845893b0c985e66",
+      "parent": "5d322d046dee1612380750fc4845893b0c985e66",
+      "time": 1792760869689,
+      "untracked": [
+        "app/Http/Middleware/StripLocalePrefix.php",
+        "tests/Feature/WebsiteLegacyUrlsTest.php"
+      ],
+      "truncated": false,
+      "after": {
+        "commit": "8b9b857591a16fcf65c1ea5d088f87366a1aec40",
+        "time": 1792761091887
+      }
     }
   ],
   "rolls": [],
-  "updatedAt": 1791462194989
+  "undos": []
 }

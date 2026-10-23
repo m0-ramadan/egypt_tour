@@ -115,7 +115,11 @@ class DestinationController extends BaseWebsiteController
             ->with(['country', 'attractions' => fn($query) => $query->where('is_active', true)->orderBy('sort_order')])
             ->where('slug', $slug)
             ->where('is_active', true)
-            ->firstOrFail();
+            ->first();
+
+        if (! $destination) {
+            return app(LegacyRedirectController::class)->handle($request);
+        }
 
         $packageIds = DB::table('package_cities')
             ->where('city_id', $destination->id)
@@ -328,9 +332,11 @@ class DestinationController extends BaseWebsiteController
             ->first();
 
         if ($destination) {
-            return redirect()->route('website.destinations.show', $destination->slug, 301);
+            view()->share('legacyCanonical', route('website.destinations.show', $destination->slug));
+
+            return $this->show(request(), $destination->slug);
         }
 
-        abort(404);
+        return app(LegacyRedirectController::class)->handle(request());
     }
 }

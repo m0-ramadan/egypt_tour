@@ -44,7 +44,11 @@ class NileCruiseController extends BaseWebsiteController
         $type = NileCruiseType::query()
             ->where('slug', 'luxor-aswan-nile-cruises')
             ->where('is_active', true)
-            ->firstOrFail();
+            ->first();
+
+        if (! $type) {
+            return app(LegacyRedirectController::class)->handle($request);
+        }
 
         $categories = NileCruiseCategory::query()
             ->where('nile_cruise_type_id', $type->id)
@@ -99,7 +103,11 @@ class NileCruiseController extends BaseWebsiteController
         $type = NileCruiseType::query()
             ->where('slug', $typeSlug)
             ->where('is_active', true)
-            ->firstOrFail();
+            ->first();
+
+        if (! $type) {
+            return app(LegacyRedirectController::class)->handle($request);
+        }
 
         $search = trim((string) $request->input('q', ''));
 
@@ -200,13 +208,19 @@ class NileCruiseController extends BaseWebsiteController
         $type = NileCruiseType::query()
             ->where('slug', 'luxor-aswan-nile-cruises')
             ->where('is_active', true)
-            ->firstOrFail();
+            ->first();
 
-        $category = NileCruiseCategory::query()
-            ->where('nile_cruise_type_id', $type->id)
-            ->where('slug', $categorySlug)
-            ->where('is_active', true)
-            ->firstOrFail();
+        $category = $type
+            ? NileCruiseCategory::query()
+                ->where('nile_cruise_type_id', $type->id)
+                ->where('slug', $categorySlug)
+                ->where('is_active', true)
+                ->first()
+            : null;
+
+        if (! $category) {
+            return app(LegacyRedirectController::class)->handle($request);
+        }
 
         $search = trim((string) $request->input('q', ''));
 

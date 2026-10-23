@@ -27,7 +27,12 @@ class SetLocale
             return $next($request);
         }
 
-        if ($request->hasSession() && $request->session()->has('locale')) {
+        $localePrefix = $request->attributes->get('locale_prefix');
+
+        if (is_string($localePrefix) && $localePrefix !== '') {
+            // /de/..., /fr/... — the URL wins over the session language.
+            $locale = $localePrefix;
+        } elseif ($request->hasSession() && $request->session()->has('locale')) {
             $locale = (string) $request->session()->get('locale');
         } elseif ($request->headers->has('Accept-Language')) {
             $locale = $this->localeNormalizer->fromAcceptLanguage(

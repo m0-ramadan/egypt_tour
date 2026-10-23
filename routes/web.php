@@ -52,7 +52,24 @@ ProtectedRoutes::group(function (): void {
                 $request->session()->put('locale', $locale);
             }
 
-            return redirect()->back();
+            // A locale prefix in the referrer would override the freshly
+            // selected language, so drop it when present (e.g. /de/tours).
+            $previous = url()->previous();
+            $parts = parse_url($previous) ?: [];
+            $segments = array_values(array_filter(
+                explode('/', trim((string) ($parts['path'] ?? ''), '/')),
+                static fn (string $segment): bool => $segment !== ''
+            ));
+
+            if ($segments === [] || ! in_array(strtolower($segments[0]), $supportedLocales, true)) {
+                return redirect()->back();
+            }
+
+            array_shift($segments);
+            $previous = url('/' . implode('/', $segments))
+                . (isset($parts['query']) ? '?' . $parts['query'] : '');
+
+            return redirect()->to($previous);
         })->name('lang.switch');
 
         /*
@@ -104,9 +121,8 @@ ProtectedRoutes::group(function (): void {
         |--------------------------------------------------------------------------
         */
         Route::get('/tour-packages', [PackageController::class, 'index'])->name('travel_packages.index');
-        Route::permanentRedirect('/travel-packages', '/tour-packages');
-        Route::permanentRedirect('/Egypt/travel-packages', '/tour-packages');
-        Route::permanentRedirect('/Egypt/travel-pakages', '/tour-packages');
+        // /travel-packages, /Egypt/travel-packages and /Egypt/travel-pakages
+        // are rendered by the legacy URL resolver (HTTP 200, no redirect).
 
         /*
         |--------------------------------------------------------------------------
@@ -123,13 +139,9 @@ ProtectedRoutes::group(function (): void {
             Route::get('/services', 'services')
                 ->name('services');
 
-            Route::get('/why-us', function () {
-                return redirect()->route('website.pages.show', ['slug' => 'why-egypt-tour-pro'], 301);
-            });
-
-            Route::get('/why-luxor-and-aswan-travel', function () {
-                return redirect()->route('website.pages.show', ['slug' => 'why-egypt-tour-pro'], 301);
-            });
+            // /why-us and /why-luxor-and-aswan-travel are handled by the
+            // legacy URL resolver, which renders the "why" page in place
+            // instead of redirecting to a different URL.
         });
 
         Route::controller(ContactController::class)->group(function () {
@@ -196,7 +208,7 @@ ProtectedRoutes::group(function (): void {
                 ->name('show.legacy');
         });
 
-        Route::redirect('/blogs', '/blog', 301);
+        // /blogs is rendered by the legacy URL resolver (HTTP 200, no redirect).
         // Route::get('/blogs', [BlogController::class, 'index'])
         //     ->name('blogs');
 

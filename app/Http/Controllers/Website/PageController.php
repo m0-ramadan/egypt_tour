@@ -52,9 +52,12 @@ class PageController extends BaseWebsiteController
         return redirect()->route('website.pages.show', ['slug' => $slug], 301);
     }
 
-    public function services(): RedirectResponse
+    public function services()
     {
-        return redirect()->route('website.travel_packages.index', [], 301);
+        // Rendered in place (HTTP 200) instead of redirecting to /tour-packages.
+        view()->share('legacyCanonical', route('website.travel_packages.index'));
+
+        return app(PackageController::class)->index(request());
     }
 
     public function multiCountry(Request $request)
@@ -186,6 +189,11 @@ class PageController extends BaseWebsiteController
         }
 
         return asset('website/photos/ship-7.webp');
+    }
+
+    public function renderPage(Page $page): View
+    {
+        return $this->renderStaticPage($page);
     }
 
     private function renderStaticPage(Page $page): View

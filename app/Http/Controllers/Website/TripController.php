@@ -73,7 +73,11 @@ class TripController extends BaseWebsiteController
             ])
             ->where('slug', $slug)
             ->where('is_active', true)
-            ->firstOrFail();
+            ->first();
+
+        if (! $package) {
+            return app(LegacyRedirectController::class)->handle(request());
+        }
 
         $title = $this->translated($package->getRawOriginal('title') ?? $package->title);
         $subtitle = $this->translated($package->getRawOriginal('subtitle') ?? $package->subtitle);

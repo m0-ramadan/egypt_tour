@@ -127,10 +127,13 @@ class DestinationAndCategoryLandingPagesTest extends TestCase
         $response->assertSee('Luxury Egypt Tour');
         $response->assertSee('Egypt Tours Packages FAQs');
 
-        // Legacy / mirror routes redirect to the canonical URL
-        $this->get('/travel-packages')->assertRedirect('/tour-packages');
-        $this->get('/Egypt/travel-packages')->assertRedirect('/tour-packages');
-        $this->get('/Egypt/travel-pakages')->assertRedirect('/tour-packages');
+        // Legacy / mirror routes render the same listing in place (HTTP 200)
+        // with a canonical pointing at /tour-packages.
+        foreach (['/travel-packages', '/Egypt/travel-packages', '/Egypt/travel-pakages'] as $legacyUrl) {
+            $this->get($legacyUrl)
+                ->assertOk()
+                ->assertSee(route('website.travel_packages.index'), false);
+        }
     }
 
     public function test_luxury_card_uses_the_explicit_category_route(): void

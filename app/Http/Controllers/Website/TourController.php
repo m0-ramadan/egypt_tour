@@ -38,7 +38,9 @@ class TourController extends BaseWebsiteController
             ->first(['slug', 'package_type']);
 
         if ($package && in_array($package->package_type, ['day_tour', 'shore_excursion'], true)) {
-            return redirect($this->packageRoute($package), 301);
+            // Render the day tour at the requested /tours/{slug} URL instead
+            // of redirecting; TripController exposes the canonical URL.
+            return app(TripController::class)->show($package->slug);
         }
 
         return app(LegacyRedirectController::class)->handle(request());

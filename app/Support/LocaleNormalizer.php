@@ -55,4 +55,28 @@ class LocaleNormalizer
             $locales
         )));
     }
+
+    /**
+     * Locales that may be used as a URL prefix (e.g. /de, /fr).
+     *
+     * @return array<int, string>
+     */
+    public function supported(): array
+    {
+        $database = [];
+
+        try {
+            $database = (array) \Illuminate\Support\Facades\Cache::remember('supported_locales', 3600, function () {
+                return \App\Models\Language::where('is_active', true)->pluck('code')->all();
+            });
+        } catch (\Throwable) {
+            // Database unavailable (e.g. during install) — fall back to config.
+        }
+
+        return $this->normalizeList(array_merge(
+            (array) config('translation.supported_locales', ['en']),
+            $database,
+            ['ar', 'ch', 'de', 'en', 'es', 'fr', 'it', 'ru']
+        ));
+    }
 }

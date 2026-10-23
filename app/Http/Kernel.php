@@ -16,6 +16,8 @@ class Kernel extends HttpKernel
      * @var array<int, class-string|string>
      */
     protected $middleware = [
+        // Must run before routing so /de/..., /fr/... paths resolve normally.
+        \App\Http\Middleware\StripLocalePrefix::class,
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,

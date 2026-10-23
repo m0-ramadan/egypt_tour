@@ -178,9 +178,11 @@ abstract class BaseWebsiteController extends Controller
 
     protected function packageRoute(Package $package): string
     {
+        // Canonical package URLs never use a trailing slash: such requests are
+        // served with HTTP 200 and would otherwise look like a duplicate URL.
         return match ($package->package_type) {
             'day_tour', 'shore_excursion' => route('website.day_tours.show', $package->slug),
-            'travel_package' => route('website.tour_packages.show', $package->slug) . '/',
+            'travel_package' => route('website.tour_packages.show', $package->slug),
             'nile_cruise' => route('website.nile_cruises.show', $package->slug),
             default => route('website.trips.show', $package->slug),
         };

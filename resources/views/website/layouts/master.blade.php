@@ -26,6 +26,11 @@
         $rawDescription = trim(preg_replace('/\s+/', ' ', strip_tags($__env->yieldContent('description'))));
         $rawKeywords = trim(preg_replace('/\s+/', ' ', strip_tags($__env->yieldContent('keywords'))));
         $rawCanonical = trim($__env->yieldContent('canonical'));
+        if ($rawCanonical === '' && !empty($legacyCanonical ?? null)) {
+            // Legacy/alternative URLs render in place but point search engines
+            // at the modern canonical URL instead of redirecting.
+            $rawCanonical = trim((string) $legacyCanonical);
+        }
         $rawRobots = trim($__env->yieldContent('robots'));
         $rawOgType = trim($__env->yieldContent('og_type'));
         $rawImage = trim($__env->yieldContent('image'));
@@ -56,7 +61,11 @@
         $pageDescription =
             $rawDescription !== '' ? \Illuminate\Support\Str::limit($rawDescription, 170, '...') : $defaultDescription;
         $pageKeywords = $rawKeywords !== '' ? $rawKeywords : $defaultKeywords;
-        $pageCanonical = $toAbsoluteUrl($rawCanonical !== '' ? $rawCanonical : url()->current());
+        // Trailing-slash URLs are served with HTTP 200; point the canonical at
+        // the slash-less variant so the two forms are not indexed separately.
+        $currentUrl = url()->current();
+        $canonicalFallback = $currentUrl === url('/') ? $currentUrl : rtrim($currentUrl, '/');
+        $pageCanonical = $toAbsoluteUrl($rawCanonical !== '' ? $rawCanonical : $canonicalFallback);
         $pageImage = $toAbsoluteUrl($rawImage !== '' ? $rawImage : $logoUrl);
         $pageOgTitle = $rawOgTitle !== '' ? $rawOgTitle : $pageTitle;
         $pageOgDescription =
